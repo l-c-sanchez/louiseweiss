@@ -18,6 +18,7 @@ module LouiseWeiss {
 					create:this.create,
 					update:this.update
 				},
+				// scene: [ ChooseCharacter ],
 				banner: true,
 				title: 'Louise Weiss',
 				url: 'http://localhost:8080',
@@ -57,9 +58,11 @@ module LouiseWeiss {
 			var picture = this.add.image(0,0,"MartaSmiley");
 			picture.setInteractive().on('pointerup', () => {
 				console.log("ty as bien cliqué");
-				// picture.setActive(false);
 				picture.setVisible(false);
 				text.setVisible(false);
+				// let key = 'ChooseCharacter'
+				this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
+				// this.scene.start(new ChooseCharacter())
 			});
 			// .setScale(scaleRatio, scaleRatio);
 			// picture.displayWidth = 0.4 * this.sys.canvas.width;
@@ -67,7 +70,9 @@ module LouiseWeiss {
 			Phaser.Display.Align.In.Center(picture, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 1.8, this.sys.canvas.width, this.sys.canvas.height));
 		}
 		
-		private update() {}
+		private update() {
+			console.log("in update")
+		}
 	}
 }
 
