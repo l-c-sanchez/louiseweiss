@@ -10,7 +10,11 @@ module LouiseWeiss {
 				type: Phaser.AUTO,
 				width: 480,
 				height: 320,
-				scene: [],
+				scene: {
+					preload:this.preload,
+					create:this.create,
+					update:this.update
+				},
 				banner: true,
 				title: 'Louise Weiss',
 				url: 'http://localhost:8080',
@@ -19,9 +23,24 @@ module LouiseWeiss {
 
 			this.gameRef = new Phaser.Game(config);
 		}
+
+		static preload() {
+			// this.gameRef.load.start();
+			let character = new CharacterSheet({
+				name:"Marta",
+				age:45,
+				job:"nurse",
+				town:"Tourville-La-Campagne",
+				picture:  this.gameRef.load.image('')
+			});
+
+		}
+		static create() {}
+		static update() {}
 	}
 }
 
 window.onload = () => {
 	LouiseWeiss.InitPhaser.initGame();
 };
+
