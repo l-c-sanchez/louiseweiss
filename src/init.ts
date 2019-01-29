@@ -53,12 +53,18 @@ module LouiseWeiss {
 			// let scaleRatio = window.devicePixelRatio / 3;
 			console.log(this);
 			var text = this.add.text(0, 0, "Hello world", { fontSize:"8vw", align:'center', fill:"#FFFFFF"});
-			Phaser.Display.Align.In.Center(text, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 4, this.sys.canvas.width, this.sys.canvas.height))
-			var picture = this.add.image(0,0,"MartaSmiley")
+			Phaser.Display.Align.In.Center(text, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 4, this.sys.canvas.width, this.sys.canvas.height));
+			var picture = this.add.image(0,0,"MartaSmiley");
+			picture.setInteractive().on('pointerup', () => {
+				console.log("ty as bien cliqué");
+				// picture.setActive(false);
+				picture.setVisible(false);
+				text.setVisible(false);
+			});
 			// .setScale(scaleRatio, scaleRatio);
 			// picture.displayWidth = 0.4 * this.sys.canvas.width;
 			// picture.displayHeight = 0.4 * this.sys.canvas.width;
-			Phaser.Display.Align.In.Center(picture, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 1.8, this.sys.canvas.width, this.sys.canvas.height))
+			Phaser.Display.Align.In.Center(picture, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 1.8, this.sys.canvas.width, this.sys.canvas.height));
 		}
 		
 		private update() {}
