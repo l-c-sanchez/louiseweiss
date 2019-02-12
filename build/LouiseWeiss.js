@@ -50,46 +50,73 @@ var Pacman = /** @class */ (function (_super) {
         // this.Player = new Physics.Arcade.Sprite();
     }
     Pacman.prototype.preload = function () {
-        this.load.spritesheet("arcade", "assets/arcade2.png", { frameWidth: 16, frameHeight: 16 });
+        this.load.spritesheet("arcade", "assets/Clara.png", { frameWidth: 64, frameHeight: 64 });
         this.load.image('mapTiles', 'assets/PacmanMap.png');
     };
     Pacman.prototype.create = function () {
         var _this = this;
         var level = [
-            [0, 1, 1, 1, 1, 1, 1, 1, 2],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+            [16, 17, 17, 17, 17, 17, 17, 17, 17, 18],
+            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
+            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
+            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
+            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
+            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
+            [16, 17, 17, 17, 17, 17, 17, 17, 17, 18],
+            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
+            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
+            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
+            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
+            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
+            [16, 17, 17, 17, 17, 17, 17, 17, 17, 18],
+            [32, 33, 33, 33, 33, 33, 33, 33, 33, 34]
         ];
         var map = this.make.tilemap({ data: level, tileWidth: 32, tileHeight: 32 });
         var tiles = map.addTilesetImage('mapTiles');
         var layer = map.createDynamicLayer(0, tiles, 0, 0);
+        layer.setCollisionBetween(0, 2);
+        layer.setCollision(16);
+        layer.setCollision(18);
+        layer.setCollisionBetween(32, 34);
         var widthRatio = this.sys.canvas.width / (map.tileWidth * map.width);
         var heightRatio = this.sys.canvas.height / (map.tileHeight * map.height);
         this.ScaleRatio = widthRatio > heightRatio ? heightRatio : widthRatio;
         layer.setScale(this.ScaleRatio, this.ScaleRatio);
+        var debugGraphics = this.add.graphics().setAlpha(0.75);
+        layer.renderDebug(debugGraphics, {
+            tileColor: null,
+            collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255),
+            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+        });
         console.log(this);
-        this.Player = this.physics.add.sprite(50, 50, "arcade");
-        this.Player.setScale(this.ScaleRatio, this.ScaleRatio);
+        this.Player = this.physics.add.sprite(100, 100, "arcade");
+        this.Player.setScale(this.ScaleRatio * 0.5, this.ScaleRatio * 0.5);
+        // this.Player.setCollideWorldBounds(true);
+        var test = this.physics.add.collider(this.Player, layer);
+        // test.collideCallback()
         this.Cursors = this.input.keyboard.createCursorKeys();
         this.anims.create({
             key: "right",
-            frames: this.anims.generateFrameNumbers('arcade', { start: 0, end: 1 }),
+            frames: this.anims.generateFrameNumbers('arcade', { start: 1, end: 6 }),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key: "left",
-            frames: this.anims.generateFrameNumbers('arcade', { start: 2, end: 3 }),
+            frames: this.anims.generateFrameNumbers('arcade', { start: 7, end: 13 }),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key: "up",
-            frames: this.anims.generateFrameNumbers('arcade', { start: 4, end: 5 }),
+            frames: this.anims.generateFrameNumbers('arcade', { start: 1, end: 6 }),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key: "down",
-            frames: this.anims.generateFrameNumbers('arcade', { start: 6, end: 7 }),
+            frames: this.anims.generateFrameNumbers('arcade', { start: 7, end: 13 }),
             frameRate: 10,
             repeat: -1
         });
@@ -118,22 +145,22 @@ var Pacman = /** @class */ (function (_super) {
     Pacman.prototype.update = function () {
         if (this.Cursors.right != undefined && this.Cursors.right.isDown || this.Swipe == 'right') {
             this.Player.setVelocityX(+60 * this.ScaleRatio);
-            this.Player.setVelocityY(0);
+            // this.Player.setVelocityY(0);
             this.Player.anims.play('right', true);
         }
         else if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == 'left') {
             this.Player.setVelocityX(-60 * this.ScaleRatio);
-            this.Player.setVelocityY(0);
+            // this.Player.setVelocityY(0);
             this.Player.anims.play('left', true);
         }
         else if (this.Cursors.up != undefined && this.Cursors.up.isDown || this.Swipe == 'up') {
             this.Player.setVelocityY(-60 * this.ScaleRatio);
-            this.Player.setVelocityX(0);
+            // this.Player.setVelocityX(0);
             this.Player.anims.play('up', true);
         }
         else if (this.Cursors.down != undefined && this.Cursors.down.isDown || this.Swipe == 'down') {
             this.Player.setVelocityY(+60 * this.ScaleRatio);
-            this.Player.setVelocityX(0);
+            // this.Player.setVelocityX(0);
             this.Player.anims.play('down', true);
         }
         this.Swipe = '';
