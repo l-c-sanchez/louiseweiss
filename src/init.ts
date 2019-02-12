@@ -13,6 +13,13 @@ module LouiseWeiss {
 				height: window.innerHeight, 
 				//* window.devicePixelRatio,
 				autoResize: true,
+				physics: {
+					default: "arcade",
+					arcade:{
+						gravity: { y:0 },
+						debug: false
+					}
+				},
 				scene: {
 					preload:this.preload,
 					create:this.create,
@@ -57,11 +64,12 @@ module LouiseWeiss {
 			Phaser.Display.Align.In.Center(text, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 4, this.sys.canvas.width, this.sys.canvas.height));
 			var picture = this.add.image(0,0,"MartaSmiley");
 			picture.setInteractive().on('pointerup', () => {
-				console.log("ty as bien cliqué");
+				// console.log("ty as bien cliqué");
 				picture.setVisible(false);
 				text.setVisible(false);
 				// let key = 'ChooseCharacter'
-				this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
+				// this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
+				this.scene.add('Pacman', new Pacman(), true)
 				// this.scene.start(new ChooseCharacter())
 			});
 			// .setScale(scaleRatio, scaleRatio);
@@ -71,7 +79,7 @@ module LouiseWeiss {
 		}
 		
 		private update() {
-			console.log("in update")
+			// console.log("in update")
 		}
 	}
 }

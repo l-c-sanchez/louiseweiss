@@ -43,6 +43,104 @@ var ChooseCharacter = /** @class */ (function (_super) {
     };
     return ChooseCharacter;
 }(Phaser.Scene));
+var Pacman = /** @class */ (function (_super) {
+    __extends(Pacman, _super);
+    function Pacman() {
+        return _super.call(this, { key: 'Pacman', active: false }) || this;
+        // this.Player = new Physics.Arcade.Sprite();
+    }
+    Pacman.prototype.preload = function () {
+        this.load.spritesheet("arcade", "assets/arcade2.png", { frameWidth: 16, frameHeight: 16 });
+        this.load.image('mapTiles', 'assets/PacmanMap.png');
+    };
+    Pacman.prototype.create = function () {
+        var _this = this;
+        var level = [
+            [0, 1, 1, 1, 1, 1, 1, 1, 2],
+        ];
+        var map = this.make.tilemap({ data: level, tileWidth: 32, tileHeight: 32 });
+        var tiles = map.addTilesetImage('mapTiles');
+        var layer = map.createDynamicLayer(0, tiles, 0, 0);
+        var widthRatio = this.sys.canvas.width / (map.tileWidth * map.width);
+        var heightRatio = this.sys.canvas.height / (map.tileHeight * map.height);
+        this.ScaleRatio = widthRatio > heightRatio ? heightRatio : widthRatio;
+        layer.setScale(this.ScaleRatio, this.ScaleRatio);
+        console.log(this);
+        this.Player = this.physics.add.sprite(50, 50, "arcade");
+        this.Player.setScale(this.ScaleRatio, this.ScaleRatio);
+        this.Cursors = this.input.keyboard.createCursorKeys();
+        this.anims.create({
+            key: "right",
+            frames: this.anims.generateFrameNumbers('arcade', { start: 0, end: 1 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "left",
+            frames: this.anims.generateFrameNumbers('arcade', { start: 2, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "up",
+            frames: this.anims.generateFrameNumbers('arcade', { start: 4, end: 5 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "down",
+            frames: this.anims.generateFrameNumbers('arcade', { start: 6, end: 7 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        var downX, upX, downY, upY, threshold = 50;
+        this.input.on('pointerdown', function (pointer) {
+            downX = pointer.x;
+            downY = pointer.y;
+        });
+        this.input.on('pointerup', function (pointer) {
+            upX = pointer.x;
+            upY = pointer.y;
+            if (upX < downX - threshold) {
+                _this.Swipe = 'left';
+            }
+            else if (upX > downX + threshold) {
+                _this.Swipe = 'right';
+            }
+            else if (upY < downY - threshold) {
+                _this.Swipe = 'up';
+            }
+            else if (upY > downY + threshold) {
+                _this.Swipe = 'down';
+            }
+        });
+    };
+    Pacman.prototype.update = function () {
+        if (this.Cursors.right != undefined && this.Cursors.right.isDown || this.Swipe == 'right') {
+            this.Player.setVelocityX(+60 * this.ScaleRatio);
+            this.Player.setVelocityY(0);
+            this.Player.anims.play('right', true);
+        }
+        else if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == 'left') {
+            this.Player.setVelocityX(-60 * this.ScaleRatio);
+            this.Player.setVelocityY(0);
+            this.Player.anims.play('left', true);
+        }
+        else if (this.Cursors.up != undefined && this.Cursors.up.isDown || this.Swipe == 'up') {
+            this.Player.setVelocityY(-60 * this.ScaleRatio);
+            this.Player.setVelocityX(0);
+            this.Player.anims.play('up', true);
+        }
+        else if (this.Cursors.down != undefined && this.Cursors.down.isDown || this.Swipe == 'down') {
+            this.Player.setVelocityY(+60 * this.ScaleRatio);
+            this.Player.setVelocityX(0);
+            this.Player.anims.play('down', true);
+        }
+        this.Swipe = '';
+        // console.log(this.Cursors)
+    };
+    return Pacman;
+}(Phaser.Scene));
 /// <reference path ='phaser/dist/phaser.d.ts'>
 var LouiseWeiss;
 (function (LouiseWeiss) {
@@ -55,6 +153,13 @@ var LouiseWeiss;
                 height: window.innerHeight,
                 //* window.devicePixelRatio,
                 autoResize: true,
+                physics: {
+                    default: "arcade",
+                    arcade: {
+                        gravity: { y: 0 },
+                        debug: false
+                    }
+                },
                 scene: {
                     preload: this.preload,
                     create: this.create,
@@ -96,11 +201,12 @@ var LouiseWeiss;
             Phaser.Display.Align.In.Center(text, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 4, this.sys.canvas.width, this.sys.canvas.height));
             var picture = this.add.image(0, 0, "MartaSmiley");
             picture.setInteractive().on('pointerup', function () {
-                console.log("ty as bien cliqué");
+                // console.log("ty as bien cliqué");
                 picture.setVisible(false);
                 text.setVisible(false);
                 // let key = 'ChooseCharacter'
-                _this.scene.add('ChooseCharacter', new ChooseCharacter(), true);
+                // this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
+                _this.scene.add('Pacman', new Pacman(), true);
                 // this.scene.start(new ChooseCharacter())
             });
             // .setScale(scaleRatio, scaleRatio);
@@ -109,7 +215,7 @@ var LouiseWeiss;
             Phaser.Display.Align.In.Center(picture, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 1.8, this.sys.canvas.width, this.sys.canvas.height));
         };
         InitPhaser.prototype.update = function () {
-            console.log("in update");
+            // console.log("in update")
         };
         return InitPhaser;
     }());
