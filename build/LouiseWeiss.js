@@ -91,20 +91,25 @@ var Pacman = /** @class */ (function (_super) {
         layer.setCollision(16);
         layer.setCollision(18);
         layer.setCollisionBetween(32, 34);
-        var widthRatio = this.sys.canvas.width / (this.TileMap.tileWidth * this.TileMap.width);
-        var heightRatio = this.sys.canvas.height / (this.TileMap.tileHeight * this.TileMap.height);
-        this.ScaleRatio = widthRatio > heightRatio ? heightRatio : widthRatio;
-        layer.setScale(this.ScaleRatio, this.ScaleRatio);
+        var widthRatio = this.sys.canvas.width / (layer.displayWidth);
+        var heightRatio = this.sys.canvas.height / (layer.displayWidth);
+        console.log(this.sys.canvas.width);
+        console.log(layer.displayWidth);
+        var camX = -(this.sys.canvas.width - layer.displayWidth) / 4;
+        var camY = -(this.sys.canvas.height - layer.displayHeight) / 2;
+        this.cameras.main.setScroll(camX, camY);
+        this.cameras.main.zoom = widthRatio > heightRatio ? heightRatio : widthRatio;
+        this.ScaleRatio = 1;
         var debugGraphics = this.add.graphics().setAlpha(0.75);
         layer.renderDebug(debugGraphics, {
             tileColor: null,
             collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255),
             faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
         });
-        this.Player = this.physics.add.sprite(48 * this.ScaleRatio, 48 * this.ScaleRatio, "arcade");
-        this.Player.setScale(this.ScaleRatio * 0.4, this.ScaleRatio * 0.4);
-        console.log(32 * this.ScaleRatio + " - " + this.Player.displayWidth + " / 2");
-        this.Threshold = Math.ceil((32 * this.ScaleRatio - this.Player.displayWidth) / 2);
+        this.Player = this.physics.add.sprite(48, 48, "arcade");
+        this.Player.setScale(0.5, 0.5);
+        console.log(32 + " - " + this.Player.displayWidth + " / 2");
+        this.Threshold = 10; //Math.ceil((32 - this.Player.displayWidth) / 2);
         console.log(this.Threshold);
         this.physics.add.collider(this.Player, layer);
         this.Cursors = this.input.keyboard.createCursorKeys();
@@ -159,6 +164,7 @@ var Pacman = /** @class */ (function (_super) {
                 _this.Swipe = 'down';
             }
         });
+        this.Turning = this.NONE;
         this.move(this.RIGHT);
     };
     Pacman.prototype.update = function () {
@@ -191,25 +197,25 @@ var Pacman = /** @class */ (function (_super) {
     };
     Pacman.prototype.move = function (direction) {
         if (direction === this.LEFT) {
-            this.Player.setVelocityX(-this.PLAYER_SPEED * this.ScaleRatio);
+            this.Player.setVelocityX(-this.PLAYER_SPEED);
             if (this.Player.anims.currentAnim !== this.anims.get('left')) {
                 this.Player.anims.play('left', true);
             }
         }
         else if (direction === this.RIGHT) {
-            this.Player.setVelocityX(this.PLAYER_SPEED * this.ScaleRatio);
+            this.Player.setVelocityX(this.PLAYER_SPEED);
             if (this.Player.anims.currentAnim !== this.anims.get('right')) {
                 this.Player.anims.play('right', true);
             }
         }
         else if (direction === this.UP) {
-            this.Player.setVelocityY(-this.PLAYER_SPEED * this.ScaleRatio);
+            this.Player.setVelocityY(-this.PLAYER_SPEED);
             if (this.Player.anims.currentAnim !== this.anims.get('up')) {
                 this.Player.anims.play('up', true);
             }
         }
         else {
-            this.Player.setVelocityY(this.PLAYER_SPEED * this.ScaleRatio);
+            this.Player.setVelocityY(this.PLAYER_SPEED);
             if (this.Player.anims.currentAnim !== this.anims.get('down')) {
                 this.Player.anims.play('down', true);
             }
@@ -221,27 +227,28 @@ var Pacman = /** @class */ (function (_super) {
         var cy = Math.floor(this.Player.y);
         // var cx = this.Player.x;
         // var cy = this.Player.y;
-        if (this.isHorizontalAxis(this.Current)) {
-            if (this.Current == this.RIGHT && cx > this.TurnPoint.x + this.Threshold) {
-                this.Turning = this.NONE;
-                return false;
-            }
-            else if (cx < this.TurnPoint.x - this.Threshold) {
-                this.Turning = this.NONE;
-                return false;
-            }
+        if (this.Directions[this.Turning] === null || this.Directions[this.Turning].index != 17) {
+            this.Turning = this.NONE;
+            return false;
         }
-        else {
-            if (this.Current == this.DOWN && cy > this.TurnPoint.y + this.Threshold) {
-                this.Turning = this.NONE;
-                return false;
-            }
-            else if (cy < this.TurnPoint.y - this.Threshold) {
-                console.log(cy + " < " + this.TurnPoint.y + " - " + this.Threshold);
-                this.Turning = this.NONE;
-                return false;
-            }
-        }
+        // if (this.isHorizontalAxis(this.Current)) {
+        //     if (this.Current == this.RIGHT && cx > this.TurnPoint.x + this.Threshold) {
+        //         this.Turning = this.NONE;
+        //         return false;
+        //     } else if (cx < this.TurnPoint.x - this.Threshold) {
+        //         this.Turning = this.NONE;
+        //         return false;
+        //     }
+        // } else {
+        //     if (this.Current == this.DOWN && cy > this.TurnPoint.y + this.Threshold) {
+        //         this.Turning = this.NONE;
+        //         return false;
+        //     } else if (cy < this.TurnPoint.y - this.Threshold) {
+        //         console.log(`${cy} < ${this.TurnPoint.y} - ${this.Threshold}`);
+        //         this.Turning = this.NONE;
+        //         return false;
+        //     }
+        // }
         // console.log(`${cy} == ${this.TurnPoint.y} | ${cx} == ${this.TurnPoint.x}`);
         if (!Phaser.Math.Fuzzy.Equal(cx, this.TurnPoint.x, this.Threshold)
             || !Phaser.Math.Fuzzy.Equal(cy, this.TurnPoint.y, this.Threshold)) {
@@ -266,12 +273,12 @@ var Pacman = /** @class */ (function (_super) {
         }
         else {
             this.Turning = direction;
-            this.TurnPoint.x = (this.Marker.x * 32 + 16) * this.ScaleRatio;
-            this.TurnPoint.y = (this.Marker.y * 32 + 16) * this.ScaleRatio;
+            this.TurnPoint.x = this.Marker.x * 32 + 16;
+            this.TurnPoint.y = this.Marker.y * 32 + 16;
         }
     };
     Pacman.prototype.gridToWorld = function (pos) {
-        return ((pos * 32 + 16) * this.ScaleRatio);
+        return (pos * 32 + 16);
     };
     Pacman.prototype.collectStar = function (player, star) {
         star.disableBody(true, true);
@@ -285,11 +292,9 @@ var LouiseWeiss;
         function InitPhaser() {
             var config = {
                 type: Phaser.AUTO,
-                width: window.innerWidth,
-                //  * window.devicePixelRatio,
-                height: window.innerHeight,
-                //* window.devicePixelRatio,
-                autoResize: true,
+                width: 360,
+                height: 640,
+                parent: 'phaser-app',
                 physics: {
                     default: "arcade",
                     arcade: {
@@ -306,7 +311,7 @@ var LouiseWeiss;
                 banner: true,
                 title: 'Louise Weiss',
                 url: 'http://localhost:8080',
-                version: '1.0.0'
+                version: '1.0.0',
             };
             this.gameRef = new Phaser.Game(config);
         }
@@ -318,37 +323,17 @@ var LouiseWeiss;
         };
         InitPhaser.prototype.create = function () {
             var _this = this;
-            // this.add.image(100,100,"MartaSmiley");
-            // var graphics = this.add.graphics()
-            // let pictures = this.add.group( {classType: Phaser.GameObjects.Image, runChildUpdate: true});
-            // let picture = new Phaser.GameObjects.Image(this, 100, 100, "MartaSmiley");
-            // picture.setActive(true);
-            // pictures.add(picture);
-            // let character = new CharacterSheet({
-            // 	name:"Marta",
-            // 	age:45,
-            // 	job:"nurse",
-            // 	town:"Tourville-La-Campagne"
-            // 	// picture: picture
-            // });
-            // console.log(character);
-            // let scaleRatio = window.devicePixelRatio / 3;
             console.log(this);
-            var text = this.add.text(0, 0, "Hello world", { fontSize: "8vw", align: 'center', fill: "#FFFFFF" });
+            var text = this.add.text(0, 0, "Hello world", { fontSize: "20px", align: 'center', fill: "#FFFFFF" });
             Phaser.Display.Align.In.Center(text, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 4, this.sys.canvas.width, this.sys.canvas.height));
             var picture = this.add.image(0, 0, "MartaSmiley");
             picture.setInteractive().on('pointerup', function () {
-                // console.log("ty as bien cliqué");
                 picture.setVisible(false);
                 text.setVisible(false);
-                // let key = 'ChooseCharacter'
                 // this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
                 _this.scene.add('Pacman', new Pacman(), true);
                 // this.scene.start(new ChooseCharacter())
             });
-            // .setScale(scaleRatio, scaleRatio);
-            // picture.displayWidth = 0.4 * this.sys.canvas.width;
-            // picture.displayHeight = 0.4 * this.sys.canvas.width;
             Phaser.Display.Align.In.Center(picture, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 1.8, this.sys.canvas.width, this.sys.canvas.height));
         };
         InitPhaser.prototype.update = function () {
@@ -358,8 +343,28 @@ var LouiseWeiss;
     }());
     LouiseWeiss.InitPhaser = InitPhaser;
 })(LouiseWeiss || (LouiseWeiss = {}));
+function resizeApp() {
+    // Width-height-ratio of game resolution
+    var game_ratio = 360 / 640;
+    // Make div full height of browser and keep the ratio of game resolution
+    var div = document.getElementById('phaser-app');
+    div.style.width = (window.innerHeight * game_ratio) + 'px';
+    div.style.height = window.innerHeight + 'px';
+    // Check if device DPI messes up the width-height-ratio
+    var canvas = document.getElementsByTagName('canvas')[0];
+    var dpi_w = (parseInt(div.style.width) / canvas.width);
+    var dpi_h = (parseInt(div.style.height) / canvas.height);
+    var height = window.innerHeight * (dpi_w / dpi_h);
+    var width = height * 0.6;
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+}
 window.onload = function () {
     var game = new LouiseWeiss.InitPhaser();
+    resizeApp();
     // LouiseWeiss.InitPhaser.initGame();
 };
+// Add to resize event
+window.addEventListener('resize', resizeApp);
+// Set correct size when page loads the first time
 //# sourceMappingURL=LouiseWeiss.js.map

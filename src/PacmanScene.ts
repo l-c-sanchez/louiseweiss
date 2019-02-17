@@ -67,10 +67,17 @@ class Pacman extends Phaser.Scene {
         layer.setCollision(16);
         layer.setCollision(18);
         layer.setCollisionBetween(32, 34);
-        var widthRatio = this.sys.canvas.width / (this.TileMap.tileWidth * this.TileMap.width);
-        var heightRatio = this.sys.canvas.height / (this.TileMap.tileHeight * this.TileMap.height);
-        this.ScaleRatio = widthRatio > heightRatio ? heightRatio : widthRatio;
-        layer.setScale(this.ScaleRatio, this.ScaleRatio);
+        var widthRatio = this.sys.canvas.width / (layer.displayWidth);
+		var heightRatio = this.sys.canvas.height / (layer.displayWidth);
+
+		console.log(this.sys.canvas.width);
+		console.log(layer.displayWidth);
+		var camX = -(this.sys.canvas.width - layer.displayWidth) / 4;
+		var camY = -(this.sys.canvas.height - layer.displayHeight) / 2;
+		this.cameras.main.setScroll(camX, camY);
+		this.cameras.main.zoom = widthRatio > heightRatio ? heightRatio : widthRatio;
+		this.ScaleRatio = 1;
+
 
         const debugGraphics = this.add.graphics().setAlpha(0.75);
         layer.renderDebug(debugGraphics, {
@@ -79,10 +86,10 @@ class Pacman extends Phaser.Scene {
           faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
         });
 
-        this.Player = this.physics.add.sprite(48 * this.ScaleRatio,48 * this.ScaleRatio,"arcade");
-        this.Player.setScale(this.ScaleRatio * 0.4, this.ScaleRatio * 0.4);
-        console.log(`${32 * this.ScaleRatio} - ${this.Player.displayWidth} / 2`);
-        this.Threshold = Math.ceil((32 * this.ScaleRatio - this.Player.displayWidth) / 2);
+        this.Player = this.physics.add.sprite(48, 48, "arcade");
+        this.Player.setScale(0.5, 0.5);
+        console.log(`${32} - ${this.Player.displayWidth} / 2`);
+        this.Threshold = 10;//Math.ceil((32 - this.Player.displayWidth) / 2);
         console.log(this.Threshold);
         this.physics.add.collider(this.Player, layer);
 
@@ -141,7 +148,8 @@ class Pacman extends Phaser.Scene {
             }
         });     
 
-        this.move(this.RIGHT);
+		this.Turning = this.NONE;
+		this.move(this.RIGHT);
     }
 
     update() {
@@ -181,22 +189,22 @@ class Pacman extends Phaser.Scene {
     move(direction: number)
     {
         if (direction === this.LEFT) {
-            this.Player.setVelocityX(-this.PLAYER_SPEED * this.ScaleRatio);
+            this.Player.setVelocityX(-this.PLAYER_SPEED);
             if (this.Player.anims.currentAnim !== this.anims.get('left')) {
                 this.Player.anims.play('left', true);
             }
         } else if (direction === this.RIGHT) {
-            this.Player.setVelocityX(this.PLAYER_SPEED * this.ScaleRatio);
+            this.Player.setVelocityX(this.PLAYER_SPEED);
             if (this.Player.anims.currentAnim !== this.anims.get('right')) {
                 this.Player.anims.play('right', true);
             }
         } else if (direction === this.UP) {
-            this.Player.setVelocityY(-this.PLAYER_SPEED * this.ScaleRatio);
+            this.Player.setVelocityY(-this.PLAYER_SPEED);
             if (this.Player.anims.currentAnim !== this.anims.get('up')) {
                 this.Player.anims.play('up', true);
             }
         } else {
-            this.Player.setVelocityY(this.PLAYER_SPEED * this.ScaleRatio);
+            this.Player.setVelocityY(this.PLAYER_SPEED);
             if (this.Player.anims.currentAnim !== this.anims.get('down')) {
                 this.Player.anims.play('down', true);
             }
@@ -212,24 +220,29 @@ class Pacman extends Phaser.Scene {
         // var cx = this.Player.x;
         // var cy = this.Player.y;
 
-        if (this.isHorizontalAxis(this.Current)) {
-            if (this.Current == this.RIGHT && cx > this.TurnPoint.x + this.Threshold) {
-                this.Turning = this.NONE;
-                return false;
-            } else if (cx < this.TurnPoint.x - this.Threshold) {
-                this.Turning = this.NONE;
-                return false;
-            }
-        } else {
-            if (this.Current == this.DOWN && cy > this.TurnPoint.y + this.Threshold) {
-                this.Turning = this.NONE;
-                return false;
-            } else if (cy < this.TurnPoint.y - this.Threshold) {
-                console.log(`${cy} < ${this.TurnPoint.y} - ${this.Threshold}`);
-                this.Turning = this.NONE;
-                return false;
-            }
-        }
+
+		if (this.Directions[this.Turning] === null || this.Directions[this.Turning].index != 17) {
+			this.Turning = this.NONE;
+			return false;
+		}
+        // if (this.isHorizontalAxis(this.Current)) {
+        //     if (this.Current == this.RIGHT && cx > this.TurnPoint.x + this.Threshold) {
+        //         this.Turning = this.NONE;
+        //         return false;
+        //     } else if (cx < this.TurnPoint.x - this.Threshold) {
+        //         this.Turning = this.NONE;
+        //         return false;
+        //     }
+        // } else {
+        //     if (this.Current == this.DOWN && cy > this.TurnPoint.y + this.Threshold) {
+        //         this.Turning = this.NONE;
+        //         return false;
+        //     } else if (cy < this.TurnPoint.y - this.Threshold) {
+        //         console.log(`${cy} < ${this.TurnPoint.y} - ${this.Threshold}`);
+        //         this.Turning = this.NONE;
+        //         return false;
+        //     }
+        // }
         // console.log(`${cy} == ${this.TurnPoint.y} | ${cx} == ${this.TurnPoint.x}`);
         if (!Phaser.Math.Fuzzy.Equal(cx, this.TurnPoint.x, this.Threshold)
             || !Phaser.Math.Fuzzy.Equal(cy, this.TurnPoint.y, this.Threshold)) {
@@ -241,8 +254,8 @@ class Pacman extends Phaser.Scene {
 
         this.Player.body.reset(this.TurnPoint.x, this.TurnPoint.y);
         this.move(this.Turning);
-        this.Turning = this.NONE;
-
+		this.Turning = this.NONE;
+		
         return true;
     }
 
@@ -261,13 +274,13 @@ class Pacman extends Phaser.Scene {
         } else {
             this.Turning = direction;
 
-            this.TurnPoint.x = (this.Marker.x * 32 + 16) * this.ScaleRatio;
-            this.TurnPoint.y = (this.Marker.y * 32 + 16) * this.ScaleRatio;
+            this.TurnPoint.x = this.Marker.x * 32 + 16;
+            this.TurnPoint.y = this.Marker.y * 32 + 16;
         }
     }
 
     gridToWorld(pos: number) {
-        return ((pos * 32 + 16) * this.ScaleRatio);
+        return (pos * 32 + 16);
     }
 
     collectStar(player: Phaser.Physics.Arcade.Sprite, star: Phaser.Physics.Arcade.Sprite) {
