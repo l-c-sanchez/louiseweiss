@@ -86,8 +86,8 @@ define(["require", "exports"], function (require, exports) {
             return _this;
         }
         Pacman.prototype.preload = function () {
-            this.load.spritesheet('boss', 'assets/Boss.png', { frameWidth: 64, frameHeight: 64 });
-            this.load.spritesheet("clara", "assets/Clara.png", { frameWidth: 64, frameHeight: 64 });
+            this.load.spritesheet('boss', 'assets/Boss32.png', { frameWidth: 32, frameHeight: 32 });
+            this.load.spritesheet("clara", "assets/Clara32.png", { frameWidth: 32, frameHeight: 32 });
             this.load.image('mapTiles', 'assets/PacmanMap.png');
             this.load.image('star', 'assets/star.png');
         };

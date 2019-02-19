@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./config"], function (require, exports, config_1) {
+define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Preload = /** @class */ (function (_super) {
@@ -22,7 +22,6 @@ define(["require", "exports", "./config"], function (require, exports, config_1)
         Preload.prototype.init = function () {
         };
         Preload.prototype.preload = function () {
-            config_1.Config.Game.tile;
         };
         Preload.prototype.create = function () {
             this.scene.start('Menu');
