@@ -212,12 +212,12 @@ class Pacman extends Phaser.Scene {
 
         this.Boss = new PacmanCharacter(this, 'boss', 272, 240, bossAnims);
         this.Boss.setSpeed(60);
-        this.Boss.Sprite.setScale(0.5, 0.5);
+        // this.Boss.Sprite.setScale(0.5, 0.5);
         this.physics.add.collider(this.Boss.Sprite, layer);
 
         this.Player = new PacmanCharacter(this, 'clara', 48, 48, claraAnims);
         this.Player.setSpeed(60);
-        this.Player.Sprite.setScale(0.5, 0.5);
+        // this.Player.Sprite.setScale(0.5, 0.5);
         this.Threshold = 10;//Math.ceil((32 - this.Player.displayWidth) / 2);
         this.physics.add.collider(this.Player.Sprite, layer);
 
