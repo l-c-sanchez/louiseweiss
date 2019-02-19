@@ -5,6 +5,7 @@ import { Preload } from "./Preload";
 import { Boot } from "./Boot";
 import { Menu } from "./Menu";
 import { Pacman } from "./PacmanScene";
+import { CarGame } from "./CarScene";
 
 module LouiseWeiss {
 	export class App {
@@ -18,6 +19,7 @@ module LouiseWeiss {
 			this.Scenes.push(new Preload);
 			this.Scenes.push(new Menu());
 			this.Scenes.push(new Pacman());
+			this.Scenes.push(new CarGame());
 
 			Config.Phaser.scene = this.Scenes;
 
@@ -51,10 +53,15 @@ function resizeApp()
 
 
 export function start() {
-	window.onload = () => {
-		let game = new LouiseWeiss.App();
-		resizeApp();
-	// LouiseWeiss.InitPhaser.initGame();
-	};
+	console.log("here")
+	let game = new LouiseWeiss.App();
+	resizeApp();
+	// window.onload = () => {
+	// 	console.log("here2")
+	// 	let game = new LouiseWeiss.App();
+	// 	resizeApp();
+
+	// // LouiseWeiss.InitPhaser.initGame();
+	// };
 	window.addEventListener('resize', resizeApp);
 }

@@ -1,5 +1,5 @@
 /// <reference path ='phaser/dist/phaser.d.ts'>
-define(["require", "exports", "./Config", "./Preload", "./Boot", "./Menu", "./PacmanScene"], function (require, exports, Config_1, Preload_1, Boot_1, Menu_1, PacmanScene_1) {
+define(["require", "exports", "./Config", "./Preload", "./Boot", "./Menu", "./PacmanScene", "./CarScene"], function (require, exports, Config_1, Preload_1, Boot_1, Menu_1, PacmanScene_1, CarScene_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var LouiseWeiss;
@@ -11,6 +11,7 @@ define(["require", "exports", "./Config", "./Preload", "./Boot", "./Menu", "./Pa
                 this.Scenes.push(new Preload_1.Preload);
                 this.Scenes.push(new Menu_1.Menu());
                 this.Scenes.push(new PacmanScene_1.Pacman());
+                this.Scenes.push(new CarScene_1.CarGame());
                 Config_1.Config.Phaser.scene = this.Scenes;
                 this.GameRef = new Phaser.Game(Config_1.Config.Phaser);
             }
@@ -35,11 +36,15 @@ define(["require", "exports", "./Config", "./Preload", "./Boot", "./Menu", "./Pa
         canvas.style.height = height + 'px';
     }
     function start() {
-        window.onload = function () {
-            var game = new LouiseWeiss.App();
-            resizeApp();
-            // LouiseWeiss.InitPhaser.initGame();
-        };
+        console.log("here");
+        var game = new LouiseWeiss.App();
+        resizeApp();
+        // window.onload = () => {
+        // 	console.log("here2")
+        // 	let game = new LouiseWeiss.App();
+        // 	resizeApp();
+        // // LouiseWeiss.InitPhaser.initGame();
+        // };
         window.addEventListener('resize', resizeApp);
     }
     exports.start = start;

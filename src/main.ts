@@ -2,6 +2,7 @@ require(
     ['init'], 
   
     function (app: any) { 
+        console.log("hey")
         app.start(); 
     }, 
   
