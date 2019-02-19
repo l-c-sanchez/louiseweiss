@@ -56,14 +56,39 @@ class Generator
 
     }
     scrollFloor() {
-        console.log(typeof (this.Layers.floor))
-        var offset = this.Env.cameras.main.scrollY - this.Layers.floor
+        let offset = this.Env.cameras.main.scrollY - this.Layers.floor[0][0].y;
+        if (offset >= 32)  { // this.config.tile
+            this.destroyFloorRow();
+            this.appendFloorRow();
+        }
     }
     destroyFloorRow() {
+        console.log(this.Layers[0])
+        for (let tx = 0;tx > this.Layers.floor[0].length; tx++) {
+            this.Layers.floor[0][tx].destroy();
+        }
 
+        this.Layers.floor.splice(0,1);
     }
     appendFloorRow() {
+        let x;
+        let spr;
+        let empty: number[] = []
 
+        /// ligne à la fin, right below camera edge
+        let ty = this.Layers.floor.length;
+        let y = this.Layers.floor[ty - 1][0].y + 32; // this.CONFIG.tile
+
+        // ajout d'une ligne vide
+        this.Layers.floor.push(empty);
+
+        for (let tx = 0; tx < this.Cols; tx++) {
+            x = (tx * 32) // this CONFIG TILE + this CONFIG MAP offset
+            spr = this.Env.add.sprite(x, y, 'tileset');
+            spr.setOrigin(0);
+            spr.setDepth(this.DEPTH.floor);
+            this.Layers.floor[ty][tx] = spr;
+        }
     }
 
 }
@@ -101,7 +126,6 @@ class CarGame extends Phaser.Scene {
     }
 
     create() {
-
         // Create floor 
         this.Generator.setup();
 
@@ -123,7 +147,6 @@ class CarGame extends Phaser.Scene {
     setCamSpeed(speed) {
         this.cam_speed.base = speed;
         this.cam_speed.current = speed;
-
         this.cam_speed.current = Math.min(
             this.cam_speed.current,
             this.cam_speed.max

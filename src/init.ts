@@ -1,65 +1,20 @@
 /// <reference path ='phaser/dist/phaser.d.ts'>
 
 module LouiseWeiss {
-	export class InitPhaser {
+	export class App {
 
-		gameRef:Phaser.Game;
+		GameRef: Phaser.Game;
+		Scenes: Array<Phaser.Scene>;
 
 		constructor() {
-			let config = {
-				type: Phaser.AUTO,
-				width: 360,
-				height: 640, 
-				parent: 'phaser-app',
-				physics: {
-					default: "arcade",
-					arcade:{
-						gravity: { y:0 },
-						debug: true
-					}
-				},
-				scene: {
-					preload:this.preload,
-					create:this.create,
-					update:this.update
-				},
-				// scene: [ ChooseCharacter ],
-				banner: true,
-				title: 'Louise Weiss',
-				url: 'http://localhost:8080',
-				version: '1.0.0',
+			this.Scenes = new Array<Phaser.Scene>();
+			this.Scenes.push(new Boot());
+			this.Scenes.push(new Preload());
+			this.Scenes.push(new Menu());
 
-			}
+			Config.Phaser.scene = this.Scenes;
 
-			this.gameRef = new Phaser.Game(config);
-		}
-
-		preload(this: Phaser.Scene) {
-			this.load.image("MartaSmiley", "assets/smiley.png");
-		}
-
-		getCenterX(this: Phaser.Scene){
-			return this.sys.canvas.width / 2
-		}
-		
-		private create(this: Phaser.Scene) {
-			console.log(this);
-			var text = this.add.text(0, 0, "Hello world", { fontSize:"20px", align:'center', fill:"#FFFFFF"});
-			Phaser.Display.Align.In.Center(text, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 4, this.sys.canvas.width, this.sys.canvas.height));
-			var picture = this.add.image(0,0,"MartaSmiley");
-			picture.setInteractive().on('pointerup', () => {
-				picture.setVisible(false);
-				text.setVisible(false);
-				// this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
-				this.scene.add('CarGame', new CarGame(), true)
-				// this.scene.add('Pacman', new Pacman(), true)
-				// this.scene.start(new ChooseCharacter())
-			});
-			Phaser.Display.Align.In.Center(picture, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 1.8, this.sys.canvas.width, this.sys.canvas.height));
-		}
-		
-		private update() {
-			// console.log("in update")
+			this.GameRef = new Phaser.Game(Config.Phaser);
 		}
 	}
 }
@@ -88,7 +43,7 @@ function resizeApp()
 }
 
 window.onload = () => {
-	let game = new LouiseWeiss.InitPhaser();
+	let game = new LouiseWeiss.App();
 	resizeApp();
 // LouiseWeiss.InitPhaser.initGame();
 };

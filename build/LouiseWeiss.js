@@ -11,6 +11,23 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var Boot = /** @class */ (function (_super) {
+    __extends(Boot, _super);
+    function Boot() {
+        return _super.call(this, { key: 'Boot', active: true }) || this;
+    }
+    Boot.prototype.init = function () {
+    };
+    Boot.prototype.preload = function () {
+    };
+    Boot.prototype.create = function () {
+        console.log("Coucou");
+        this.scene.start('Preload');
+    };
+    Boot.prototype.update = function () {
+    };
+    return Boot;
+}(Phaser.Scene));
 var Generator = /** @class */ (function () {
     function Generator(Env) {
         // trucs qui sont init // this.CONFIG =ctx.CONFIG;
@@ -54,12 +71,35 @@ var Generator = /** @class */ (function () {
         this.Layers.floor = floor;
     };
     Generator.prototype.scrollFloor = function () {
-        console.log(typeof (this.Layers.floor));
-        var offset = this.Env.cameras.main.scrollY - this.Layers.floor;
+        var offset = this.Env.cameras.main.scrollY - this.Layers.floor[0][0].y;
+        if (offset >= 32) { // this.config.tile
+            this.destroyFloorRow();
+            this.appendFloorRow();
+        }
     };
     Generator.prototype.destroyFloorRow = function () {
+        console.log(this.Layers[0]);
+        for (var tx = 0; tx > this.Layers.floor[0].length; tx++) {
+            this.Layers.floor[0][tx].destroy();
+        }
+        this.Layers.floor.splice(0, 1);
     };
     Generator.prototype.appendFloorRow = function () {
+        var x;
+        var spr;
+        var empty = [];
+        /// ligne à la fin, right below camera edge
+        var ty = this.Layers.floor.length;
+        var y = this.Layers.floor[ty - 1][0].y + 32; // this.CONFIG.tile
+        // ajout d'une ligne vide
+        this.Layers.floor.push(empty);
+        for (var tx = 0; tx < this.Cols; tx++) {
+            x = (tx * 32); // this CONFIG TILE + this CONFIG MAP offset
+            spr = this.Env.add.sprite(x, y, 'tileset');
+            spr.setOrigin(0);
+            spr.setDepth(this.DEPTH.floor);
+            this.Layers.floor[ty][tx] = spr;
+        }
     };
     return Generator;
 }());
@@ -136,6 +176,72 @@ var ChooseCharacter = /** @class */ (function (_super) {
         this.add.image(0, 0, "Space");
     };
     return ChooseCharacter;
+}(Phaser.Scene));
+var LouiseWeiss;
+(function (LouiseWeiss) {
+    var Config = /** @class */ (function () {
+        function Config() {
+        }
+        Config.Phaser = {
+            type: Phaser.AUTO,
+            parent: 'phaser-app',
+            title: 'Louise Weiss',
+            width: 360,
+            height: 640,
+            physics: {
+                default: "arcade",
+                arcade: {
+                    gravity: { y: 0 },
+                    debug: false
+                }
+            },
+            scene: [],
+            pixelArt: true,
+            banner: true,
+            url: 'http://localhost:8080',
+            version: '1.0.0',
+        };
+        Config.Game = {
+            width: Config.Phaser.width,
+            height: Config.Phaser.height,
+            centerX: Math.round(0.5 * Config.Phaser.width),
+            centerY: Math.round(0.5 * Config.Phaser.height),
+            tile: 32,
+            fps: 60
+        };
+        return Config;
+    }());
+    LouiseWeiss.Config = Config;
+})(LouiseWeiss || (LouiseWeiss = {}));
+var Menu = /** @class */ (function (_super) {
+    __extends(Menu, _super);
+    function Menu() {
+        return _super.call(this, { key: 'Menu', active: false }) || this;
+    }
+    Menu.prototype.init = function () {
+    };
+    Menu.prototype.preload = function () {
+        this.load.image("MartaSmiley", "assets/smiley.png");
+    };
+    Menu.prototype.create = function () {
+        var _this = this;
+        console.log(this);
+        var text = this.add.text(0, 0, "Hello world", { fontSize: "20px", align: 'center', fill: "#FFFFFF" });
+        Phaser.Display.Align.In.Center(text, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 4, this.sys.canvas.width, this.sys.canvas.height));
+        var picture = this.add.image(0, 0, "MartaSmiley");
+        picture.setInteractive().on('pointerup', function () {
+            picture.setVisible(false);
+            text.setVisible(false);
+            // this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
+            // this.scene.add('Pacman', new Pacman(), true)
+            _this.scene.add('CarGame', new CarGame(), true);
+            // this.scene.start(new ChooseCharacter())
+        });
+        Phaser.Display.Align.In.Center(picture, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 1.8, this.sys.canvas.width, this.sys.canvas.height));
+    };
+    Menu.prototype.update = function () {
+    };
+    return Menu;
 }(Phaser.Scene));
 var PacmanCharacter = /** @class */ (function () {
     function PacmanCharacter(env, spriteName, spawnX, spawnY, animations) {
@@ -305,11 +411,11 @@ var Pacman = /** @class */ (function (_super) {
         });
         this.Boss = new PacmanCharacter(this, 'boss', 272, 240, bossAnims);
         this.Boss.setSpeed(60);
-        this.Boss.Sprite.setScale(0.5, 0.5);
+        // this.Boss.Sprite.setScale(0.5, 0.5);
         this.physics.add.collider(this.Boss.Sprite, layer);
         this.Player = new PacmanCharacter(this, 'clara', 48, 48, claraAnims);
         this.Player.setSpeed(60);
-        this.Player.Sprite.setScale(0.5, 0.5);
+        // this.Player.Sprite.setScale(0.5, 0.5);
         this.Threshold = 10; //Math.ceil((32 - this.Player.displayWidth) / 2);
         this.physics.add.collider(this.Player.Sprite, layer);
         this.Cursors = this.input.keyboard.createCursorKeys();
@@ -445,64 +551,37 @@ var Pacman = /** @class */ (function (_super) {
     Pacman.DOWN = 4;
     return Pacman;
 }(Phaser.Scene));
+var Preload = /** @class */ (function (_super) {
+    __extends(Preload, _super);
+    function Preload() {
+        return _super.call(this, { key: 'Preload', active: false }) || this;
+    }
+    Preload.prototype.init = function () {
+    };
+    Preload.prototype.preload = function () {
+    };
+    Preload.prototype.create = function () {
+        this.scene.start('Menu');
+    };
+    Preload.prototype.update = function () {
+    };
+    return Preload;
+}(Phaser.Scene));
 /// <reference path ='phaser/dist/phaser.d.ts'>
 var LouiseWeiss;
 (function (LouiseWeiss) {
-    var InitPhaser = /** @class */ (function () {
-        function InitPhaser() {
-            var config = {
-                type: Phaser.AUTO,
-                width: 360,
-                height: 640,
-                parent: 'phaser-app',
-                physics: {
-                    default: "arcade",
-                    arcade: {
-                        gravity: { y: 0 },
-                        debug: true
-                    }
-                },
-                scene: {
-                    preload: this.preload,
-                    create: this.create,
-                    update: this.update
-                },
-                // scene: [ ChooseCharacter ],
-                banner: true,
-                title: 'Louise Weiss',
-                url: 'http://localhost:8080',
-                version: '1.0.0',
-            };
-            this.gameRef = new Phaser.Game(config);
+    var App = /** @class */ (function () {
+        function App() {
+            this.Scenes = new Array();
+            this.Scenes.push(new Boot());
+            this.Scenes.push(new Preload());
+            this.Scenes.push(new Menu());
+            LouiseWeiss.Config.Phaser.scene = this.Scenes;
+            this.GameRef = new Phaser.Game(LouiseWeiss.Config.Phaser);
         }
-        InitPhaser.prototype.preload = function () {
-            this.load.image("MartaSmiley", "assets/smiley.png");
-        };
-        InitPhaser.prototype.getCenterX = function () {
-            return this.sys.canvas.width / 2;
-        };
-        InitPhaser.prototype.create = function () {
-            var _this = this;
-            console.log(this);
-            var text = this.add.text(0, 0, "Hello world", { fontSize: "20px", align: 'center', fill: "#FFFFFF" });
-            Phaser.Display.Align.In.Center(text, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 4, this.sys.canvas.width, this.sys.canvas.height));
-            var picture = this.add.image(0, 0, "MartaSmiley");
-            picture.setInteractive().on('pointerup', function () {
-                picture.setVisible(false);
-                text.setVisible(false);
-                // this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
-                _this.scene.add('CarGame', new CarGame(), true);
-                // this.scene.add('Pacman', new Pacman(), true)
-                // this.scene.start(new ChooseCharacter())
-            });
-            Phaser.Display.Align.In.Center(picture, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 1.8, this.sys.canvas.width, this.sys.canvas.height));
-        };
-        InitPhaser.prototype.update = function () {
-            // console.log("in update")
-        };
-        return InitPhaser;
+        return App;
     }());
-    LouiseWeiss.InitPhaser = InitPhaser;
+    LouiseWeiss.App = App;
 })(LouiseWeiss || (LouiseWeiss = {}));
 function resizeApp() {
     // Width-height-ratio of game resolution
@@ -521,7 +600,7 @@ function resizeApp() {
     canvas.style.height = height + 'px';
 }
 window.onload = function () {
-    var game = new LouiseWeiss.InitPhaser();
+    var game = new LouiseWeiss.App();
     resizeApp();
     // LouiseWeiss.InitPhaser.initGame();
 };
