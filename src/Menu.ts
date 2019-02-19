@@ -24,7 +24,7 @@ export class Menu extends Phaser.Scene {
 			// this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
 			// this.scene.add('Pacman', new Pacman(), true)
 			// this.scene.add('CarGame', new CarGame(), true)
-			this.scene.start('CarGame')
+			this.scene.start('Pacman')
 			// this.scene.start(new ChooseCharacter())
 		});
 		Phaser.Display.Align.In.Center(picture, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 1.8, this.sys.canvas.width, this.sys.canvas.height));

@@ -24,7 +24,6 @@ define(["require", "exports"], function (require, exports) {
         Boot.prototype.preload = function () {
         };
         Boot.prototype.create = function () {
-            console.log("Coucou");
             this.scene.start('Preload');
         };
         Boot.prototype.update = function () {

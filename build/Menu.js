@@ -36,7 +36,7 @@ define(["require", "exports"], function (require, exports) {
                 // this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
                 // this.scene.add('Pacman', new Pacman(), true)
                 // this.scene.add('CarGame', new CarGame(), true)
-                _this.scene.start('CarGame');
+                _this.scene.start('Pacman');
                 // this.scene.start(new ChooseCharacter())
             });
             Phaser.Display.Align.In.Center(picture, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 1.8, this.sys.canvas.width, this.sys.canvas.height));
