@@ -83,7 +83,7 @@ class PacmanCharacter {
     }
 }
 
-class Pacman extends Phaser.Scene {
+export class Pacman extends Phaser.Scene {
 
     static NONE = 0;
     static LEFT = 1;

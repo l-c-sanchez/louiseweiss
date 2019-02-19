@@ -1,4 +1,4 @@
-class Menu extends Phaser.Scene {
+export class Menu extends Phaser.Scene {
 	constructor() {
         super({ key: 'Menu', active: false });
 	}
@@ -20,8 +20,9 @@ class Menu extends Phaser.Scene {
 			picture.setVisible(false);
 			text.setVisible(false);
 			// this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
-			this.scene.add('Pacman', new Pacman(), true)
-			// this.scene.start(new ChooseCharacter())
+			// this.scene.add('Pacman', new Pacman(), true)
+			this.scene.start('Pacman');
+		// this.scene.start(new ChooseCharacter())
 		});
 		Phaser.Display.Align.In.Center(picture, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 1.8, this.sys.canvas.width, this.sys.canvas.height));
 	}
