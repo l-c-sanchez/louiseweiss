@@ -1,42 +1,123 @@
 
+class PacmanCharacter {
+
+    Sprite: Phaser.Physics.Arcade.Sprite;
+    Env: Pacman;
+    Speed: number;
+    Animations: Array<string>;
+
+    Marker!: Phaser.Math.Vector2;
+    Current!: number;
+    Turning!: number;
+
+
+    PrevTurnPoint = new Phaser.Math.Vector2(-1, -1);
+    TurnPoint = new Phaser.Math.Vector2();
+    Directions: Array<Phaser.Tilemaps.Tile> = [ null, null, null, null, null ];
+    Opposites: Array<number> = [ Pacman.NONE, Pacman.RIGHT, Pacman.LEFT, Pacman.DOWN, Pacman.UP ];
+
+    constructor(env: Pacman, spriteName: string, spawnX: number, spawnY: number, animations: Array<string>) {
+        this.Env = env;
+        this.Sprite = this.Env.physics.add.sprite(spawnX, spawnY, spriteName);
+        this.Speed = 10;
+        this.Turning = Pacman.NONE;
+        this.Animations = animations;
+    }
+
+    setSpeed(speed: number) {
+        this.Speed = speed;
+    }
+
+    checkSpaceAround() {
+        this.Marker = new Phaser.Math.Vector2();
+        // this.Marker.x = Phaser.Math.Snap.Floor(Math.floor(this.Player.x), 32) / 32;
+        // this.Marker.y = Phaser.Math.Snap.Floor(Math.floor(this.Player.y), 32) / 32;
+
+        var playerTile = this.Env.TileMap.getTileAtWorldXY(this.Sprite.x, this.Sprite.y);
+        this.Marker.x = playerTile.x;
+        this.Marker.y = playerTile.y;
+        this.Directions[Pacman.LEFT] = this.Env.TileMap.getTileAt(playerTile.x - 1, playerTile.y);
+        this.Directions[Pacman.RIGHT] = this.Env.TileMap.getTileAt(playerTile.x + 1, playerTile.y);
+        this.Directions[Pacman.UP] = this.Env.TileMap.getTileAt(playerTile.x, playerTile.y - 1);
+        this.Directions[Pacman.DOWN] = this.Env.TileMap.getTileAt(playerTile.x, playerTile.y + 1);
+    }
+
+    automaticMove(target: PacmanCharacter) {
+        if (this.Turning != Pacman.NONE) {
+            return;
+        }
+        var bestMove = Pacman.NONE;
+        var bestSquareDistance = 1000000000;
+
+        for (var i = 0; i < this.Directions.length; ++i) {
+            if (this.Directions[i] !== null && this.Directions[i].index === 17 && i != this.Opposites[this.Current] && i != this.Current) {
+                if (bestMove == Pacman.NONE) {
+                    bestMove = i;
+                    bestSquareDistance = Phaser.Math.Distance.Squared(this.Directions[i].x * 32,  
+                        this.Directions[i].y * 32, target.Sprite.x, target.Sprite.y);
+                }
+                else {
+                    // console.log(this.Directions[i].x * 32, this.Directions[i].y * 32)                
+                    var SquareDistance = Phaser.Math.Distance.Squared(this.Directions[i].x * 32,  
+                    this.Directions[i].y * 32, target.Sprite.x, target.Sprite.y);
+                    
+                    if (SquareDistance < bestSquareDistance) {
+                        bestSquareDistance = SquareDistance;
+                        bestMove = i;
+                    }
+                    // console.log(SquareDistance)
+                }
+
+            }
+        }
+        if (bestMove == Pacman.NONE) {
+            this.Turning = Pacman.NONE;
+        } 
+        else {
+            var turnPoint = new Phaser.Math.Vector2(this.Marker.x * 32 + 16, this.Marker.y * 32 + 16);
+            if (turnPoint.x == this.PrevTurnPoint.x && turnPoint.y == this.PrevTurnPoint.y) {
+                this.Turning = Pacman.NONE;
+            } else {
+                this.Turning = bestMove;
+                this.TurnPoint.x = turnPoint.x;
+                this.TurnPoint.y = turnPoint.y;
+                this.PrevTurnPoint = this.TurnPoint;
+            }
+
+        }
+    }
+}
+
 class Pacman extends Phaser.Scene {
 
-    // Directions
-    NONE = 0;
-    LEFT = 1;
-    RIGHT = 2;
-    UP = 3;
-    DOWN = 4;
-
-    PLAYER_SPEED = 60;
+    static NONE = 0;
+    static LEFT = 1;
+    static RIGHT = 2;
+    static UP = 3;
+    static DOWN = 4;
 
     STAR_NB = 4;
 
     ScaleRatio!: number;
     TileMap!: Phaser.Tilemaps.Tilemap;
-    Player!: Phaser.Physics.Arcade.Sprite;
+    Player!: PacmanCharacter;
+    Boss!: PacmanCharacter;
     Stars!: Phaser.Physics.Arcade.Group;
-
 
     // Player movement
     Cursors!: Phaser.Input.Keyboard.CursorKeys;
     Swipe!: string;
     Threshold!: number;
-    Marker!: Phaser.Math. Vector2;
-    Current!: number;
-    Turning!: number;
-
-    TurnPoint = new Phaser.Math.Vector2();
-    Directions: Array<Phaser.Tilemaps.Tile> = [ null, null, null, null, null ];
-    Opposites: Array<number> = [ this.NONE, this.RIGHT, this.LEFT, this.DOWN, this.UP ];
 
     constructor() {
         super({ key: 'Pacman', active:false });
-        // this.Player = new Physics.Arcade.Sprite();
+        // this.Player = new Physics.clara.Sprite();
     }
 
     preload(){
-        this.load.spritesheet("arcade", "assets/Clara.png", { frameWidth:64, frameHeight:64});
+        this.load.spritesheet('boss', 'assets/Boss.png', { frameWidth:64, frameHeight:64});
+        this.load.spritesheet("clara", "assets/Clara.png", { frameWidth:64, frameHeight:64});
+        
         this.load.image('mapTiles', 'assets/PacmanMap.png');
         this.load.image('star', 'assets/star.png');
     }
@@ -70,8 +151,6 @@ class Pacman extends Phaser.Scene {
         var widthRatio = this.sys.canvas.width / (layer.displayWidth);
 		var heightRatio = this.sys.canvas.height / (layer.displayWidth);
 
-		console.log(this.sys.canvas.width);
-		console.log(layer.displayWidth);
 		var camX = -(this.sys.canvas.width - layer.displayWidth) / 4;
 		var camY = -(this.sys.canvas.height - layer.displayHeight) / 2;
 		this.cameras.main.setScroll(camX, camY);
@@ -86,39 +165,69 @@ class Pacman extends Phaser.Scene {
           faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
         });
 
-        this.Player = this.physics.add.sprite(48, 48, "arcade");
-        this.Player.setScale(0.5, 0.5);
-        console.log(`${32} - ${this.Player.displayWidth} / 2`);
-        this.Threshold = 10;//Math.ceil((32 - this.Player.displayWidth) / 2);
-        console.log(this.Threshold);
-        this.physics.add.collider(this.Player, layer);
-
-        this.Cursors = this.input.keyboard.createCursorKeys();
-
+        var claraAnims = ["", "left", "right", "up", "down" ];
+        var bossAnims = ["", "boss_left", "boss_right", "boss_up", "boss_down" ];
         this.anims.create({
             key:"right",
-            frames:this.anims.generateFrameNumbers('arcade', { start: 1, end:6 }),
+            frames:this.anims.generateFrameNumbers('clara', { start: 1, end:6 }),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key:"left",
-            frames:this.anims.generateFrameNumbers('arcade', { start: 7, end:13 }),
+            frames:this.anims.generateFrameNumbers('clara', { start: 7, end:13 }),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key:"up",
-            frames:this.anims.generateFrameNumbers('arcade', { start: 1, end:6 }),
+            frames:this.anims.generateFrameNumbers('clara', { start: 1, end:6 }),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key:"down",
-            frames:this.anims.generateFrameNumbers('arcade', { start: 7, end:13 }),
+            frames:this.anims.generateFrameNumbers('clara', { start: 7, end:13 }),
             frameRate: 10,
             repeat: -1
         });
+        this.anims.create({
+            key:"boss_right",
+            frames:this.anims.generateFrameNumbers('boss', { start: 1, end:6 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key:"boss_left",
+            frames:this.anims.generateFrameNumbers('boss', { start: 7, end:13 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key:"boss_up",
+            frames:this.anims.generateFrameNumbers('boss', { start: 1, end:6 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key:"boss_down",
+            frames:this.anims.generateFrameNumbers('boss', { start: 7, end:13 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.Boss = new PacmanCharacter(this, 'boss', 272, 240, bossAnims);
+        this.Boss.setSpeed(60);
+        this.Boss.Sprite.setScale(0.5, 0.5);
+        this.physics.add.collider(this.Boss.Sprite, layer);
+
+        this.Player = new PacmanCharacter(this, 'clara', 48, 48, claraAnims);
+        this.Player.setSpeed(60);
+        this.Player.Sprite.setScale(0.5, 0.5);
+        this.Threshold = 10;//Math.ceil((32 - this.Player.displayWidth) / 2);
+        this.physics.add.collider(this.Player.Sprite, layer);
+
+        this.Cursors = this.input.keyboard.createCursorKeys();
 
         this.Stars = this.physics.add.group();
 
@@ -127,7 +236,9 @@ class Pacman extends Phaser.Scene {
         this.Stars.create(this.gridToWorld(8), this.gridToWorld(8), 'star');
         this.Stars.create(this.gridToWorld(1), this.gridToWorld(12), 'star');
 
-        this.physics.add.overlap(this.Player, this.Stars, this.collectStar, null, this);
+        this.physics.add.overlap(this.Player.Sprite, this.Stars, this.collectStar, null, this);
+        this.physics.add.overlap(this.Player.Sprite, this.Boss.Sprite, this.collideBoss, null, this);
+
 
         var downX: number, upX: number, downY: number, upY: number, Threshold: number = 50;
         this.input.on('pointerdown', function (pointer : Phaser.Input.InputPlugin) {
@@ -148,134 +259,108 @@ class Pacman extends Phaser.Scene {
             }
         });     
 
-		this.Turning = this.NONE;
-		this.move(this.RIGHT);
+        this.move(Pacman.RIGHT, this.Player);
+        this.move(Pacman.LEFT, this.Boss);
     }
 
     update() {
-        this.Marker = new Phaser.Math.Vector2();
-        // this.Marker.x = Phaser.Math.Snap.Floor(Math.floor(this.Player.x), 32) / 32;
-        // this.Marker.y = Phaser.Math.Snap.Floor(Math.floor(this.Player.y), 32) / 32;
-
-        var playerTile = this.TileMap.getTileAtWorldXY(this.Player.x, this.Player.y);
-        this.Marker.x = playerTile.x;
-        this.Marker.y = playerTile.y;
-        this.Directions[this.LEFT] = this.TileMap.getTileAt(playerTile.x - 1, playerTile.y);
-        this.Directions[this.RIGHT] = this.TileMap.getTileAt(playerTile.x + 1, playerTile.y);
-        this.Directions[this.UP] = this.TileMap.getTileAt(playerTile.x, playerTile.y - 1);
-        this.Directions[this.DOWN] = this.TileMap.getTileAt(playerTile.x, playerTile.y + 1);
+        this.Player.checkSpaceAround();
+        this.Boss.checkSpaceAround();
+        this.Boss.automaticMove(this.Player);
 
         if (this.Cursors.right != undefined && this.Cursors.right.isDown || this.Swipe == 'right'){
-            this.checkDirection(this.RIGHT);
+            this.checkDirection(Pacman.RIGHT, this.Player);
         }
         else if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == 'left'){
-            this.checkDirection(this.LEFT);
+            this.checkDirection(Pacman.LEFT, this.Player);
 
         }
         else if (this.Cursors.up != undefined && this.Cursors.up.isDown || this.Swipe == 'up'){
-            this.checkDirection(this.UP);
+            this.checkDirection(Pacman.UP, this.Player);
 
         }
         else if (this.Cursors.down != undefined && this.Cursors.down.isDown || this.Swipe == 'down'){
-            this.checkDirection(this.DOWN);
+            this.checkDirection(Pacman.DOWN, this.Player);
         }
         this.Swipe = '';
 
-        if (this.Turning != this.Current && this.Turning !== this.NONE) {
-            this.turn();
+        if (this.Player.Turning != this.Player.Current && this.Player.Turning !== Pacman.NONE) {
+            this.turn(this.Player);
+        }
+        if (this.Boss.Turning != this.Boss.Current && this.Boss.Turning !== Pacman.NONE) {
+            this.turn(this.Boss);
         }
     }
 
-    move(direction: number)
+    move(direction: number, character: PacmanCharacter)
     {
-        if (direction === this.LEFT) {
-            this.Player.setVelocityX(-this.PLAYER_SPEED);
-            if (this.Player.anims.currentAnim !== this.anims.get('left')) {
-                this.Player.anims.play('left', true);
+        if (direction === Pacman.LEFT) {
+            character.Sprite.setVelocityX(-character.Speed);
+            if (character.Sprite.anims.currentAnim !== this.anims.get('left')) {
+                character.Sprite.anims.play(character.Animations[Pacman.LEFT], true);
             }
-        } else if (direction === this.RIGHT) {
-            this.Player.setVelocityX(this.PLAYER_SPEED);
-            if (this.Player.anims.currentAnim !== this.anims.get('right')) {
-                this.Player.anims.play('right', true);
+        } else if (direction === Pacman.RIGHT) {
+            character.Sprite.setVelocityX(character.Speed);
+            if (character.Sprite.anims.currentAnim !== this.anims.get('right')) {
+                character.Sprite.anims.play(character.Animations[Pacman.RIGHT], true);
             }
-        } else if (direction === this.UP) {
-            this.Player.setVelocityY(-this.PLAYER_SPEED);
-            if (this.Player.anims.currentAnim !== this.anims.get('up')) {
-                this.Player.anims.play('up', true);
+        } else if (direction === Pacman.UP) {
+            character.Sprite.setVelocityY(-character.Speed);
+            if (character.Sprite.anims.currentAnim !== this.anims.get('up')) {
+                character.Sprite.anims.play(character.Animations[Pacman.UP], true);
             }
         } else {
-            this.Player.setVelocityY(this.PLAYER_SPEED);
-            if (this.Player.anims.currentAnim !== this.anims.get('down')) {
-                this.Player.anims.play('down', true);
+            character.Sprite.setVelocityY(character.Speed);
+            if (character.Sprite.anims.currentAnim !== this.anims.get('down')) {
+                character.Sprite.anims.play(character.Animations[Pacman.DOWN], true);
             }
         }
-
-        this.Current = direction;
+        character.Current = direction;
+        
     }
 
-    turn()
+    turn(character: PacmanCharacter)
     {
-        var cx = Math.floor(this.Player.x);
-        var cy = Math.floor(this.Player.y);
-        // var cx = this.Player.x;
-        // var cy = this.Player.y;
+        var cx = Math.floor(character.Sprite.x);
+        var cy = Math.floor(character.Sprite.y);
 
-
-		if (this.Directions[this.Turning] === null || this.Directions[this.Turning].index != 17) {
-			this.Turning = this.NONE;
+		if (character.Directions[character.Turning] === null || character.Directions[character.Turning].index != 17) {
+			character.Turning = Pacman.NONE;
 			return false;
 		}
-        // if (this.isHorizontalAxis(this.Current)) {
-        //     if (this.Current == this.RIGHT && cx > this.TurnPoint.x + this.Threshold) {
-        //         this.Turning = this.NONE;
-        //         return false;
-        //     } else if (cx < this.TurnPoint.x - this.Threshold) {
-        //         this.Turning = this.NONE;
-        //         return false;
-        //     }
-        // } else {
-        //     if (this.Current == this.DOWN && cy > this.TurnPoint.y + this.Threshold) {
-        //         this.Turning = this.NONE;
-        //         return false;
-        //     } else if (cy < this.TurnPoint.y - this.Threshold) {
-        //         console.log(`${cy} < ${this.TurnPoint.y} - ${this.Threshold}`);
-        //         this.Turning = this.NONE;
-        //         return false;
-        //     }
-        // }
-        // console.log(`${cy} == ${this.TurnPoint.y} | ${cx} == ${this.TurnPoint.x}`);
-        if (!Phaser.Math.Fuzzy.Equal(cx, this.TurnPoint.x, this.Threshold)
-            || !Phaser.Math.Fuzzy.Equal(cy, this.TurnPoint.y, this.Threshold)) {
+
+        if (!Phaser.Math.Fuzzy.Equal(cx, character.TurnPoint.x, this.Threshold)
+            || !Phaser.Math.Fuzzy.Equal(cy, character.TurnPoint.y, this.Threshold)) {
             return false;
         }
 
-        this.Player.x = this.TurnPoint.x;
-        this.Player.y = this.TurnPoint.y;
+        character.Sprite.x = character.TurnPoint.x;
+        character.Sprite.y = character.TurnPoint.y;
 
-        this.Player.body.reset(this.TurnPoint.x, this.TurnPoint.y);
-        this.move(this.Turning);
-		this.Turning = this.NONE;
+        character.Sprite.body.reset(character.TurnPoint.x, character.TurnPoint.y);
+        this.move(character.Turning, character);
+		character.Turning = Pacman.NONE;
 		
         return true;
     }
 
     isHorizontalAxis(direction: number)
     {
-        return (direction == this.LEFT || direction == this.RIGHT);
+        return (direction == Pacman.LEFT || direction == Pacman.RIGHT);
     }
 
-    checkDirection(direction: number) {
-        if (this.Turning === direction || this.Directions[direction] === null || this.Directions[direction].index != 17) {
+    checkDirection(direction: number, character: PacmanCharacter) {
+        if (character.Turning === direction || character.Directions[direction] === null || character.Directions[direction].index != 17) {
             return;
         }
 
-        if (this.Current === this.Opposites[direction]) {
-            this.move(direction);
+        if (character.Current === character.Opposites[direction]) {
+            this.move(direction, character);
         } else {
-            this.Turning = direction;
+            character.Turning = direction;
 
-            this.TurnPoint.x = this.Marker.x * 32 + 16;
-            this.TurnPoint.y = this.Marker.y * 32 + 16;
+            character.TurnPoint.x = character.Marker.x * 32 + 16;
+            character.TurnPoint.y = character.Marker.y * 32 + 16;
         }
     }
 
@@ -285,5 +370,8 @@ class Pacman extends Phaser.Scene {
 
     collectStar(player: Phaser.Physics.Arcade.Sprite, star: Phaser.Physics.Arcade.Sprite) {
         star.disableBody(true, true);
+    }
+    collideBoss(player: Phaser.Physics.Arcade.Sprite, boss: Phaser.Physics.Arcade.Sprite) {
+        player.disableBody(true, true);
     }
 }
