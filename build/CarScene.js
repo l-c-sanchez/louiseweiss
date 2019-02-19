@@ -51,6 +51,7 @@ define(["require", "exports"], function (require, exports) {
                     spr = this.Env.add.sprite(x, y, "tileset");
                     spr.setOrigin(0);
                     spr.setDepth(this.DEPTH.floor);
+                    floor[ty][tx] = spr;
                 }
             }
             // save floor array in generators layers
@@ -64,7 +65,6 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         Generator.prototype.destroyFloorRow = function () {
-            console.log(this.Layers[0]);
             for (var tx = 0; tx > this.Layers.floor[0].length; tx++) {
                 this.Layers.floor[0][tx].destroy();
             }
@@ -78,7 +78,7 @@ define(["require", "exports"], function (require, exports) {
             var ty = this.Layers.floor.length;
             var y = this.Layers.floor[ty - 1][0].y + 32; // this.CONFIG.tile
             // ajout d'une ligne vide
-            this.Layers.floor.push(empty);
+            this.Layers.floor.push(new Array());
             for (var tx = 0; tx < this.Cols; tx++) {
                 x = (tx * 32); // this CONFIG TILE + this CONFIG MAP offset
                 spr = this.Env.add.sprite(x, y, 'tileset');

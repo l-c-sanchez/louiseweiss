@@ -36,11 +36,15 @@ define(["require", "exports", "./Config", "./Preload", "./Boot", "./Menu", "./Pa
         canvas.style.height = height + 'px';
     }
     function start() {
-        window.onload = function () {
-            var game = new LouiseWeiss.App();
-            resizeApp();
-            // LouiseWeiss.InitPhaser.initGame();
-        };
+        console.log("here");
+        var game = new LouiseWeiss.App();
+        resizeApp();
+        // window.onload = () => {
+        // 	console.log("here2")
+        // 	let game = new LouiseWeiss.App();
+        // 	resizeApp();
+        // // LouiseWeiss.InitPhaser.initGame();
+        // };
         window.addEventListener('resize', resizeApp);
     }
     exports.start = start;

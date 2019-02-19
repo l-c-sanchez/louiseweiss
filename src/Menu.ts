@@ -1,3 +1,5 @@
+import { CarGame } from "./CarScene";
+
 export class Menu extends Phaser.Scene {
 	constructor() {
         super({ key: 'Menu', active: false });
@@ -21,6 +23,7 @@ export class Menu extends Phaser.Scene {
 			text.setVisible(false);
 			// this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
 			// this.scene.add('Pacman', new Pacman(), true)
+			// this.scene.add('CarGame', new CarGame(), true)
 			this.scene.start('CarGame')
 			// this.scene.start(new ChooseCharacter())
 		});

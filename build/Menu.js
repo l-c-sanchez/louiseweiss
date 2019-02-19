@@ -35,6 +35,7 @@ define(["require", "exports"], function (require, exports) {
                 text.setVisible(false);
                 // this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
                 // this.scene.add('Pacman', new Pacman(), true)
+                // this.scene.add('CarGame', new CarGame(), true)
                 _this.scene.start('CarGame');
                 // this.scene.start(new ChooseCharacter())
             });

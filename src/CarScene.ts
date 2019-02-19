@@ -4,7 +4,7 @@ class Generator
     Cols: number;
     Rows: number;
     Env: CarGame;
-    Layers: { floor: Array<Number>, walls: Array<any>, monsters: Array<any>, pickups: Array<any>, turrets:Array<any>, overlay:boolean };
+    Layers: { floor: Array<Array<Phaser.Tilemaps.Tile>>, walls: Array<any>, monsters: Array<any>, pickups: Array<any>, turrets:Array<any>, overlay:boolean };
 
     constructor (Env) {
         
@@ -49,6 +49,7 @@ class Generator
                 spr = this.Env.add.sprite(x, y, "tileset");
                 spr.setOrigin(0);
                 spr.setDepth(this.DEPTH.floor)
+                floor[ty][tx] = spr;
             }
         }
         // save floor array in generators layers
@@ -63,7 +64,6 @@ class Generator
         }
     }
     destroyFloorRow() {
-        console.log(this.Layers[0])
         for (let tx = 0;tx > this.Layers.floor[0].length; tx++) {
             this.Layers.floor[0][tx].destroy();
         }
@@ -80,7 +80,7 @@ class Generator
         let y = this.Layers.floor[ty - 1][0].y + 32; // this.CONFIG.tile
 
         // ajout d'une ligne vide
-        this.Layers.floor.push(empty);
+        this.Layers.floor.push(new Array<Phaser.Tilemaps.Tile>());
 
         for (let tx = 0; tx < this.Cols; tx++) {
             x = (tx * 32) // this CONFIG TILE + this CONFIG MAP offset
