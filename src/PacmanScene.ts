@@ -30,9 +30,6 @@ class PacmanCharacter {
 
     checkSpaceAround() {
         this.Marker = new Phaser.Math.Vector2();
-        // this.Marker.x = Phaser.Math.Snap.Floor(Math.floor(this.Player.x), 32) / 32;
-        // this.Marker.y = Phaser.Math.Snap.Floor(Math.floor(this.Player.y), 32) / 32;
-
         var playerTile = this.Env.TileMap.getTileAtWorldXY(this.Sprite.x, this.Sprite.y);
         this.Marker.x = playerTile.x;
         this.Marker.y = playerTile.y;
@@ -56,8 +53,7 @@ class PacmanCharacter {
                     bestSquareDistance = Phaser.Math.Distance.Squared(this.Directions[i].x * 32,  
                         this.Directions[i].y * 32, target.Sprite.x, target.Sprite.y);
                 }
-                else {
-                    // console.log(this.Directions[i].x * 32, this.Directions[i].y * 32)                
+                else {             
                     var SquareDistance = Phaser.Math.Distance.Squared(this.Directions[i].x * 32,  
                     this.Directions[i].y * 32, target.Sprite.x, target.Sprite.y);
                     
@@ -65,7 +61,6 @@ class PacmanCharacter {
                         bestSquareDistance = SquareDistance;
                         bestMove = i;
                     }
-                    // console.log(SquareDistance)
                 }
 
             }
@@ -111,7 +106,6 @@ class Pacman extends Phaser.Scene {
 
     constructor() {
         super({ key: 'Pacman', active:false });
-        // this.Player = new Physics.clara.Sprite();
     }
 
     preload(){

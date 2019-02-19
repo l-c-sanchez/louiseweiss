@@ -59,8 +59,6 @@ var PacmanCharacter = /** @class */ (function () {
     };
     PacmanCharacter.prototype.checkSpaceAround = function () {
         this.Marker = new Phaser.Math.Vector2();
-        // this.Marker.x = Phaser.Math.Snap.Floor(Math.floor(this.Player.x), 32) / 32;
-        // this.Marker.y = Phaser.Math.Snap.Floor(Math.floor(this.Player.y), 32) / 32;
         var playerTile = this.Env.TileMap.getTileAtWorldXY(this.Sprite.x, this.Sprite.y);
         this.Marker.x = playerTile.x;
         this.Marker.y = playerTile.y;
@@ -82,13 +80,11 @@ var PacmanCharacter = /** @class */ (function () {
                     bestSquareDistance = Phaser.Math.Distance.Squared(this.Directions[i].x * 32, this.Directions[i].y * 32, target.Sprite.x, target.Sprite.y);
                 }
                 else {
-                    // console.log(this.Directions[i].x * 32, this.Directions[i].y * 32)                
                     var SquareDistance = Phaser.Math.Distance.Squared(this.Directions[i].x * 32, this.Directions[i].y * 32, target.Sprite.x, target.Sprite.y);
                     if (SquareDistance < bestSquareDistance) {
                         bestSquareDistance = SquareDistance;
                         bestMove = i;
                     }
-                    // console.log(SquareDistance)
                 }
             }
         }
@@ -116,7 +112,6 @@ var Pacman = /** @class */ (function (_super) {
         var _this = _super.call(this, { key: 'Pacman', active: false }) || this;
         _this.STAR_NB = 4;
         return _this;
-        // this.Player = new Physics.clara.Sprite();
     }
     Pacman.prototype.preload = function () {
         this.load.spritesheet('boss', 'assets/Boss.png', { frameWidth: 64, frameHeight: 64 });
@@ -369,7 +364,7 @@ var LouiseWeiss;
                     default: "arcade",
                     arcade: {
                         gravity: { y: 0 },
-                        debug: false
+                        debug: true
                     }
                 },
                 scene: {
