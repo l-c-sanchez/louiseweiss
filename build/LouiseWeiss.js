@@ -11,6 +11,101 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var Generator = /** @class */ (function () {
+    function Generator(Env) {
+        // trucs qui sont init // this.CONFIG =ctx.CONFIG;
+        this.Env = Env;
+        this.DEPTH = Env.DEPTH;
+        this.Cols = 11;
+        this.Rows = 20;
+        this.Layers = {
+            floor: [],
+            walls: [],
+            monsters: [],
+            pickups: [],
+            turrets: [],
+            overlay: false
+        };
+    }
+    Generator.prototype.setup = function () {
+        this.createFloor();
+    };
+    Generator.prototype.update = function () {
+        this.scrollFloor();
+    };
+    Generator.prototype.createFloor = function () {
+        var x;
+        var y;
+        var spr;
+        var cols = this.Cols;
+        var rows = this.Rows + 1;
+        var floor = [];
+        for (var ty = 0; ty < rows; ty++) {
+            floor[ty] = [];
+            for (var tx = 0; tx < cols; tx++) {
+                x = (tx * 32); // ou à la place de 32 this.CONFIG.tile
+                y = (ty * 32); // ou à la place de 32 this.CONFIG.tile
+                spr = this.Env.add.sprite(x, y, "tileset");
+                spr.setOrigin(0);
+                spr.setDepth(this.DEPTH.floor);
+            }
+        }
+        // save floor array in generators layers
+        this.Layers.floor = floor;
+    };
+    Generator.prototype.scrollFloor = function () {
+        console.log(typeof (this.Layers.floor));
+        var offset = this.Env.cameras.main.scrollY - this.Layers.floor;
+    };
+    Generator.prototype.destroyFloorRow = function () {
+    };
+    Generator.prototype.appendFloorRow = function () {
+    };
+    return Generator;
+}());
+var CarGame = /** @class */ (function (_super) {
+    __extends(CarGame, _super);
+    function CarGame() {
+        return _super.call(this, { key: 'CarGame', active: false }) || this;
+    }
+    CarGame.prototype.init = function () {
+        // this.CONFIG = this.sys.game.CONFIG
+        this.DEPTH = {
+            floor: 0
+        };
+        this.Generator = new Generator(this);
+        //this.allow_input = false;
+        // this.is_pause = false;
+        // this.is_gameover = false
+        this.cam_speed = {
+            base: 1,
+            current: 1,
+            max: 1
+        };
+    };
+    CarGame.prototype.preload = function () {
+        this.load.spritesheet('tileset', 'assets/PacmanMap.png', { frameWidth: 32, frameHeight: 32, margin: 1, spacing: 2 });
+    };
+    CarGame.prototype.create = function () {
+        // Create floor 
+        this.Generator.setup();
+    };
+    CarGame.prototype.update = function () {
+        this.updateCamera();
+        this.Generator.update();
+    };
+    CarGame.prototype.updateCamera = function () {
+        // Scroll camera
+        this.cameras.main.setScroll(0, this.cameras.main.scrollY + this.cam_speed.current);
+    };
+    CarGame.prototype.setCamSpeed = function (speed) {
+        this.cam_speed.base = speed;
+        this.cam_speed.current = speed;
+        this.cam_speed.current = Math.min(this.cam_speed.current, this.cam_speed.max);
+        this.cam_speed.current = Math.max(this.cam_speed.current, 0);
+    };
+    return CarGame;
+}(Phaser.Scene));
 var CharacterSheet = /** @class */ (function () {
     // private Picture: Phaser.GameObjects.Image;
     function CharacterSheet(obj) {
@@ -396,7 +491,8 @@ var LouiseWeiss;
                 picture.setVisible(false);
                 text.setVisible(false);
                 // this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
-                _this.scene.add('Pacman', new Pacman(), true);
+                _this.scene.add('CarGame', new CarGame(), true);
+                // this.scene.add('Pacman', new Pacman(), true)
                 // this.scene.start(new ChooseCharacter())
             });
             Phaser.Display.Align.In.Center(picture, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 1.8, this.sys.canvas.width, this.sys.canvas.height));
