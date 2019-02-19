@@ -1,5 +1,12 @@
 /// <reference path ='phaser/dist/phaser.d.ts'>
 
+import { Config } from "./Config";
+import { Preload } from "./Preload";
+import { Boot } from "./Boot";
+import { Menu } from "./Menu";
+import { Pacman } from "./PacmanScene";
+import { CarGame } from "./CarScene";
+
 module LouiseWeiss {
 	export class App {
 
@@ -9,8 +16,10 @@ module LouiseWeiss {
 		constructor() {
 			this.Scenes = new Array<Phaser.Scene>();
 			this.Scenes.push(new Boot());
-			this.Scenes.push(new Preload());
+			this.Scenes.push(new Preload);
 			this.Scenes.push(new Menu());
+			this.Scenes.push(new Pacman());
+			this.Scenes.push(new CarGame());
 
 			Config.Phaser.scene = this.Scenes;
 
@@ -42,15 +51,12 @@ function resizeApp()
 	canvas.style.height = height + 'px';
 }
 
-window.onload = () => {
-	let game = new LouiseWeiss.App();
-	resizeApp();
-// LouiseWeiss.InitPhaser.initGame();
-};
 
-
-
-// Add to resize event
-window.addEventListener('resize', resizeApp);
-
-// Set correct size when page loads the first time
+export function start() {
+	window.onload = () => {
+		let game = new LouiseWeiss.App();
+		resizeApp();
+	// LouiseWeiss.InitPhaser.initGame();
+	};
+	window.addEventListener('resize', resizeApp);
+}

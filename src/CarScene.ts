@@ -94,7 +94,7 @@ class Generator
 }
 
 
-class CarGame extends Phaser.Scene {
+export class CarGame extends Phaser.Scene {
 
     Generator!: Generator;
     DEPTH!: { floor: number };
