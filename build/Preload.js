@@ -22,7 +22,7 @@ define(["require", "exports", "./Config", "./GameText"], function (require, expo
         Preload.prototype.init = function () {
         };
         Preload.prototype.preload = function () {
-            var title = new GameText_1.GameText(this, Config_1.Config.Game.centerX, Config_1.Config.Game.centerY * 0.50, "Élections Européennes");
+            var title = new GameText_1.GameText(this, Config_1.Config.Game.centerX, Config_1.Config.Game.centerY * 0.30, "Élections Européennes");
             title.setOrigin(0.5, 0.5);
             title.setSize(40);
             this.createLoadingBar();
