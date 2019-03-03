@@ -109,11 +109,7 @@ export class Pacman extends Phaser.Scene {
     }
 
     preload(){
-        this.load.spritesheet('boss', 'assets/Boss32.png', { frameWidth:32, frameHeight:32});
-        this.load.spritesheet("clara", "assets/Clara32.png", { frameWidth:32, frameHeight:32});
-        
-        this.load.image('mapTiles', 'assets/PacmanMap.png');
-        this.load.image('star', 'assets/star.png');
+
     }
 
     create() {
@@ -267,11 +263,9 @@ export class Pacman extends Phaser.Scene {
         }
         else if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == 'left'){
             this.checkDirection(Pacman.LEFT, this.Player);
-
         }
         else if (this.Cursors.up != undefined && this.Cursors.up.isDown || this.Swipe == 'up'){
             this.checkDirection(Pacman.UP, this.Player);
-
         }
         else if (this.Cursors.down != undefined && this.Cursors.down.isDown || this.Swipe == 'down'){
             this.checkDirection(Pacman.DOWN, this.Player);

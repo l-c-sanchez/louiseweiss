@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "./Config", "./GameText"], function (require, exports, Config_1, GameText_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Menu = /** @class */ (function (_super) {
@@ -22,26 +22,54 @@ define(["require", "exports"], function (require, exports) {
         Menu.prototype.init = function () {
         };
         Menu.prototype.preload = function () {
-            this.load.image("MartaSmiley", "assets/smiley.png");
         };
         Menu.prototype.create = function () {
-            var _this = this;
-            console.log(this);
-            var text = this.add.text(0, 0, "Hello world", { fontSize: "20px", align: 'center', fill: "#FFFFFF" });
-            Phaser.Display.Align.In.Center(text, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 4, this.sys.canvas.width, this.sys.canvas.height));
-            var picture = this.add.image(0, 0, "MartaSmiley");
-            picture.setInteractive().on('pointerup', function () {
-                picture.setVisible(false);
-                text.setVisible(false);
-                // this.scene.add('ChooseCharacter', new ChooseCharacter(), true)
-                // this.scene.add('Pacman', new Pacman(), true)
-                // this.scene.add('CarGame', new CarGame(), true)
-                _this.scene.start('Pacman');
-                // this.scene.start(new ChooseCharacter())
+            if (Config_1.Config.Game.debugMode) {
+                console.log(this);
+            }
+            var picture = this.add.image(Config_1.Config.Game.centerX, Config_1.Config.Game.centerY * 1.1, "EuropeanFlag");
+            picture.setOrigin(0.5, 0.5);
+            var title = new GameText_1.GameText(this, Config_1.Config.Game.centerX, Config_1.Config.Game.centerY * 0.30, "Élections Européennes");
+            title.setOrigin(0.5, 0.5);
+            title.setSize(40);
+            this.StartText = new GameText_1.GameText(this, Config_1.Config.Game.centerX, Config_1.Config.Game.centerY, "START");
+            this.StartText.setSize(40);
+            this.StartText.setOrigin(0.5, 0);
+            this.time.addEvent({
+                delay: 1000,
+                callback: this.textBlink,
+                callbackScope: this,
+                loop: true
             });
-            Phaser.Display.Align.In.Center(picture, this.add.zone(this.sys.canvas.width / 2, this.sys.canvas.height / 1.8, this.sys.canvas.width, this.sys.canvas.height));
+            this.input.on('pointerup', this.startGame, this);
+            this.input.keyboard.on('keyup', this.onKeyReleased, this);
         };
         Menu.prototype.update = function () {
+        };
+        Menu.prototype.textBlink = function () {
+            if (this.StartText.getAlpha() == 1.0) {
+                this.StartText.setAlpha(0);
+            }
+            else {
+                this.StartText.setAlpha(1);
+            }
+        };
+        Menu.prototype.startGame = function () {
+            this.scene.start('Pacman');
+            // this.scene.start(new ChooseCharacter())
+        };
+        Menu.prototype.onKeyReleased = function (key) {
+            console.log(key);
+            switch (key.code) {
+                case 'Enter':
+                    this.startGame();
+                    break;
+                case 'Space':
+                    this.startGame();
+                    break;
+                default:
+                    break;
+            }
         };
         return Menu;
     }(Phaser.Scene));

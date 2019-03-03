@@ -1,0 +1,19 @@
+@font-face {
+    font-family: 'unscii';
+    src: url('unscii-16.eot');
+    src: url('unscii-16.eot?#iefix') format('embedded-opentype'),
+        url('unscii-16.woff2') format('woff2'),
+        url('unscii-16.woff') format('woff'),
+        url('unscii-16.ttf') format('truetype'),
+        url('unscii-16.svg#unscii-16') format('svg');
+    font-weight: 100;
+    font-style: normal;
+}
+
+
+
+.fontLoader {
+	position: absolute;
+	left: -1000px;
+	visibility: hidden;
+}

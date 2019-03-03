@@ -1,5 +1,3 @@
-/// <reference path ='phaser/dist/phaser.d.ts'>
-
 import { Config } from "./Config";
 import { Preload } from "./Preload";
 import { Boot } from "./Boot";
@@ -7,31 +5,33 @@ import { Menu } from "./Menu";
 import { Pacman } from "./PacmanScene";
 import { CarGame } from "./CarScene";
 
-module LouiseWeiss {
-	export class App {
+export class App {
 
-		GameRef: Phaser.Game;
-		Scenes: Array<Phaser.Scene>;
+	GameRef: Phaser.Game;
+	Scenes: Array<Phaser.Scene>;
 
-		constructor() {
-			this.Scenes = new Array<Phaser.Scene>();
-			this.Scenes.push(new Boot());
-			this.Scenes.push(new Preload);
-			this.Scenes.push(new Menu());
-			this.Scenes.push(new Pacman());
-			this.Scenes.push(new CarGame());
+	constructor() {
+		this.Scenes = new Array<Phaser.Scene>();
+		this.Scenes.push(new Boot());
+		this.Scenes.push(new Preload);
+		this.Scenes.push(new Menu());
+		this.Scenes.push(new Pacman());
+		this.Scenes.push(new CarGame());
 
-			Config.Phaser.scene = this.Scenes;
+		Config.Phaser.scene = this.Scenes;
 
-			this.GameRef = new Phaser.Game(Config.Phaser);
+		if (Config.Game.debugMode) {
+			Config.Phaser.url = 'http://localhost:8080/';
 		}
+
+		this.GameRef = new Phaser.Game(Config.Phaser);
 	}
 }
 
 function resizeApp()
 {
 	// Width-height-ratio of game resolution
-	let game_ratio = 360 / 640;
+	let game_ratio = 360.0 / 640.0;
 	
 	// Make div full height of browser and keep the ratio of game resolution
 	let div = document.getElementById('phaser-app');
@@ -45,7 +45,7 @@ function resizeApp()
 	let dpi_h = (parseInt(div.style.height) / canvas.height);		
 	
 	let height = window.innerHeight * (dpi_w / dpi_h);
-	let width = height * 0.6;
+	let width = height * game_ratio;
 	
 	canvas.style.width = width + 'px';
 	canvas.style.height = height + 'px';
@@ -54,7 +54,7 @@ function resizeApp()
 
 export function start() {
 	console.log("here")
-	let game = new LouiseWeiss.App();
+	let game = new App();
 	resizeApp();
 	// window.onload = () => {
 	// 	console.log("here2")
