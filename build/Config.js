@@ -26,7 +26,7 @@ define(["require", "exports"], function (require, exports) {
             version: '1.0.0',
         };
         Config.Game = {
-            debugMode: false,
+            debugMode: true,
             width: Config.Phaser.width,
             height: Config.Phaser.height,
             centerX: Math.round(0.5 * Config.Phaser.width),

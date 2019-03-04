@@ -22,7 +22,7 @@ export class Config {
 	};
 
 	static Game = {
-		debugMode: false,
+		debugMode: true,
 		width: Config.Phaser.width,
 		height: Config.Phaser.height,
 		centerX: Math.round(0.5 * Config.Phaser.width),
