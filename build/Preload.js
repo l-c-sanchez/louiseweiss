@@ -27,6 +27,8 @@ define(["require", "exports", "./Config", "./GameText"], function (require, expo
             title.setSize(40);
             this.createLoadingBar();
             this.load.setPath(/*Config.Phaser.url + */ 'assets/');
+            //Dialogs
+            this.load.image('Arrow', 'sprites/Arrow.png');
             // Main Menu
             this.load.image('EuropeanFlag', 'sprites/EuropeanFlag.png');
             this.load.json('StartText', 'texts/StartText.json');

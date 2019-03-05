@@ -19,6 +19,8 @@ export enum Anchor {
 }
 
 export class Dialog {
+	Ended		: boolean = true;
+
 	Graphics		: Phaser.GameObjects.Graphics;
 	Env				: Phaser.Scene;
 	Text			: string[];
@@ -30,7 +32,6 @@ export class Dialog {
 	Options			: DialogOptions;
 	Anchor			: Anchor;
 
-	Visible			: boolean = true;
 	EventCounter	: number = 0;
 	TextCounter		: number = 0;
 	TimedEvent		: Phaser.Time.TimerEvent = null;
@@ -70,7 +71,7 @@ export class Dialog {
 		this.CurrentText.setAlign('left');
 		this.showNextText();
 
-		this.Env.input.on('pointerup', this.onPointerUp, this);		
+		this.Env.input.on('pointerup', this.onPointerUp, this);
 	}
 
 	createWindow() {
@@ -87,6 +88,7 @@ export class Dialog {
 		this.Graphics = this.Env.add.graphics();
 		this.createOuterWindow(x, y, width, height);
 		this.createInnerWindow(x, y, width, height);
+		this.Env.add.sprite(x + width - 32, y + height -32, 'Arrow');
 	}
 
 	createInnerWindow(x: number, y: number, width: number, height: number) {
@@ -110,17 +112,19 @@ export class Dialog {
 				this.TimedEvent = null;
 			}
 
-			console.log("here");
-			this.TimedEvent = this.Env.time.addEvent({
-				delay: 150 - (this.Options.dialogSpeed * 30),
-				callback: this.animateText,
-				callbackScope: this,
-				loop: true
-			});
+			if (this.Animate) {
+				this.TimedEvent = this.Env.time.addEvent({
+					delay: 150 - (this.Options.dialogSpeed * 30),
+					callback: this.animateText,
+					callbackScope: this,
+					loop: true
+				});
+			}
+
 			++this.TextCounter;
-			return true;
+			return (this.TextCounter >= this.Text.length);
 		}
-		return false;
+		return true;
 	}
 
 	animateText() {
@@ -138,8 +142,12 @@ export class Dialog {
 	}
 
 	onPointerUp() {
-		if (this.TimedEvent === null) {
-			this.showNextText();
+		if (this.Ended) {
+			console.log("destroy");
+			this.CurrentText.PhaserText.setVisible(false);
+			this.Graphics.destroy();
+		} else if (this.TimedEvent === null) {
+			this.Ended = this.showNextText();
 		} else {
 			this.CurrentText.setText(this.Text[this.TextCounter - 1]);
 			this.TimedEvent.remove(() => {});

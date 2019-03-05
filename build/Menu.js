@@ -45,8 +45,6 @@ define(["require", "exports", "./Config", "./GameText", "./Dialog"], function (r
             });
             this.input.on('pointerup', this.startGame, this);
             this.input.keyboard.on('keyup', this.onKeyReleased, this);
-            var text = this.cache.json.get('StartText');
-            this.StartDialog = new Dialog_1.Dialog(this, text, true, Dialog_1.Anchor.Center, 250);
         };
         Menu.prototype.update = function () {
         };
@@ -59,8 +57,15 @@ define(["require", "exports", "./Config", "./GameText", "./Dialog"], function (r
             }
         };
         Menu.prototype.startGame = function () {
-            // this.scene.start('Pacman')
-            // this.scene.start(new ChooseCharacter())
+            console.log("startGame1");
+            if (this.StartDialog === null) {
+                var text = this.cache.json.get('StartText');
+                this.StartDialog = new Dialog_1.Dialog(this, text, false, Dialog_1.Anchor.Center, 250);
+            }
+            else if (this.StartDialog.Ended) {
+                console.log("start pacman");
+                this.scene.start('CarGame');
+            }
         };
         Menu.prototype.onKeyReleased = function (key) {
             console.log(key);

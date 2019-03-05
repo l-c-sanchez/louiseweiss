@@ -44,9 +44,6 @@ export class Menu extends Phaser.Scene {
 
 		this.input.on('pointerup', this.startGame, this);
 		this.input.keyboard.on('keyup', this.onKeyReleased, this);
-
-		let text = this.cache.json.get('StartText');
-		this.StartDialog = new Dialog(this, text, true, Anchor.Center, 250);
 	}
 
 	update() {
@@ -62,8 +59,14 @@ export class Menu extends Phaser.Scene {
 	}
 
 	startGame() {
-		// this.scene.start('Pacman')
-		// this.scene.start(new ChooseCharacter())
+		console.log("startGame1");
+		if (this.StartDialog === null) {
+			let text = this.cache.json.get('StartText');
+			this.StartDialog = new Dialog(this, text, false, Anchor.Center, 250);
+		} else if (this.StartDialog.Ended) {
+			console.log("start pacman");
+			this.scene.start('CarGame');
+		}
 	}
 
 	onKeyReleased(key: KeyboardEvent) {

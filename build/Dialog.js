@@ -9,7 +9,7 @@ define(["require", "exports", "./Config", "./GameText"], function (require, expo
     })(Anchor = exports.Anchor || (exports.Anchor = {}));
     var Dialog = /** @class */ (function () {
         function Dialog(env, text, animate, anchor, height) {
-            this.Visible = true;
+            this.Ended = true;
             this.EventCounter = 0;
             this.TextCounter = 0;
             this.TimedEvent = null;
@@ -59,6 +59,7 @@ define(["require", "exports", "./Config", "./GameText"], function (require, expo
             this.Graphics = this.Env.add.graphics();
             this.createOuterWindow(x, y, width, height);
             this.createInnerWindow(x, y, width, height);
+            this.Env.add.sprite(x + width - 32, y + height - 32, 'Arrow');
         };
         Dialog.prototype.createInnerWindow = function (x, y, width, height) {
             this.Graphics.fillStyle(this.Options.windowColor, this.Options.windowAlpha);
@@ -77,17 +78,18 @@ define(["require", "exports", "./Config", "./GameText"], function (require, expo
                     this.TimedEvent.remove(function () { });
                     this.TimedEvent = null;
                 }
-                console.log("here");
-                this.TimedEvent = this.Env.time.addEvent({
-                    delay: 150 - (this.Options.dialogSpeed * 30),
-                    callback: this.animateText,
-                    callbackScope: this,
-                    loop: true
-                });
+                if (this.Animate) {
+                    this.TimedEvent = this.Env.time.addEvent({
+                        delay: 150 - (this.Options.dialogSpeed * 30),
+                        callback: this.animateText,
+                        callbackScope: this,
+                        loop: true
+                    });
+                }
                 ++this.TextCounter;
-                return true;
+                return (this.TextCounter >= this.Text.length);
             }
-            return false;
+            return true;
         };
         Dialog.prototype.animateText = function () {
             if (this.TimedEvent === null)
@@ -101,8 +103,13 @@ define(["require", "exports", "./Config", "./GameText"], function (require, expo
             }
         };
         Dialog.prototype.onPointerUp = function () {
-            if (this.TimedEvent === null) {
-                this.showNextText();
+            if (this.Ended) {
+                console.log("destroy");
+                this.CurrentText.PhaserText.setVisible(false);
+                this.Graphics.destroy();
+            }
+            else if (this.TimedEvent === null) {
+                this.Ended = this.showNextText();
             }
             else {
                 this.CurrentText.setText(this.Text[this.TextCounter - 1]);
