@@ -37,6 +37,14 @@ export class GameText {
 		this.PhaserText.setAlpha(alpha);
 	}
 
+	setWordWrap(width: number) {
+		this.PhaserText.setWordWrapWidth(width);
+	}
+
+	setAlign(align: string) {
+		this.PhaserText.setAlign(align);
+	}
+
 	getAlpha() {
 		return this.PhaserText.alpha;
 	}

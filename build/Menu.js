@@ -11,13 +11,15 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define(["require", "exports", "./Config", "./GameText"], function (require, exports, Config_1, GameText_1) {
+define(["require", "exports", "./Config", "./GameText", "./Dialog"], function (require, exports, Config_1, GameText_1, Dialog_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Menu = /** @class */ (function (_super) {
         __extends(Menu, _super);
         function Menu() {
-            return _super.call(this, { key: 'Menu', active: false }) || this;
+            var _this = _super.call(this, { key: 'Menu', active: false }) || this;
+            _this.StartDialog = null;
+            return _this;
         }
         Menu.prototype.init = function () {
         };
@@ -43,6 +45,8 @@ define(["require", "exports", "./Config", "./GameText"], function (require, expo
             });
             this.input.on('pointerup', this.startGame, this);
             this.input.keyboard.on('keyup', this.onKeyReleased, this);
+            var text = this.cache.json.get('StartText');
+            this.StartDialog = new Dialog_1.Dialog(this, text, true, Dialog_1.Anchor.Center, 250);
         };
         Menu.prototype.update = function () {
         };
@@ -55,7 +59,7 @@ define(["require", "exports", "./Config", "./GameText"], function (require, expo
             }
         };
         Menu.prototype.startGame = function () {
-            this.scene.start('Pacman');
+            // this.scene.start('Pacman')
             // this.scene.start(new ChooseCharacter())
         };
         Menu.prototype.onKeyReleased = function (key) {

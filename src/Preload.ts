@@ -12,7 +12,7 @@ export class Preload extends Phaser.Scene {
 	}
 
 	init() {
-		
+
 	}
 
 	preload() {
@@ -22,17 +22,18 @@ export class Preload extends Phaser.Scene {
 
 		this.createLoadingBar();
 
-		this.load.setPath(Config.Phaser.url + 'assets/');
+		this.load.setPath(/*Config.Phaser.url + */'assets/');
 
 		// Main Menu
 		this.load.image('EuropeanFlag', 'sprites/EuropeanFlag.png');
+		this.load.json('StartText', 'texts/StartText.json');
 
 		// Pacman
 		this.load.image('mapTiles', 'tilesets/PacmanMap.png');
 		this.load.spritesheet('boss', 'sprites/Boss32.png', { frameWidth:32, frameHeight:32});
 		this.load.spritesheet('clara', 'sprites/Clara32.png', { frameWidth:32, frameHeight:32});
         this.load.image('star', 'sprites/star.png');
-		
+
 		this.load.on('progress', this.onProgress, this);
 		this.load.on('complete', this.onComplete, this);
 	}

@@ -26,9 +26,10 @@ define(["require", "exports", "./Config", "./GameText"], function (require, expo
             title.setOrigin(0.5, 0.5);
             title.setSize(40);
             this.createLoadingBar();
-            this.load.setPath(Config_1.Config.Phaser.url + 'assets/');
+            this.load.setPath(/*Config.Phaser.url + */ 'assets/');
             // Main Menu
             this.load.image('EuropeanFlag', 'sprites/EuropeanFlag.png');
+            this.load.json('StartText', 'texts/StartText.json');
             // Pacman
             this.load.image('mapTiles', 'tilesets/PacmanMap.png');
             this.load.spritesheet('boss', 'sprites/Boss32.png', { frameWidth: 32, frameHeight: 32 });

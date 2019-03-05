@@ -1,10 +1,11 @@
 import { Config } from "./Config";
 import { CarGame } from "./CarScene";
 import { GameText } from "./GameText";
-import { Scene, Game } from "phaser";
+import { Dialog, Anchor } from "./Dialog";
 
 export class Menu extends Phaser.Scene {
 	StartText	: GameText;
+	StartDialog	: Dialog = null;
 
 	constructor() {
         super({ key: 'Menu', active: false });
@@ -43,6 +44,9 @@ export class Menu extends Phaser.Scene {
 
 		this.input.on('pointerup', this.startGame, this);
 		this.input.keyboard.on('keyup', this.onKeyReleased, this);
+
+		let text = this.cache.json.get('StartText');
+		this.StartDialog = new Dialog(this, text, true, Anchor.Center, 250);
 	}
 
 	update() {
@@ -58,7 +62,7 @@ export class Menu extends Phaser.Scene {
 	}
 
 	startGame() {
-		this.scene.start('Pacman')
+		// this.scene.start('Pacman')
 		// this.scene.start(new ChooseCharacter())
 	}
 

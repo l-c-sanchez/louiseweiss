@@ -51,7 +51,6 @@ function resizeApp()
 	canvas.style.height = height + 'px';
 }
 
-
 export function start() {
 	console.log("here")
 	let game = new App();

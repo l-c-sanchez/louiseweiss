@@ -28,6 +28,12 @@ define(["require", "exports", "./Config"], function (require, exports, Config_1)
         GameText.prototype.setAlpha = function (alpha) {
             this.PhaserText.setAlpha(alpha);
         };
+        GameText.prototype.setWordWrap = function (width) {
+            this.PhaserText.setWordWrapWidth(width);
+        };
+        GameText.prototype.setAlign = function (align) {
+            this.PhaserText.setAlign(align);
+        };
         GameText.prototype.getAlpha = function () {
             return this.PhaserText.alpha;
         };
