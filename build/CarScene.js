@@ -173,6 +173,7 @@ define(["require", "exports", "./Config"], function (require, exports, Config_1)
             this.updateCamera();
             this.Generator.update();
             this.player.setPositionY(this.player.y + this.cam_speed.current);
+            this.createWalls();
             if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == "left") {
                 console.log(this.Swipe);
                 this.moveTo(this.player.x - this.Corridor);
@@ -187,6 +188,10 @@ define(["require", "exports", "./Config"], function (require, exports, Config_1)
         };
         CarGame.prototype.createPlayer = function (claraAnims) {
             this.player = new Entity(this, Config_1.Config.Game.centerX, Config_1.Config.Game.centerY / 2 * 3, 'voiture', claraAnims);
+        };
+        CarGame.prototype.createWalls = function () {
+            console.log("here");
+            this.wall = new Entity(this, Config_1.Config.Game.centerX, 0, 'boss', []);
         };
         CarGame.prototype.moveTo = function (x) {
             if (x > Config_1.Config.Game.width || x < 0) {

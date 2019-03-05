@@ -1,4 +1,5 @@
 import { Config } from "./Config";
+import { NONE } from "phaser";
 
 class Generator 
 {
@@ -33,6 +34,7 @@ class Generator
     update() {
         this.scrollFloor();
     }
+  
     createFloor() {
         let x;
         let y;
@@ -120,6 +122,7 @@ export class CarGame extends Phaser.Scene {
     DEPTH!: { floor: number };
     cam_speed!: { base:number, current:number, max:number};
     player!: Entity;
+    wall!: Entity;
     playerSpeed:number = 120;
     targetPos:number;
     Corridor:number = 64;
@@ -161,6 +164,7 @@ export class CarGame extends Phaser.Scene {
 
         // Create Player
         this.createPlayer(claraAnims);
+        
         this.player.spr.setScale(2, 2);
         this.player.spr.setOrigin(0.5, 0.5);
         this.player.setPosition(this.player.x, this.player.y - 1);
@@ -201,7 +205,7 @@ export class CarGame extends Phaser.Scene {
         this.updateCamera();
         this.Generator.update();
         this.player.setPositionY(this.player.y + this.cam_speed.current);
-    
+        this.createWalls();
         
         if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == "left" ){
             console.log(this.Swipe)
@@ -219,6 +223,10 @@ export class CarGame extends Phaser.Scene {
     createPlayer (claraAnims) {
         this.player = new Entity(this, Config.Game.centerX, Config.Game.centerY / 2 * 3, 'voiture', claraAnims);
         
+    }
+    createWalls() {
+        console.log("here")
+        this.wall = new Entity(this, Config.Game.centerX, 0, 'boss', []);
     }
 
     moveTo(x:number){
