@@ -46,7 +46,7 @@ class Generator
                 x = (tx * 32) // ou à la place de 32 this.CONFIG.tile
                 y = (ty * 32) // ou à la place de 32 this.CONFIG.tile
 
-                spr = this.Env.add.sprite(x, y, "tileset");
+                spr = this.Env.add.sprite(x, y, "mapTiles");
                 spr.setOrigin(0);
                 spr.setDepth(this.DEPTH.floor)
                 floor[ty][tx] = spr;
@@ -84,7 +84,7 @@ class Generator
 
         for (let tx = 0; tx < this.Cols; tx++) {
             x = (tx * 32) // this CONFIG TILE + this CONFIG MAP offset
-            spr = this.Env.add.sprite(x, y, 'tileset');
+            spr = this.Env.add.sprite(x, y, 'mapTiles');
             spr.setOrigin(0);
             spr.setDepth(this.DEPTH.floor);
             this.Layers.floor[ty][tx] = spr;
@@ -122,7 +122,7 @@ export class CarGame extends Phaser.Scene {
     }
 
     preload(){
-        this.load.spritesheet('tileset', 'assets/PacmanMap.png', { frameWidth:32, frameHeight:32, margin:1, spacing:2});
+        // this.load.spritesheet('tileset', 'assets/tilesets/PacmanMap.png', { frameWidth:32, frameHeight:32, margin:1, spacing:2});
     }
 
     create() {
@@ -159,3 +159,31 @@ export class CarGame extends Phaser.Scene {
     }
 
 }
+
+// class Entity
+// {
+//     MAP_OFFSET: number;
+//     TILE_SIZE: number;
+
+//     constructor(ctx, x, y, key) {
+//         this.MAP_OFFSET = ctx.CONFIG.map_offset;
+//         this.TILE_SIZE = ctx.CONFIG.tile;
+
+//         this.helper = new Helper();
+//         this.ctx = ctx;
+//         this.x = x;
+//         this.y = y;
+//         this.width = 32;
+//         this.height = 32;
+//         this.depth = 0;
+
+//         this.key = key;
+//         this.frames = {
+//             idle:0,
+//             hurt:3
+//         }
+//         this.states = {
+
+//         }
+//     }
+// }

@@ -58,7 +58,8 @@ export class Menu extends Phaser.Scene {
 	}
 
 	startGame() {
-		this.scene.start('Pacman')
+		// this.scene.start('Pacman')
+		this.scene.start('CarGame')
 		// this.scene.start(new ChooseCharacter())
 	}
 

@@ -22,7 +22,8 @@ export class Preload extends Phaser.Scene {
 
 		this.createLoadingBar();
 
-		this.load.setPath(Config.Phaser.url + 'assets/');
+		// this.load.setPath(Config.Phaser.url + 'assets/');
+		this.load.setPath('assets/');
 
 		// Main Menu
 		this.load.image('EuropeanFlag', 'sprites/EuropeanFlag.png');

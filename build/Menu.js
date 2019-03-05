@@ -55,7 +55,8 @@ define(["require", "exports", "./Config", "./GameText"], function (require, expo
             }
         };
         Menu.prototype.startGame = function () {
-            this.scene.start('Pacman');
+            // this.scene.start('Pacman')
+            this.scene.start('CarGame');
             // this.scene.start(new ChooseCharacter())
         };
         Menu.prototype.onKeyReleased = function (key) {
