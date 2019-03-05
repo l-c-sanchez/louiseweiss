@@ -35,6 +35,9 @@ define(["require", "exports", "./Config", "./GameText"], function (require, expo
             this.load.spritesheet('boss', 'sprites/Boss32.png', { frameWidth: 32, frameHeight: 32 });
             this.load.spritesheet('clara', 'sprites/Clara32.png', { frameWidth: 32, frameHeight: 32 });
             this.load.image('star', 'sprites/star.png');
+            this.load.image('voiture', 'sprites/voiture.png');
+            this.load.image('road', 'sprites/road.png');
+            this.load.image('road_line', 'sprites/road_line.png');
             this.load.on('progress', this.onProgress, this);
             this.load.on('complete', this.onComplete, this);
         };
