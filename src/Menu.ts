@@ -73,13 +73,9 @@ export class Menu extends Phaser.Scene {
 		console.log(key);
 		switch (key.code) {
 			case 'Enter':
-				this.startGame();
-				break;
-
 			case 'Space':
 				this.startGame();
 				break;
-
 			default:
 				break;
 		}

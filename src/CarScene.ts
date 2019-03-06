@@ -1,13 +1,74 @@
 import { Config } from "./Config";
 import { NONE } from "phaser";
 
+/**
+ * TODO: there should be only one group of stars shared between all layers.
+ * --> each layer contains only an array with its star(s)
+ */
+class Layer {
+    floor: Phaser.GameObjects.Group
+    // stars: Phaser.GameObjects.Group
+    layerStars: Array<Phaser.GameObjects.Sprite>
+    starGroup: Phaser.GameObjects.Group
+
+    y: number
+    Cols: number
+    DEPTH!: { floor: number };
+    Env: CarGame
+
+    constructor (Env: CarGame, starGroup: Phaser.GameObjects.Group, y: number) {
+        this.Env = Env;
+        this.Cols = 12;
+        this.DEPTH = Env.DEPTH;
+        this.y = y;
+
+        this.layerStars = [];
+        this.starGroup = starGroup;
+        this.createLayer();
+    }
+
+    createLayer() {
+        var cols = this.Cols;
+
+        this.floor = this.Env.add.group();
+
+        for (let tx = 0; tx < this.Cols; tx++) {
+            var x = (tx * 32) // ou à la place de 32 this.CONFIG.tile
+            if (tx != 3 && tx != 8) {
+                this.floor.create(x, this.y, 'road');
+            } else {
+                this.floor.create(x, this.y, 'road_line');
+            }
+            this.floor.setDepth(this.DEPTH.floor, 0);
+        }
+
+        var starProba = 0.2;
+
+        if (Math.random() < starProba){
+            var x = Phaser.Math.Between(0, cols * 32);
+            var star: Phaser.GameObjects.Sprite = this.starGroup.create(x, this.y, 'star');
+            this.layerStars.push(star);
+        }
+    }
+
+    destroy() {
+        this.floor.destroy();
+        for (var i=0; i<this.layerStars.length; i++){
+            this.starGroup.remove(this.layerStars[i], true, true);
+        }
+    }
+
+}
+
+
 class Generator 
 {
     DEPTH: { floor: number };
     Cols: number;
     Rows: number;
     Env: CarGame;
-    Layers: { floor: Array<Array<Phaser.GameObjects.Sprite>>, walls: Array<any>, monsters: Array<any>, pickups: Array<any>, turrets:Array<any>, overlay:boolean };
+    Layers: Array<Layer>
+    starGroup: Phaser.GameObjects.Group
 
     constructor (Env) {
         
@@ -17,97 +78,48 @@ class Generator
         
         this.Cols = 12;
         this.Rows = 20;
-        this.Layers = {
-            floor: [],
-            walls: [],
-            monsters:[],
-            pickups: [],
-            turrets: [],
-            overlay: false
-        };
+        this.Layers = [];
 
+        this.starGroup = this.Env.add.group();
+        this.starGroup.setDepth(1, 0);
     }
 
     setup() {
-        this.createFloor();
+        this.createLayers();
     }
     update() {
-        this.scrollFloor();
+        this.scrollLayers();
     }
-  
-    createFloor() {
-        let x;
+
+    createLayers() {
         let y;
-        let spr;
-        
-        let cols = this.Cols;
         let rows = this.Rows + 1;
-        let floor = [];
+
+        this.Layers = [];
 
         for (let ty = 0; ty < rows; ty++){
-            floor[ty] = [];
-            for (let tx = 0; tx < cols; tx++) {
-                x = (tx * 32) // ou à la place de 32 this.CONFIG.tile
-                y = (ty * 32) // ou à la place de 32 this.CONFIG.tile
-
-                if (tx != 3 && tx != 8)
-                    spr = this.Env.add.sprite(x, y, 'road');
-                else    
-                    spr = this.Env.add.sprite(x, y, 'road_line');
-                spr.setOrigin(0);
-                spr.setDepth(this.DEPTH.floor)
-                floor[ty][tx] = spr;
-            }
+            y = (ty * 32) // ou à la place de 32 this.CONFIG.tile
+            this.Layers.push(new Layer(this.Env, this.starGroup, y));
         }
-        // save floor array in generators layers
-        this.Layers.floor = floor;
-
     }
-    scrollFloor() {
-        // console.log(this.Layers.floor);
-        let ty = this.Layers.floor.length;
-        let offset = this.Env.cameras.main.scrollY - this.Layers.floor[ty - 1][0].y;
-        // console.log(this.Env.cameras.main.scrollY + "; " + this.Layers.floor[ty - 1][0].y + ";" + offset)
+
+    scrollLayers() {
+        let ty = this.Layers.length;
+        let offset = this.Env.cameras.main.scrollY - this.Layers[ty - 1].y;
         if (offset <= -640)  { // this.config.tile
-            this.appendFloorRow();
-            this.destroyFloorRow();
-            
+            this.appendLayer();
+            this.destroyLastLayer();
         }
     }
-    destroyFloorRow() {
-        let ty = this.Layers.floor.length;
-        for (let tx = 0;tx > this.Layers.floor[0].length; tx++) {
-            this.Layers.floor[ty - 1][tx].destroy();
-        }
-        this.Layers.floor.splice(ty - 1,1);
+
+    destroyLastLayer() {
+        let ty = this.Layers.length;
+        this.Layers[ty-1].destroy();
+        this.Layers.splice(ty - 1, 1);
     }
-    appendFloorRow() {
-        let x;
-        let spr;
-        let empty: number[] = []
-
-        /// ligne à la fin, right below camera edge
-        let ty = this.Layers.floor.length;
-        // let y = this.Layers.floor[ty - 1][0].y + 32; // this.CONFIG.tile
-        let y = this.Layers.floor[0][0].y - 32;
-        // console.log(y);
-
-        // ajout d'une ligne vide
-        this.Layers.floor.unshift(new Array<Phaser.GameObjects.Sprite>());
-
-        for (let tx = 0; tx < this.Cols; tx++) {
-        
-            x = (tx * 32) // this CONFIG TILE + this CONFIG MAP offset
-            // spr = this.Env.add.tileSpr0ite(x, y, 32, 32,'mapTiles', 2);
-            if (tx != 3 && tx != 8)
-                spr = this.Env.add.sprite(x, y, 'road');
-            else    
-                spr = this.Env.add.sprite(x, y, 'road_line');
-        
-            spr.setOrigin(0);
-            spr.setDepth(this.DEPTH.floor);
-            this.Layers.floor[0][tx] = spr;
-        }
+    appendLayer() {
+        let y = this.Layers[0].y - 32;
+        this.Layers.unshift(new Layer(this.Env, this.starGroup, y));
     }
 
 }
@@ -162,6 +174,9 @@ export class CarGame extends Phaser.Scene {
         // Create floor 
         this.Generator.setup();
 
+        //physics system
+        this.physics.systems.start(Phaser.Physics.Arcade);
+
         // Create Player
         this.createPlayer(claraAnims);
         
@@ -199,13 +214,16 @@ export class CarGame extends Phaser.Scene {
             console.log(this.Swipe)
         }); 
         console.log(this.Swipe)
+
+        // The collision detection is not working for now :/
+        this.physics.add.collider(this.player.spr, this.Generator.starGroup, this.captureStar);
+        
     }
 
     update() {
         this.updateCamera();
         this.Generator.update();
         this.player.setPositionY(this.player.y + this.cam_speed.current);
-        this.createWalls();
         
         if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == "left" ){
             console.log(this.Swipe)
@@ -224,9 +242,9 @@ export class CarGame extends Phaser.Scene {
         this.player = new Entity(this, Config.Game.centerX, Config.Game.centerY / 2 * 3, 'voiture', claraAnims);
         
     }
-    createWalls() {
-        console.log("here")
-        this.wall = new Entity(this, Config.Game.centerX, 0, 'boss', []);
+
+    captureStar(player, star){
+        console.log("capturing star");
     }
 
     moveTo(x:number){
@@ -238,19 +256,25 @@ export class CarGame extends Phaser.Scene {
             this.player.setVelocityX(-this.playerSpeed);
         else
             this.player.setVelocityX(this.playerSpeed);
-
-        
-
     }
 
     
 
     move() {
-        console.log(this.targetPos, this.player.x)
-        if (Phaser.Math.Fuzzy.Equal(this.player.spr.x, this.targetPos, this.Threshold)){
-            this.player.setVelocityX(0);
-            this.player.setPositionX(this.targetPos);
+        // console.log(this.targetPos, this.player.x)
+        var speedX = this.player.getVelocityX();
+        if ((speedX > 0 && this.player.spr.x >= this.targetPos) ||
+            (speedX < 0 && this.player.spr.x <= this.targetPos)) {
+                this.player.setVelocityX(0);
+                this.player.setPositionX(this.targetPos);
         }
+
+        //// The problem of this method below is that if we miss the point where x = targetPos, 
+        //// then we will keep on changing x for an undetermined time
+        // if (Phaser.Math.Fuzzy.Equal(this.player.spr.x, this.targetPos, this.Threshold)){
+        //     this.player.setVelocityX(0);
+        //     this.player.setPositionX(this.targetPos);
+        // }
     }
 
     updateCamera() {
@@ -379,8 +403,11 @@ export class Entity
     }
     
     setVelocityX(speed:number){
-        console.log(speed)
         this.spr.setVelocityX(speed);
+    }
+
+    getVelocityX(): number {
+        return this.spr.body.velocity.x;
     }
 
 
