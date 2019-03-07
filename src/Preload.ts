@@ -41,6 +41,7 @@ export class Preload extends Phaser.Scene {
 		this.load.image('voiture', 'sprites/voiture.png');
 		this.load.image('road', 'sprites/road.png');
 		this.load.image('road_line', 'sprites/road_line.png');
+		this.load.image('rock', 'sprites/rock.png');
 		
 		this.load.on('progress', this.onProgress, this);
 		this.load.on('complete', this.onComplete, this);

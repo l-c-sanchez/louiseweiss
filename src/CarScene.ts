@@ -7,23 +7,29 @@ import { NONE } from "phaser";
  */
 class Layer {
     floor: Phaser.GameObjects.Group
-    // stars: Phaser.GameObjects.Group
-    layerStars: Array<Phaser.GameObjects.Sprite>
-    starGroup: Phaser.GameObjects.Group
-
+    layerSprites: Array<Phaser.GameObjects.Sprite>
+    starGroup: Phaser.Physics.Arcade.Group
+    rockGroup: Phaser.Physics.Arcade.Group
+    
     y: number
     Cols: number
     DEPTH!: { floor: number };
     Env: CarGame
 
-    constructor (Env: CarGame, starGroup: Phaser.GameObjects.Group, y: number) {
+    constructor (
+        Env: CarGame,
+        starGroup: Phaser.Physics.Arcade.Group,
+        rockGroup: Phaser.Physics.Arcade.Group,
+        y: number) 
+        {
         this.Env = Env;
         this.Cols = 12;
         this.DEPTH = Env.DEPTH;
         this.y = y;
 
-        this.layerStars = [];
+        this.layerSprites = [];
         this.starGroup = starGroup;
+        this.rockGroup = rockGroup;
         this.createLayer();
     }
 
@@ -43,18 +49,25 @@ class Layer {
         }
 
         var starProba = 0.2;
-
         if (Math.random() < starProba){
             var x = Phaser.Math.Between(0, cols * 32);
-            var star: Phaser.GameObjects.Sprite = this.starGroup.create(x, this.y, 'star');
-            this.layerStars.push(star);
+            var star: Phaser.Physics.Arcade.Sprite = this.starGroup.create(x, this.y, 'star');
+            this.layerSprites.push(star);
         }
+        var rockProba = 0.1;
+        if (Math.random() < rockProba){
+            var x = Phaser.Math.Between(0, cols * 32);
+            var rock: Phaser.Physics.Arcade.Sprite = this.rockGroup.create(x, this.y, 'rock');
+            this.layerSprites.push(rock);
+        }
+
     }
 
     destroy() {
         this.floor.destroy();
-        for (var i=0; i<this.layerStars.length; i++){
-            this.starGroup.remove(this.layerStars[i], true, true);
+        for (var i=0; i<this.layerSprites.length; i++){
+            this.starGroup.remove(this.layerSprites[i], true, true);
+            this.rockGroup.remove(this.layerSprites[i], true, true);
         }
     }
 
@@ -68,7 +81,8 @@ class Generator
     Rows: number;
     Env: CarGame;
     Layers: Array<Layer>
-    starGroup: Phaser.GameObjects.Group
+    starGroup: Phaser.Physics.Arcade.Group
+    rockGroup: Phaser.Physics.Arcade.Group
 
     constructor (Env) {
         
@@ -80,8 +94,10 @@ class Generator
         this.Rows = 20;
         this.Layers = [];
 
-        this.starGroup = this.Env.add.group();
+        this.starGroup = this.Env.physics.add.group();
         this.starGroup.setDepth(1, 0);
+        this.rockGroup = this.Env.physics.add.group();
+        this.rockGroup.setDepth(1, 0);
     }
 
     setup() {
@@ -99,7 +115,7 @@ class Generator
 
         for (let ty = 0; ty < rows; ty++){
             y = (ty * 32) // ou à la place de 32 this.CONFIG.tile
-            this.Layers.push(new Layer(this.Env, this.starGroup, y));
+            this.Layers.push(new Layer(this.Env, this.starGroup, this.rockGroup, y));
         }
     }
 
@@ -119,9 +135,8 @@ class Generator
     }
     appendLayer() {
         let y = this.Layers[0].y - 32;
-        this.Layers.unshift(new Layer(this.Env, this.starGroup, y));
+        this.Layers.unshift(new Layer(this.Env, this.starGroup, this.rockGroup, y));
     }
-
 }
 
 
@@ -174,9 +189,6 @@ export class CarGame extends Phaser.Scene {
         // Create floor 
         this.Generator.setup();
 
-        //physics system
-        this.physics.systems.start(Phaser.Physics.Arcade);
-
         // Create Player
         this.createPlayer(claraAnims);
         
@@ -210,14 +222,22 @@ export class CarGame extends Phaser.Scene {
                 this.Swipe = 'left';
             } else if (upX > downX + Threshold) {
                 this.Swipe = 'right';
-            } 
-            console.log(this.Swipe)
+            }
         }); 
-        console.log(this.Swipe)
 
-        // The collision detection is not working for now :/
-        this.physics.add.collider(this.player.spr, this.Generator.starGroup, this.captureStar);
-        
+        // Collision with objects
+        this.physics.add.overlap(this.player.spr, this.Generator.starGroup, this.collectStar, null, this);
+        this.physics.add.overlap(this.player.spr, this.Generator.rockGroup, this.collideRock, null, this);
+    }
+
+    collectStar(player: Phaser.Physics.Arcade.Sprite, star: Phaser.Physics.Arcade.Sprite) {
+        star.disableBody(true, true);
+    }
+
+    collideRock(player: Phaser.Physics.Arcade.Sprite, rock: Phaser.Physics.Arcade.Sprite) {
+        player.disableBody(true, true);
+        // // There are some error when start another scene after CarScene. To investigate.
+        // this.scene.start('GameOverScene')
     }
 
     update() {
@@ -226,12 +246,10 @@ export class CarGame extends Phaser.Scene {
         this.player.setPositionY(this.player.y + this.cam_speed.current);
         
         if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == "left" ){
-            console.log(this.Swipe)
             this.moveTo(this.player.x - this.Corridor);
             this.Swipe = "";      
         }
         else if (this.Cursors.right != undefined && this.Cursors.right.isDown || this.Swipe == "right") {
-            console.log(this.Swipe)
             this.moveTo(this.player.x + this.Corridor);
             this.Swipe = "";
         }
@@ -241,10 +259,6 @@ export class CarGame extends Phaser.Scene {
     createPlayer (claraAnims) {
         this.player = new Entity(this, Config.Game.centerX, Config.Game.centerY / 2 * 3, 'voiture', claraAnims);
         
-    }
-
-    captureStar(player, star){
-        console.log("capturing star");
     }
 
     moveTo(x:number){
@@ -258,10 +272,7 @@ export class CarGame extends Phaser.Scene {
             this.player.setVelocityX(this.playerSpeed);
     }
 
-    
-
     move() {
-        // console.log(this.targetPos, this.player.x)
         var speedX = this.player.getVelocityX();
         if ((speedX > 0 && this.player.spr.x >= this.targetPos) ||
             (speedX < 0 && this.player.spr.x <= this.targetPos)) {
@@ -303,8 +314,6 @@ export class CarGame extends Phaser.Scene {
 
 export class Entity 
 {
-
-
     MAP_OFFSET: number;
     TILE_SIZE: number;
     width: number;

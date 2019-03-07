@@ -1,5 +1,4 @@
 import { Config } from "./Config";
-import { CarGame } from "./CarScene";
 import { GameText } from "./GameText";
 import { Dialog, Anchor } from "./Dialog";
 
@@ -65,7 +64,7 @@ export class Menu extends Phaser.Scene {
 			this.StartDialog = new Dialog(this, text, false, Anchor.Center, 250);
 		} else if (this.StartDialog.Ended) {
 			console.log("start pacman");
-			this.scene.start('CarGame');
+			this.scene.start('CarGame');  // CarGame Pacman
 		}
 	}
 

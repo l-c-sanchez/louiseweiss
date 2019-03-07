@@ -361,5 +361,6 @@ export class Pacman extends Phaser.Scene {
     }
     collideBoss(player: Phaser.Physics.Arcade.Sprite, boss: Phaser.Physics.Arcade.Sprite) {
         player.disableBody(true, true);
+        this.scene.start('CarGame');
     }
 }
