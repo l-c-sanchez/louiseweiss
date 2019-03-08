@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@types/requirejs": "^2.1.31"
+    "@types/requirejs": "^2.1.31",
+    "phaser": "^3.16.2",
+    "requirejs": "^2.3.6"
   },
   "devDependencies": {},
   "scripts": {
