@@ -16,7 +16,7 @@ export class GameOverScene extends Phaser.Scene {
 			console.log(this);
 		}
 
-		let title = new GameText(this, Config.Game.centerX, Config.Game.centerY * 0.30, "Élections Européennes");
+		let title = new GameText(this, Config.Game.centerX, Config.Game.centerY * 0.50, "Game Over");
 		title.setOrigin(0.5, 0.5);
         title.setSize(40);
         

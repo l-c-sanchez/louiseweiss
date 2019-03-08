@@ -6,66 +6,66 @@ import { NONE } from "phaser";
  * --> each layer contains only an array with its star(s)
  */
 class Layer {
-    floor: Phaser.GameObjects.Group
     layerSprites: Array<Phaser.GameObjects.Sprite>
+    floorGroup: Phaser.Physics.Arcade.Group
     starGroup: Phaser.Physics.Arcade.Group
     rockGroup: Phaser.Physics.Arcade.Group
     
     y: number
     Cols: number
-    DEPTH!: { floor: number };
     Env: CarGame
 
     constructor (
         Env: CarGame,
+        floorGroup: Phaser.Physics.Arcade.Group, 
         starGroup: Phaser.Physics.Arcade.Group,
         rockGroup: Phaser.Physics.Arcade.Group,
-        y: number) 
+        y: number,
+        withObjects: boolean = true) 
         {
         this.Env = Env;
         this.Cols = 12;
-        this.DEPTH = Env.DEPTH;
         this.y = y;
 
         this.layerSprites = [];
         this.starGroup = starGroup;
         this.rockGroup = rockGroup;
-        this.createLayer();
+        this.floorGroup = floorGroup;
+        this.createLayer(withObjects);
     }
 
-    createLayer() {
+    createLayer(withObjects: boolean) {
         var cols = this.Cols;
-
-        this.floor = this.Env.add.group();
 
         for (let tx = 0; tx < this.Cols; tx++) {
             var x = (tx * 32) // ou à la place de 32 this.CONFIG.tile
             if (tx != 3 && tx != 8) {
-                this.floor.create(x, this.y, 'road');
+                this.floorGroup.create(x, this.y, 'road');
             } else {
-                this.floor.create(x, this.y, 'road_line');
+                this.floorGroup.create(x, this.y, 'road_line');
             }
-            this.floor.setDepth(this.DEPTH.floor, 0);
         }
 
-        var starProba = 0.2;
-        if (Math.random() < starProba){
-            var x = Phaser.Math.Between(0, cols * 32);
-            var star: Phaser.Physics.Arcade.Sprite = this.starGroup.create(x, this.y, 'star');
-            this.layerSprites.push(star);
-        }
-        var rockProba = 0.1;
-        if (Math.random() < rockProba){
-            var x = Phaser.Math.Between(0, cols * 32);
-            var rock: Phaser.Physics.Arcade.Sprite = this.rockGroup.create(x, this.y, 'rock');
-            this.layerSprites.push(rock);
+        if (withObjects){
+            var starProba = 0.2;
+            if (Math.random() < starProba){
+                var x = Phaser.Math.Between(0, cols * 32);
+                var star: Phaser.Physics.Arcade.Sprite = this.starGroup.create(x, this.y, 'star');
+                this.layerSprites.push(star);
+            }
+            var rockProba = 0.1;
+            if (Math.random() < rockProba){
+                var x = Phaser.Math.Between(0, cols * 32);
+                var rock: Phaser.Physics.Arcade.Sprite = this.rockGroup.create(x, this.y, 'rock');
+                this.layerSprites.push(rock);
+            }
         }
 
     }
 
     destroy() {
-        this.floor.destroy();
         for (var i=0; i<this.layerSprites.length; i++){
+            this.floorGroup.remove(this.layerSprites[i], true, true);
             this.starGroup.remove(this.layerSprites[i], true, true);
             this.rockGroup.remove(this.layerSprites[i], true, true);
         }
@@ -81,6 +81,7 @@ class Generator
     Rows: number;
     Env: CarGame;
     Layers: Array<Layer>
+    floorGroup: Phaser.Physics.Arcade.Group
     starGroup: Phaser.Physics.Arcade.Group
     rockGroup: Phaser.Physics.Arcade.Group
 
@@ -94,9 +95,11 @@ class Generator
         this.Rows = 20;
         this.Layers = [];
 
+        this.floorGroup = this.Env.physics.add.group();
         this.starGroup = this.Env.physics.add.group();
-        this.starGroup.setDepth(1, 0);
         this.rockGroup = this.Env.physics.add.group();
+        this.floorGroup.setDepth(this.DEPTH.floor, 0);
+        this.starGroup.setDepth(1, 0);
         this.rockGroup.setDepth(1, 0);
     }
 
@@ -115,7 +118,7 @@ class Generator
 
         for (let ty = 0; ty < rows; ty++){
             y = (ty * 32) // ou à la place de 32 this.CONFIG.tile
-            this.Layers.push(new Layer(this.Env, this.starGroup, this.rockGroup, y));
+            this.Layers.push(new Layer(this.Env, this.floorGroup, this.starGroup, this.rockGroup, y, false));
         }
     }
 
@@ -135,7 +138,7 @@ class Generator
     }
     appendLayer() {
         let y = this.Layers[0].y - 32;
-        this.Layers.unshift(new Layer(this.Env, this.starGroup, this.rockGroup, y));
+        this.Layers.unshift(new Layer(this.Env, this.floorGroup, this.starGroup, this.rockGroup, y));
     }
 }
 
@@ -149,7 +152,6 @@ export class CarGame extends Phaser.Scene {
     DEPTH!: { floor: number };
     cam_speed!: { base:number, current:number, max:number};
     player!: Entity;
-    wall!: Entity;
     playerSpeed:number = 120;
     targetPos:number;
     Corridor:number = 64;
@@ -164,10 +166,8 @@ export class CarGame extends Phaser.Scene {
         this.DEPTH = {
             floor: 0
         };
+
         this.Generator = new Generator(this);
-            //this.allow_input = false;
-            // this.is_pause = false;
-            // this.is_gameover = false
 
         this.cam_speed = {
             base:-3, 
@@ -181,34 +181,20 @@ export class CarGame extends Phaser.Scene {
         this.targetPos = Config.Game.centerX;
     }
 
-    preload(){
-        // this.load.spritesheet('tileset', 'assets/tilesets/PacmanMap.png', { frameWidth:32, frameHeight:32, margin:1, spacing:2});
-    }
+    preload(){}
 
     create() {
-        // Create floor 
+        // Create initial environment
         this.Generator.setup();
 
         // Create Player
+        var claraAnims = ["", "left", "right"];
         this.createPlayer(claraAnims);
         
         this.player.spr.setScale(2, 2);
         this.player.spr.setOrigin(0.5, 0.5);
         this.player.setPosition(this.player.x, this.player.y - 1);
 
-        var claraAnims = ["", "left", "right"];
-        this.anims.create({
-            key:"right",
-            frames:this.anims.generateFrameNumbers('voiture', { start: 1, end:6 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({
-            key:"left",
-            frames:this.anims.generateFrameNumbers('voiture', { start: 7, end:13 }),
-            frameRate: 10,
-            repeat: -1
-        });
         this.Threshold = 1;
         this.Cursors = this.input.keyboard.createCursorKeys();
         var downX: number, upX: number, Threshold: number = 50;
@@ -236,8 +222,7 @@ export class CarGame extends Phaser.Scene {
 
     collideRock(player: Phaser.Physics.Arcade.Sprite, rock: Phaser.Physics.Arcade.Sprite) {
         player.disableBody(true, true);
-        // // There are some error when start another scene after CarScene. To investigate.
-        // this.scene.start('GameOverScene')
+        this.scene.start('Pacman')
     }
 
     update() {
@@ -258,7 +243,6 @@ export class CarGame extends Phaser.Scene {
 
     createPlayer (claraAnims) {
         this.player = new Entity(this, Config.Game.centerX, Config.Game.centerY / 2 * 3, 'voiture', claraAnims);
-        
     }
 
     moveTo(x:number){
@@ -294,8 +278,8 @@ export class CarGame extends Phaser.Scene {
             0,
             this.cameras.main.scrollY + this.cam_speed.current
         );
-
     }
+
     setCamSpeed(speed) {
         this.cam_speed.base = speed;
         this.cam_speed.current = speed;
