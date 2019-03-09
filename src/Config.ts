@@ -1,5 +1,7 @@
+import { DialogOptions } from "./DialogBox";
+
 export class Config {
-	static Phaser = {
+	public static Phaser = {
 		type: Phaser.AUTO,
 		parent: 'phaser-app',
 		title: 'Louise Weiss',
@@ -21,7 +23,7 @@ export class Config {
 		version: '1.0.0',
 	};
 
-	static Game = {
+	public static Game = {
 		debugMode: true,
 		width: Config.Phaser.width,
 		height: Config.Phaser.height,
@@ -30,5 +32,35 @@ export class Config {
 		tile: 32,
 		fps: 60,
 		fontName: 'unscii'
-	}
+	};
+
+	public static GameText = {
+		defaultStyle: {
+			fontFamily: Config.Game.fontName,
+			fontSize: 20,
+			color: '#FFFFFF',
+			align: 'center',
+			wordWrap: { width: Config.Game.width, useAdvancedWrap: true }
+		}
+	};
+
+	public static DialogBox = {
+		defaultOptions: {
+			borderThickness: 3,
+			borderColor: 0xfeb809,
+			borderAlpha: 1,
+			windowAlpha: 1,
+			windowColor: 0x303030,
+			windowHeight: 150,
+			padding: 32,
+			dialogSpeed: 3,
+			arrowPadding: 20,
+			arrowScale: 1,
+			fontSize: Config.GameText.defaultStyle.fontSize
+		},
+		arrow : {
+			offset: 2,
+			speed: 5
+		}
+	};
 }

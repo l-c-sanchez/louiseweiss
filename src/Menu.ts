@@ -1,10 +1,10 @@
 import { Config } from "./Config";
 import { GameText } from "./GameText";
-import { Dialog, Anchor } from "./Dialog";
+import { DialogBox, Anchor } from "./DialogBox";
 
 export class Menu extends Phaser.Scene {
 	StartText	: GameText;
-	StartDialog	: Dialog = null;
+	StartDialog	: DialogBox = null;
 
 	constructor() {
         super({ key: 'Menu', active: false });
@@ -58,12 +58,11 @@ export class Menu extends Phaser.Scene {
 	}
 
 	startGame() {
-		console.log("startGame1");
 		if (this.StartDialog === null) {
 			let text = this.cache.json.get('StartText');
-			this.StartDialog = new Dialog(this, text, false, Anchor.Center, 250);
-		} else if (this.StartDialog.Ended) {
-			console.log("start pacman");
+			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+			this.add.existing(this.StartDialog);
+		} else if (this.StartDialog.isAnimationEnded()) {
 			this.scene.start('CarGame');  // CarGame Pacman
 		}
 	}

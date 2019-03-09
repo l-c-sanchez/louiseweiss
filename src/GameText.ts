@@ -5,16 +5,8 @@ export class GameText {
 	PhaserText	: Phaser.GameObjects.Text;
 
 	constructor(env: Phaser.Scene, x: number, y: number, content: string) {
-		let defaultStyle = {
-			fontFamily: Config.Game.fontName,
-			fontSize: 20,
-			color: '#FFFFFF',
-			align: 'center',
-			wordWrap: { width: Config.Game.width, useAdvancedWrap: true }
-		};
-
 		this.Env = env;
-		this.PhaserText = this.Env.add.text(x, y, content, defaultStyle);
+		this.PhaserText = this.Env.add.text(x, y, content, Config.GameText.defaultStyle);
 	}
 
 	setText(content: string) {
