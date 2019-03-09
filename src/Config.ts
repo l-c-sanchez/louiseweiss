@@ -31,4 +31,14 @@ export class Config {
 		fps: 60,
 		fontName: 'unscii'
 	}
+
+	static CarGame = {
+		rows: 20,
+		columns: 12,
+		starProbability: 0.2,
+		rockProbability: 0.1,
+		carSize: 64,
+		tileSize: 32,
+		time: 20 // in seconds
+	}
 }

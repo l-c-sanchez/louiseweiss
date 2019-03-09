@@ -58,13 +58,14 @@ export class Menu extends Phaser.Scene {
 	}
 
 	startGame() {
-		console.log("startGame1");
 		if (this.StartDialog === null) {
 			let text = this.cache.json.get('StartText');
 			this.StartDialog = new Dialog(this, text, false, Anchor.Center, 250);
 		} else if (this.StartDialog.Ended) {
-			console.log("start pacman");
+			console.log("start first game");
+			this.scene.start('HudScene');
 			this.scene.start('CarGame');  // CarGame Pacman
+			
 		}
 	}
 

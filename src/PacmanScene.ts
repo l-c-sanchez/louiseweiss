@@ -358,6 +358,7 @@ export class Pacman extends Phaser.Scene {
 
     collectStar(player: Phaser.Physics.Arcade.Sprite, star: Phaser.Physics.Arcade.Sprite) {
         star.disableBody(true, true);
+        this.registry.values.starCount += 1;
     }
     collideBoss(player: Phaser.Physics.Arcade.Sprite, boss: Phaser.Physics.Arcade.Sprite) {
         player.disableBody(true, true);
