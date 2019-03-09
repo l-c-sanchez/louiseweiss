@@ -31,6 +31,12 @@ export class Preload extends Phaser.Scene {
 		this.load.image('EuropeanFlag', 'sprites/EuropeanFlag.png');
 		this.load.json('StartText', 'texts/StartText.json');
 
+		// Character Selection
+		this.load.json('CharacterSheets', 'texts/CharacterSheets.json');
+		this.load.image('ClaraPortrait', 'sprites/clara_portrait.png');
+		this.load.image('ValentinPortrait', 'sprites/valentin_portrait.png');
+		this.load.image('LuciePortrait', 'sprites/lucie_portrait.png');
+
 		// Pacman
 		this.load.image('mapTiles', 'tilesets/PacmanMap.png');
 		this.load.spritesheet('boss', 'sprites/Boss32.png', { frameWidth:32, frameHeight:32});
@@ -41,7 +47,7 @@ export class Preload extends Phaser.Scene {
 		this.load.image('voiture', 'sprites/voiture.png');
 		this.load.image('road', 'sprites/road.png');
 		this.load.image('road_line', 'sprites/road_line.png');
-		this.load.image('rock', 'sprites/rock.png');
+		this.load.image('rock', 'sprites/cow.png');
 		
 		this.load.on('progress', this.onProgress, this);
 		this.load.on('complete', this.onComplete, this);

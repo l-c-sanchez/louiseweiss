@@ -12,7 +12,8 @@ export interface DialogOptions {
 	dialogSpeed?: number,
 	arrowPadding?: number,
 	arrowScale?: number,
-	fontSize?: number
+	fontSize?: number,
+	innerPadding?: number
 }
 
 export enum Anchor {
@@ -49,12 +50,10 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		this.Anchor = anchor;
 		this.Animate = animate;
 		this.Text = text;
-
 		this.Options = Config.DialogBox.defaultOptions;
 
 		if (options != undefined)
 			this.setOptions(options);
-
 		this.initWindow();
 	}
 	//#endregion

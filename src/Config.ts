@@ -40,7 +40,7 @@ export class Config {
 			fontSize: 20,
 			color: '#FFFFFF',
 			align: 'center',
-			wordWrap: { width: Config.Game.width, useAdvancedWrap: true }
+			wordWrap: { width: Config.Game.width, useAdvancedWrap: false }
 		}
 	};
 
@@ -56,13 +56,36 @@ export class Config {
 			dialogSpeed: 3,
 			arrowPadding: 20,
 			arrowScale: 1,
-			fontSize: Config.GameText.defaultStyle.fontSize
+			fontSize: Config.GameText.defaultStyle.fontSize,
+			innerPadding: 10
 		},
 		arrow : {
 			offset: 2,
 			speed: 5
 		}
 	};
+
+	public static CharacterSheet = {
+		defaultOptions: {
+			borderThickness: 3,
+			borderColor: 0xfeb809,
+			borderAlpha: 1,
+			windowAlpha: 1,
+			windowColor: 0x303030,
+			windowHeight: 50,
+			padding: 10,
+			dialogSpeed: 3,
+			arrowPadding: 20,
+			arrowScale: 1,
+			fontSize: Config.GameText.defaultStyle.fontSize,
+			innerPadding: 10,
+		},
+		imageSize: 96
+	};
+
+	public static CharacterChoice = {
+		padding: 10
+	}
 
 	public static CarGame = {
 		rows: 20,

@@ -1,8 +1,11 @@
 import { Config } from "../Config";
 import { GameText } from "../utils/GameText";
 import { DialogBox, Anchor } from "../utils/DialogBox";
+import { CharacterSheet } from "../utils/CharacterSheet";
 
 export class CharacterChoice extends Phaser.Scene {
+	TextData	: any;
+	Title		: GameText;
 
 	constructor() {
         super({ key: 'CharacterChoice', active: false });
@@ -18,9 +21,12 @@ export class CharacterChoice extends Phaser.Scene {
 
 	create() {
 
-		let title = new GameText(this, Config.Game.centerX, Config.Game.centerY * 0.30, "Élections Européennes");
-		title.setOrigin(0.5, 0.5);
-		title.setSize(40);
+		this.TextData = this.cache.json.get('CharacterSheets');
+		this.Title = new GameText(this, Config.Game.centerX, 10, this.TextData.title);
+		this.Title.setOrigin(0.5, 0);
+		this.Title.setSize(30);
+
+		this.createSheets();
 
 		this.input.on('pointerup', this.startGame, this);
 		this.input.keyboard.on('keyup', this.onKeyReleased, this);
@@ -30,13 +36,26 @@ export class CharacterChoice extends Phaser.Scene {
 
 	}
 
-	startGame() {
+	private startGame() {
 		// if (this.StartDialog === null) {
-		// 	let text = this.cache.json.get('StartText');
+		// let text = this.cache.json.get('StartText');
 		// 	this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
 		// 	this.add.existing(this.StartDialog);
 		this.scene.start('HudScene');
 		this.scene.start('CarGame');  // CarGame Pacman
+	}
+
+	private createSheets() {
+		let y = this.Title.PhaserText.displayHeight + Config.CharacterChoice.padding;
+		let x = 0;
+		let offset = y + Config.CharacterChoice.padding * (this.TextData.characters.length + 1);
+		let height = (Config.Game.height - offset) / this.TextData.characters.length;
+
+		for (let i = 0; i < this.TextData.characters.length; ++i) {
+			let sheet = new CharacterSheet(this, x, y, this.TextData.characters[i], { windowHeight: height, fontSize: 22 });
+			this.add.existing(sheet);
+			y += height + Config.CharacterChoice.padding;
+		}
 	}
 
 	onKeyReleased(key: KeyboardEvent) {

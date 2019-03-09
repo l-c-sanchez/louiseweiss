@@ -1,5 +1,29 @@
 {
-	"clara": {
-
-	}
+	"title": "Choisissez votre personnage",
+	"characters": [
+		{
+			"name": "Clara",
+			"age": "35 ans",
+			"job": "Cadre",
+			"town": "Paris",
+			"stars": 3,
+			"sprite": "ClaraPortrait"
+		},
+		{
+			"name": "Valentin",
+			"age": "52 ans",
+			"job": "Infirmier",
+			"town": "Tourville",
+			"stars": 2,
+			"sprite": "ValentinPortrait"
+		},
+		{
+			"name": "Lucie",
+			"age": "24 ans",
+			"job": "Intérimaire",
+			"town": "Bar-Le-Duc",
+			"stars": 1,
+			"sprite": "LuciePortrait"
+		}
+	]
 }
