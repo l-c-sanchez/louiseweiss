@@ -63,6 +63,7 @@ export class Menu extends Phaser.Scene {
 			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
 			this.add.existing(this.StartDialog);
 		} else if (this.StartDialog.isAnimationEnded()) {
+			this.scene.start('HudScene');
 			this.scene.start('CarGame');  // CarGame Pacman
 		}
 	}

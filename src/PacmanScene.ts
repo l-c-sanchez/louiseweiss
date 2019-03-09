@@ -24,11 +24,11 @@ class PacmanCharacter {
         this.Animations = animations;
     }
 
-    setSpeed(speed: number) {
+    public setSpeed(speed: number) {
         this.Speed = speed;
     }
 
-    checkSpaceAround() {
+    public checkSpaceAround() {
         this.Marker = new Phaser.Math.Vector2();
         var playerTile = this.Env.TileMap.getTileAtWorldXY(this.Sprite.x, this.Sprite.y);
         this.Marker.x = playerTile.x;
@@ -39,7 +39,7 @@ class PacmanCharacter {
         this.Directions[Pacman.DOWN] = this.Env.TileMap.getTileAt(playerTile.x, playerTile.y + 1);
     }
 
-    automaticMove(target: PacmanCharacter) {
+    public automaticMove(target: PacmanCharacter) {
         if (this.Turning != Pacman.NONE) {
             return;
         }
@@ -108,11 +108,9 @@ export class Pacman extends Phaser.Scene {
         super({ key: 'Pacman', active:false });
     }
 
-    preload(){
+    preload(){}
 
-    }
-
-    create() {
+    public create() {
         var level = [
             [0, 1, 1, 1, 1, 1, 1, 1, 1, 2],
             [16, 17, 17, 17, 17, 17, 17, 17, 17, 18],
@@ -253,7 +251,7 @@ export class Pacman extends Phaser.Scene {
         this.move(Pacman.LEFT, this.Boss);
     }
 
-    update() {
+    public update() {
         this.Player.checkSpaceAround();
         this.Boss.checkSpaceAround();
         this.Boss.automaticMove(this.Player);
@@ -280,7 +278,7 @@ export class Pacman extends Phaser.Scene {
         }
     }
 
-    move(direction: number, character: PacmanCharacter)
+    private move(direction: number, character: PacmanCharacter)
     {
         if (direction === Pacman.LEFT) {
             character.Sprite.setVelocityX(-character.Speed);
@@ -307,7 +305,7 @@ export class Pacman extends Phaser.Scene {
         
     }
 
-    turn(character: PacmanCharacter)
+    private turn(character: PacmanCharacter)
     {
         var cx = Math.floor(character.Sprite.x);
         var cy = Math.floor(character.Sprite.y);
@@ -331,13 +329,8 @@ export class Pacman extends Phaser.Scene {
 		
         return true;
     }
-
-    isHorizontalAxis(direction: number)
-    {
-        return (direction == Pacman.LEFT || direction == Pacman.RIGHT);
-    }
-
-    checkDirection(direction: number, character: PacmanCharacter) {
+    
+    private checkDirection(direction: number, character: PacmanCharacter) {
         if (character.Turning === direction || character.Directions[direction] === null || character.Directions[direction].index != 17) {
             return;
         }
@@ -352,14 +345,15 @@ export class Pacman extends Phaser.Scene {
         }
     }
 
-    gridToWorld(pos: number) {
+    private gridToWorld(pos: number) {
         return (pos * 32 + 16);
     }
 
-    collectStar(player: Phaser.Physics.Arcade.Sprite, star: Phaser.Physics.Arcade.Sprite) {
+    private collectStar(player: Phaser.Physics.Arcade.Sprite, star: Phaser.Physics.Arcade.Sprite) {
         star.disableBody(true, true);
+        this.registry.values.starCount += 1;
     }
-    collideBoss(player: Phaser.Physics.Arcade.Sprite, boss: Phaser.Physics.Arcade.Sprite) {
+    private collideBoss(player: Phaser.Physics.Arcade.Sprite, boss: Phaser.Physics.Arcade.Sprite) {
         player.disableBody(true, true);
         this.scene.start('CarGame');
     }

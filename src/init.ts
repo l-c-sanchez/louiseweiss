@@ -5,6 +5,7 @@ import { Menu } from "./Menu";
 import { Pacman } from "./PacmanScene";
 import { CarGame } from "./CarScene";
 import { GameOverScene } from "./GameOverScene";
+import { HudScene } from "./HudScene";
 
 export class App {
 
@@ -19,6 +20,7 @@ export class App {
 		this.Scenes.push(new Pacman());
 		this.Scenes.push(new CarGame());
 		this.Scenes.push(new GameOverScene());
+		this.Scenes.push(new HudScene());
 
 		Config.Phaser.scene = this.Scenes;
 

@@ -63,4 +63,14 @@ export class Config {
 			speed: 5
 		}
 	};
+
+	public static CarGame = {
+		rows: 20,
+		columns: 12,
+		starProbability: 0.2,
+		rockProbability: 0.1,
+		corridorSize: 64,
+		tileSize: 32,
+		time: 20 // in seconds
+	}
 }
