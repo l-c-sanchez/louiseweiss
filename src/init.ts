@@ -1,8 +1,8 @@
 import { Config } from "./Config";
-import { Preload } from "./Preload";
+import { Preload } from "./scenes/Preload";
 import { Boot } from "./scenes/Boot";
-import { Menu } from "./Menu";
-import { Pacman } from "./PacmanScene";
+import { Menu } from "./scenes/Menu";
+import { Pacman } from "./scenes/PacmanScene";
 import { CarGame } from "./scenes/CarScene";
 import { GameOverScene } from "./scenes/GameOverScene";
 import { HudScene } from "./scenes/HudScene";

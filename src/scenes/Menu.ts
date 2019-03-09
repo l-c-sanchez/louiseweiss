@@ -1,6 +1,6 @@
-import { Config } from "./Config";
-import { GameText } from "./utils/GameText";
-import { DialogBox, Anchor } from "./utils/DialogBox";
+import { Config } from "../Config";
+import { GameText } from "../utils/GameText";
+import { DialogBox, Anchor } from "../utils/DialogBox";
 
 export class Menu extends Phaser.Scene {
 	StartText	: GameText;

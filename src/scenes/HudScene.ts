@@ -34,7 +34,7 @@ export class HudScene extends Phaser.Scene {
     
     updateData(parent, key, data){
         if (key === 'starCount'){
-            this.starCountText.setText(""+data);
+            this.starCountText.setText(data.toString());
         }
     }
 }
