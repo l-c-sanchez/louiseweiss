@@ -1,11 +1,12 @@
 import { Config } from "./Config";
 import { Preload } from "./Preload";
-import { Boot } from "./Boot";
+import { Boot } from "./scenes/Boot";
 import { Menu } from "./Menu";
 import { Pacman } from "./PacmanScene";
-import { CarGame } from "./CarScene";
-import { GameOverScene } from "./GameOverScene";
-import { HudScene } from "./HudScene";
+import { CarGame } from "./scenes/CarScene";
+import { GameOverScene } from "./scenes/GameOverScene";
+import { HudScene } from "./scenes/HudScene";
+import { CharacterChoice } from "./scenes/CharacterChoice";
 
 export class App {
 
@@ -21,6 +22,7 @@ export class App {
 		this.Scenes.push(new CarGame());
 		this.Scenes.push(new GameOverScene());
 		this.Scenes.push(new HudScene());
+		this.Scenes.push(new CharacterChoice());
 
 		Config.Phaser.scene = this.Scenes;
 

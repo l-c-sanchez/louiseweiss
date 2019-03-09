@@ -1,6 +1,6 @@
 import { Config } from "./Config";
-import { GameText } from "./GameText";
-import { DialogBox, Anchor } from "./DialogBox";
+import { GameText } from "./utils/GameText";
+import { DialogBox, Anchor } from "./utils/DialogBox";
 
 export class Menu extends Phaser.Scene {
 	StartText	: GameText;
@@ -63,8 +63,7 @@ export class Menu extends Phaser.Scene {
 			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
 			this.add.existing(this.StartDialog);
 		} else if (this.StartDialog.isAnimationEnded()) {
-			this.scene.start('HudScene');
-			this.scene.start('CarGame');  // CarGame Pacman
+			this.scene.start('CharacterChoice');
 		}
 	}
 

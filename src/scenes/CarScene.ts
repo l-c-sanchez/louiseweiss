@@ -1,5 +1,4 @@
-import { Config } from "./Config";
-import { NONE } from "phaser";
+import { Config } from "../Config";
 
 /**
  * TODO: there should be only one group of stars shared between all layers.

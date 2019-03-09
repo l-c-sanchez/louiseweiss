@@ -1,6 +1,5 @@
-import { Config } from "./Config";
+import { Config } from "../Config";
 import { GameText } from "./GameText";
-import { Time } from "phaser";
 
 export interface DialogOptions {
 	borderThickness?: number,

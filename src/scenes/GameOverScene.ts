@@ -1,5 +1,5 @@
-import { Config } from "./Config";
-import { GameText } from "./GameText";
+import { Config } from "../Config";
+import { GameText } from "../utils/GameText";
 
 export class GameOverScene extends Phaser.Scene {
 

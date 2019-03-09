@@ -1,4 +1,4 @@
-import { DialogOptions } from "./DialogBox";
+import { DialogOptions } from "./utils/DialogBox";
 
 export class Config {
 	public static Phaser = {
