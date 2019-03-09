@@ -37,7 +37,7 @@ export class Config {
 		columns: 12,
 		starProbability: 0.2,
 		rockProbability: 0.1,
-		carSize: 64,
+		corridorSize: 64,
 		tileSize: 32,
 		time: 20 // in seconds
 	}
