@@ -34,6 +34,18 @@ export class Menu extends Phaser.Scene {
 		this.StartText.setSize(40);
 		this.StartText.setOrigin(0.5, 0);
 
+		let music = this.sound.add('OdeToJoy', {
+			mute: false,
+			volume: 1,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: true,
+			delay: 0
+		});
+		music.play();
+		console.log(music);
+
 		this.time.addEvent({
 			delay: 1000,
 			callback: this.textBlink,
@@ -78,4 +90,5 @@ export class Menu extends Phaser.Scene {
 				break;
 		}
 	}
+
 }

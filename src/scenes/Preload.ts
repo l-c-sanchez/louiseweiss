@@ -30,6 +30,7 @@ export class Preload extends Phaser.Scene {
 		// Main Menu
 		this.load.image('EuropeanFlag', 'sprites/EuropeanFlag.png');
 		this.load.json('StartText', 'texts/StartText.json');
+		this.load.audio('OdeToJoy', 'sounds/ode-to-joy.mp3');
 
 		// Character Selection
 		this.load.json('CharacterSheets', 'texts/CharacterSheets.json');
@@ -85,7 +86,7 @@ export class Preload extends Phaser.Scene {
 
 	onComplete() {
 		this.time.addEvent({
-			delay: 500,
+			delay: 1000,
 			callback: () => { this.scene.start('Menu') },
 			callbackScope: this
 		});
