@@ -49,7 +49,6 @@ class Layer {
             if (Math.random() < Config.CarGame.starProbability){
                 var column = Phaser.Math.Between(-2, 2);
                 var x = Config.Game.centerX + column * Config.CarGame.corridorSize;
-                // var x = Phaser.Math.Between(0, cols * Config.CarGame.tileSize);
                 var star: Phaser.Physics.Arcade.Sprite = this.StarGroup.create(x, this.PosY, 'star');
                 star.setOrigin(0.5, 0.5);
                 this.LayerSprites.push(star);
@@ -57,7 +56,6 @@ class Layer {
             if (Math.random() < Config.CarGame.starProbability){
                 var column = Phaser.Math.Between(-2, 2);
                 var x = Config.Game.centerX + column * Config.CarGame.corridorSize;
-                // var x = Phaser.Math.Between(0, cols * Config.CarGame.tileSize);
                 var rock: Phaser.Physics.Arcade.Sprite = this.RockGroup.create(x, this.PosY, 'rock');
                 rock.setOrigin(0.5, 0.5);
                 this.LayerSprites.push(rock);
@@ -149,6 +147,8 @@ export class CarGame extends Phaser.Scene {
     RemainingTimeText: Phaser.GameObjects.Text;
     GameEnded: boolean;
 
+    invicible: boolean;
+
     // Player movement
     Cursors: Phaser.Input.Keyboard.CursorKeys;
     Swipe: string;
@@ -166,7 +166,8 @@ export class CarGame extends Phaser.Scene {
             max: Config.CarGame.camSpeed
         }
         this.RemainingTime = Config.CarGame.time; // in seconds
-		this.GameEnded = false;
+        this.GameEnded = false;
+        this.invicible = false;
 		this.PlayerSpeed = Config.CarGame.playerSpeed;
     }
 
@@ -225,10 +226,10 @@ export class CarGame extends Phaser.Scene {
         this.RemainingTimeText.setText(""+ this.RemainingTime);
     }
 
-	private updateStarCount(value: number) {
+	private updateStarCount(difference: number) {
 		if (this.registry.has('starCount')) {
 			let stars: number = this.registry.get('starCount');
-			stars = Math.max(0, stars + value);
+			stars = Math.max(0, stars + difference);
 			this.registry.set('starCount', stars);
 		} else {
 			console.warn("The starCount value should be initialized in the registry before this call.");
@@ -237,34 +238,33 @@ export class CarGame extends Phaser.Scene {
 
     private collectStar(player: Phaser.Physics.Arcade.Sprite, star: Phaser.Physics.Arcade.Sprite) {
         star.disableBody(true, true);
-
-		/*
-		** something like this avoids undefined errors.
-		*/
 		this.updateStarCount(1);
-
-		// Warning: The value has to be created in registry beforehand.
-		// this.registry.values.starCount += 1;
     }
 
     private collideRock(player: Phaser.Physics.Arcade.Sprite, rock: Phaser.Physics.Arcade.Sprite) {
         rock.disableBody(true, true);
-        this.time.addEvent({
-			delay: 200,
-			callback: this.playerBlink,
-			callbackScope: this,
-			repeat:5
-		});
-		
-		/*
-		** something like this avoids undefined errors.
-		*/
-		this.updateStarCount(-1);
 
-        // this.registry.values.starCount -= 1;
-        // player.disableBody(true, true);
-        // this.gameEnded = true;
+        if (!this.invicible){
+            var blinkPeriod = 200; // ms
+            var blinkCount = 5;
 
+            this.time.addEvent({
+                delay: blinkPeriod,
+                callback: this.playerBlink,
+                callbackScope: this,
+                repeat: blinkCount
+            });
+            
+            // player is invicible as long as he blinks
+            this.invicible = true;
+            this.time.addEvent({
+                delay: blinkPeriod * blinkCount,
+                callback: function(){ this.invicible = false; },
+                callbackScope: this
+            })
+
+            this.updateStarCount(-1);
+        }
     }
 
 	private playerBlink() {
@@ -280,7 +280,6 @@ export class CarGame extends Phaser.Scene {
         this.updateCamera(deltaTime);
         this.Generator.update();
         this.Player.y += this.CamSpeed.current * deltaTime;
-        // this.remainingTimeText.y += this.cam_speed.current;
         var corridor = Config.CarGame.corridorSize;
         if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == "left" ){
             this.moveTo(this.Player.x -  corridor);
