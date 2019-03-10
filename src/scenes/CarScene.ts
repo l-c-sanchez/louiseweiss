@@ -1,10 +1,9 @@
 import { Config } from "../Config";
 import { MS2S } from "../init";
+import { GameText } from "../utils/GameText"
+import { HudScene } from "./HudScene";
 
-/**
- * TODO: there should be only one group of stars shared between all layers.
- * --> each layer contains only an array with its star(s)
- */
+
 class Layer {
     LayerSprites: Array<Phaser.GameObjects.Sprite>
     FloorGroup: Phaser.Physics.Arcade.Group
@@ -72,6 +71,7 @@ class Layer {
     }
 }
 
+
 class Generator {
     Cols: number;
     Rows: number;
@@ -112,7 +112,7 @@ class Generator {
     public update() {
         let ty = this.Layers.length;
         let offset = this.Env.cameras.main.scrollY - this.Layers[ty - 1].PosY;
-        if (offset <= -640)  { // this.config.tile
+        if (offset <= -640)  {
             this.appendLayer();
             this.destroyLastLayer();
         }
@@ -140,11 +140,13 @@ export class CarGame extends Phaser.Scene {
     Generator: Generator;
     CamSpeed: { base:number, current:number, max:number};
     Player: Phaser.Physics.Arcade.Sprite;
-    PlayerSpeed:number;
-    TargetPos:number;
+    PlayerSpeed: number;
+    TargetPos: number;
+
+    hud: HudScene;
 
     RemainingTime: number;
-    RemainingTimeText: Phaser.GameObjects.Text;
+    RemainingTimeText: GameText;
     GameEnded: boolean;
 
     invicible: boolean;
@@ -165,10 +167,11 @@ export class CarGame extends Phaser.Scene {
             current: Config.CarGame.camSpeed,
             max: Config.CarGame.camSpeed
         }
-        this.RemainingTime = Config.CarGame.time; // in seconds
         this.GameEnded = false;
         this.invicible = false;
-		this.PlayerSpeed = Config.CarGame.playerSpeed;
+        this.PlayerSpeed = Config.CarGame.playerSpeed;
+        this.hud = <HudScene>this.scene.get("HudScene");
+        this.hud.setRemainingTime(Config.CarGame.time);
     }
 
     public create() {
@@ -199,31 +202,6 @@ export class CarGame extends Phaser.Scene {
         // Collision with objects
         this.physics.add.overlap(this.Player, this.Generator.StarGroup, this.collectStar, null, this);
         this.physics.add.overlap(this.Player, this.Generator.RockGroup, this.collideRock, null, this);
-
-
-		/*
-		** The timer should be integrated in the HUD scene with setters / getters,
-		** as many games will be time limited.
-		*/
-        this.time.addEvent({
-            delay: 1000,
-            callback: this.updateTime,
-            callbackScope: this,
-            loop: true
-		});
-		
-		/*
-		** Set text should be avoided, use GameText instead.
-		** this.RemainingTime.toString() seems cleaner than  ""+ this.RemainingTime
-		*/
-        this.RemainingTimeText = this.add.text(0, 0, ""+this.RemainingTime, {});
-        this.RemainingTimeText.setScrollFactor(0, 0);
-        this.RemainingTimeText.setDepth(1);
-    }
-
-    private updateTime(){
-		this.RemainingTime -= 1;
-        this.RemainingTimeText.setText(""+ this.RemainingTime);
     }
 
 	private updateStarCount(difference: number) {
@@ -291,8 +269,8 @@ export class CarGame extends Phaser.Scene {
         }
         this.move();
 
-        if (this.RemainingTime <= 0){
-            this.GameEnded = true;
+        if (this.hud.getRemainingTime() <= 0){
+            this.GameEnded = true;            
         }
         if (this.GameEnded){
             this.scene.start("Pacman");
@@ -326,6 +304,7 @@ export class CarGame extends Phaser.Scene {
         this.cameras.main.setScroll(0, newPosY);
     }
 
+    // This function is never used. Should we keep it?
     private setCamSpeed(speed: number) {
         this.CamSpeed.base = speed;
         this.CamSpeed.current = speed;

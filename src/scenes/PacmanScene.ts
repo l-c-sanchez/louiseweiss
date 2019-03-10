@@ -1,3 +1,6 @@
+import { Config } from "../Config";
+import { HudScene } from "./HudScene";
+
 
 class PacmanCharacter {
 
@@ -98,17 +101,26 @@ export class Pacman extends Phaser.Scene {
     Player!: PacmanCharacter;
     Boss!: PacmanCharacter;
     Stars!: Phaser.Physics.Arcade.Group;
+    gameEnded: boolean;
 
     // Player movement
     Cursors!: Phaser.Input.Keyboard.CursorKeys;
     Swipe!: string;
     Threshold!: number;
 
+    hud: HudScene;
+
     constructor() {
         super({ key: 'Pacman', active:false });
     }
 
     preload(){}
+
+    public init() {
+        this.hud = <HudScene>this.scene.get("HudScene");
+        this.hud.setRemainingTime(Config.Pacman.time);
+        this.gameEnded = false;
+    }
 
     public create() {
         var level = [
@@ -276,6 +288,14 @@ export class Pacman extends Phaser.Scene {
         if (this.Boss.Turning != this.Boss.Current && this.Boss.Turning !== Pacman.NONE) {
             this.turn(this.Boss);
         }
+
+        if (this.hud.getRemainingTime() <= 0){
+            this.gameEnded = true;
+        }
+        if (this.gameEnded){
+            this.scene.start('CarGame');
+        }
+
     }
 
     private move(direction: number, character: PacmanCharacter)
@@ -355,6 +375,6 @@ export class Pacman extends Phaser.Scene {
     }
     private collideBoss(player: Phaser.Physics.Arcade.Sprite, boss: Phaser.Physics.Arcade.Sprite) {
         player.disableBody(true, true);
-        this.scene.start('CarGame');
+        this.gameEnded = true;
     }
 }

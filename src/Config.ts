@@ -94,8 +94,12 @@ export class Config {
 		rockProbability: 0.1,
 		corridorSize: 64,
 		tileSize: 32,
-		time: 60, // in seconds
+		time: 25, // in seconds
 		playerSpeed: 200,
 		camSpeed: -120
+	}
+
+	public static Pacman = {
+		time: 30
 	}
 }
