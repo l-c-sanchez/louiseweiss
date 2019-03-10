@@ -3,9 +3,9 @@ import { GameText } from "../utils/GameText";
 import { DialogBox, Anchor } from "../utils/DialogBox";
 
 export class Menu extends Phaser.Scene {
-	StartText	: GameText;
-	StartDialog	: DialogBox = null;
-	Music		: Phaser.Sound.BaseSound;
+	startText	: GameText;
+	startDialog	: DialogBox = null;
+	music		: Phaser.Sound.BaseSound;
 
 	constructor() {
         super({ key: 'Menu', active: false });
@@ -31,11 +31,11 @@ export class Menu extends Phaser.Scene {
 		title.setOrigin(0.5, 0.5);
 		title.setSize(40);
 
-		this.StartText = new GameText(this, Config.Game.centerX, Config.Game.centerY, "START");
-		this.StartText.setSize(40);
-		this.StartText.setOrigin(0.5, 0);
+		this.startText = new GameText(this, Config.Game.centerX, Config.Game.centerY, "START");
+		this.startText.setSize(40);
+		this.startText.setOrigin(0.5, 0);
 
-		this.Music = this.sound.add('OdeToJoy', {
+		this.music = this.sound.add('OdeToJoy', {
 			mute: false,
 			volume: 1,
 			rate: 1,
@@ -44,7 +44,7 @@ export class Menu extends Phaser.Scene {
 			loop: true,
 			delay: 0
 		});
-		this.Music.play();
+		this.music.play();
 
 		this.time.addEvent({
 			delay: 1000,
@@ -62,19 +62,19 @@ export class Menu extends Phaser.Scene {
 	}
 
 	textBlink() {
-		if (this.StartText.getAlpha() == 1.0) {
-			this.StartText.setAlpha(0);
+		if (this.startText.getAlpha() == 1.0) {
+			this.startText.setAlpha(0);
 		} else {
-			this.StartText.setAlpha(1);
+			this.startText.setAlpha(1);
 		}
 	}
 
 	startGame() {
-		if (this.StartDialog === null) {
+		if (this.startDialog === null) {
 			let text = this.cache.json.get('StartText');
-			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
-			this.add.existing(this.StartDialog);
-		} else if (this.StartDialog.isAnimationEnded()) {
+			this.startDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+			this.add.existing(this.startDialog);
+		} else if (this.startDialog.isAnimationEnded()) {
 			this.scene.start('CharacterChoice');
 		}
 	}
@@ -87,7 +87,7 @@ export class Menu extends Phaser.Scene {
 				this.startGame();
 				break;
 			case 'KeyM':
-				this.Music.isPaused ? this.Music.resume() : this.Music.pause();
+				this.music.isPaused ? this.music.resume() : this.music.pause();
 				break;
 			default:
 				break;

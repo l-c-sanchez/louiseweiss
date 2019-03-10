@@ -1,43 +1,43 @@
 import { Config } from "../Config";
 
 export class GameText {
-	Env			: Phaser.Scene;
-	PhaserText	: Phaser.GameObjects.Text;
+	env			: Phaser.Scene;
+	phaserText	: Phaser.GameObjects.Text;
 
 	constructor(env: Phaser.Scene, x: number, y: number, content: string) {
-		this.Env = env;
-		this.PhaserText = this.Env.add.text(x, y, content, Config.GameText.defaultStyle);
+		this.env = env;
+		this.phaserText = this.env.add.text(x, y, content, Config.GameText.defaultStyle);
 	}
 
 	setText(content: string) {
-		this.PhaserText.setText(content);
+		this.phaserText.setText(content);
 	}
 
 	setOrigin(x: number, y: number) {
-		this.PhaserText.setOrigin(x, y);
+		this.phaserText.setOrigin(x, y);
 	}
 
 	setSize(size: number) {
-		this.PhaserText.setFontSize(size);
+		this.phaserText.setFontSize(size);
 	}
 
 	setColor(color: string) {
-		this.PhaserText.setColor(color);
+		this.phaserText.setColor(color);
 	}
 
 	setAlpha(alpha: number) {
-		this.PhaserText.setAlpha(alpha);
+		this.phaserText.setAlpha(alpha);
 	}
 
 	setWordWrap(width: number) {
-		this.PhaserText.setWordWrapWidth(width);
+		this.phaserText.setWordWrapWidth(width);
 	}
 
 	setAlign(align: string) {
-		this.PhaserText.setAlign(align);
+		this.phaserText.setAlign(align);
 	}
 
 	getAlpha() {
-		return this.PhaserText.alpha;
+		return this.phaserText.alpha;
 	}
 }

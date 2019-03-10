@@ -5,14 +5,14 @@ import { HudScene } from "./HudScene";
 
 
 class Layer {
-    LayerSprites: Array<Phaser.GameObjects.Sprite>
-    FloorGroup: Phaser.Physics.Arcade.Group
-    StarGroup: Phaser.Physics.Arcade.Group
-    RockGroup: Phaser.Physics.Arcade.Group
+    layerSprites: Array<Phaser.GameObjects.Sprite>
+    floorGroup: Phaser.Physics.Arcade.Group
+    starGroup: Phaser.Physics.Arcade.Group
+    rockGroup: Phaser.Physics.Arcade.Group
     
-    PosY: number
-    Cols: number
-    Env: CarGame
+    y: number
+    cols: number
+    env: CarGame
 
     constructor (
         env: CarGame,
@@ -22,25 +22,25 @@ class Layer {
         y: number,
         withObjects: boolean = true) 
 	{
-        this.Env = env;
-        this.Cols = Config.CarGame.columns;
-        this.PosY = y;
+        this.env = env;
+        this.cols = Config.CarGame.columns;
+        this.y = y;
 
-        this.LayerSprites = [];
-        this.StarGroup = starGroup;
-        this.RockGroup = rockGroup;
-        this.FloorGroup = floorGroup;
+        this.layerSprites = [];
+        this.starGroup = starGroup;
+        this.rockGroup = rockGroup;
+        this.floorGroup = floorGroup;
         this.createLayer(withObjects);
     }
 
     private createLayer(withObjects: boolean) {
 
-        for (let tx = 0; tx < this.Cols; tx++) {
+        for (let tx = 0; tx < this.cols; tx++) {
             var x = (tx * Config.CarGame.tileSize)
             if (tx != 3 && tx != 8) {
-                this.FloorGroup.create(x, this.PosY, 'road');
+                this.floorGroup.create(x, this.y, 'road');
             } else {
-                this.FloorGroup.create(x, this.PosY, 'road_line');
+                this.floorGroup.create(x, this.y, 'road_line');
             }
         }
 
@@ -48,70 +48,70 @@ class Layer {
             if (Math.random() < Config.CarGame.starProbability){
                 var column = Phaser.Math.Between(-2, 2);
                 var x = Config.Game.centerX + column * Config.CarGame.corridorSize;
-                var star: Phaser.Physics.Arcade.Sprite = this.StarGroup.create(x, this.PosY, 'star');
+                var star: Phaser.Physics.Arcade.Sprite = this.starGroup.create(x, this.y, 'star');
                 star.setOrigin(0.5, 0.5);
-                this.LayerSprites.push(star);
+                this.layerSprites.push(star);
             }
             if (Math.random() < Config.CarGame.starProbability){
                 var column = Phaser.Math.Between(-2, 2);
                 var x = Config.Game.centerX + column * Config.CarGame.corridorSize;
-                var rock: Phaser.Physics.Arcade.Sprite = this.RockGroup.create(x, this.PosY, 'rock');
+                var rock: Phaser.Physics.Arcade.Sprite = this.rockGroup.create(x, this.y, 'rock');
                 rock.setOrigin(0.5, 0.5);
-                this.LayerSprites.push(rock);
+                this.layerSprites.push(rock);
             }
         }
     }
 
     public destroy() {
-        for (var i=0; i<this.LayerSprites.length; i++){
-            this.FloorGroup.remove(this.LayerSprites[i], true, true);
-            this.StarGroup.remove(this.LayerSprites[i], true, true);
-            this.RockGroup.remove(this.LayerSprites[i], true, true);
+        for (var i=0; i<this.layerSprites.length; i++){
+            this.floorGroup.remove(this.layerSprites[i], true, true);
+            this.starGroup.remove(this.layerSprites[i], true, true);
+            this.rockGroup.remove(this.layerSprites[i], true, true);
         }
     }
 }
 
 
 class Generator {
-    Cols: number;
-    Rows: number;
-    Env: CarGame;
-    Layers: Array<Layer>
-    FloorGroup: Phaser.Physics.Arcade.Group
-    StarGroup: Phaser.Physics.Arcade.Group
-    RockGroup: Phaser.Physics.Arcade.Group
+    cols: number;
+    rows: number;
+    env: CarGame;
+    layers: Array<Layer>
+    floorGroup: Phaser.Physics.Arcade.Group
+    starGroup: Phaser.Physics.Arcade.Group
+    rockGroup: Phaser.Physics.Arcade.Group
 
-    constructor (Env) {
+    constructor (env) {
         
-        this.Env = Env;
+        this.env = env;
         
-        this.Cols = 12;
-        this.Rows = 20;
-        this.Layers = [];
+        this.cols = 12;
+        this.rows = 20;
+        this.layers = [];
 
-        this.FloorGroup = this.Env.physics.add.group();
-        this.StarGroup = this.Env.physics.add.group();
-        this.RockGroup = this.Env.physics.add.group();
-        this.FloorGroup.setDepth(0, 0);
-        this.StarGroup.setDepth(1, 0);
-        this.RockGroup.setDepth(1, 0);
+        this.floorGroup = this.env.physics.add.group();
+        this.starGroup = this.env.physics.add.group();
+        this.rockGroup = this.env.physics.add.group();
+        this.floorGroup.setDepth(0, 0);
+        this.starGroup.setDepth(1, 0);
+        this.rockGroup.setDepth(1, 0);
     }
 
     public setup() {
         let y;
-        let rows = this.Rows + 1;
+        let rows = this.rows + 1;
 
-        this.Layers = [];
+        this.layers = [];
 
         for (let ty = 0; ty < rows; ty++){
             y = (ty * Config.CarGame.tileSize)
-            this.Layers.push(new Layer(this.Env, this.FloorGroup, this.StarGroup, this.RockGroup, y, false));
+            this.layers.push(new Layer(this.env, this.floorGroup, this.starGroup, this.rockGroup, y, false));
         }
 	}
 	
     public update() {
-        let ty = this.Layers.length;
-        let offset = this.Env.cameras.main.scrollY - this.Layers[ty - 1].PosY;
+        let ty = this.layers.length;
+        let offset = this.env.cameras.main.scrollY - this.layers[ty - 1].y;
         if (offset <= -640)  {
             this.appendLayer();
             this.destroyLastLayer();
@@ -119,73 +119,64 @@ class Generator {
 	}
 	
     private destroyLastLayer() {
-        let ty = this.Layers.length;
-        this.Layers[ty-1].destroy();
-        this.Layers.splice(ty - 1, 1);
+        let ty = this.layers.length;
+        this.layers[ty-1].destroy();
+        this.layers.splice(ty - 1, 1);
 	}
 	
     private appendLayer() {
-        let y = this.Layers[0].PosY - Config.CarGame.tileSize;
-        this.Layers.unshift(new Layer(this.Env, this.FloorGroup, this.StarGroup, this.RockGroup, y));
+        let y = this.layers[0].y - Config.CarGame.tileSize;
+        this.layers.unshift(new Layer(this.env, this.floorGroup, this.starGroup, this.rockGroup, y));
     }
 }
 
-enum SwipeDirection {
-	None,
-	Right,
-	Left
-}
 
 export class CarGame extends Phaser.Scene {
-    Generator: Generator;
-    CamSpeed: { base:number, current:number, max:number};
-    Player: Phaser.Physics.Arcade.Sprite;
-    PlayerSpeed: number;
-    TargetPos: number;
+    generator: Generator;
+    camSpeed: { base:number, current:number, max:number};
+    player: Phaser.Physics.Arcade.Sprite;
+    playerSpeed: number;
+    targetPos: number;
+    gameEnded: boolean;
+    invicible: boolean;
 
     hud: HudScene;
 
-    RemainingTime: number;
-    RemainingTimeText: GameText;
-    GameEnded: boolean;
-
-    invicible: boolean;
-
     // Player movement
-    Cursors: Phaser.Input.Keyboard.CursorKeys;
-    Swipe: string;
+    cursors: Phaser.Input.Keyboard.CursorKeys;
+    swipe: string;
 
     constructor() {
         super({ key: 'CarGame', active:false });
-        this.TargetPos = Config.Game.centerX;
+        this.targetPos = Config.Game.centerX;
     }
 
     public init() {
-        this.Generator = new Generator(this);
-        this.CamSpeed = {
+        this.generator = new Generator(this);
+        this.camSpeed = {
             base: Config.CarGame.camSpeed, 
             current: Config.CarGame.camSpeed,
             max: Config.CarGame.camSpeed
         }
-        this.GameEnded = false;
+        this.gameEnded = false;
         this.invicible = false;
-        this.PlayerSpeed = Config.CarGame.playerSpeed;
+        this.playerSpeed = Config.CarGame.playerSpeed;
         this.hud = <HudScene>this.scene.get("HudScene");
         this.hud.setRemainingTime(Config.CarGame.time);
     }
 
     public create() {
         // Create initial environment
-        this.Generator.setup();
+        this.generator.setup();
 
         // Create Player
-        this.Player = this.physics.add.sprite(Config.Game.centerX, Config.Game.centerY / 2 * 3, 'voiture');
-        this.Player.setOrigin(0.5, 0.5);
-        this.Player.setDepth(10);        
-        this.Player.setScale(2, 2);
+        this.player = this.physics.add.sprite(Config.Game.centerX, Config.Game.centerY / 2 * 3, 'voiture');
+        this.player.setOrigin(0.5, 0.5);
+        this.player.setDepth(10);        
+        this.player.setScale(2, 2);
 
         // Dealing with Swipes
-        this.Cursors = this.input.keyboard.createCursorKeys();
+        this.cursors = this.input.keyboard.createCursorKeys();
         var downX: number, upX: number, Threshold: number = 50;
         this.input.on('pointerdown', function (pointer : Phaser.Input.InputPlugin) {
             downX = pointer.x;
@@ -193,15 +184,15 @@ export class CarGame extends Phaser.Scene {
         this.input.on('pointerup', (pointer : Phaser.Input.InputPlugin) => {
             upX = pointer.x;
             if (upX < downX - Threshold){
-                this.Swipe = 'left';
+                this.swipe = 'left';
             } else if (upX > downX + Threshold) {
-                this.Swipe = 'right';
+                this.swipe = 'right';
             }
         }); 
 
         // Collision with objects
-        this.physics.add.overlap(this.Player, this.Generator.StarGroup, this.collectStar, null, this);
-        this.physics.add.overlap(this.Player, this.Generator.RockGroup, this.collideRock, null, this);
+        this.physics.add.overlap(this.player, this.generator.starGroup, this.collectStar, null, this);
+        this.physics.add.overlap(this.player, this.generator.rockGroup, this.collideRock, null, this);
     }
 
 	private updateStarCount(difference: number) {
@@ -246,33 +237,33 @@ export class CarGame extends Phaser.Scene {
     }
 
 	private playerBlink() {
-		if (this.Player.alpha == 1.0) {
-			this.Player.setAlpha(0);
+		if (this.player.alpha == 1.0) {
+			this.player.setAlpha(0);
 		} else {
-			this.Player.setAlpha(1);
+			this.player.setAlpha(1);
 		}
 	}
 
     public update(time: number, deltaTime: number) {
 		deltaTime = MS2S(deltaTime);
         this.updateCamera(deltaTime);
-        this.Generator.update();
-        this.Player.y += this.CamSpeed.current * deltaTime;
+        this.generator.update();
+        this.player.y += this.camSpeed.current * deltaTime;
         var corridor = Config.CarGame.corridorSize;
-        if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == "left" ){
-            this.moveTo(this.Player.x -  corridor);
-            this.Swipe = "";      
+        if (this.cursors.left != undefined && this.cursors.left.isDown || this.swipe == "left" ){
+            this.moveTo(this.player.x -  corridor);
+            this.swipe = "";      
         }
-        else if (this.Cursors.right != undefined && this.Cursors.right.isDown || this.Swipe == "right") {
-            this.moveTo(this.Player.x + corridor);
-            this.Swipe = "";
+        else if (this.cursors.right != undefined && this.cursors.right.isDown || this.swipe == "right") {
+            this.moveTo(this.player.x + corridor);
+            this.swipe = "";
         }
         this.move();
 
         if (this.hud.getRemainingTime() <= 0){
-            this.GameEnded = true;            
+            this.gameEnded = true;            
         }
-        if (this.GameEnded){
+        if (this.gameEnded){
             this.scene.start("Pacman");
         }
 
@@ -283,38 +274,38 @@ export class CarGame extends Phaser.Scene {
         if (x + carWidth/2 > Config.Game.width || x - carWidth/2 < 0) {
             return;
         }
-        this.TargetPos = x;
-        if (x - this.Player.x < 0)
-            this.Player.setVelocityX(-this.PlayerSpeed);
+        this.targetPos = x;
+        if (x - this.player.x < 0)
+            this.player.setVelocityX(-this.playerSpeed);
         else
-            this.Player.setVelocityX(this.PlayerSpeed);
+            this.player.setVelocityX(this.playerSpeed);
     }
 
     private move() {
-        var speedX = this.Player.body.velocity.x;
-        if ((speedX > 0 && this.Player.x >= this.TargetPos) ||
-            (speedX < 0 && this.Player.x <= this.TargetPos)) {
-                this.Player.setVelocityX(0);
-                this.Player.x = this.TargetPos;
+        var speedX = this.player.body.velocity.x;
+        if ((speedX > 0 && this.player.x >= this.targetPos) ||
+            (speedX < 0 && this.player.x <= this.targetPos)) {
+                this.player.setVelocityX(0);
+                this.player.x = this.targetPos;
         }
     }
 
     private updateCamera(deltaTime: number) {
-		let newPosY = this.cameras.main.scrollY + this.CamSpeed.current * deltaTime;
+		let newPosY = this.cameras.main.scrollY + this.camSpeed.current * deltaTime;
         this.cameras.main.setScroll(0, newPosY);
     }
 
     // This function is never used. Should we keep it?
     private setCamSpeed(speed: number) {
-        this.CamSpeed.base = speed;
-        this.CamSpeed.current = speed;
-        this.CamSpeed.current = Math.min(
-            this.CamSpeed.current,
-            this.CamSpeed.max
+        this.camSpeed.base = speed;
+        this.camSpeed.current = speed;
+        this.camSpeed.current = Math.min(
+            this.camSpeed.current,
+            this.camSpeed.max
         );
 
-        this.CamSpeed.current = Math.max(
-            this.CamSpeed.current,
+        this.camSpeed.current = Math.max(
+            this.camSpeed.current,
             0
         );
     }

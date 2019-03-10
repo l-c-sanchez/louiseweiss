@@ -10,27 +10,27 @@ import { CharacterChoice } from "./scenes/CharacterChoice";
 
 export class App {
 
-	GameRef: Phaser.Game;
-	Scenes: Array<Phaser.Scene>;
+	gameRef: Phaser.Game;
+	scenes: Array<Phaser.Scene>;
 
 	constructor() {
-		this.Scenes = new Array<Phaser.Scene>();
-		this.Scenes.push(new Boot());
-		this.Scenes.push(new Preload);
-		this.Scenes.push(new Menu());
-		this.Scenes.push(new Pacman());
-		this.Scenes.push(new CarGame());
-		this.Scenes.push(new GameOverScene());
-		this.Scenes.push(new HudScene());
-		this.Scenes.push(new CharacterChoice());
+		this.scenes = new Array<Phaser.Scene>();
+		this.scenes.push(new Boot());
+		this.scenes.push(new Preload);
+		this.scenes.push(new Menu());
+		this.scenes.push(new Pacman());
+		this.scenes.push(new CarGame());
+		this.scenes.push(new GameOverScene());
+		this.scenes.push(new HudScene());
+		this.scenes.push(new CharacterChoice());
 
-		Config.Phaser.scene = this.Scenes;
+		Config.Phaser.scene = this.scenes;
 
 		if (Config.Game.debugMode) {
 			Config.Phaser.url = 'http://localhost:8080/';
 		}
 
-		this.GameRef = new Phaser.Game(Config.Phaser);
+		this.gameRef = new Phaser.Game(Config.Phaser);
 	}
 }
 
