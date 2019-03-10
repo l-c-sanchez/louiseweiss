@@ -46,7 +46,7 @@ export class CharacterChoice extends Phaser.Scene {
 	}
 
 	private createSheets() {
-		let y = this.title.PhaserText.displayHeight + Config.CharacterChoice.padding;
+		let y = this.title.phaserText.displayHeight + Config.CharacterChoice.padding;
 		let x = 0;
 		let offset = y + Config.CharacterChoice.padding * (this.textData.characters.length + 1);
 		let height = (Config.Game.height - offset) / this.textData.characters.length;
