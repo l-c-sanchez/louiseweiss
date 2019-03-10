@@ -47,6 +47,7 @@ export class CharacterSheet extends Phaser.GameObjects.GameObject {
 		this.createWindow();
 		this.createSprite();
 		this.createText();
+
 		// this.TextObject = new GameText(this.Env, this.TextPos.x, this.TextPos.y, this.Text);
 		// this.TextObject.setWordWrap(Config.Game.width - this.Options.padding * 2 - 25);
 		// this.TextObject.setSize(this.Options.fontSize);

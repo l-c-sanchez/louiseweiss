@@ -5,6 +5,7 @@ import { DialogBox, Anchor } from "../utils/DialogBox";
 export class Menu extends Phaser.Scene {
 	StartText	: GameText;
 	StartDialog	: DialogBox = null;
+	Music		: Phaser.Sound.BaseSound;
 
 	constructor() {
         super({ key: 'Menu', active: false });
@@ -34,7 +35,7 @@ export class Menu extends Phaser.Scene {
 		this.StartText.setSize(40);
 		this.StartText.setOrigin(0.5, 0);
 
-		let music = this.sound.add('OdeToJoy', {
+		this.Music = this.sound.add('OdeToJoy', {
 			mute: false,
 			volume: 1,
 			rate: 1,
@@ -43,8 +44,7 @@ export class Menu extends Phaser.Scene {
 			loop: true,
 			delay: 0
 		});
-		music.play();
-		console.log(music);
+		this.Music.play();
 
 		this.time.addEvent({
 			delay: 1000,
@@ -80,11 +80,14 @@ export class Menu extends Phaser.Scene {
 	}
 
 	onKeyReleased(key: KeyboardEvent) {
-		console.log(key);
+		// console.log(key);
 		switch (key.code) {
 			case 'Enter':
 			case 'Space':
 				this.startGame();
+				break;
+			case 'KeyM':
+				this.Music.isPaused ? this.Music.resume() : this.Music.pause();
 				break;
 			default:
 				break;

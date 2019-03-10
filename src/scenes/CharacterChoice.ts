@@ -59,14 +59,14 @@ export class CharacterChoice extends Phaser.Scene {
 	}
 
 	onKeyReleased(key: KeyboardEvent) {
-		console.log(key);
-		switch (key.code) {
-			case 'Enter':
-			case 'Space':
-				this.startGame();
-				break;
-			default:
-				break;
-		}
+		// console.log(key);
+		// switch (key.code) {
+		// 	case 'Enter':
+		// 	case 'Space':
+		// 		this.startGame();
+		// 		break;
+		// 	default:
+		// 		break;
+		// }
 	}
 }

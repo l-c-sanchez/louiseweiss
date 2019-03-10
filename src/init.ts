@@ -34,6 +34,10 @@ export class App {
 	}
 }
 
+export function MS2S(value: number) {
+	return value * 10e-4;
+}
+
 function resizeApp()
 {
 	// Width-height-ratio of game resolution
