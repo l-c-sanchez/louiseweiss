@@ -25,32 +25,32 @@ export enum Anchor {
 export class DialogBox extends Phaser.GameObjects.GameObject {
 
 	//#region Fields
-	private env				: Phaser.Scene;
-	private graphics		: Phaser.GameObjects.Graphics;
-	private textObject		: GameText;
-	private arrow			: Phaser.Physics.Arcade.Sprite;
+	private Env				: Phaser.Scene;
+	private Graphics		: Phaser.GameObjects.Graphics;
+	private TextObject		: GameText;
+	private Arrow			: Phaser.Physics.Arcade.Sprite;
 
-	private text			: string;
-	private anchor			: Anchor;
-	private animate			: boolean;
-	private options			: DialogOptions;
+	private Text			: string;
+	private Anchor			: Anchor;
+	private Animate			: boolean;
+	private Options			: DialogOptions;
 
-	private dialog			: string[];
-	private textPos			: Phaser.Math.Vector2;
-	private eventCounter	: number = 0;
-	private timedEvent		: Phaser.Time.TimerEvent = null;
-	private arrowLeftLimit	: number;
-	private arrowRightLimit	: number;
+	private Dialog			: string[];
+	private TextPos			: Phaser.Math.Vector2;
+	private EventCounter	: number = 0;
+	private TimedEvent		: Phaser.Time.TimerEvent = null;
+	private ArrowLeftLimit	: number;
+	private ArrowRightLimit	: number;
 	//#endregion
 
 	//#region Constructor
 	constructor(env: Phaser.Scene, text: string, animate: boolean, anchor: Anchor, options?: DialogOptions) {
 		super(env, 'dialogbox');
-		this.env = env;
-		this.anchor = anchor;
-		this.animate = animate;
-		this.text = text;
-		this.options = Config.DialogBox.defaultOptions;
+		this.Env = env;
+		this.Anchor = anchor;
+		this.Animate = animate;
+		this.Text = text;
+		this.Options = Config.DialogBox.defaultOptions;
 
 		if (options != undefined)
 			this.setOptions(options);
@@ -65,7 +65,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 
 	private setOptions(options: DialogOptions) {
 		for (const key in options) {
-			this.options[key] = options[key];
+			this.Options[key] = options[key];
 		}
 	}
 
@@ -73,74 +73,74 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		this.computeTextPos();
 		this.createWindow();
 
-		this.textObject = new GameText(this.env, this.textPos.x, this.textPos.y, this.text);
-		this.textObject.setWordWrap(Config.Game.width - this.options.padding * 2 - 25);
-		this.textObject.setSize(this.options.fontSize);
-		this.textObject.setAlign('left');
+		this.TextObject = new GameText(this.Env, this.TextPos.x, this.TextPos.y, this.Text);
+		this.TextObject.setWordWrap(Config.Game.width - this.Options.padding * 2 - 25);
+		this.TextObject.setSize(this.Options.fontSize);
+		this.TextObject.setAlign('left');
 
 		this.showText();
 	}
 
 	private computeTextPos() {
-		let y = Config.Game.height - this.options.windowHeight - this.options.padding + 10;
-		if (this.anchor == Anchor.Top) {
-			y = this.options.padding + 10;
-		} else if (this.anchor == Anchor.Center) {
-			y = Config.Game.centerY - this.options.windowHeight * 0.5 + 10;
+		let y = Config.Game.height - this.Options.windowHeight - this.Options.padding + 10;
+		if (this.Anchor == Anchor.Top) {
+			y = this.Options.padding + 10;
+		} else if (this.Anchor == Anchor.Center) {
+			y = Config.Game.centerY - this.Options.windowHeight * 0.5 + 10;
 		}
-		this.textPos = new Phaser.Math.Vector2(this.options.padding + 10, y);
+		this.TextPos = new Phaser.Math.Vector2(this.Options.padding + 10, y);
 	}
 
 	private createWindow() {
-		let width = Config.Game.width - this.options.padding * 2;
-		let height = this.options.windowHeight;
-		let x = this.options.padding;
-		let y = Config.Game.height - this.options.windowHeight - this.options.padding;
+		let width = Config.Game.width - this.Options.padding * 2;
+		let height = this.Options.windowHeight;
+		let x = this.Options.padding;
+		let y = Config.Game.height - this.Options.windowHeight - this.Options.padding;
 
-		if (this.anchor == Anchor.Top) {
-			y = this.options.padding;
-		} else if (this.anchor == Anchor.Center) {
-			y = Config.Game.centerY - this.options.windowHeight * 0.5;
+		if (this.Anchor == Anchor.Top) {
+			y = this.Options.padding;
+		} else if (this.Anchor == Anchor.Center) {
+			y = Config.Game.centerY - this.Options.windowHeight * 0.5;
 		}
-		this.graphics = this.env.add.graphics();
+		this.Graphics = this.Env.add.graphics();
 		this.createOuterWindow(x, y, width, height);
 		this.createInnerWindow(x, y, width, height);
 		this.createArrow(x, y, width, height);
 	}
 
 	private createArrow(x: number, y: number, width: number, height: number) {
-		let arrowX = x + width - this.options.arrowPadding;
-		let arrowY = y + height - this.options.arrowPadding;
-		this.arrow = this.env.physics.add.sprite(arrowX, arrowY, 'Arrow');
-		this.arrow.setScale(this.options.arrowScale, this.options.arrowScale);
-		this.arrowLeftLimit = arrowX - Config.DialogBox.arrow.offset;
-		this.arrowRightLimit = arrowX + Config.DialogBox.arrow.offset;
-		this.arrow.setVelocityX(Config.DialogBox.arrow.speed);
+		let arrowX = x + width - this.Options.arrowPadding;
+		let arrowY = y + height - this.Options.arrowPadding;
+		this.Arrow = this.Env.physics.add.sprite(arrowX, arrowY, 'Arrow');
+		this.Arrow.setScale(this.Options.arrowScale, this.Options.arrowScale);
+		this.ArrowLeftLimit = arrowX - Config.DialogBox.arrow.offset;
+		this.ArrowRightLimit = arrowX + Config.DialogBox.arrow.offset;
+		this.Arrow.setVelocityX(Config.DialogBox.arrow.speed);
 	}
 
 	private createInnerWindow(x: number, y: number, width: number, height: number) {
-		this.graphics.fillStyle(this.options.windowColor, this.options.windowAlpha);
-		this.graphics.fillRect(x + 1, y + 1, width - 1, height - 1);
+		this.Graphics.fillStyle(this.Options.windowColor, this.Options.windowAlpha);
+		this.Graphics.fillRect(x + 1, y + 1, width - 1, height - 1);
 	}
 
 	private createOuterWindow(x: number, y: number, width: number, height: number) {
-		this.graphics.lineStyle(this.options.borderThickness, this.options.borderColor, this.options.borderAlpha);
-		this.graphics.strokeRect(x, y, width, height);
+		this.Graphics.lineStyle(this.Options.borderThickness, this.Options.borderColor, this.Options.borderAlpha);
+		this.Graphics.strokeRect(x, y, width, height);
 	}
 
 	private showText() {
-		this.eventCounter = 0;
-		this.dialog = this.text.toString().split('');
-		this.textObject.setText(this.animate ? '' : this.text);
+		this.EventCounter = 0;
+		this.Dialog = this.Text.toString().split('');
+		this.TextObject.setText(this.Animate ? '' : this.Text);
 
-		if (this.timedEvent !== null) {
-			this.timedEvent.remove(() => {});
-			this.timedEvent = null;
+		if (this.TimedEvent !== null) {
+			this.TimedEvent.remove(() => {});
+			this.TimedEvent = null;
 		}
 
-		if (this.animate) {
-			this.timedEvent = this.env.time.addEvent({
-				delay: 150 - (this.options.dialogSpeed * 30),
+		if (this.Animate) {
+			this.TimedEvent = this.Env.time.addEvent({
+				delay: 150 - (this.Options.dialogSpeed * 30),
 				callback: this.animateText,
 				callbackScope: this,
 				loop: true
@@ -149,49 +149,49 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	}
 
 	private animateText() {
-		if (this.timedEvent === null)
+		if (this.TimedEvent === null)
 			return;
 
-		++this.eventCounter;
+		++this.EventCounter;
 
 		// console.log(this.TextObject.PhaserText.text + this.Dialog[this.EventCounter - 1]);
-		this.textObject.setText(this.textObject.phaserText.text + this.dialog[this.eventCounter - 1]);
-		if (this.eventCounter === this.dialog.length) {
-			this.timedEvent.remove(() => {});
-			this.timedEvent = null;
+		this.TextObject.setText(this.TextObject.PhaserText.text + this.Dialog[this.EventCounter - 1]);
+		if (this.EventCounter === this.Dialog.length) {
+			this.TimedEvent.remove(() => {});
+			this.TimedEvent = null;
 		}
 	}
 
 	private animateArrow() {
-		if (this.arrow.x <= this.arrowLeftLimit) {
-			this.arrow.setVelocityX(Config.DialogBox.arrow.speed)
-		} else if (this.arrow.x >= this.arrowRightLimit) {
-			this.arrow.setVelocityX(-Config.DialogBox.arrow.speed)
+		if (this.Arrow.x <= this.ArrowLeftLimit) {
+			this.Arrow.setVelocityX(Config.DialogBox.arrow.speed)
+		} else if (this.Arrow.x >= this.ArrowRightLimit) {
+			this.Arrow.setVelocityX(-Config.DialogBox.arrow.speed)
 		}
 	}
 	//#endregion
 
 	//#region Public Methods
 	public setText(text: string) {
-		this.text = text;
+		this.Text = text;
 		this.showText();
 	}
 
 	public endAnimation() {
-		if (this.timedEvent != null) {
-			this.textObject.setText(this.text);
-			this.timedEvent.remove(() => {});
-			this.timedEvent = null;
+		if (this.TimedEvent != null) {
+			this.TextObject.setText(this.Text);
+			this.TimedEvent.remove(() => {});
+			this.TimedEvent = null;
 		}
 	}
 
 	public isAnimationEnded(): boolean {
-		return this.timedEvent == null;
+		return this.TimedEvent == null;
 	}
 
 	public destroy() {
-		this.textObject.phaserText.setVisible(false);
-		this.graphics.destroy();
+		this.TextObject.PhaserText.setVisible(false);
+		this.Graphics.destroy();
 		super.destroy();
 	}
 	//#endregion

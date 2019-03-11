@@ -2,10 +2,10 @@ import { Config } from "../Config";
 import { GameText } from "../utils/GameText";
 
 export class Preload extends Phaser.Scene {
-	progressText	: GameText;
-	progressBar		: Phaser.GameObjects.Graphics;
-	barWidth		: number;
-	barHeight		: number;
+	ProgressText	: GameText;
+	ProgressBar		: Phaser.GameObjects.Graphics;
+	BarWidth		: number;
+	BarHeight		: number;
 
 	constructor() {
         super({ key: 'Preload', active: false });
@@ -65,23 +65,23 @@ export class Preload extends Phaser.Scene {
 	createLoadingBar() {
 		let x = 30;
 		let y = Config.Game.centerY;
-		this.barWidth = 360.0 - 2.0 * x;
-		this.barHeight = 30;
-		this.progressBar = this.add.graphics({ x: x, y: y });
+		this.BarWidth = 360.0 - 2.0 * x;
+		this.BarHeight = 30;
+		this.ProgressBar = this.add.graphics({ x: x, y: y });
 
-		this.progressText = new GameText(this, Config.Game.centerX, Config.Game.centerY, "0%");
-		this.progressText.setOrigin(0.5, 0);
-		this.progressText.setSize(30);
-		this.progressText.setColor('#000000');
+		this.ProgressText = new GameText(this, Config.Game.centerX, Config.Game.centerY, "0%");
+		this.ProgressText.setOrigin(0.5, 0);
+		this.ProgressText.setSize(30);
+		this.ProgressText.setColor('#000000');
 
 	}
 
 	onProgress(progress: number) {
-		this.progressBar.clear();
-		this.progressBar.fillStyle(0xFFFFFF, 1);
-		this.progressBar.fillRect(0, 0, this.barWidth * progress, this.barHeight);
+		this.ProgressBar.clear();
+		this.ProgressBar.fillStyle(0xFFFFFF, 1);
+		this.ProgressBar.fillRect(0, 0, this.BarWidth * progress, this.BarHeight);
 
-		this.progressText.setText(Math.round(progress * 100) + '%');
+		this.ProgressText.setText(Math.round(progress * 100) + '%');
 	}
 
 	onComplete() {

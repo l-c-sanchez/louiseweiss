@@ -1,8 +1,8 @@
 import { Config } from "../Config";
 
 export class Boot extends Phaser.Scene {
-	fontProgress	: number;
-	fontLoaded		: boolean;
+	FontProgress	: number;
+	FontLoaded		: boolean;
 
 	constructor() {
 		super({ key: 'Boot', active: true });
