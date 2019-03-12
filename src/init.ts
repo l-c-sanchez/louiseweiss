@@ -7,6 +7,7 @@ import { CarGame } from "./scenes/CarScene";
 import { GameOverScene } from "./scenes/GameOverScene";
 import { HudScene } from "./scenes/HudScene";
 import { CharacterChoice } from "./scenes/CharacterChoice";
+import { Facebook } from "./scenes/FacebookScene";
 
 export class App {
 
@@ -23,6 +24,7 @@ export class App {
 		this.Scenes.push(new GameOverScene());
 		this.Scenes.push(new HudScene());
 		this.Scenes.push(new CharacterChoice());
+		this.Scenes.push(new Facebook());
 
 		Config.Phaser.scene = this.Scenes;
 
