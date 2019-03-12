@@ -16,10 +16,22 @@ export interface DialogOptions {
 	innerPadding?: number
 }
 
+export interface ButtonOptions {
+	borderThickness?: number,
+	borderColor?: number,
+	borderAlpha?: number,
+	fontSize?: number
+}
+
 export enum Anchor {
 	Top,
 	Down,
 	Center
+}
+
+export enum Orientation {
+	Vertical,
+	Horizontal
 }
 
 export class DialogBox extends Phaser.GameObjects.GameObject {
@@ -28,19 +40,27 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	private Env				: Phaser.Scene;
 	private Graphics		: Phaser.GameObjects.Graphics;
 	private TextObject		: GameText;
-	private Arrow			: Phaser.Physics.Arcade.Sprite;
 
 	private Text			: string;
 	private Anchor			: Anchor;
 	private Animate			: boolean;
 	private Options			: DialogOptions;
+	private ButtonOptions	: ButtonOptions;
 
 	private Dialog			: string[];
 	private TextPos			: Phaser.Math.Vector2;
 	private EventCounter	: number = 0;
 	private TimedEvent		: Phaser.Time.TimerEvent = null;
+
+	private Arrow			: Phaser.Physics.Arcade.Sprite;
+	private ArrowButton		: Phaser.GameObjects.Sprite;
 	private ArrowLeftLimit	: number;
 	private ArrowRightLimit	: number;
+
+	private PosX: number;
+	private PosY: number;
+	private Width: number;
+	private Height: number;
 	//#endregion
 
 	//#region Constructor
@@ -82,30 +102,29 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	}
 
 	private computeTextPos() {
-		let y = Config.Game.height - this.Options.windowHeight - this.Options.padding + 10;
+		let y = Config.Game.height - this.Options.windowHeight - this.Options.padding + this.Options.innerPadding;
 		if (this.Anchor == Anchor.Top) {
-			y = this.Options.padding + 10;
+			y = this.Options.padding + this.Options.innerPadding;
 		} else if (this.Anchor == Anchor.Center) {
-			y = Config.Game.centerY - this.Options.windowHeight * 0.5 + 10;
+			y = Config.Game.centerY - this.Options.windowHeight * 0.5 + this.Options.innerPadding;
 		}
-		this.TextPos = new Phaser.Math.Vector2(this.Options.padding + 10, y);
+		this.TextPos = new Phaser.Math.Vector2(this.Options.padding + this.Options.innerPadding, y);
 	}
 
 	private createWindow() {
-		let width = Config.Game.width - this.Options.padding * 2;
-		let height = this.Options.windowHeight;
-		let x = this.Options.padding;
-		let y = Config.Game.height - this.Options.windowHeight - this.Options.padding;
+		this.Width = Config.Game.width - this.Options.padding * 2;
+		this.Height = this.Options.windowHeight;
+		this.PosX = this.Options.padding;
+		this.PosY = Config.Game.height - this.Options.windowHeight - this.Options.padding;
 
 		if (this.Anchor == Anchor.Top) {
-			y = this.Options.padding;
+			this.PosY = this.Options.padding;
 		} else if (this.Anchor == Anchor.Center) {
-			y = Config.Game.centerY - this.Options.windowHeight * 0.5;
+			this.PosY = Config.Game.centerY - this.Options.windowHeight * 0.5;
 		}
 		this.Graphics = this.Env.add.graphics();
-		this.createOuterWindow(x, y, width, height);
-		this.createInnerWindow(x, y, width, height);
-		this.createArrow(x, y, width, height);
+		this.createOuterWindow(this.PosX, this.PosY, this.Width, this.Height);
+		this.createInnerWindow(this.PosX, this.PosY, this.Width, this.Height);
 	}
 
 	private createArrow(x: number, y: number, width: number, height: number) {
@@ -169,6 +188,20 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 			this.Arrow.setVelocityX(-Config.DialogBox.arrow.speed)
 		}
 	}
+
+	private createButton(x: number, y: number, width: number, height: number): Phaser.GameObjects.Sprite {
+		let button = this.Env.add.sprite(x, y, 'Transparent');
+		button.displayWidth = width;
+		button.displayHeight = height;
+		button.setOrigin(0, 1);
+		button.setInteractive();
+		return button;
+	}
+
+	private createButtonFrame(x: number, y: number, width: number, height: number) {
+		this.Graphics.lineStyle(2, this.Options.borderColor, 0.8);
+		this.Graphics.strokeRect(x, y, width, height);
+	}
 	//#endregion
 
 	//#region Public Methods
@@ -194,5 +227,47 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		this.Arrow.destroy();
 		this.Graphics.destroy();
 		super.destroy();
+	}
+
+	public addArrowButton(): Phaser.GameObjects.Sprite {
+		this.createArrow(this.PosX, this.PosY, this.Width, this.Height);
+		this.ArrowButton = this.Env.add.sprite(0, 0, 'Transparent');
+		this.ArrowButton.setOrigin(0, 0);
+		this.ArrowButton.displayWidth = Config.Game.width;
+		this.ArrowButton.displayHeight = Config.Game.height;
+		this.ArrowButton.setInteractive();
+		return this.ArrowButton;
+	}
+
+	public addButtons(labels: string[], orientation?: Orientation, frame?: boolean, options?: ButtonOptions): Phaser.GameObjects.Sprite[] {
+		if (orientation == undefined) {
+			orientation = Orientation.Vertical;
+		}
+		if (frame == undefined) {
+			frame = false;
+		}
+
+		let buttons: Array<Phaser.GameObjects.Sprite> = new Array();
+		let x = this.PosX + this.Options.innerPadding * 2;
+		let y = this.PosY + this.Height - this.Options.innerPadding * 2;
+		for (let i = 0; i < labels.length; ++i) {
+			let text = new GameText(this.Env, x, y, labels[i]);
+			text.setOrigin(0, 1);
+			text.setWordWrap(Config.Game.width - this.Options.padding * 2 - 25);
+			text.setSize(this.Options.fontSize);
+			text.setAlign('left');
+			let button = this.createButton(x, y, text.PhaserText.displayWidth, text.PhaserText.displayHeight);
+			buttons.push(button);
+
+			let frameX = x - this.Options.innerPadding;
+			let frameY = y - text.PhaserText.displayHeight - this.Options.innerPadding;
+			let frameWidth = this.Width - this.Options.innerPadding * 2;
+			let frameHeight = text.PhaserText.displayHeight + this.Options.innerPadding * 2;
+			this.createButtonFrame(frameX, frameY, frameWidth, frameHeight);
+
+			y -= text.PhaserText.displayHeight + this.Options.innerPadding  * 3;
+		}
+		this.Arrow.setVisible(false);
+		return buttons;
 	}
 }

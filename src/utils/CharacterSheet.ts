@@ -128,7 +128,7 @@ export class CharacterSheet extends Phaser.GameObjects.GameObject {
 		}
 	}
 
-	public addButton(callback: HitAreaCallback) {
+	public addButton(callback: Function) {
 		this.Button.setInteractive();
 		this.Button.on('pointerup', callback, this.Env);
 	}

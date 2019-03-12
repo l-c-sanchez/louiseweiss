@@ -82,7 +82,7 @@ export class Config {
 			arrowPadding: 20,
 			arrowScale: 1,
 			fontSize: Config.GameText.defaultStyle.fontSize,
-			innerPadding: 10,
+			innerPadding: 10
 		},
 		imageSize: 96
 	};

@@ -1,6 +1,6 @@
 import { Config } from "../Config";
 import { GameText } from "../utils/GameText";
-import { DialogBox, Anchor } from "../utils/DialogBox";
+import { DialogBox, Anchor, Orientation } from "../utils/DialogBox";
 import { Scene } from "phaser";
 
 export class Menu extends Phaser.Scene {
@@ -76,10 +76,17 @@ export class Menu extends Phaser.Scene {
 		}
 		if (this.StartDialog === null) {
 			let text = this.cache.json.get('StartText');
-			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 500, fontSize: 22 });
+			let button = this.StartDialog.addArrowButton();
+			button.on('pointerup', () => {
+				console.log("hey")
+				if (this.StartDialog.isAnimationEnded()) {
+					console.log("hey1")
+					this.scene.start('CharacterChoice');
+				}
+			});
+			// let buttons = this.StartDialog.addButtons(["1 - Coucou! Ça va et toi? On se voit bientôt", "2 - Coucou! Désolé j'ai pas le temps de parler :s"], Orientation.Vertical, false);
 			this.add.existing(this.StartDialog);
-		} else if (this.StartDialog.isAnimationEnded()) {
-			this.scene.start('CharacterChoice');
 		}
 	}
 

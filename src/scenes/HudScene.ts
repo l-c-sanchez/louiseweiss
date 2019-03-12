@@ -23,9 +23,7 @@ export class HudScene extends Phaser.Scene {
 		if (Config.Game.debugMode) {
 			console.log(this);
         }
-
         this.timerEvent = this.time.addEvent({});
-        
         // TODO: put star and counter at right positions.
         var star = this.add.image(Config.Game.centerX, 17, 'star');
 		star.setOrigin(0, 0.5);
