@@ -138,7 +138,7 @@ enum SwipeDirection {
 
 export class CarGame extends Phaser.Scene {
     Generator: Generator;
-    CamSpeed: { base:number, current:number, max:number};
+    CamSpeed: number;
     Player: Phaser.Physics.Arcade.Sprite;
     PlayerSpeed: number;
     TargetPos: number;
@@ -162,11 +162,7 @@ export class CarGame extends Phaser.Scene {
 
     public init() {
         this.Generator = new Generator(this);
-        this.CamSpeed = {
-            base: Config.CarGame.camSpeed, 
-            current: Config.CarGame.camSpeed,
-            max: Config.CarGame.camSpeed
-        }
+        this.CamSpeed = Config.CarGame.camSpeed;
         this.GameEnded = false;
         this.invicible = false;
         this.PlayerSpeed = Config.CarGame.playerSpeed;
@@ -257,7 +253,7 @@ export class CarGame extends Phaser.Scene {
 		deltaTime = MS2S(deltaTime);
         this.updateCamera(deltaTime);
         this.Generator.update();
-        this.Player.y += this.CamSpeed.current * deltaTime;
+        this.Player.y += this.CamSpeed * deltaTime;
         var corridor = Config.CarGame.corridorSize;
         if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == "left" ){
             this.moveTo(this.Player.x -  corridor);
@@ -300,23 +296,7 @@ export class CarGame extends Phaser.Scene {
     }
 
     private updateCamera(deltaTime: number) {
-		let newPosY = this.cameras.main.scrollY + this.CamSpeed.current * deltaTime;
+		let newPosY = this.cameras.main.scrollY + this.CamSpeed * deltaTime;
         this.cameras.main.setScroll(0, newPosY);
     }
-
-    // This function is never used. Should we keep it?
-    private setCamSpeed(speed: number) {
-        this.CamSpeed.base = speed;
-        this.CamSpeed.current = speed;
-        this.CamSpeed.current = Math.min(
-            this.CamSpeed.current,
-            this.CamSpeed.max
-        );
-
-        this.CamSpeed.current = Math.max(
-            this.CamSpeed.current,
-            0
-        );
-    }
-
 }
