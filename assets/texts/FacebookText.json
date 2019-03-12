@@ -3,31 +3,33 @@
 	"lucie": [
 		{
 			"publisher": "F34ZERSF34R",
-            "text":"CECI EST UNE FAKE NEWS",
+            "text":"FAKE NEWS 1",
             "fake": 1,
             "comments": 15,
 			"likes": 3,
 			"sprite": ""
 		},
 		{
-			"publisher": "",
-            "text":"ceci est une news vraie",
+			"publisher": "F34ZERSF34R",
+            "text":"VRAIE NEWS 1",
             "fake": 0,
-            "comments": 15,
-			"likes": 3,
-			"sprite": ""
-        },
-        {
-			"publisher": "",
-			"text":"",
             "comments": 15,
 			"likes": 3,
 			"sprite": ""
 		},
 		{
-			"publisher": "",
-			"text":"",
+			"publisher": "F34ZERSF34R",
+            "text":"FAKE NEWS 2",
+            "fake": 1,
             "comments": 15,
+			"likes": 3,
+			"sprite": ""
+		},
+		{
+			"publisher": "F34ZERSF34R",
+            "text":"FAKE NEWS 3",
+            "fake": 1,
+            "comments": 1,
 			"likes": 3,
 			"sprite": ""
 		}

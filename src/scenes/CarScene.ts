@@ -36,12 +36,15 @@ class Layer {
     private createLayer(withObjects: boolean) {
 
         for (let tx = 0; tx < this.Cols; tx++) {
-            var x = (tx * Config.CarGame.tileSize)
+            var x = (tx * Config.CarGame.tileSize);
+            var floor:Phaser.GameObjects.Sprite;
+
             if (tx != 3 && tx != 8) {
-                this.FloorGroup.create(x, this.PosY, 'road');
+                floor = this.FloorGroup.create(x, this.PosY, 'road');
             } else {
-                this.FloorGroup.create(x, this.PosY, 'road_line');
+                floor = this.FloorGroup.create(x, this.PosY, 'road_line');
             }
+            this.LayerSprites.push(floor);
         }
 
         if (withObjects){
@@ -63,10 +66,14 @@ class Layer {
     }
 
     public destroy() {
-        for (var i=0; i<this.LayerSprites.length; i++){
+
+        for (var i=0; i < this.LayerSprites.length; i++){
+            console.log("in destroy");
+            
             this.FloorGroup.remove(this.LayerSprites[i], true, true);
             this.StarGroup.remove(this.LayerSprites[i], true, true);
             this.RockGroup.remove(this.LayerSprites[i], true, true);
+            this.LayerSprites[i].destroy();
         }
     }
 }
@@ -112,7 +119,7 @@ class Generator {
     public update() {
         let ty = this.Layers.length;
         let offset = this.Env.cameras.main.scrollY - this.Layers[ty - 1].PosY;
-        if (offset <= -640)  {
+        if (offset <= -Config.Game.height - 16)  {
             this.appendLayer();
             this.destroyLastLayer();
         }
@@ -250,6 +257,7 @@ export class CarGame extends Phaser.Scene {
 	}
 
     public update(time: number, deltaTime: number) {
+
 		deltaTime = MS2S(deltaTime);
         this.updateCamera(deltaTime);
         this.Generator.update();
