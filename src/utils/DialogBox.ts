@@ -195,5 +195,4 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		this.Graphics.destroy();
 		super.destroy();
 	}
-	//#endregion
 }

@@ -1,6 +1,7 @@
 import { Config } from "../Config";
 import { GameText } from "../utils/GameText";
 import { DialogBox, Anchor } from "../utils/DialogBox";
+import { FacebookSheet } from "../utils/FacebookSheet";
 
 
 export class Facebook extends Phaser.Scene {
@@ -26,18 +27,29 @@ export class Facebook extends Phaser.Scene {
         this.StartDialog = new DialogBox(this, this.TextData.title, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
         this.add.existing(this.StartDialog);
         this.input.on('pointerup', this.startFacebook, this);
-		// this.input.keyboard.on('keyup', this.onKeyReleased, this);
-        // console.log(this.cache.json.get('FacebookText'))
-		// this.Title = new GameText(this, 15, 10, this.TextData.title);
 
     }
     startFacebook() {
         console.log("in facebook scene")
-        this.StartDialog.destroy()
+        this.StartDialog.destroy();
+        this.createSheets();
 	}
 
 	update() {
 
+    }
+    private createSheets() {
+		let y = 20 + Config.Facebook.padding;
+		let x = 0;
+		let offset = y + Config.Facebook.padding * (this.TextData.lucie.length + 1);
+		let height = (Config.Game.height - offset) / 3;
+
+		for (let i = 0; i < this.TextData.lucie.length; ++i) {
+			let sheet = new FacebookSheet(this, x, y, this.TextData.lucie[i], { windowHeight: height, fontSize: 22 });
+			this.add.existing(sheet);
+			y += height + Config.Facebook.padding;
+		}
 	}
+
 
 }

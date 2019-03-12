@@ -99,6 +99,52 @@ export class Config {
 		camSpeed: -120
 	}
 
+	public static Facebook = {
+		rows: 20,
+		columns: 12,
+		starProbability: 0.2,
+		rockProbability: 0.1,
+		corridorSize: 64,
+		tileSize: 32,
+		time: 25, // in seconds
+		playerSpeed: 200,
+		camSpeed: -120,
+		padding: 10
+		// defaultOptions: {
+		// 	borderThickness: 2,
+		// 	borderColor: 0xdddfe2,
+		// 	borderAlpha: 1,
+		// 	windowAlpha: 1,
+		// 	windowColor: 0xffffff,
+		// 	windowHeight: 50,
+		// 	padding: 10,
+		// 	dialogSpeed: 3,
+		// 	arrowPadding: 20,
+		// 	arrowScale: 1,
+		// 	fontSize: Config.GameText.defaultStyle.fontSize,
+		// 	innerPadding: 10,
+		// },
+		// imageSize: 96
+	}
+
+	public static FacebookSheet = {
+		defaultOptions: {
+			borderThickness: 3,
+			borderColor: 0xfeb809,
+			borderAlpha: 1,
+			windowAlpha: 1,
+			windowColor: 0xffffff,
+			windowHeight: 50,
+			padding: 10,
+			dialogSpeed: 3,
+			arrowPadding: 20,
+			arrowScale: 1,
+			fontSize: Config.GameText.defaultStyle.fontSize,
+			innerPadding: 10,
+		},
+		imageSize: 96
+	};
+
 	public static Pacman = {
 		time: 30
 	}
