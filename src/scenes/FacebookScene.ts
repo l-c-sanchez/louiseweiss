@@ -22,7 +22,6 @@ export class Facebook extends Phaser.Scene {
 	}
 
 	create() {
-
         this.TextData = this.cache.json.get('FacebookText');
         this.StartDialog = new DialogBox(this, this.TextData.title, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
         this.add.existing(this.StartDialog);
@@ -30,9 +29,13 @@ export class Facebook extends Phaser.Scene {
 
     }
     startFacebook() {
-        console.log("in facebook scene")
-        this.StartDialog.destroy();
-        this.createSheets();
+        if (this.StartDialog != null){
+            this.StartDialog.destroy();
+            this.StartDialog = null;
+            this.createSheets();
+            this.cameras.main.setBackgroundColor(Config.FacebookSheet.backgroundColor);
+        }
+    
 	}
 
 	update() {
@@ -45,8 +48,11 @@ export class Facebook extends Phaser.Scene {
 		let height = (Config.Game.height - offset) / 3;
 
 		for (let i = 0; i < this.TextData.lucie.length; ++i) {
-			let sheet = new FacebookSheet(this, x, y, this.TextData.lucie[i], { windowHeight: height, fontSize: 22 });
-			this.add.existing(sheet);
+            let sheet = new FacebookSheet(this, x, y, this.TextData.lucie[i], { windowHeight: height, fontSize: 22 });
+            this.add.existing(sheet);
+            sheet.addButton(() => {
+                sheet.changeButton();
+            });
 			y += height + Config.Facebook.padding;
 		}
 	}

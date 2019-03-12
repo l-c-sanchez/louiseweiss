@@ -55,6 +55,8 @@ export class Preload extends Phaser.Scene {
 
 		// Facebook
 		this.load.json('FacebookText', 'texts/FacebookText.json');
+		this.load.image('heart', 'sprites/heart.png');
+		this.load.image('heart_empty', 'sprites/heart_empty.png');
 		
 		this.load.on('progress', this.onProgress, this);
 		this.load.on('complete', this.onComplete, this);
