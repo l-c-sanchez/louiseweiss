@@ -64,7 +64,7 @@ function resizeApp()
 export function start() {
 	console.log("here")
 	let game = new App();
-	resizeApp();
+	// resizeApp();
 	// window.onload = () => {
 	// 	console.log("here2")
 	// 	let game = new LouiseWeiss.App();
@@ -72,5 +72,5 @@ export function start() {
 
 	// // LouiseWeiss.InitPhaser.initGame();
 	// };
-	window.addEventListener('resize', resizeApp);
+	// window.addEventListener('resize', resizeApp);
 }

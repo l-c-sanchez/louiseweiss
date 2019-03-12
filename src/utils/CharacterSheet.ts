@@ -9,23 +9,23 @@ export interface Characteristics {
     job: string;
     town: string;
     stars: number;
-    sprite: string;
+	sprite: string;
+	sceneToLaunch: string;
 }
 
 export class CharacterSheet extends Phaser.GameObjects.GameObject {
-    
 	private Env				: Phaser.Scene;
 	private Character		: Characteristics;
 	private Pos				: Phaser.Math.Vector2;
 	private Options			: DialogOptions;
 	private ContentPos		: Phaser.Math.Vector2;
 	private Graphics		: Phaser.GameObjects.Graphics;
+	private Button			: Phaser.GameObjects.Sprite;
 	private ProfilePicture	: Phaser.GameObjects.Sprite;
 	private WindowWidth		: number;
 
     constructor(env: Phaser.Scene, x: number, y: number, character: Characteristics, options?: DialogOptions) {
 		super(env, 'charactersheet');
-
 		this.Env = env;
 		this.Character = character;
 		this.Pos = new Phaser.Math.Vector2(x, y);
@@ -68,13 +68,18 @@ export class CharacterSheet extends Phaser.GameObjects.GameObject {
 		let x = this.Pos.x + this.Options.padding;
 		let y = this.Pos.y + this.Options.padding;
 		this.Graphics = this.Env.add.graphics();
+		this.Button = this.Env.add.sprite(x, y, 'Transparent');
+		this.Button.setOrigin(0, 0);
+		this.Button.displayWidth = this.WindowWidth;
+		this.Button.displayHeight = height;
+		// this.ButtonFrame = new Phaser.Geom.Rectangle(x, y, this.WindowWidth, height);
 		this.createOuterWindow(x, y, this.WindowWidth, height);
 		this.createInnerWindow(x, y, this.WindowWidth, height);
 	}
 
 	private createInnerWindow(x: number, y: number, width: number, height: number) {
-		this.Graphics.fillStyle(this.Options.windowColor, this.Options.windowAlpha);
-		this.Graphics.fillRect(x + 1, y + 1, width - 1, height - 1);
+		 this.Graphics.fillStyle(this.Options.windowColor, this.Options.windowAlpha);
+		 this.Graphics.fillRect(x + 1, y + 1, width - 1, height - 1);
 	}
 
 	private createOuterWindow(x: number, y: number, width: number, height: number) {
@@ -121,5 +126,14 @@ export class CharacterSheet extends Phaser.GameObjects.GameObject {
 			star.setOrigin(0, 0);
 			x += star.displayWidth;
 		}
+	}
+
+	public addButton(callback: HitAreaCallback) {
+		this.Button.setInteractive();
+		this.Button.on('pointerup', callback, this.Env);
+	}
+
+	public getSceneToLaunch(): string {
+		return this.Character.sceneToLaunch;
 	}
 }

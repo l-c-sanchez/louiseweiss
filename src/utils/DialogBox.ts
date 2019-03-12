@@ -134,7 +134,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		this.TextObject.setText(this.Animate ? '' : this.Text);
 
 		if (this.TimedEvent !== null) {
-			this.TimedEvent.remove(() => {});
+			this.TimedEvent.remove(false);
 			this.TimedEvent = null;
 		}
 
@@ -157,7 +157,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		// console.log(this.TextObject.PhaserText.text + this.Dialog[this.EventCounter - 1]);
 		this.TextObject.setText(this.TextObject.PhaserText.text + this.Dialog[this.EventCounter - 1]);
 		if (this.EventCounter === this.Dialog.length) {
-			this.TimedEvent.remove(() => {});
+			this.TimedEvent.remove(false);
 			this.TimedEvent = null;
 		}
 	}
@@ -180,7 +180,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	public endAnimation() {
 		if (this.TimedEvent != null) {
 			this.TextObject.setText(this.Text);
-			this.TimedEvent.remove(() => {});
+			this.TimedEvent.remove(false);
 			this.TimedEvent = null;
 		}
 	}

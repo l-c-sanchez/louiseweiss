@@ -7,7 +7,8 @@
 			"job": "Cadre",
 			"town": "Paris",
 			"stars": 3,
-			"sprite": "ClaraPortrait"
+			"sprite": "ClaraPortrait",
+			"sceneToLaunch": "Pacman"
 		},
 		{
 			"name": "Valentin",
@@ -15,7 +16,8 @@
 			"job": "Infirmier",
 			"town": "Tourville",
 			"stars": 2,
-			"sprite": "ValentinPortrait"
+			"sprite": "ValentinPortrait",
+			"sceneToLaunch": "CarGame"
 		},
 		{
 			"name": "Lucie",
@@ -23,7 +25,8 @@
 			"job": "Intérimaire",
 			"town": "Bar-Le-Duc",
 			"stars": 1,
-			"sprite": "LuciePortrait"
+			"sprite": "LuciePortrait",
+			"sceneToLaunch": "Pacman"
 		}
 	]
 }
