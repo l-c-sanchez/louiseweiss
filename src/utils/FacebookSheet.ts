@@ -19,7 +19,9 @@ export class FacebookSheet extends Phaser.GameObjects.GameObject {
 	private Pos				: Phaser.Math.Vector2;
 	private Options			: DialogOptions;
 	private ContentPos		: Phaser.Math.Vector2;
-	private Graphics		: Phaser.GameObjects.Graphics;
+    private Graphics		: Phaser.GameObjects.Graphics;
+	public Like		    : Phaser.GameObjects.Sprite;
+	public LikeOk		    : Phaser.GameObjects.Sprite;
 	private ProfilePicture	: Phaser.GameObjects.Sprite;
 	private WindowWidth		: number;
 
@@ -96,25 +98,44 @@ export class FacebookSheet extends Phaser.GameObjects.GameObject {
 		y += text.PhaserText.displayHeight;
 		text = this.displayText(x, y, String(this.Post.fake));
 		y += text.PhaserText.displayHeight;
-		text = this.displayText(x, y, String(this.Post.comments));
-		y = this.Pos.y + this.Options.windowHeight - this.Options.padding - this.Options.innerPadding ;
-		text.setOrigin(0, 0);
-        x += text.PhaserText.displayWidth;
-        
-		// this.addStars(x, y, this.Post.likes);
+        text = this.displayText(x, y, String(this.Post.comments));
+        y += text.PhaserText.displayHeight;
+		text = this.displayText(x, y, String(this.Post.likes));
+        y = this.Pos.y + this.Options.windowHeight - this.Options.padding - this.Options.innerPadding ;
+        // console.log(this.Options);
+        // console.log(Config.Game.width, Config.Game.width - 50)
+        // x = this.WindowWidth - this.Options.innerPadding;
+        x = this.Pos.x + this.WindowWidth / 2;
+        // text = this.displayText(x, y, "J'aime");
+        // text.setOrigin(0.5, 0);
+        // text.setOrigin(1, 0);
+        //x += text.PhaserText.displayWidth;
+		this.addLikeButton(x, y);
 	}
 
 	private displayText(x: number, y: number, content: string): GameText {
         let text = new GameText(this.Env, x, y, content);
-        text.setColor("1d2028")
+        text.setColor("1d2028");
 		return text;
 	}
 
-	private addStars(x: number, y: number, quantity: number) {
-		while(quantity--) {
-			let star = this.Env.add.sprite(x, y, 'star');
-			star.setOrigin(0, 0);
-			x += star.displayWidth;
-		}
+	private addLikeButton(x: number, y: number) {
+		this.Like = this.Env.add.sprite(x, y, 'heart_empty');
+		this.LikeOk = this.Env.add.sprite(x, y, 'heart');
+		this.Like.depth = 1;
+		this.LikeOk.depth = 0;
+		this.LikeOk.visible = false;
+		this.Like.setOrigin(0, 0);
+		this.LikeOk.setOrigin(0, 0);
+    }
+    
+    public addButton(callback: Function) {
+		this.Like.setInteractive();
+		this.Like.on('pointerup', callback, this.Env);
 	}
+
+	public changeButton() {
+		this.LikeOk.visible = !this.LikeOk.visible
+	}
+
 }

@@ -114,30 +114,15 @@ export class Config {
 		playerSpeed: 200,
 		camSpeed: -120,
 		padding: 10
-		// defaultOptions: {
-		// 	borderThickness: 2,
-		// 	borderColor: 0xdddfe2,
-		// 	borderAlpha: 1,
-		// 	windowAlpha: 1,
-		// 	windowColor: 0xffffff,
-		// 	windowHeight: 50,
-		// 	padding: 10,
-		// 	dialogSpeed: 3,
-		// 	arrowPadding: 20,
-		// 	arrowScale: 1,
-		// 	fontSize: Config.GameText.defaultStyle.fontSize,
-		// 	innerPadding: 10,
-		// },
-		// imageSize: 96
 	}
 
 	public static FacebookSheet = {
 		defaultOptions: {
-			borderThickness: 3,
-			borderColor: 0xfeb809,
+			borderThickness: 1,
+			borderColor: 0xb1b1b1,
 			borderAlpha: 1,
 			windowAlpha: 1,
-			windowColor: 0xffffff,
+			windowColor: 0xf7f7f7,
 			windowHeight: 50,
 			padding: 10,
 			dialogSpeed: 3,
@@ -146,6 +131,7 @@ export class Config {
 			fontSize: Config.GameText.defaultStyle.fontSize,
 			innerPadding: 10,
 		},
+		backgroundColor: '0xd4d4d4',
 		imageSize: 96
 	};
 
