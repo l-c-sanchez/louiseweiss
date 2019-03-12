@@ -42,7 +42,7 @@ export class CharacterChoice extends Phaser.Scene {
 		// 	this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
 		// 	this.add.existing(this.StartDialog);
 		this.scene.start('HudScene');
-		this.scene.start('CarGame');  // CarGame Pacman
+		this.scene.start('Facebook');  // Commencer FB
 	}
 
 	private createSheets() {

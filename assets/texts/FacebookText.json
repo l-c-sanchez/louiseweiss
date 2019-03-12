@@ -1,0 +1,35 @@
+{
+	"title": "Likez les informations vraies",
+	"lucie": [
+		{
+			"publisher": "F34ZERSF34R",
+            "text":"CECI EST UNE FAKE NEWS",
+            "fake": 1,
+            "comments": 15,
+			"likes": 3,
+			"sprite": ""
+		},
+		{
+			"publisher": "",
+            "text":"ceci est une news vraie",
+            "fake": 0,
+            "comments": 15,
+			"likes": 3,
+			"sprite": ""
+        },
+        {
+			"publisher": "",
+			"text":"",
+            "comments": 15,
+			"likes": 3,
+			"sprite": ""
+		},
+		{
+			"publisher": "",
+			"text":"",
+            "comments": 15,
+			"likes": 3,
+			"sprite": ""
+		}
+	]
+}
