@@ -72,6 +72,8 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		this.Text = text;
 		this.Options = Config.DialogBox.defaultOptions;
 
+		this.addArrowButton();
+
 		if (options != undefined)
 			this.setOptions(options);
 		this.initWindow();
@@ -80,7 +82,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 
 	//#region Private methods
 	preUpdate() {
-		this.animateArrow();
+			this.animateArrow();
 	}
 
 	private setOptions(options: DialogOptions) {
@@ -229,7 +231,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		super.destroy();
 	}
 
-	public addArrowButton(): Phaser.GameObjects.Sprite {
+	private addArrowButton(): Phaser.GameObjects.Sprite {
 		this.createArrow(this.PosX, this.PosY, this.Width, this.Height);
 		this.ArrowButton = this.Env.add.sprite(0, 0, 'Transparent');
 		this.ArrowButton.setOrigin(0, 0);
@@ -269,5 +271,9 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		}
 		this.Arrow.setVisible(false);
 		return buttons;
+	}
+
+	public getArrowButton(){
+		return this.ArrowButton;
 	}
 }

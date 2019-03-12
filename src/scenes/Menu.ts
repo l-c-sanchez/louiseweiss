@@ -77,7 +77,8 @@ export class Menu extends Phaser.Scene {
 		if (this.StartDialog === null) {
 			let text = this.cache.json.get('StartText');
 			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 500, fontSize: 22 });
-			let button = this.StartDialog.addArrowButton();
+			let button = this.StartDialog.getArrowButton();
+
 			button.on('pointerup', () => {
 				console.log("hey")
 				if (this.StartDialog.isAnimationEnded()) {
