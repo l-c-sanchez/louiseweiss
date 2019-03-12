@@ -104,15 +104,7 @@ export class Config {
 	}
 
 	public static Facebook = {
-		rows: 20,
-		columns: 12,
-		starProbability: 0.2,
-		rockProbability: 0.1,
-		corridorSize: 64,
-		tileSize: 32,
-		time: 25, // in seconds
-		playerSpeed: 200,
-		camSpeed: -120,
+		time: 10, // in seconds
 		padding: 10
 	}
 

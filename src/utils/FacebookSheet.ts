@@ -138,4 +138,20 @@ export class FacebookSheet extends Phaser.GameObjects.GameObject {
 		this.LikeOk.visible = !this.LikeOk.visible
 	}
 
+	public putLikeOkVisible() {
+		this.LikeOk.visible = true;
+	}
+
+	public getStarNumber(): number {
+		if (this.LikeOk.visible){
+			if (this.Post.fake){
+				return -1;
+			} else {
+				return 1;
+			}
+		} else {
+			return 0;
+		}
+	}
+
 }

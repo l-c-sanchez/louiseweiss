@@ -4,7 +4,7 @@
 		{
 			"publisher": "F34ZERSF34R",
             "text":"FAKE NEWS 1",
-            "fake": 1,
+            "fake": true,
             "comments": 15,
 			"likes": 3,
 			"sprite": ""
@@ -12,7 +12,7 @@
 		{
 			"publisher": "F34ZERSF34R",
             "text":"VRAIE NEWS 1",
-            "fake": 0,
+            "fake": false,
             "comments": 15,
 			"likes": 3,
 			"sprite": ""
@@ -20,7 +20,7 @@
 		{
 			"publisher": "F34ZERSF34R",
             "text":"FAKE NEWS 3",
-            "fake": 1,
+            "fake": true,
             "comments": 1,
 			"likes": 3,
 			"sprite": ""
