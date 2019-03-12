@@ -1,6 +1,7 @@
 import { Config } from "../Config";
 import { GameText } from "../utils/GameText";
 import { DialogBox, Anchor } from "../utils/DialogBox";
+import { Scene } from "phaser";
 
 export class Menu extends Phaser.Scene {
 	StartText	: GameText;
@@ -70,6 +71,9 @@ export class Menu extends Phaser.Scene {
 	}
 
 	startGame() {
+		if (!this.sys.game.device.os.desktop && !this.scale.isFullscreen) {
+			this.scale.toggleFullscreen();
+		}
 		if (this.StartDialog === null) {
 			let text = this.cache.json.get('StartText');
 			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });

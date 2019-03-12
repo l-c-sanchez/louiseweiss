@@ -55,7 +55,7 @@ function resizeApp()
 	
 	let dpi_w = (parseInt(div.style.width) / canvas.width);
 	let dpi_h = (parseInt(div.style.height) / canvas.height);		
-	
+
 	let height = window.innerHeight * (dpi_w / dpi_h);
 	let width = height * game_ratio;
 	
