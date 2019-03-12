@@ -28,7 +28,7 @@ export class HudScene extends Phaser.Scene {
         
         // TODO: put star and counter at right positions.
         var star = this.add.image(Config.Game.centerX, 17, 'star');
-        star.setOrigin(0, 0.5);
+		star.setOrigin(0, 0.5);
         this.starCountText = new GameText(this, Config.Game.centerX - 15, 17, "0");
         this.starCountText.setOrigin(1, 0.5)
         this.timeText = new GameText(this, Config.Game.centerX / 2, 17, "");

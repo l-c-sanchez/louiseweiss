@@ -28,8 +28,8 @@ export class CharacterChoice extends Phaser.Scene {
 
 		this.createSheets();
 
-		this.input.on('pointerup', this.startGame, this);
-		this.input.keyboard.on('keyup', this.onKeyReleased, this);
+		// this.input.on('pointerup', this.startGame, this);
+		// this.input.keyboard.on('keyup', this.onKeyReleased, this);
 	}
 
 	update() {
@@ -55,7 +55,24 @@ export class CharacterChoice extends Phaser.Scene {
 		for (let i = 0; i < this.TextData.characters.length; ++i) {
 			let sheet = new CharacterSheet(this, x, y, this.TextData.characters[i], { windowHeight: height, fontSize: 22 });
 			this.add.existing(sheet);
+
+			let sceneToLaunch = this.TextData.characters[i].sceneToLaunch;
+			sheet.addButton(() => {
+				this.scene.start('HudScene');
+				this.scene.start(sceneToLaunch);
+			});
+
 			y += height + Config.CharacterChoice.padding;
+		}
+	}
+
+	public onButtonPressed(hitArea: any, x: number, y: number, gameObject: Phaser.GameObjects.GameObject) {
+		console.log(gameObject);
+		let pointer = this.input.activePointer;
+		if (pointer.justUp) {
+			console.log(gameObject);
+		// 	this.scene.start('HudScene');
+		// 	this.scene.start(this.TextData.characters[i].sceneToLaunch);	
 		}
 	}
 

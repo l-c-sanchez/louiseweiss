@@ -24,6 +24,9 @@ export class Preload extends Phaser.Scene {
 
 		this.load.setPath(/*Config.Phaser.url + */'assets/');
 
+		//General
+		this.load.image('Transparent', 'sprites/transparent.png');
+
 		//Dialogs
 		this.load.image('Arrow', 'sprites/Arrow.png');
 
