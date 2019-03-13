@@ -105,7 +105,10 @@ export class Config {
 
 	public static Facebook = {
 		time: 10, // in seconds
-		padding: 10
+		padding: 10,
+		topPadding: 20,
+		// We put 2.5 news per page. That way, the user will see that he needs to scroll
+		postPerPage: 2.5
 	}
 
 	public static FacebookSheet = {

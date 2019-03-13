@@ -11,7 +11,7 @@
 		},
 		{
 			"publisher": "F34ZERSF34R",
-            "text":"VRAIE NEWS 1",
+            "text":"VRAIE NEWS 2",
             "fake": false,
             "comments": 15,
 			"likes": 3,
@@ -21,6 +21,22 @@
 			"publisher": "F34ZERSF34R",
             "text":"FAKE NEWS 3",
             "fake": true,
+            "comments": 1,
+			"likes": 3,
+			"sprite": ""
+		},
+		{
+			"publisher": "F34ZERSF34R",
+            "text":"FAKE NEWS 4",
+            "fake": true,
+            "comments": 1,
+			"likes": 3,
+			"sprite": ""
+		},
+		{
+			"publisher": "F34ZERSF34R",
+            "text":"TRUE NEWS 5",
+            "fake": false,
             "comments": 1,
 			"likes": 3,
 			"sprite": ""
