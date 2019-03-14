@@ -4,16 +4,24 @@ import { DialogBox, Anchor } from "../utils/DialogBox";
 import { FacebookSheet } from "../utils/FacebookSheet";
 import { HudScene } from "./HudScene";
 
+import { KineticScroll, KineticScrollSettings } from "../utils/KineticScroll";
 
 // Idea for scrolling improvement: try that -> https://jdnichollsc.github.io/Phaser-Kinetic-Scrolling-Plugin/
+// Ported to Phaser 3 here: https://gist.github.com/PaNaVTEC/ef18d2bee239514515e91d6c50012825
+
+// Other idea:
+// Scroller on object: https://rexrainbow.github.io/phaser3-rex-notes/docs/site/scroller/
+// Complex objects: add everything to groups -> https://phasergames.com/complex-objects-phaser/
 
 export class Facebook extends Phaser.Scene {
-    TextData	: any;
-    Title		: GameText;
-    StartDialog	: DialogBox = null;
-    Sheets      : Array<FacebookSheet>;
-    Hud         : HudScene;
-    GameEnded   : boolean;
+    TextData	 : any;
+    Title		 : GameText;
+    StartDialog	 : DialogBox = null;
+    Sheets       : Array<FacebookSheet>;
+    Hud          : HudScene;
+    GameEnded    : boolean;
+    
+    Scroll       : KineticScroll;
 
     Cursors: Phaser.Input.Keyboard.CursorKeys; // keyboard input for scrolling
     // total height if we take all the posts (including those not on screen into account) 
@@ -33,53 +41,47 @@ export class Facebook extends Phaser.Scene {
 
 	create() {
         this.TextData = this.cache.json.get('FacebookText');
-        this.StartDialog = new DialogBox(this, this.TextData.title, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
-        this.add.existing(this.StartDialog);
-        this.Sheets = [];
+        this.cameras.main.setBackgroundColor(Config.FacebookSheet.backgroundColor);
+        this.createSheets();
+
         this.Hud = <HudScene>this.scene.get("HudScene");
         this.Hud.setRemainingTime(Config.Facebook.time);
-        this.input.on('pointerup', this.startFacebook, this);
+
         this.Cursors = this.input.keyboard.createCursorKeys();
         this.GameEnded = false;
 
+        const settings: KineticScrollSettings = {
+            kineticMovement: true,
+            timeConstantScroll: 325,
+            horizontalScroll: false,
+            verticalScroll: true,
+            bounds: {left: 0, top: 0, bottom: this.TotalHeight, right: 300}
+        }
+
+        this.Scroll = new KineticScroll(this, settings);
+
         // Scrolling with touch or mouse
-        var screenY = 0;
-        var scrollY = 0;
-        var draw = false;
         this.input.on(
             'pointerdown',
             function (pointer) {
-                screenY = pointer.y;
-                scrollY = this.cameras.main.scrollY;
-                draw = true;
+                this.Scroll.beginMove(pointer); 
             },
             this
         );
         this.input.on(
             'pointerup', 
             function (pointer) {
-                draw = false;
+                this.Scroll.endMove();
             },
             this);
         this.input.on(
             'pointermove', 
             function (pointer) {
-                if (draw) {
-                    this.scrollTo(scrollY + screenY - pointer.y);
-                }
+                this.Scroll.move(pointer);
             },
             this
         );
     }
-    startFacebook() {
-        if (this.StartDialog != null){
-            this.StartDialog.destroy();
-            this.StartDialog = null;
-            this.createSheets();
-            this.cameras.main.setBackgroundColor(Config.FacebookSheet.backgroundColor);
-        }
-    
-	}
 
     update() {
         if (this.Hud.getRemainingTime() <= 0){
@@ -95,23 +97,22 @@ export class Facebook extends Phaser.Scene {
 
         // Scrolling with Keyboard arrows
         if (this.Cursors.down != undefined && this.Cursors.down.isDown){
-            this.scroll(10);
+            this.scroll(8);
+        } else if (this.Cursors.up != undefined && this.Cursors.up.isDown){
+            this.scroll(-8);
         }
-        else if (this.Cursors.up != undefined && this.Cursors.up.isDown){
-            this.scroll(-10);
-        }
-    }
 
-    private scrollTo(y: number){
-        // We cannot scroll above or below the posts
-        let maxY = this.TotalHeight - Config.Game.height;
-        y = Math.min(Math.max(y, 0), maxY);
-        this.cameras.main.setScroll(0, y);
+        // Kinetic scrolling (with Touch or mouse)
+        this.Scroll.update();
     }
 
     private scroll(deltaY: number){
-        let y = this.cameras.main.scrollY;
-        this.scrollTo(y + deltaY);
+        let targetY = this.cameras.main.scrollY + deltaY;
+        // We cannot scroll above or below the posts
+        let maxY = this.TotalHeight - Config.Game.height;
+        targetY = Math.min(Math.max(targetY, 0), maxY);
+
+        this.cameras.main.setScroll(0, targetY);
     }
     
     private createSheets() {
@@ -124,6 +125,7 @@ export class Facebook extends Phaser.Scene {
 
         let x = 0;
         let y = topPadding;
+        this.Sheets = [];
 		for (let i = 0; i < this.TextData.lucie.length; ++i) {
             let sheet = new FacebookSheet(this, x, y, this.TextData.lucie[i], { windowHeight: sheetHeight, fontSize: 22 });
             this.Sheets.push(sheet);

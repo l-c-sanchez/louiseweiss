@@ -277,7 +277,7 @@ export class CarGame extends Phaser.Scene {
             this.GameEnded = true;            
         }
         if (this.GameEnded){
-            this.scene.start("Pacman");
+            this.scene.start("Facebook");
         }
 
     }
