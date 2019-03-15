@@ -48,12 +48,16 @@ export class HudScene extends Phaser.Scene {
         this.timeText.setText(this.remainingTime.toString());
 
         // we reset the timer (instead of creating a new one). Thus, we can call setRemainingTime multiple times.
+        console.log("setTime");
         this.timerEvent.reset({
             delay: 1000,
             callback: this.updateTime,
             callbackScope: this,
             loop: true
 		});
+    }
+    public pauseTimer(request: boolean) {
+        this.timerEvent.paused = request;
     }
 
     public getRemainingTime(){

@@ -8,7 +8,7 @@ import { GameOverScene } from "./scenes/GameOverScene";
 import { HudScene } from "./scenes/HudScene";
 import { CharacterChoice } from "./scenes/CharacterChoice";
 import { Facebook } from "./scenes/FacebookScene";
-import { FacebookInstructions } from "./scenes/FacebookInstructions";
+// import { FacebookInstructions } from "./scenes/FacebookInstructions";
 
 export class App {
 
@@ -26,7 +26,7 @@ export class App {
 		this.Scenes.push(new HudScene());
 		this.Scenes.push(new CharacterChoice());
 		this.Scenes.push(new Facebook());
-		this.Scenes.push(new FacebookInstructions());
+		// this.Scenes.push(new FacebookInstructions());
 
 		Config.Phaser.scene = this.Scenes;
 

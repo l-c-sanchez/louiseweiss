@@ -41,6 +41,9 @@ export class KineticScroll {
   
     // from update
     private elapsed
+
+    // private boolean for end mode
+    private enterInBeginMove : boolean = false;
   
     private scene: Phaser.Scene
     constructor (scene: Phaser.Scene, settings?: KineticScrollSettings) {
@@ -73,6 +76,7 @@ export class KineticScroll {
       // the time of press down
       this.beginTime = this.timestamp;
       this.velocityY = this.amplitudeY = this.velocityX = this.amplitudeX = 0;
+      this.enterInBeginMove = true;
     }
   
     move (pointer) {
@@ -115,27 +119,29 @@ export class KineticScroll {
     }
   
     endMove () {
-      this.pointerId = null;
-      this.pressedDown = false;
-      this.autoScrollX = false;
-      this.autoScrollY = false;
+      if (this.enterInBeginMove) {
+        this.pointerId = null;
+        this.pressedDown = false;
+        this.autoScrollX = false;
+        this.autoScrollY = false;
+    
+        if (!this.settings.kineticMovement) return;
+    
+        this.now = Date.now();
+    
+        const cam = this.scene.cameras.main;
+        const bounds = this.settings.bounds;
+        const maxAmplitude = 300;  // we need to cap the amplitude
   
-      if (!this.settings.kineticMovement) return;
+        this.targetX = this.getTarget(cam.scrollX, this.velocityX, maxAmplitude, bounds.left, bounds.right - cam.width);
+        this.amplitudeX = cam.scrollX - this.targetX;
+        
+        this.targetY = this.getTarget(cam.scrollY, this.velocityY, maxAmplitude, bounds.top, bounds.bottom - cam.height);
+        this.amplitudeY = cam.scrollY - this.targetY;
   
-      this.now = Date.now();
-  
-      const cam = this.scene.cameras.main;
-      const bounds = this.settings.bounds;
-      const maxAmplitude = 300;  // we need to cap the amplitude
-
-      this.targetX = this.getTarget(cam.scrollX, this.velocityX, maxAmplitude, bounds.left, bounds.right - cam.width);
-      this.amplitudeX = cam.scrollX - this.targetX;
-      
-      this.targetY = this.getTarget(cam.scrollY, this.velocityY, maxAmplitude, bounds.top, bounds.bottom - cam.height);
-      this.amplitudeY = cam.scrollY - this.targetY;
-
-      this.autoScrollX = true;
-      this.autoScrollY = true;
+        this.autoScrollX = true;
+        this.autoScrollY = true;
+      }
     }
 
     private getTarget(currentScroll, velocity, maxAmplitude, minScroll, maxScroll){

@@ -31,7 +31,6 @@ export class GameOverScene extends Phaser.Scene {
 	}
 
 	onKeyReleased(key: KeyboardEvent) {
-		console.log(key);
 		switch (key.code) {
 			case 'Enter':
 			case 'Space':
