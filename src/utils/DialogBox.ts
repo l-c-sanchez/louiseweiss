@@ -227,6 +227,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	public destroy() {
 		this.TextObject.PhaserText.destroy();
 		this.Arrow.destroy();
+		this.ArrowButton.destroy();
 		this.Graphics.destroy();
 		super.destroy();
 	}

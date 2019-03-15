@@ -13,6 +13,12 @@ import { KineticScroll, KineticScrollSettings } from "../utils/KineticScroll";
 // Scroller on object: https://rexrainbow.github.io/phaser3-rex-notes/docs/site/scroller/
 // Complex objects: add everything to groups -> https://phasergames.com/complex-objects-phaser/
 
+enum State {
+    Paused,
+    Started,
+    Ended
+}
+
 export class Facebook extends Phaser.Scene {
     TextData	 : any;
     Title		 : GameText;
@@ -20,6 +26,7 @@ export class Facebook extends Phaser.Scene {
     Sheets       : Array<FacebookSheet>;
     Hud          : HudScene;
     GameEnded    : boolean;
+    GameState    : State;
     
     Scroll       : KineticScroll;
 
@@ -32,23 +39,10 @@ export class Facebook extends Phaser.Scene {
     }
     
     init() {
-
-	}
-
-	preload() {
-
-	}
-
-	create() {
-        this.TextData = this.cache.json.get('FacebookText');
-        this.cameras.main.setBackgroundColor(Config.FacebookSheet.backgroundColor);
-        this.createSheets();
-
-        this.Hud = <HudScene>this.scene.get("HudScene");
+        this.Hud = <HudScene>this.scene.get("HudScene");      
         this.Hud.setRemainingTime(Config.Facebook.time);
-
+        this.Hud.pauseTimer(true);
         this.Cursors = this.input.keyboard.createCursorKeys();
-        this.GameEnded = false;
 
         const settings: KineticScrollSettings = {
             kineticMovement: true,
@@ -59,8 +53,32 @@ export class Facebook extends Phaser.Scene {
         }
 
         this.Scroll = new KineticScroll(this, settings);
+        console.log(this.Hud);
+
+	}
+
+	preload() {
+
+	}
+
+	create() {
+        this.GameState = State.Paused;
+        this.TextData = this.cache.json.get('FacebookText'); 
+        this.StartDialog = new DialogBox(this, this.TextData.title, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+        this.add.existing(this.StartDialog);
+        this.StartDialog.getArrowButton().on('pointerup', this.startFacebook, this);
+
+        // this.input.on('pointerup', this.startFacebook, this);
+    }
+    startFacebook() {
+        this.StartDialog.destroy();
+        this.Hud.pauseTimer(false);
+        this.cameras.main.setBackgroundColor(Config.FacebookSheet.backgroundColor);
+        this.createSheets();
+       // this.Scroll = new KineticScroll(this, settings);
 
         // Scrolling with touch or mouse
+
         this.input.on(
             'pointerdown',
             function (pointer) {
@@ -81,19 +99,23 @@ export class Facebook extends Phaser.Scene {
             },
             this
         );
+
+        this.GameState = State.Started;
     }
 
     update() {
+        // console.log(this.Hud)
         if (this.Hud.getRemainingTime() <= 0){
-            if (!this.GameEnded){
-                this.GameEnded = true;
-
+            if (this.GameState == State.Started){
+                this.GameState = State.Ended;
                 // update global number of stars
                 this.registry.values.starCount += this.getStarNumber();
-
                 // TODO: disable like controls / go to next scene?
             }
         }
+
+        if (this.GameState != State.Started)
+            return;
 
         // Scrolling with Keyboard arrows
         if (this.Cursors.down != undefined && this.Cursors.down.isDown){
@@ -101,7 +123,6 @@ export class Facebook extends Phaser.Scene {
         } else if (this.Cursors.up != undefined && this.Cursors.up.isDown){
             this.scroll(-8);
         }
-
         // Kinetic scrolling (with Touch or mouse)
         this.Scroll.update();
     }
