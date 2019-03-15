@@ -60,6 +60,8 @@ export class CharacterChoice extends Phaser.Scene {
 			sheet.addButton(() => {
 				this.scene.start('HudScene');
 				this.scene.start(sceneToLaunch);
+				// this.game.sound.destroy();
+				console.log(this);
 			});
 
 			y += height + Config.CharacterChoice.padding;
