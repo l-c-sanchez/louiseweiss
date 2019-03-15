@@ -45,7 +45,7 @@ export class Menu extends Phaser.Scene {
 			loop: true,
 			delay: 0
 		});
-		this.Music.play();
+		// this.Music.play();
 
 		this.time.addEvent({
 			delay: 1000,
@@ -72,21 +72,19 @@ export class Menu extends Phaser.Scene {
 
 	startGame() {
 		if (!this.sys.game.device.os.desktop && !this.scale.isFullscreen) {
-			this.scale.toggleFullscreen();
+			// this.scale.toggleFullscreen();
 		}
 		if (this.StartDialog === null) {
 			let text = this.cache.json.get('StartText');
 			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 500, fontSize: 22 });
-			let button = this.StartDialog.getArrowButton();
+			let button = this.StartDialog.addArrowButton();
 
 			button.on('pointerup', () => {
-				console.log("hey")
 				if (this.StartDialog.isAnimationEnded()) {
-					console.log("hey1")
 					this.scene.start('CharacterChoice');
 				}
 			});
-			// let buttons = this.StartDialog.addButtons(["1 - Coucou! Ça va et toi? On se voit bientôt", "2 - Coucou! Désolé j'ai pas le temps de parler :s"], Orientation.Vertical, false);
+			// let buttons = this.StartDialog.addButtons(["Oui", "Non"], Orientation.Horizontal, true);
 			this.add.existing(this.StartDialog);
 		}
 	}

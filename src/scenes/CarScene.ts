@@ -68,8 +68,6 @@ class Layer {
     public destroy() {
 
         for (var i=0; i < this.LayerSprites.length; i++){
-            console.log("in destroy");
-            
             this.FloorGroup.remove(this.LayerSprites[i], true, true);
             this.StarGroup.remove(this.LayerSprites[i], true, true);
             this.RockGroup.remove(this.LayerSprites[i], true, true);

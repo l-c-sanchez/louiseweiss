@@ -63,6 +63,12 @@ export class Config {
 			fontSize: Config.GameText.defaultStyle.fontSize,
 			innerPadding: 10
 		},
+		defaultButtonOptions: {
+			borderThickness: 2,
+			borderColor: 0xfeb809,
+			borderAlpha: 0.8,
+			fontSize: Config.GameText.defaultStyle.fontSize,
+		},
 		arrow : {
 			offset: 2,
 			speed: 5
