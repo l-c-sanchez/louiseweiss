@@ -67,7 +67,7 @@ export class Facebook extends Phaser.Scene {
         this.GameState = State.Paused;
         this.TextInstructions = this.cache.json.get('Instructions'); 
         this.TextData = this.cache.json.get('FacebookText'); 
-        this.StartDialog = new DialogBox(this, this.TextInstructions.FacebookScene, false, Anchor.Center, { windowHeight: 370, fontSize: 22 });
+        this.StartDialog = new DialogBox(this, this.TextInstructions.FacebookScene, false, Anchor.Center, { windowHeight: 410, fontSize: 22 });
         this.add.existing(this.StartDialog);
         let button = this.StartDialog.addArrowButton();
         button.on('pointerup', this.startFacebook, this);

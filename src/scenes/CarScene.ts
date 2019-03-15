@@ -2,7 +2,13 @@ import { Config } from "../Config";
 import { MS2S } from "../init";
 import { GameText } from "../utils/GameText"
 import { HudScene } from "./HudScene";
+import { DialogBox, Anchor } from "../utils/DialogBox";
 
+enum State {
+    Paused,
+    Started,
+    Ended
+}
 
 class Layer {
     LayerSprites: Array<Phaser.GameObjects.Sprite>
@@ -152,7 +158,10 @@ export class CarGame extends Phaser.Scene {
 
     RemainingTime: number;
     RemainingTimeText: GameText;
-    GameEnded: boolean;
+    GameEnded    : boolean;
+    GameState    : State;
+    TextInstructions : any;
+    StartDialog	 : DialogBox = null;
 
     invicible: boolean;
 
@@ -173,10 +182,20 @@ export class CarGame extends Phaser.Scene {
         this.PlayerSpeed = Config.CarGame.playerSpeed;
         this.hud = <HudScene>this.scene.get("HudScene");
         this.hud.setRemainingTime(Config.CarGame.time);
+        this.hud.pauseTimer(true);
     }
 
     public create() {
-        // Create initial environment
+        this.GameState = State.Paused;
+        this.TextInstructions = this.cache.json.get('Instructions'); 
+    
+        this.StartDialog = new DialogBox(this, this.TextInstructions.FacebookScene, false, Anchor.Center, { windowHeight: 410, fontSize: 22 });
+        this.add.existing(this.StartDialog);
+        let button = this.StartDialog.addArrowButton();
+        button.on('pointerup', this.startCarGame, this);
+    }
+    
+    public startCarGame() {    // Create initial environment
         this.Generator.setup();
 
         // Create Player
@@ -203,6 +222,7 @@ export class CarGame extends Phaser.Scene {
         // Collision with objects
         this.physics.add.overlap(this.Player, this.Generator.StarGroup, this.collectStar, null, this);
         this.physics.add.overlap(this.Player, this.Generator.RockGroup, this.collideRock, null, this);
+        this.GameState = State.Started;
     }
 
 	private updateStarCount(difference: number) {
@@ -255,7 +275,8 @@ export class CarGame extends Phaser.Scene {
 	}
 
     public update(time: number, deltaTime: number) {
-
+        if (this.GameState != State.Started)
+            return;
 		deltaTime = MS2S(deltaTime);
         this.updateCamera(deltaTime);
         this.Generator.update();

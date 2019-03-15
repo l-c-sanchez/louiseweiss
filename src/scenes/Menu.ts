@@ -36,15 +36,15 @@ export class Menu extends Phaser.Scene {
 		this.StartText.setSize(40);
 		this.StartText.setOrigin(0.5, 0);
 
-		this.Music = this.sound.add('OdeToJoy', {
-			mute: false,
-			volume: 1,
-			rate: 1,
-			detune: 0,
-			seek: 0,
-			loop: true,
-			delay: 0
-		});
+		// this.Music = this.sound.add('OdeToJoy', {
+		// 	mute: false,
+		// 	volume: 1,
+		// 	rate: 1,
+		// 	detune: 0,
+		// 	seek: 0,
+		// 	loop: true,
+		// 	delay: 0
+		// });
 		// this.Music.play();
 
 		this.time.addEvent({

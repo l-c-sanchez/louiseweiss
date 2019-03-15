@@ -1,6 +1,12 @@
 import { Config } from "../Config";
 import { HudScene } from "./HudScene";
+import { DialogBox, Anchor } from "../utils/DialogBox";
 
+enum State {
+    Paused,
+    Started,
+    Ended
+}
 
 class PacmanCharacter {
 
@@ -12,7 +18,6 @@ class PacmanCharacter {
     Marker!: Phaser.Math.Vector2;
     Current!: number;
     Turning!: number;
-
 
     PrevTurnPoint = new Phaser.Math.Vector2(-1, -1);
     TurnPoint = new Phaser.Math.Vector2();
@@ -102,6 +107,11 @@ export class Pacman extends Phaser.Scene {
     Boss!: PacmanCharacter;
     Stars!: Phaser.Physics.Arcade.Group;
     gameEnded: boolean;
+    GameState: State;
+
+    TextInstructions : any;
+    StartDialog	 : DialogBox = null;
+
 
     // Player movement
     Cursors!: Phaser.Input.Keyboard.CursorKeys;
@@ -119,10 +129,24 @@ export class Pacman extends Phaser.Scene {
     public init() {
         this.hud = <HudScene>this.scene.get("HudScene");
         this.hud.setRemainingTime(Config.Pacman.time);
+        this.hud.pauseTimer(true);
         this.gameEnded = false;
     }
 
     public create() {
+
+        this.GameState = State.Paused;
+        this.TextInstructions = this.cache.json.get('Instructions'); 
+        this.StartDialog = new DialogBox(this, this.TextInstructions.PacmanScene, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+        this.add.existing(this.StartDialog);
+        let button = this.StartDialog.addArrowButton();
+        button.on('pointerup', this.startPacman, this);
+
+    }
+    startPacman() {
+        this.StartDialog.destroy();
+        this.hud.pauseTimer(false);
+
         var level = [
             [0, 1, 1, 1, 1, 1, 1, 1, 1, 2],
             [16, 17, 17, 17, 17, 17, 17, 17, 17, 18],
@@ -261,9 +285,12 @@ export class Pacman extends Phaser.Scene {
 
         this.move(Pacman.RIGHT, this.Player);
         this.move(Pacman.LEFT, this.Boss);
+        this.GameState = State.Started;
     }
 
     public update() {
+        if (this.GameState != State.Started)
+            return;
         this.Player.checkSpaceAround();
         this.Boss.checkSpaceAround();
         this.Boss.automaticMove(this.Player);
