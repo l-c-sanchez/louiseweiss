@@ -68,8 +68,9 @@ export class FacebookSheet extends Phaser.GameObjects.GameObject {
 	}
 
 	private createInnerWindow(x: number, y: number, width: number, height: number) {
+		let offset = this.Options.borderThickness;
 		this.Graphics.fillStyle(this.Options.windowColor, this.Options.windowAlpha);
-		this.Graphics.fillRect(x + 1, y + 1, width - 1, height - 1);
+		this.Graphics.fillRect(x + offset * 0.5, y + offset * 0.5, width - offset, height - offset);
 	}
 
 	private createOuterWindow(x: number, y: number, width: number, height: number) {

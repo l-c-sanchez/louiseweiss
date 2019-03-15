@@ -1,6 +1,24 @@
 import { Config } from "../Config";
 import { GameText } from "./GameText";
 
+/*
+** DialogBox : Creates a dialog box to show text within a frame.
+**
+** Constructor parameters:
+**  - env: a Phaser scene
+**  - text: the string to display
+**  - animate: if true, the text appears on screen over time letter by letter
+**  - anchor: where on screen to anchor the box. Center, Top and Down are possible
+**  - options: the options of the box (see DialogOptions)
+**
+** addArrowButton() : adds an arrow button to the box taking the whole screen
+** Returns the created button, so you can bind an event to it.
+** eg: button = myDialogBox.addArraowButton(); 
+**     button.on('pointerup', myFunction, this);
+**
+** addButtons() : adds textual buttons to the box.
+*/
+
 export interface DialogOptions {
 	borderThickness?: number,
 	borderColor?: number,
@@ -128,8 +146,8 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 			this.PosY = Config.Game.centerY - this.Options.windowHeight * 0.5;
 		}
 		this.Frame = this.Env.add.graphics();
-		this.createOuterWindow(this.PosX, this.PosY, this.Width, this.Height);
 		this.createInnerWindow(this.PosX, this.PosY, this.Width, this.Height);
+		this.createOuterWindow(this.PosX, this.PosY, this.Width, this.Height);
 	}
 
 	private createArrow(x: number, y: number, width: number, height: number) {
@@ -143,8 +161,9 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	}
 
 	private createInnerWindow(x: number, y: number, width: number, height: number) {
+		let offset = this.Options.borderThickness;
 		this.Frame.fillStyle(this.Options.windowColor, this.Options.windowAlpha);
-		this.Frame.fillRect(x + 1, y + 1, width - 1, height - 1);
+		this.Frame.fillRect(x + offset * 0.5, y + offset * 0.5, width - offset, height - offset);
 	}
 
 	private createOuterWindow(x: number, y: number, width: number, height: number) {
