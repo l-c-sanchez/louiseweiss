@@ -21,6 +21,7 @@ enum State {
 
 export class Facebook extends Phaser.Scene {
     TextData	 : any;
+    TextInstructions : any;
     Title		 : GameText;
     StartDialog	 : DialogBox = null;
     Sheets       : Array<FacebookSheet>;
@@ -53,7 +54,7 @@ export class Facebook extends Phaser.Scene {
         }
 
         this.Scroll = new KineticScroll(this, settings);
-        console.log(this.Hud);
+        console.log("in init");
 
 	}
 
@@ -62,11 +63,14 @@ export class Facebook extends Phaser.Scene {
 	}
 
 	create() {
+        console.log("in create")
         this.GameState = State.Paused;
+        this.TextInstructions = this.cache.json.get('Instructions'); 
         this.TextData = this.cache.json.get('FacebookText'); 
-        this.StartDialog = new DialogBox(this, this.TextData.title, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+        this.StartDialog = new DialogBox(this, this.TextInstructions.FacebookScene, false, Anchor.Center, { windowHeight: 370, fontSize: 22 });
         this.add.existing(this.StartDialog);
-        this.StartDialog.getArrowButton().on('pointerup', this.startFacebook, this);
+        let button = this.StartDialog.addArrowButton();
+        button.on('pointerup', this.startFacebook, this);
 
         // this.input.on('pointerup', this.startFacebook, this);
     }
