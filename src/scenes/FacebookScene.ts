@@ -5,13 +5,7 @@ import { FacebookSheet } from "../utils/FacebookSheet";
 import { HudScene } from "./HudScene";
 
 import { KineticScroll, KineticScrollSettings } from "../utils/KineticScroll";
-
-// Idea for scrolling improvement: try that -> https://jdnichollsc.github.io/Phaser-Kinetic-Scrolling-Plugin/
-// Ported to Phaser 3 here: https://gist.github.com/PaNaVTEC/ef18d2bee239514515e91d6c50012825
-
-// Other idea:
-// Scroller on object: https://rexrainbow.github.io/phaser3-rex-notes/docs/site/scroller/
-// Complex objects: add everything to groups -> https://phasergames.com/complex-objects-phaser/
+import { MouseWheel } from "../utils/MouseWheel";
 
 enum State {
     Paused,
@@ -22,13 +16,14 @@ enum State {
 export class Facebook extends Phaser.Scene {
     TextData	 : any;
     TextInstructions : any;
-    StartDialog	 : DialogBox = null;
-    Sheets       : Array<FacebookSheet>;
-    Hud          : HudScene;
-    GameEnded    : boolean;
-    GameState    : State;
+    StartDialog	  : DialogBox = null;
+    Sheets        : Array<FacebookSheet>;
+    Hud           : HudScene;
+    GameEnded     : boolean;
+    GameState     : State;
     
-    Scroll       : KineticScroll;
+    KineticScroll : KineticScroll;
+    Wheel         : MouseWheel;
 
     Cursors: Phaser.Input.Keyboard.CursorKeys; // keyboard input for scrolling
     // total height if we take all the posts (including those not on screen into account) 
@@ -37,7 +32,7 @@ export class Facebook extends Phaser.Scene {
     constructor() {
         super({ key: 'Facebook', active: false });
     }
-    
+     
     init() {
         this.Hud = <HudScene>this.scene.get("HudScene");      
         this.Hud.setRemainingTime(Config.Facebook.time);
@@ -59,48 +54,44 @@ export class Facebook extends Phaser.Scene {
         button.on('pointerup', this.startFacebook, this);
     }
 
-    // private wheelCallback(e){
-    //     console.log(e.deltaY);
-    //     this.scroll(e.deltaY);
-    // }
-
     startFacebook() {
         this.StartDialog.destroy();
         this.Hud.pauseTimer(false);
         this.cameras.main.setBackgroundColor(Config.FacebookSheet.backgroundColor);
         this.createSheets();
 
-       this.TotalHeight = this.getTotalHeight();
-       const settings: KineticScrollSettings = {
-           kineticMovement: true,
-           timeConstantScroll: 325,
-           horizontalScroll: false,
-           verticalScroll: true,
-           bounds: {left: 0, top: 0, bottom: this.TotalHeight, right: 300}
-       }
-       this.Scroll = new KineticScroll(this, settings);
-
-    //    const gameWindow = document.getElementById("phaser-app");
-    //    gameWindow.addEventListener("wheel", this.wheelCallback.bind(this));
+        // Scrolling with mouse wheel
+        this.Wheel = new MouseWheel();
+        this.Wheel.addEvent(this.wheelCallback, this);
 
         // Scrolling with touch or mouse
+        this.TotalHeight = this.getTotalHeight();
+        const settings: KineticScrollSettings = {
+            kineticMovement: true,
+            timeConstantScroll: 325,
+            horizontalScroll: false,
+            verticalScroll: true,
+            bounds: {left: 0, top: 0, bottom: this.TotalHeight, right: 300}
+        }
+        this.KineticScroll = new KineticScroll(this, settings);
+
         this.input.on(
             'pointerdown',
             function (pointer) {
-                this.Scroll.beginMove(pointer); 
+                this.KineticScroll.beginMove(pointer); 
             },
             this
         );
         this.input.on(
             'pointerup', 
             function (pointer) {
-                this.Scroll.endMove();
+                this.KineticScroll.endMove();
             },
             this);
         this.input.on(
             'pointermove', 
             function (pointer) {
-                this.Scroll.move(pointer);
+                this.KineticScroll.move(pointer);
             },
             this
         );
@@ -116,7 +107,9 @@ export class Facebook extends Phaser.Scene {
                 this.registry.values.starCount += this.getStarNumber();
                 // TODO: disable like controls / go to next scene?
 
-                // this.scene.start("CarGame");
+                // Before leaving the scene, we need to remove wheel events
+                this.Wheel.removeEvents();
+                this.scene.start("CarGame");
             }
         }
 
@@ -128,11 +121,15 @@ export class Facebook extends Phaser.Scene {
                 this.scroll(-8);
             }
             // Kinetic scrolling (with Touch or mouse)
-            if (this.Scroll){
-                this.Scroll.update();
+            if (this.KineticScroll){
+                this.KineticScroll.update();
             }
         }
 
+    }
+
+    private wheelCallback(e){
+        this.scroll(e.deltaY);
     }
 
     private getTotalHeight(){
