@@ -144,6 +144,12 @@ export class Pacman extends Phaser.Scene {
 
     }
     startPacman() {
+        // This avoid starting the game multiple times
+        if (this.GameState != State.Paused){
+            return;
+        }
+        this.GameState = State.Started;
+
         this.StartDialog.destroy();
         this.hud.pauseTimer(false);
 
@@ -285,7 +291,6 @@ export class Pacman extends Phaser.Scene {
 
         this.move(Pacman.RIGHT, this.Player);
         this.move(Pacman.LEFT, this.Boss);
-        this.GameState = State.Started;
     }
 
     public update() {

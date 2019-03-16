@@ -55,6 +55,12 @@ export class Facebook extends Phaser.Scene {
     }
 
     startFacebook() {
+        // This avoid starting the game multiple times
+        if (this.GameState != State.Paused){
+            return;
+        }
+        this.GameState = State.Started;
+
         this.StartDialog.destroy();
         this.Hud.pauseTimer(false);
         this.cameras.main.setBackgroundColor(Config.FacebookSheet.backgroundColor);
@@ -95,8 +101,7 @@ export class Facebook extends Phaser.Scene {
             },
             this
         );
-
-        this.GameState = State.Started;
+        
     }
 
     update() {

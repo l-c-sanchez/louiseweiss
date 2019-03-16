@@ -196,6 +196,12 @@ export class CarGame extends Phaser.Scene {
     }
     
     public startCarGame() {    // Create initial environment
+        // This avoid starting the game multiple times
+        if (this.GameState != State.Paused){
+            return;
+        }
+        this.GameState = State.Started;
+
         this.Generator.setup();
 
         // Create Player
@@ -222,7 +228,6 @@ export class CarGame extends Phaser.Scene {
         // Collision with objects
         this.physics.add.overlap(this.Player, this.Generator.StarGroup, this.collectStar, null, this);
         this.physics.add.overlap(this.Player, this.Generator.RockGroup, this.collideRock, null, this);
-        this.GameState = State.Started;
     }
 
 	private updateStarCount(difference: number) {
@@ -284,7 +289,7 @@ export class CarGame extends Phaser.Scene {
         var corridor = Config.CarGame.corridorSize;
         if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == "left" ){
             this.moveTo(this.Player.x -  corridor);
-            this.Swipe = "";      
+            this.Swipe = "";
         }
         else if (this.Cursors.right != undefined && this.Cursors.right.isDown || this.Swipe == "right") {
             this.moveTo(this.Player.x + corridor);
