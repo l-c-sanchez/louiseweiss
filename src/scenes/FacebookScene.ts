@@ -22,7 +22,6 @@ enum State {
 export class Facebook extends Phaser.Scene {
     TextData	 : any;
     TextInstructions : any;
-    Title		 : GameText;
     StartDialog	 : DialogBox = null;
     Sheets       : Array<FacebookSheet>;
     Hud          : HudScene;
@@ -44,7 +43,6 @@ export class Facebook extends Phaser.Scene {
         this.Hud.setRemainingTime(Config.Facebook.time);
         this.Hud.pauseTimer(true);
         this.Cursors = this.input.keyboard.createCursorKeys();
-        console.log("in init");
 	}
 
 	preload() {
@@ -52,7 +50,6 @@ export class Facebook extends Phaser.Scene {
 	}
 
 	create() {
-        console.log("in create")
         this.GameState = State.Paused;
         this.TextInstructions = this.cache.json.get('Instructions'); 
         this.TextData = this.cache.json.get('FacebookText'); 
@@ -60,28 +57,33 @@ export class Facebook extends Phaser.Scene {
         this.add.existing(this.StartDialog);
         let button = this.StartDialog.addArrowButton();
         button.on('pointerup', this.startFacebook, this);
-
-        this.TotalHeight = this.getTotalHeight();
-        const settings: KineticScrollSettings = {
-            kineticMovement: true,
-            timeConstantScroll: 325,
-            horizontalScroll: false,
-            verticalScroll: true,
-            bounds: {left: 0, top: 0, bottom: this.TotalHeight, right: 300}
-        }
-        this.Scroll = new KineticScroll(this, settings);
-
-        // this.input.on('pointerup', this.startFacebook, this);
     }
+
+    // private wheelCallback(e){
+    //     console.log(e.deltaY);
+    //     this.scroll(e.deltaY);
+    // }
+
     startFacebook() {
         this.StartDialog.destroy();
         this.Hud.pauseTimer(false);
         this.cameras.main.setBackgroundColor(Config.FacebookSheet.backgroundColor);
         this.createSheets();
-       // this.Scroll = new KineticScroll(this, settings);
+
+       this.TotalHeight = this.getTotalHeight();
+       const settings: KineticScrollSettings = {
+           kineticMovement: true,
+           timeConstantScroll: 325,
+           horizontalScroll: false,
+           verticalScroll: true,
+           bounds: {left: 0, top: 0, bottom: this.TotalHeight, right: 300}
+       }
+       this.Scroll = new KineticScroll(this, settings);
+
+    //    const gameWindow = document.getElementById("phaser-app");
+    //    gameWindow.addEventListener("wheel", this.wheelCallback.bind(this));
 
         // Scrolling with touch or mouse
-
         this.input.on(
             'pointerdown',
             function (pointer) {
@@ -107,24 +109,30 @@ export class Facebook extends Phaser.Scene {
     }
 
     update() {
-        // console.log(this.Hud)
         if (this.Hud.getRemainingTime() <= 0){
             if (this.GameState == State.Started){
                 this.GameState = State.Ended;
                 // update global number of stars
                 this.registry.values.starCount += this.getStarNumber();
                 // TODO: disable like controls / go to next scene?
+
+                // this.scene.start("CarGame");
             }
         }
 
-        // Scrolling with Keyboard arrows
-        if (this.Cursors.down != undefined && this.Cursors.down.isDown){
-            this.scroll(8);
-        } else if (this.Cursors.up != undefined && this.Cursors.up.isDown){
-            this.scroll(-8);
+        if (this.GameState === State.Started){
+            // Scrolling with Keyboard arrows
+            if (this.Cursors.down != undefined && this.Cursors.down.isDown){
+                this.scroll(8);
+            } else if (this.Cursors.up != undefined && this.Cursors.up.isDown){
+                this.scroll(-8);
+            }
+            // Kinetic scrolling (with Touch or mouse)
+            if (this.Scroll){
+                this.Scroll.update();
+            }
         }
-        // Kinetic scrolling (with Touch or mouse)
-        this.Scroll.update();
+
     }
 
     private getTotalHeight(){
