@@ -108,6 +108,7 @@ export class Pacman extends Phaser.Scene {
     Stars!: Phaser.Physics.Arcade.Group;
     gameEnded: boolean;
     GameState: State;
+    Config:any;
 
     TextInstructions : any;
     StartDialog	 : DialogBox = null;
@@ -121,7 +122,7 @@ export class Pacman extends Phaser.Scene {
     hud: HudScene;
 
     constructor() {
-        super({ key: 'Pacman', active:false });
+        super({ key: 'Pacman', active:false});
     }
 
     preload(){}
@@ -134,10 +135,21 @@ export class Pacman extends Phaser.Scene {
     }
 
     public create() {
+	
+        var character: string = this.registry.get('character');
+        console.log(character);        
+        switch (character) {
+            case "clara": this.Config = Config.Pacman.clara;
+                break;
+            case "valentin": this.Config = Config.Pacman.valentin;
+                break;
+            default:
+                this.Config = Config.Pacman.clara;
+        }
+
 
         this.GameState = State.Paused;
-        this.TextInstructions = this.cache.json.get('Instructions'); 
-        this.StartDialog = new DialogBox(this, this.TextInstructions.PacmanScene, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+        this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
         this.add.existing(this.StartDialog);
         let button = this.StartDialog.addArrowButton();
         button.on('pointerup', this.startPacman, this);
@@ -193,59 +205,59 @@ export class Pacman extends Phaser.Scene {
         var bossAnims = ["", "boss_left", "boss_right", "boss_up", "boss_down" ];
         this.anims.create({
             key:"right",
-            frames:this.anims.generateFrameNumbers('clara', { start: 1, end:6 }),
+            frames:this.anims.generateFrameNumbers(this.Config.sprite_char, { start: 1, end:6 }),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key:"left",
-            frames:this.anims.generateFrameNumbers('clara', { start: 7, end:13 }),
+            frames:this.anims.generateFrameNumbers(this.Config.sprite_char, { start: 7, end:13 }),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key:"up",
-            frames:this.anims.generateFrameNumbers('clara', { start: 1, end:6 }),
+            frames:this.anims.generateFrameNumbers(this.Config.sprite_char, { start: 1, end:6 }),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key:"down",
-            frames:this.anims.generateFrameNumbers('clara', { start: 7, end:13 }),
+            frames:this.anims.generateFrameNumbers(this.Config.sprite_char, { start: 7, end:13 }),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key:"boss_right",
-            frames:this.anims.generateFrameNumbers('boss', { start: 1, end:6 }),
+            frames:this.anims.generateFrameNumbers(this.Config.sprite_follower, { start: 1, end:6 }),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key:"boss_left",
-            frames:this.anims.generateFrameNumbers('boss', { start: 7, end:13 }),
+            frames:this.anims.generateFrameNumbers(this.Config.sprite_follower, { start: 7, end:13 }),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key:"boss_up",
-            frames:this.anims.generateFrameNumbers('boss', { start: 1, end:6 }),
+            frames:this.anims.generateFrameNumbers(this.Config.sprite_follower, { start: 1, end:6 }),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key:"boss_down",
-            frames:this.anims.generateFrameNumbers('boss', { start: 7, end:13 }),
+            frames:this.anims.generateFrameNumbers(this.Config.sprite_follower, { start: 7, end:13 }),
             frameRate: 10,
             repeat: -1
         });
 
-        this.Boss = new PacmanCharacter(this, 'boss', 272, 240, bossAnims);
+        this.Boss = new PacmanCharacter(this, this.Config.sprite_follower, 272, 240, bossAnims);
         this.Boss.setSpeed(60);
         // this.Boss.Sprite.setScale(0.5, 0.5);
         this.physics.add.collider(this.Boss.Sprite, layer);
 
-        this.Player = new PacmanCharacter(this, 'clara', 48, 48, claraAnims);
+        this.Player = new PacmanCharacter(this, this.Config.sprite_char, 48, 48, claraAnims);
         this.Player.setSpeed(60);
         // this.Player.Sprite.setScale(0.5, 0.5);
         this.Threshold = 10;//Math.ceil((32 - this.Player.displayWidth) / 2);

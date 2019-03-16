@@ -153,6 +153,7 @@ export class CarGame extends Phaser.Scene {
     Player: Phaser.Physics.Arcade.Sprite;
     PlayerSpeed: number;
     TargetPos: number;
+    Config:any;
 
     hud: HudScene;
 
@@ -160,7 +161,6 @@ export class CarGame extends Phaser.Scene {
     RemainingTimeText: GameText;
     GameEnded    : boolean;
     GameState    : State;
-    TextInstructions : any;
     StartDialog	 : DialogBox = null;
 
     invicible: boolean;
@@ -186,10 +186,19 @@ export class CarGame extends Phaser.Scene {
     }
 
     public create() {
+        var character: string = this.registry.get('character');   
+        switch (character) {
+            case "clara": this.Config = Config.CarGame.clara;
+                break;
+            case "valentin": this.Config = Config.CarGame.valentin;
+                break;
+            default:
+                this.Config = Config.CarGame.valentin;
+        }
+        console.log(character);
         this.GameState = State.Paused;
-        this.TextInstructions = this.cache.json.get('Instructions'); 
-    
-        this.StartDialog = new DialogBox(this, this.TextInstructions.FacebookScene, false, Anchor.Center, { windowHeight: 410, fontSize: 22 });
+
+        this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { windowHeight: 410, fontSize: 22 });
         this.add.existing(this.StartDialog);
         let button = this.StartDialog.addArrowButton();
         button.on('pointerup', this.startCarGame, this);
@@ -197,6 +206,7 @@ export class CarGame extends Phaser.Scene {
     
     public startCarGame() {    // Create initial environment
         this.Generator.setup();
+        this.hud.pauseTimer(false);
 
         // Create Player
         this.Player = this.physics.add.sprite(Config.Game.centerX, Config.Game.centerY / 2 * 3, 'voiture');

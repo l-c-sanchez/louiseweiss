@@ -98,6 +98,14 @@ export class Config {
 	}
 
 	public static CarGame = {
+		clara: {
+			instruction: "évitez tous les trucs divertissants qui pourraient vous dévier du vote (à changer)",
+			sprite_char: "lucie",
+		},
+		valentin: {
+			instruction: "Vous prenez votre voiture pour rendre visite à l’une de vos patientes dans un petit village rural. La route est difficile: Evitez les vaches et collectez le plus d’étoiles européennes.\n\nBonus : Ecoutez avec attention la radio, une question vous sera posée à l’issue du jeu",
+			sprite_char: "valentin",
+		},
 		rows: 20,
 		columns: 12,
 		starProbability: 0.2,
@@ -114,7 +122,10 @@ export class Config {
 		padding: 10,
 		topPadding: 20,
 		// We put 2.5 news per page. That way, the user will see that he needs to scroll
-		postPerPage: 2.5
+		postPerPage: 2.5,
+		lucie: {
+			instruction:  "Dans les transports pour aller au boulot, Lucie consulte son fil d’actualité Facebook. Elle a cependant du mal à trouver des informations sur les élections européennes.\n\nAide-la à mieux repérer les informations. Sur chacune des pages, sélectionner les publications concernant le scrutin."
+		},
 	}
 
 	public static FacebookSheet = {
@@ -137,6 +148,16 @@ export class Config {
 	};
 
 	public static Pacman = {
-		time: 30
+		time: 30,
+		clara: {
+			instruction:  "Vous souhaitez aller voter pour les élections européennes. Mais votre patron souhaite que vous vous déplaciez à l’étranger dans le cadre d’une réunion professionnelle.\n\nEt récoltez le plus d’étoiles possibles",
+			sprite_char: "clara",
+			sprite_follower: "boss"
+		},
+		valentin: {
+			instruction: "Evitez les gilets jaunes (à changer)",
+			sprite_char: "clara",
+			sprite_follower: "boss"
+		}
 	}
 }
