@@ -186,16 +186,21 @@ export class CarGame extends Phaser.Scene {
     }
 
     public create() {
-        var character: string = this.registry.get('character');   
-        switch (character) {
-            case "clara": this.Config = Config.CarGame.clara;
-                break;
-            case "valentin": this.Config = Config.CarGame.valentin;
-                break;
-            default:
-                this.Config = Config.CarGame.valentin;
-        }
+        var character: string = this.registry.get('character'); 
         console.log(character);
+        var games: any = this.cache.json.get('Games');
+        this.Config = games.CarGame[character];
+        if (!this.Config){
+            throw new TypeError("Invalid config");
+        }
+        // switch (character) {
+        //     case "clara": this.Config = games.CarGame.clara;
+        //         break;
+        //     case "Valentin": this.Config = games.CarGame.valentin;
+        //         break;
+        //     default:
+        //         this.Config = games.CarGame.valentin;
+        // }
         this.GameState = State.Paused;
 
         this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { windowHeight: 410, fontSize: 22 });

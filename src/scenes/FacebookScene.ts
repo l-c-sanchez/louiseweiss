@@ -48,12 +48,18 @@ export class Facebook extends Phaser.Scene {
 	create() {
         console.log("in create")
         var character: string = this.registry.get('character');
-        console.log(character);        
-        switch (character) {
-            case "lucie": this.Config = Config.Facebook.lucie;
-            default:
-                this.Config = Config.Facebook.lucie;
+        var games = this.cache.json.get('Games');
+        console.log(character);
+        console.log(games);
+        this.Config = games.Facebook[character];
+        if (!this.Config){
+            throw new TypeError("Invalid config");
         }
+        // switch (character) {
+        //     case "lucie": this.Config = games.Facebook.lucie;
+        //     default:
+        //         this.Config = games.Facebook.lucie;
+        // }
         this.GameState = State.Paused;
         this.TextData = this.cache.json.get('FacebookText'); 
         this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { windowHeight: 410, fontSize: 22 });

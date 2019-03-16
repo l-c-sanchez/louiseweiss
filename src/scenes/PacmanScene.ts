@@ -110,7 +110,6 @@ export class Pacman extends Phaser.Scene {
     GameState: State;
     Config:any;
 
-    TextInstructions : any;
     StartDialog	 : DialogBox = null;
 
 
@@ -137,15 +136,19 @@ export class Pacman extends Phaser.Scene {
     public create() {
 	
         var character: string = this.registry.get('character');
-        console.log(character);        
-        switch (character) {
-            case "clara": this.Config = Config.Pacman.clara;
-                break;
-            case "valentin": this.Config = Config.Pacman.valentin;
-                break;
-            default:
-                this.Config = Config.Pacman.clara;
+        var games = this.cache.json.get('Games'); 
+        this.Config = games.Pacman[character];
+        if (!this.Config){
+            throw new TypeError("Invalid config");
         }
+        // switch (character) {
+        //     case "clara": this.Config = games.Pacman.clara;
+        //         break;
+        //     case "valentin": this.Config = games.Pacman.valentin;
+        //         break;
+        //     default:
+        //         this.Config = games.Pacman.clara;
+        // }
 
 
         this.GameState = State.Paused;

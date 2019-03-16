@@ -57,11 +57,11 @@ export class CharacterChoice extends Phaser.Scene {
 			this.add.existing(sheet);
 
 			let sceneToLaunch = this.TextData.characters[i].sceneToLaunch;
-			let nameCharacter = this.TextData.characters[i].name;
+			let nameCharacter: string = this.TextData.characters[i].name;
 			sheet.addButton(() => {
 				this.scene.start('HudScene');
 				this.scene.start(sceneToLaunch);
-				this.registry.set('character', nameCharacter);
+				this.registry.set('character', nameCharacter.toLowerCase());
 				// this.game.sound.destroy();
 				console.log(this);
 			});
@@ -80,15 +80,5 @@ export class CharacterChoice extends Phaser.Scene {
 		}
 	}
 
-	onKeyReleased(key: KeyboardEvent) {
-		// console.log(key);
-		// switch (key.code) {
-		// 	case 'Enter':
-		// 	case 'Space':
-		// 		this.startGame();
-		// 		break;
-		// 	default:
-		// 		break;
-		// }
-	}
+	onKeyReleased(key: KeyboardEvent) {	}
 }
