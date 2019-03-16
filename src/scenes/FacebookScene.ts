@@ -15,12 +15,13 @@ enum State {
 
 export class Facebook extends Phaser.Scene {
     TextData	 : any;
-    TextInstructions : any;
-    StartDialog	  : DialogBox = null;
-    Sheets        : Array<FacebookSheet>;
-    Hud           : HudScene;
-    GameEnded     : boolean;
-    GameState     : State;
+    Title		 : GameText;
+    StartDialog	 : DialogBox = null;
+    Sheets       : Array<FacebookSheet>;
+    Hud          : HudScene;
+    GameEnded    : boolean;
+    GameState    : State;
+    Config       : any;
     
     KineticScroll : KineticScroll;
     Wheel         : MouseWheel;
@@ -45,10 +46,17 @@ export class Facebook extends Phaser.Scene {
 	}
 
 	create() {
+        console.log("in create")
+        var character: string = this.registry.get('character');
+        console.log(character);        
+        switch (character) {
+            case "lucie": this.Config = Config.Facebook.lucie;
+            default:
+                this.Config = Config.Facebook.lucie;
+        }
         this.GameState = State.Paused;
-        this.TextInstructions = this.cache.json.get('Instructions'); 
         this.TextData = this.cache.json.get('FacebookText'); 
-        this.StartDialog = new DialogBox(this, this.TextInstructions.FacebookScene, false, Anchor.Center, { windowHeight: 410, fontSize: 22 });
+        this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { windowHeight: 410, fontSize: 22 });
         this.add.existing(this.StartDialog);
         let button = this.StartDialog.addArrowButton();
         button.on('pointerup', this.startFacebook, this);
@@ -101,7 +109,7 @@ export class Facebook extends Phaser.Scene {
             },
             this
         );
-        
+
     }
 
     update() {
