@@ -44,18 +44,7 @@ export class Facebook extends Phaser.Scene {
         this.Hud.setRemainingTime(Config.Facebook.time);
         this.Hud.pauseTimer(true);
         this.Cursors = this.input.keyboard.createCursorKeys();
-
-        const settings: KineticScrollSettings = {
-            kineticMovement: true,
-            timeConstantScroll: 325,
-            horizontalScroll: false,
-            verticalScroll: true,
-            bounds: {left: 0, top: 0, bottom: this.TotalHeight, right: 300}
-        }
-
-        this.Scroll = new KineticScroll(this, settings);
         console.log("in init");
-
 	}
 
 	preload() {
@@ -71,6 +60,16 @@ export class Facebook extends Phaser.Scene {
         this.add.existing(this.StartDialog);
         let button = this.StartDialog.addArrowButton();
         button.on('pointerup', this.startFacebook, this);
+
+        this.TotalHeight = this.getTotalHeight();
+        const settings: KineticScrollSettings = {
+            kineticMovement: true,
+            timeConstantScroll: 325,
+            horizontalScroll: false,
+            verticalScroll: true,
+            bounds: {left: 0, top: 0, bottom: this.TotalHeight, right: 300}
+        }
+        this.Scroll = new KineticScroll(this, settings);
 
         // this.input.on('pointerup', this.startFacebook, this);
     }
@@ -118,9 +117,6 @@ export class Facebook extends Phaser.Scene {
             }
         }
 
-        if (this.GameState != State.Started)
-            return;
-
         // Scrolling with Keyboard arrows
         if (this.Cursors.down != undefined && this.Cursors.down.isDown){
             this.scroll(8);
@@ -129,6 +125,15 @@ export class Facebook extends Phaser.Scene {
         }
         // Kinetic scrolling (with Touch or mouse)
         this.Scroll.update();
+    }
+
+    private getTotalHeight(){
+        let topPadding = Config.Facebook.topPadding;
+        let postPerPage = Config.Facebook.postPerPage;
+        let padding = Config.Facebook.padding;
+        let sheetHeight = (Config.Game.height - topPadding) / postPerPage - padding;
+        let totalHeight = topPadding + (sheetHeight + padding) * this.TextData.lucie.length + padding;
+        return totalHeight;
     }
 
     private scroll(deltaY: number){
@@ -145,8 +150,6 @@ export class Facebook extends Phaser.Scene {
         let postPerPage = Config.Facebook.postPerPage;
         let padding = Config.Facebook.padding;
         let sheetHeight = (Config.Game.height - topPadding) / postPerPage - padding;
-
-        this.TotalHeight = topPadding + (sheetHeight + padding) * this.TextData.lucie.length + padding;
 
         let x = 0;
         let y = topPadding;
