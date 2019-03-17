@@ -1,5 +1,37 @@
 {
-	"Answers": {
-		"1" : {}
+	"Choices": {
+		"1": {
+			"text": "Ça va pas :(",
+			"stars": -1,
+			"nextDialog": "sad"
+		},
+		"2": {
+			"text": "Ça va :)",
+			"stars": 1,
+			"nextDialog": "happy"
+		},
+		"3": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "3"
+		}
+	},
+	"Dialogs": {
+		"start": {
+			"text": "Bonjour! Comment vas-tu?",
+			"linkedChoices": ["1", "2"]
+		},
+		"sad": {
+			"text": "Oh... Qu'est ce qui t'arrive?",
+			"linkedChoices": []
+		},
+		"happy": {
+			"text": "Cool!",
+			"linkedChoices": ["3"]
+		},
+		"3": {
+			"text": "On se voit bientôt?",
+			"linkedChoices": []
+		}
 	}
 }

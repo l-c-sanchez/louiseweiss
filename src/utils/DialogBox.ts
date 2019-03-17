@@ -17,6 +17,8 @@ import { GameText } from "./GameText";
 **     button.on('pointerup', myFunction, this);
 **
 ** addButtons() : adds textual buttons to the box.
+**
+** It could be a good thing to add Frame and Button classes if I have time
 */
 
 export interface DialogOptions {
@@ -75,6 +77,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	private ArrowRightLimit	: number;
 	private Buttons			: Array<Phaser.GameObjects.Sprite>;
 	private ButtonFrames	: Array<Phaser.GameObjects.Graphics>;
+	private ButtonText		: Array<GameText>;
 
 	private PosX: number;
 	private PosY: number;
@@ -93,6 +96,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		this.Arrow = null;
 		this.Buttons = new Array<Phaser.GameObjects.Sprite>();
 		this.ButtonFrames = new Array<Phaser.GameObjects.Graphics>();
+		this.ButtonText = new Array<GameText>();
 
 		if (options != undefined)
 			this.setOptions(options);
@@ -233,6 +237,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 			text.setWordWrap(Config.Game.width - this.Options.padding * 2 - 25);
 			text.setSize(this.ButtonOptions.fontSize);
 			text.setAlign('left');
+			this.ButtonText.push(text);
 			let button = this.createButton(x, y, text.PhaserText.displayWidth, text.PhaserText.displayHeight);
 			this.Buttons.push(button);
 			if(frame) {
@@ -257,6 +262,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 			text.setOrigin(0, 0);
 			// text.setWordWrap(Config.Game.width - this.Options.padding * 2 - 25);
 			text.setSize(this.ButtonOptions.fontSize);
+			this.ButtonText.push(text);
 			let frameX = x - this.Options.innerPadding;
 			let frameY = y - this.Options.innerPadding;
 			let frameWidth = text.PhaserText.displayWidth + this.Options.innerPadding * 2;
@@ -301,6 +307,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		buttonFrame.lineStyle(this.ButtonOptions.borderThickness, this.ButtonOptions.borderColor,
 			this.ButtonOptions.borderAlpha);
 		buttonFrame.strokeRect(x, y, width, height);
+		this.ButtonFrames.push(buttonFrame);
 		return buttonFrame;
 	}
 	//#endregion
@@ -326,15 +333,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	public destroy() {
 		this.TextObject.PhaserText.destroy();
 		this.Frame.destroy();
-		if (this.Arrow != null) {
-			this.Arrow.destroy();
-		}
-		for (let i = 0; i < this.Buttons.length; ++i) {
-			this.Buttons[i].destroy();
-		}
-		for (let i = 0; i < this.ButtonFrames.length; ++i) {
-			this.ButtonFrames[i].destroy();
-		}
+		this.removeButtons();
 		super.destroy();
 	}
 
@@ -365,6 +364,23 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 			buttons = this.createHorizontalButtons(labels, frame);
 		}
 		return buttons;
+	}
+
+	public removeButtons() {
+		for (let i = 0; i < this.Buttons.length; ++i) {
+			this.Buttons[i].destroy();
+		}
+		this.Buttons = new Array<Phaser.GameObjects.Sprite>();
+		for (let i = 0; i < this.ButtonFrames.length; ++i) {
+			this.ButtonFrames[i].destroy();
+		}
+		this.ButtonFrames = new Array<Phaser.GameObjects.Graphics>();
+		for (let i = 0; i < this.ButtonText.length; ++i) {
+			this.ButtonText[i].destroy();
+		}
+		this.ButtonText = new Array<GameText>();
+		if (this.Arrow != null)
+			this.Arrow.destroy();
 	}
 
 	// public getArrowButton(){

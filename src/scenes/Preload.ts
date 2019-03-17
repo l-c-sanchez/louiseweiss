@@ -29,6 +29,7 @@ export class Preload extends Phaser.Scene {
 
 		//Dialogs
 		this.load.image('Arrow', 'sprites/Arrow.png');
+		this.load.json('DialogExample', 'texts/DialogExample.json');
 
 		// Main Menu
 		this.load.image('EuropeanFlag', 'sprites/EuropeanFlag.png');

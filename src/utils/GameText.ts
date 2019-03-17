@@ -9,6 +9,10 @@ export class GameText {
 		this.PhaserText = this.Env.add.text(x, y, content, Config.GameText.defaultStyle);
 	}
 
+	destroy() {
+		this.PhaserText.destroy();
+	}
+
 	setText(content: string) {
 		this.PhaserText.setText(content);
 	}

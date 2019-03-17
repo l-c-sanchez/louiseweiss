@@ -2,6 +2,7 @@ import { Config } from "../Config";
 import { GameText } from "../utils/GameText";
 import { DialogBox, Anchor, Orientation } from "../utils/DialogBox";
 import { Scene } from "phaser";
+import { DialogTree } from "../utils/DialogTree";
 
 export class Menu extends Phaser.Scene {
 	StartText	: GameText;
@@ -75,17 +76,25 @@ export class Menu extends Phaser.Scene {
 			// this.scale.toggleFullscreen();
 		}
 		if (this.StartDialog === null) {
-			let text = this.cache.json.get('StartText');
-			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 500, fontSize: 22 });
-			let button = this.StartDialog.addArrowButton();
-
-			button.on('pointerup', () => {
-				if (this.StartDialog.isAnimationEnded()) {
-					this.scene.start('CharacterChoice');
-				}
+			// let text = this.cache.json.get('StartText');
+			let text = this.cache.json.get('DialogExample');
+			let tree = new DialogTree(this, text, false, Anchor.Down, { windowHeight: 300 });
+			tree.on
+			this.add.existing(tree);
+			tree.on('destroy', () => {
+				this.scene.start('CharacterChoice');
 			});
-			// let buttons = this.StartDialog.addButtons(["Oui", "Non"], Orientation.Horizontal, true);
-			this.add.existing(this.StartDialog);
+			
+			this.StartDialog = tree.Box;
+			// this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 500, fontSize: 22 });
+			// let button = this.StartDialog.addArrowButton();
+
+			// button.on('pointerup', () => {
+			// 	if (this.StartDialog.isAnimationEnded()) {
+			// 		this.scene.start('CharacterChoice');
+			// 	}
+			// });
+			// this.add.existing(this.StartDialog);
 		}
 	}
 

@@ -1,6 +1,5 @@
 import { Config } from "../Config";
 import { GameText } from "../utils/GameText";
-import { DialogBox, Anchor } from "../utils/DialogBox";
 import { CharacterSheet } from "../utils/CharacterSheet";
 
 export class CharacterChoice extends Phaser.Scene {
