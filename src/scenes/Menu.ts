@@ -7,7 +7,7 @@ import { DialogTree } from "../utils/DialogTree";
 export class Menu extends Phaser.Scene {
 	StartText	: GameText;
 	StartDialog	: DialogBox = null;
-	Music		: Phaser.Sound.BaseSound;
+	public Music		: Phaser.Sound.BaseSound;
 
 	constructor() {
         super({ key: 'Menu', active: false });
@@ -46,7 +46,7 @@ export class Menu extends Phaser.Scene {
 			loop: true,
 			delay: 0
 		});
-		// this.Music.play();
+		this.Music.play();
 
 		this.time.addEvent({
 			delay: 1000,

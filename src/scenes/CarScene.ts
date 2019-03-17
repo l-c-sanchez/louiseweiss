@@ -2,7 +2,13 @@ import { Config } from "../Config";
 import { MS2S } from "../init";
 import { GameText } from "../utils/GameText"
 import { HudScene } from "./HudScene";
+import { DialogBox, Anchor } from "../utils/DialogBox";
 
+enum State {
+    Paused,
+    Started,
+    Ended
+}
 
 class Layer {
     LayerSprites: Array<Phaser.GameObjects.Sprite>
@@ -147,12 +153,15 @@ export class CarGame extends Phaser.Scene {
     Player: Phaser.Physics.Arcade.Sprite;
     PlayerSpeed: number;
     TargetPos: number;
+    Config:any;
 
     hud: HudScene;
 
     RemainingTime: number;
     RemainingTimeText: GameText;
-    GameEnded: boolean;
+    GameEnded    : boolean;
+    GameState    : State;
+    StartDialog	 : DialogBox = null;
 
     invicible: boolean;
 
@@ -173,11 +182,42 @@ export class CarGame extends Phaser.Scene {
         this.PlayerSpeed = Config.CarGame.playerSpeed;
         this.hud = <HudScene>this.scene.get("HudScene");
         this.hud.setRemainingTime(Config.CarGame.time);
+        this.hud.pauseTimer(true);
     }
 
     public create() {
-        // Create initial environment
+        var character: string = this.registry.get('character'); 
+        console.log(character);
+        var games: any = this.cache.json.get('Games');
+        this.Config = games.CarGame[character];
+        if (!this.Config){
+            throw new TypeError("Invalid config");
+        }
+        // switch (character) {
+        //     case "clara": this.Config = games.CarGame.clara;
+        //         break;
+        //     case "Valentin": this.Config = games.CarGame.valentin;
+        //         break;
+        //     default:
+        //         this.Config = games.CarGame.valentin;
+        // }
+        this.GameState = State.Paused;
+
+        this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { windowHeight: 410, fontSize: 22 });
+        this.add.existing(this.StartDialog);
+        let button = this.StartDialog.addArrowButton();
+        button.on('pointerup', this.startCarGame, this);
+    }
+    
+    public startCarGame() {    // Create initial environment
+        // This avoid starting the game multiple times
+        if (this.GameState != State.Paused){
+            return;
+        }
+        this.GameState = State.Started;
+
         this.Generator.setup();
+        this.hud.pauseTimer(false);
 
         // Create Player
         this.Player = this.physics.add.sprite(Config.Game.centerX, Config.Game.centerY / 2 * 3, 'voiture');
@@ -255,7 +295,8 @@ export class CarGame extends Phaser.Scene {
 	}
 
     public update(time: number, deltaTime: number) {
-
+        if (this.GameState != State.Started)
+            return;
 		deltaTime = MS2S(deltaTime);
         this.updateCamera(deltaTime);
         this.Generator.update();
@@ -263,7 +304,7 @@ export class CarGame extends Phaser.Scene {
         var corridor = Config.CarGame.corridorSize;
         if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == "left" ){
             this.moveTo(this.Player.x -  corridor);
-            this.Swipe = "";      
+            this.Swipe = "";
         }
         else if (this.Cursors.right != undefined && this.Cursors.right.isDown || this.Swipe == "right") {
             this.moveTo(this.Player.x + corridor);

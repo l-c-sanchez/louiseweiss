@@ -5,13 +5,7 @@ import { FacebookSheet } from "../utils/FacebookSheet";
 import { HudScene } from "./HudScene";
 
 import { KineticScroll, KineticScrollSettings } from "../utils/KineticScroll";
-
-// Idea for scrolling improvement: try that -> https://jdnichollsc.github.io/Phaser-Kinetic-Scrolling-Plugin/
-// Ported to Phaser 3 here: https://gist.github.com/PaNaVTEC/ef18d2bee239514515e91d6c50012825
-
-// Other idea:
-// Scroller on object: https://rexrainbow.github.io/phaser3-rex-notes/docs/site/scroller/
-// Complex objects: add everything to groups -> https://phasergames.com/complex-objects-phaser/
+import { MouseWheel } from "../utils/MouseWheel";
 
 enum State {
     Paused,
@@ -21,15 +15,16 @@ enum State {
 
 export class Facebook extends Phaser.Scene {
     TextData	 : any;
-    TextInstructions : any;
     Title		 : GameText;
     StartDialog	 : DialogBox = null;
     Sheets       : Array<FacebookSheet>;
     Hud          : HudScene;
     GameEnded    : boolean;
     GameState    : State;
+    Config       : any;
     
-    Scroll       : KineticScroll;
+    KineticScroll : KineticScroll;
+    Wheel         : MouseWheel;
 
     Cursors: Phaser.Input.Keyboard.CursorKeys; // keyboard input for scrolling
     // total height if we take all the posts (including those not on screen into account) 
@@ -38,24 +33,12 @@ export class Facebook extends Phaser.Scene {
     constructor() {
         super({ key: 'Facebook', active: false });
     }
-    
+     
     init() {
         this.Hud = <HudScene>this.scene.get("HudScene");      
         this.Hud.setRemainingTime(Config.Facebook.time);
         this.Hud.pauseTimer(true);
         this.Cursors = this.input.keyboard.createCursorKeys();
-
-        const settings: KineticScrollSettings = {
-            kineticMovement: true,
-            timeConstantScroll: 325,
-            horizontalScroll: false,
-            verticalScroll: true,
-            bounds: {left: 0, top: 0, bottom: this.TotalHeight, right: 300}
-        }
-
-        this.Scroll = new KineticScroll(this, settings);
-        console.log("in init");
-
 	}
 
 	preload() {
@@ -64,71 +47,117 @@ export class Facebook extends Phaser.Scene {
 
 	create() {
         console.log("in create")
+        var character: string = this.registry.get('character');
+        var games = this.cache.json.get('Games');
+        console.log(character);
+        console.log(games);
+        this.Config = games.Facebook[character];
+        if (!this.Config){
+            throw new TypeError("Invalid config");
+        }
+        // switch (character) {
+        //     case "lucie": this.Config = games.Facebook.lucie;
+        //     default:
+        //         this.Config = games.Facebook.lucie;
+        // }
         this.GameState = State.Paused;
-        this.TextInstructions = this.cache.json.get('Instructions'); 
         this.TextData = this.cache.json.get('FacebookText'); 
-        this.StartDialog = new DialogBox(this, this.TextInstructions.FacebookScene, false, Anchor.Center, { windowHeight: 370, fontSize: 22 });
+        this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { windowHeight: 410, fontSize: 22 });
         this.add.existing(this.StartDialog);
         let button = this.StartDialog.addArrowButton();
         button.on('pointerup', this.startFacebook, this);
-
-        // this.input.on('pointerup', this.startFacebook, this);
     }
+
     startFacebook() {
+        // This avoid starting the game multiple times
+        if (this.GameState != State.Paused){
+            return;
+        }
+        this.GameState = State.Started;
+
         this.StartDialog.destroy();
         this.Hud.pauseTimer(false);
         this.cameras.main.setBackgroundColor(Config.FacebookSheet.backgroundColor);
         this.createSheets();
-       // this.Scroll = new KineticScroll(this, settings);
+
+        // Scrolling with mouse wheel
+        this.Wheel = new MouseWheel();
+        this.Wheel.addEvent(this.wheelCallback, this);
 
         // Scrolling with touch or mouse
+        this.TotalHeight = this.getTotalHeight();
+        const settings: KineticScrollSettings = {
+            kineticMovement: true,
+            timeConstantScroll: 325,
+            horizontalScroll: false,
+            verticalScroll: true,
+            bounds: {left: 0, top: 0, bottom: this.TotalHeight, right: 300}
+        }
+        this.KineticScroll = new KineticScroll(this, settings);
 
         this.input.on(
             'pointerdown',
             function (pointer) {
-                this.Scroll.beginMove(pointer); 
+                this.KineticScroll.beginMove(pointer); 
             },
             this
         );
         this.input.on(
             'pointerup', 
             function (pointer) {
-                this.Scroll.endMove();
+                this.KineticScroll.endMove();
             },
             this);
         this.input.on(
             'pointermove', 
             function (pointer) {
-                this.Scroll.move(pointer);
+                this.KineticScroll.move(pointer);
             },
             this
         );
 
-        this.GameState = State.Started;
     }
 
     update() {
-        // console.log(this.Hud)
         if (this.Hud.getRemainingTime() <= 0){
             if (this.GameState == State.Started){
                 this.GameState = State.Ended;
                 // update global number of stars
                 this.registry.values.starCount += this.getStarNumber();
                 // TODO: disable like controls / go to next scene?
+
+                // Before leaving the scene, we need to remove wheel events
+                this.Wheel.removeEvents();
+                this.scene.start("CarGame");
             }
         }
 
-        if (this.GameState != State.Started)
-            return;
-
-        // Scrolling with Keyboard arrows
-        if (this.Cursors.down != undefined && this.Cursors.down.isDown){
-            this.scroll(8);
-        } else if (this.Cursors.up != undefined && this.Cursors.up.isDown){
-            this.scroll(-8);
+        if (this.GameState === State.Started){
+            // Scrolling with Keyboard arrows
+            if (this.Cursors.down != undefined && this.Cursors.down.isDown){
+                this.scroll(8);
+            } else if (this.Cursors.up != undefined && this.Cursors.up.isDown){
+                this.scroll(-8);
+            }
+            // Kinetic scrolling (with Touch or mouse)
+            if (this.KineticScroll){
+                this.KineticScroll.update();
+            }
         }
-        // Kinetic scrolling (with Touch or mouse)
-        this.Scroll.update();
+
+    }
+
+    private wheelCallback(e){
+        this.scroll(e.deltaY);
+    }
+
+    private getTotalHeight(){
+        let topPadding = Config.Facebook.topPadding;
+        let postPerPage = Config.Facebook.postPerPage;
+        let padding = Config.Facebook.padding;
+        let sheetHeight = (Config.Game.height - topPadding) / postPerPage - padding;
+        let totalHeight = topPadding + (sheetHeight + padding) * this.TextData.lucie.length + padding;
+        return totalHeight;
     }
 
     private scroll(deltaY: number){
@@ -145,8 +174,6 @@ export class Facebook extends Phaser.Scene {
         let postPerPage = Config.Facebook.postPerPage;
         let padding = Config.Facebook.padding;
         let sheetHeight = (Config.Game.height - topPadding) / postPerPage - padding;
-
-        this.TotalHeight = topPadding + (sheetHeight + padding) * this.TextData.lucie.length + padding;
 
         let x = 0;
         let y = topPadding;

@@ -2,7 +2,7 @@
 	"Choices": {
 		"1": {
 			"text": "Ça va pas :(",
-			"stars": -1,
+			"stars": 0,
 			"nextDialog": "sad"
 		},
 		"2": {
@@ -14,23 +14,32 @@
 			"text": "",
 			"stars": 0,
 			"nextDialog": "3"
+		},
+		"flemme": {
+			"text": "J'ai pas envie d'aller voteeeeeer",
+			"stars": -1,
+			"nextDialog": "4"
 		}
 	},
 	"Dialogs": {
 		"start": {
-			"text": "Bonjour! Comment vas-tu?",
+			"text": "Bonjour ! Comment vas-tu ?",
 			"linkedChoices": ["1", "2"]
 		},
 		"sad": {
-			"text": "Oh... Qu'est ce qui t'arrive?",
-			"linkedChoices": []
+			"text": "Oh... Qu'est ce qui t'arrive ?",
+			"linkedChoices": ["flemme"]
 		},
 		"happy": {
 			"text": "Cool!",
 			"linkedChoices": ["3"]
 		},
 		"3": {
-			"text": "On se voit bientôt?",
+			"text": "On se voit bientôt ?",
+			"linkedChoices": []
+		},
+		"4": {
+			"text": "Arf, Motives-toi ! On se voit bientôt ?",
 			"linkedChoices": []
 		}
 	}

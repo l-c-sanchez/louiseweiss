@@ -77,7 +77,7 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 
 		this.Box.setText(this.Dialogs[key].text);
 		let buttons = this.addButtons(this.Dialogs[key].linkedChoices);
-		this.addButtonsCallbacks(buttons, this.Dialogs[key].linkedChoices.length == 0);
+		this.addButtonsCallbacks(key, buttons);
 	}
 
 	private addButtons(choiceArray: Array<string>): Array<Phaser.GameObjects.Sprite> {
@@ -92,14 +92,14 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 		return buttons;
 	}
 
-	private addButtonsCallbacks(buttons: Array<Phaser.GameObjects.Sprite>, endTree: boolean) {
-		if (endTree) {
+	private addButtonsCallbacks(dialogKey: string, buttons: Array<Phaser.GameObjects.Sprite>) {
+		if (this.Dialogs[dialogKey].linkedChoices.length == 0) {
 			buttons[0].on('pointerup', () => {
 				this.DestroyBoxDelayed = true;
 			}, this);
 		} else {
 			for (let i = 0; i < buttons.length; ++i) {
-				let choiceKey = this.Dialogs[key].linkedChoices[i];
+				let choiceKey = this.Dialogs[dialogKey].linkedChoices[i];
 				buttons[i].on('pointerup', () => {
 					this.ChoiceIndex = choiceKey;
 				}, this);
