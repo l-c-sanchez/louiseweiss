@@ -1,5 +1,4 @@
 import { DialogBox, Anchor, DialogOptions, Orientation } from "./DialogBox";
-import { GameObjects } from "phaser";
 
 interface Choice {
 	text: string;
@@ -48,7 +47,6 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 
 	preUpdate() {
 		if (this.ChoiceIndex != null) {
-			console.log("removeButtons");
 			this.Box.removeButtons();
 			this.showDialog(this.Choices[this.ChoiceIndex].nextDialog);
 			this.ChoiceIndex = null;
@@ -69,7 +67,6 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 
 		this.Box = new DialogBox(this.Env, "", animate, anchor, options);
 		this.Env.add.existing(this.Box);
-
 		this.showDialog('start');
 	}
 
@@ -79,30 +76,35 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 		}
 
 		this.Box.setText(this.Dialogs[key].text);
-		let labels = this.getChoicesText(this.Dialogs[key].linkedChoices);
+		let buttons = this.addButtons(this.Dialogs[key].linkedChoices);
+		this.addButtonsCallbacks(buttons, this.Dialogs[key].linkedChoices.length == 0);
+	}
 
-		console.log(labels);
+	private addButtons(choiceArray: Array<string>): Array<Phaser.GameObjects.Sprite> {
 		let buttons = new Array<Phaser.GameObjects.Sprite>();
+		let labels = this.getChoicesText(choiceArray);
+
 		if (!labels.length || (labels.length == 1 && labels[0] === "")) {
-			console.log("arrowButton");
 			buttons.push(this.Box.addArrowButton());
 		} else {
 			buttons = this.Box.addButtons(labels, Orientation.Vertical, true);
 		}
+		return buttons;
+	}
 
-		if (labels.length) {
+	private addButtonsCallbacks(buttons: Array<Phaser.GameObjects.Sprite>, endTree: boolean) {
+		if (endTree) {
+			buttons[0].on('pointerup', () => {
+				this.DestroyBoxDelayed = true;
+			}, this);
+		} else {
 			for (let i = 0; i < buttons.length; ++i) {
 				let choiceKey = this.Dialogs[key].linkedChoices[i];
 				buttons[i].on('pointerup', () => {
 					this.ChoiceIndex = choiceKey;
 				}, this);
 			}
-		} else {
-			buttons[0].on('pointerup', () => {
-				this.DestroyBoxDelayed = true;
-			}, this);
 		}
-
 	}
 
 	private getChoicesText(choiceArray: Array<string>): Array<string> {
