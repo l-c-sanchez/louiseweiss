@@ -77,9 +77,9 @@ export class Menu extends Phaser.Scene {
 		}
 		if (this.StartDialog === null) {
 			// let text = this.cache.json.get('StartText');
+			this.scene.launch('HudScene');
 			let text = this.cache.json.get('DialogExample');
 			let tree = new DialogTree(this, text, false, Anchor.Down, { windowHeight: 300 });
-			tree.on
 			this.add.existing(tree);
 			tree.on('destroy', () => {
 				this.scene.start('CharacterChoice');

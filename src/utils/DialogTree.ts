@@ -47,6 +47,7 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 
 	preUpdate() {
 		if (this.ChoiceIndex != null) {
+			this.updateStarCount(this.Choices[this.ChoiceIndex].stars);
 			this.Box.removeButtons();
 			this.showDialog(this.Choices[this.ChoiceIndex].nextDialog);
 			this.ChoiceIndex = null;
@@ -118,5 +119,15 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 		if (labelsArray[0] === "" && labelsArray.length > 1)
 			console.error('Error. There should not be an empty choice in a multiple choices dialog');
 		return labelsArray;
+	}
+
+	private updateStarCount(difference: number) {
+		if (this.Env.registry.has('starCount')) {
+			let stars: number = this.Env.registry.get('starCount');
+			stars = Math.max(0, stars + difference);
+			this.Env.registry.set('starCount', stars);
+		} else {
+			console.warn("The starCount value should be initialized in the registry before this call.");
+		}
 	}
 }

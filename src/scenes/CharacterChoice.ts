@@ -58,7 +58,7 @@ export class CharacterChoice extends Phaser.Scene {
 			let sceneToLaunch = this.TextData.characters[i].sceneToLaunch;
 			let nameCharacter: string = this.TextData.characters[i].name;
 			sheet.addButton(() => {
-				this.scene.start('HudScene');
+				// this.scene.start('HudScene');
 				this.scene.start(sceneToLaunch);
 				this.registry.set('character', nameCharacter.toLowerCase());
 				// this.game.sound.destroy();
