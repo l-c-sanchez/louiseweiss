@@ -26,23 +26,10 @@ export class CharacterChoice extends Phaser.Scene {
 		this.Title.setSize(30);
 
 		this.createSheets();
-
-		// this.input.on('pointerup', this.startGame, this);
-		// this.input.keyboard.on('keyup', this.onKeyReleased, this);
 	}
 
 	update() {
 
-	}
-
-	private startGame() {
-		// if (this.StartDialog === null) {
-		// let text = this.cache.json.get('StartText');
-		// 	this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
-		// 	this.add.existing(this.StartDialog);
-		this.scene.start('HudScene');
-		// // this.scene.start('CarGame');  // CarGame Pacman
-		// this.scene.start('Facebook');  // fb
 	}
 
 	private createSheets() {
@@ -58,7 +45,7 @@ export class CharacterChoice extends Phaser.Scene {
 			let sceneToLaunch = this.TextData.characters[i].sceneToLaunch;
 			let nameCharacter: string = this.TextData.characters[i].name;
 			sheet.addButton(() => {
-				// this.scene.start('HudScene');
+				this.scene.launch('HudScene');
 				this.scene.start(sceneToLaunch);
 				this.registry.set('character', nameCharacter.toLowerCase());
 				// this.game.sound.destroy();
@@ -69,15 +56,15 @@ export class CharacterChoice extends Phaser.Scene {
 		}
 	}
 
-	public onButtonPressed(hitArea: any, x: number, y: number, gameObject: Phaser.GameObjects.GameObject) {
-		console.log(gameObject);
-		let pointer = this.input.activePointer;
-		if (pointer.justUp) {
-			console.log(gameObject);
-		// 	this.scene.start('HudScene');
-		// 	this.scene.start(this.TextData.characters[i].sceneToLaunch);	
-		}
-	}
+	// public onButtonPressed(hitArea: any, x: number, y: number, gameObject: Phaser.GameObjects.GameObject) {
+	// 	console.log(gameObject);
+	// 	let pointer = this.input.activePointer;
+	// 	if (pointer.justUp) {
+	// 		console.log(gameObject);
+	// 		// this.scene.start('HudScene');
+	// 	// 	this.scene.start(this.TextData.characters[i].sceneToLaunch);	
+	// 	}
+	// }
 
-	onKeyReleased(key: KeyboardEvent) {	}
+	// onKeyReleased(key: KeyboardEvent) {	}
 }

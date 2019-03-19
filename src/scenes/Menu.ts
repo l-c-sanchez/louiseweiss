@@ -29,7 +29,7 @@ export class Menu extends Phaser.Scene {
 		let picture = this.add.image(Config.Game.centerX, Config.Game.centerY * 1.1, "EuropeanFlag");
 		picture.setOrigin(0.5, 0.5);
 
-		let title = new GameText(this, Config.Game.centerX, Config.Game.centerY * 0.30, "Élections Européennes");
+		let title = new GameText(this, Config.Game.centerX, Config.Game.centerY * 0.30, "Moi, citoyen européen");
 		title.setOrigin(0.5, 0.5);
 		title.setSize(40);
 
@@ -76,25 +76,25 @@ export class Menu extends Phaser.Scene {
 			// this.scale.toggleFullscreen();
 		}
 		if (this.StartDialog === null) {
-			// let text = this.cache.json.get('StartText');
-			this.scene.launch('HudScene');
-			let text = this.cache.json.get('DialogExample');
-			let tree = new DialogTree(this, text, false, Anchor.Down, { windowHeight: 300 });
-			this.add.existing(tree);
-			tree.on('destroy', () => {
-				this.scene.start('CharacterChoice');
-			});
-			
-			this.StartDialog = tree.Box;
-			// this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 500, fontSize: 22 });
-			// let button = this.StartDialog.addArrowButton();
-
-			// button.on('pointerup', () => {
-			// 	if (this.StartDialog.isAnimationEnded()) {
-			// 		this.scene.start('CharacterChoice');
-			// 	}
+			let text = this.cache.json.get('StartText');
+			// this.scene.launch('HudScene');
+			// let text = this.cache.json.get('DialogExample');
+			// let tree = new DialogTree(this, text, false, Anchor.Down, { windowHeight: 300 });
+			// this.add.existing(tree);
+			// tree.on('destroy', () => {
+			// 	this.scene.start('CharacterChoice');
 			// });
-			// this.add.existing(this.StartDialog);
+			
+			// this.StartDialog = tree.Box;
+			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+			let button = this.StartDialog.addArrowButton();
+
+			button.on('pointerup', () => {
+				if (this.StartDialog.isAnimationEnded()) {
+					this.scene.start('CharacterChoice');
+				}
+			});
+			this.add.existing(this.StartDialog);
 		}
 	}
 
