@@ -86,7 +86,11 @@ export class Menu extends Phaser.Scene {
 			// });
 			
 			// this.StartDialog = tree.Box;
-			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, {
+				fitContent: true,
+				windowHeight: 300,
+				fontSize: 22
+			});
 			let button = this.StartDialog.addArrowButton();
 
 			button.on('pointerup', () => {

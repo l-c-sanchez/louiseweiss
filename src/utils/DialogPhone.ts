@@ -1,54 +1,51 @@
 import { DialogBox, Anchor, DialogOptions, Orientation } from "./DialogBox";
+import { DialogObj, ChoiceObj, DialogTreeObj } from "./DialogTree";
+import { Config } from "../Config";
 
-export interface Choice {
-	text: string;
-	stars: number;
-	nextDialog: string;
-}
-
-export interface Dialog {
-	text: string;
-	linkedChoices: Array<string>;
-}
-
-export interface DialogObj {
-	[key: string]: Dialog;
-}
-
-export interface ChoiceObj {
-	[key: string]: Choice;
-}
-
-export interface DialogTreeObj {
-	Choices: ChoiceObj;
-	Dialogs: DialogObj;
-}
-
-export class DialogTree extends Phaser.GameObjects.GameObject {
+export class DialogPhone extends Phaser.GameObjects.GameObject {
 
 	private Env					: Phaser.Scene;
+	private Animate				: boolean;
+	private Options				: DialogOptions;
+	private InputFieldOptions	: DialogOptions;
+
 	private Dialogs				: DialogObj;
 	private Choices				: ChoiceObj;
-	public Box					: DialogBox;
+	private Messages			: Array<DialogBox>;
+	private InputField			: DialogBox;
 	private ChoiceIndex			: string;
 	private DestroyBoxDelayed	: boolean;
 
-	constructor(env: Phaser.Scene, content: DialogTreeObj, animate: boolean, anchor: Anchor, options?: DialogOptions) {
-		super(env, 'DialogTree');
+	constructor(env: Phaser.Scene, content: DialogTreeObj, animate: boolean, options?: DialogOptions) {
+		super(env, 'DialogPhone');
 		this.Env = env;
+		this.Animate = animate;
+		this.Options = options;
+		this.InputFieldOptions = {};
+		Object.assign(this.InputFieldOptions, options);
 		this.Dialogs = content.Dialogs;
 		this.Choices = content.Choices;
 		this.ChoiceIndex = null;
 		this.DestroyBoxDelayed = false;
+		this.Messages = new Array<DialogBox>();
 	
-		this.initDialogBox(animate, anchor, options);
+		this.Options.offsetY = 0;
+
+		this.initDialogBox();
 	}
 
 	preUpdate() {
 		if (this.ChoiceIndex != null) {
 			this.updateStarCount(this.Choices[this.ChoiceIndex].stars);
-			this.Box.removeButtons();
+			this.InputField.removeButtons();
 			this.showDialog(this.Choices[this.ChoiceIndex].nextDialog);
+
+			let answer = this.Choices[this.ChoiceIndex].text
+			let message = new DialogBox(this.Env, answer, this.Animate, Anchor.Top, this.Options);
+			this.Options.offsetY += message.getHeight();
+			this.Env.add.existing(message);
+			this.Messages.push(message);
+
 			this.ChoiceIndex = null;
 		} else if (this.DestroyBoxDelayed) {
 			this.destroy();
@@ -56,17 +53,19 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 	}
 
 	destroy() {
-		this.Box.destroy();
+		for (let i = 0; i < this.Messages.length; ++i) {
+			this.Messages[i].destroy();
+		}
+		this.InputField.destroy();
 		super.destroy();
 	}
 
-	private initDialogBox(animate: boolean, anchor: Anchor, options?: DialogOptions) {
+	private initDialogBox() {
 		if (!this.Dialogs.hasOwnProperty('start')) {
 			console.error('Error. There should be a Dialog with the key "start" in the Dialog Tree.');
 		}
 
-		this.Box = new DialogBox(this.Env, "", animate, anchor, options);
-		this.Env.add.existing(this.Box);
+		this.InputField = new DialogBox(this.Env, "", this.Animate, Anchor.Down, this.InputFieldOptions);
 		this.showDialog('start');
 	}
 
@@ -75,7 +74,12 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 			console.error('Error. There is no Dialog with this id in the Tree');
 		}
 
-		this.Box.setText(this.Dialogs[key].text);
+		let message = new DialogBox(this.Env, this.Dialogs[key].text, this.Animate, Anchor.Top, this.Options);
+		this.Options.offsetY += message.getHeight();
+		console.log(message.getHeight(), this.Options.offsetY);
+		this.Env.add.existing(message);
+		this.Messages.push(message);
+
 		let buttons = this.addButtons(this.Dialogs[key].linkedChoices);
 		this.addButtonsCallbacks(key, buttons);
 	}
@@ -85,9 +89,9 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 		let labels = this.getChoicesText(choiceArray);
 
 		if (!labels.length || (labels.length == 1 && labels[0] === "")) {
-			buttons.push(this.Box.addArrowButton());
+			buttons.push(this.InputField.addArrowButton());
 		} else {
-			buttons = this.Box.addButtons(labels, Orientation.Vertical, true);
+			buttons = this.InputField.addButtons(labels, Orientation.Vertical, true);
 		}
 		return buttons;
 	}

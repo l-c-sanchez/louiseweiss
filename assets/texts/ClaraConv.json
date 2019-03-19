@@ -1,0 +1,144 @@
+{
+	"Choices": {
+		"1": {
+			"text": "Oui mon chat ^_^ ... Tu veux quoi ?",
+			"stars": 0,
+			"nextDialog": "2"
+		},
+		"demenagement": {
+			"text": "Basta, on déménage !",
+			"stars": 5,
+			"nextDialog": "3"
+		},
+		"barcelone": {
+			"text": "Barcelone.",
+			"stars": 0,
+			"nextDialog": "4"
+		},
+		"lol": {
+			"text": "Mais quelle patate. Quand tu es travailleur, tu peux librement t’installer dans un autre pays de l’Espace économique européen. SANS titre de séjour ou de travail.",
+			"stars": 0,
+			"nextDialog": "5"
+		},
+		"details": {
+			"text": "Ya certaines conditions à remplir les 5 premières années; et suivant le pays, il faut se faire enregistrer auprès des autorités locales...",
+			"stars": 0,
+			"nextDialog": "6"
+		},
+		"eleve": {
+			"text": "Non mon, élève. On te file un droit au séjour permanent.",
+			"stars": 0,
+			"nextDialog": "7"
+		},
+		"niais": {
+			"text": "T’es niais mais je t’aime.",
+			"stars": 0,
+			"nextDialog": ""
+		},
+		"voyage": {
+			"text": "On part en voyage !",
+			"stars": 5,
+			"nextDialog": "10"
+		},
+		"circulation": {
+			"text": "Heeeeu la liberté de circulation des personnes, banane ? L’espace Schengen ?... Voyager LIBREMENT ! Entre les 26 pays de l'espace Schengen !",
+			"stars": 0,
+			"nextDialog": "11"
+		},
+		"arg": {
+			"text": "Nope, dans 22 des 28 pays de l’Union européenne. Et 4 autres Etats : Norvège, Islande, Suisse et Liechtenstein.",
+			"stars": 0,
+			"nextDialog": "12"
+		},
+		"culture": {
+			"text": "Pour ta culture G : 40% du tourisme mondial s'effectue dans l'Union européenne",
+			"stars": 0,
+			"nextDialog": "13"
+		},
+		"but": {
+			"text": "Où tu veux...sauf Espagne et Italie! ",
+			"stars": 0,
+			"nextDialog": "14"
+		},
+		"morale": {
+			"text": "T’as tout compris patate",
+			"stars": 0,
+			"nextDialog": ""
+		}
+	},
+	"Dialogs": {
+		"start": {
+			"text": "Ça roule BB ?",
+			"linkedChoices": [
+				"1"
+			]
+		},
+		"2": {
+			"text": "Toujours marre de mon travail. J'ai besoin d'aaaaair !",
+			"linkedChoices": [
+				"demenagement",
+				"voyage"
+			]
+		},
+		"3": {
+			"text": "Wow, du calme haha ! Et où, Dijon?",
+			"linkedChoices": [
+				"barcelone"
+			]
+		},
+		"4": {
+			"text": "Joke ? Et le visa ?",
+			"linkedChoices": [
+				"lol"
+			]
+		},
+		"5": {
+			"text": "C’est tout ?",
+			"linkedChoices": [
+				"details"
+			]
+		},
+		"6": {
+			"text": "Et après on te vire, madame la professeur ?",
+			"linkedChoices": [
+				"eleve"
+			]
+		},
+		"7": {
+			"text": "Sympa… #jaimel’UE <3 <3",
+			"linkedChoices": [
+				"niais"
+			]
+		},
+		"10": {
+			"text": "Heeeeu tu me prends de court ! Sans passeport, je suis coincé ici.",
+			"linkedChoices": [
+				"circulation"
+			]
+		},
+		"11": {
+			"text": "Partout dans l’Union européenne ?",
+			"linkedChoices": [
+				"arg"
+			]
+		},
+		"12": {
+			"text": "... Stylé ",
+			"linkedChoices": [
+				"culture"
+			]
+		},
+		"13": {
+			"text": " OK l’ex-sciencespiste; Et on va où ?",
+			"linkedChoices": [
+				"but"
+			]
+		},
+		"14": {
+			"text": "Du tourisme sauf dans les pays les plus touristiques ! ",
+			"linkedChoices": [
+				"morale"
+			]
+		}
+	}
+}

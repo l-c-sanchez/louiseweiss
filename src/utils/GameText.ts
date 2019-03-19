@@ -21,6 +21,10 @@ export class GameText {
 		this.PhaserText.setOrigin(x, y);
 	}
 
+	setPosition(x: number, y: number) {
+		this.PhaserText.setPosition(x, y);
+	}
+
 	setSize(size: number) {
 		this.PhaserText.setFontSize(size);
 	}

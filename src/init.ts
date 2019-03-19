@@ -8,6 +8,8 @@ import { GameOverScene } from "./scenes/GameOverScene";
 import { HudScene } from "./scenes/HudScene";
 import { CharacterChoice } from "./scenes/CharacterChoice";
 import { Facebook } from "./scenes/FacebookScene";
+import { Tilemaps } from "phaser";
+import { ClaraConv } from "./scenes/ClaraConv";
 
 export class App {
 
@@ -25,6 +27,7 @@ export class App {
 		this.Scenes.push(new HudScene());
 		this.Scenes.push(new CharacterChoice());
 		this.Scenes.push(new Facebook());
+		this.Scenes.push(new ClaraConv());
 		
 		Config.Phaser.scene = this.Scenes;
 
