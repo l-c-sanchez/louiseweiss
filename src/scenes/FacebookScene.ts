@@ -46,11 +46,11 @@ export class Facebook extends Phaser.Scene {
 	}
 
 	create() {
-        console.log("in create")
+        // console.log("in create")
         var character: string = this.registry.get('character');
         var games = this.cache.json.get('Games');
-        console.log(character);
-        console.log(games);
+        // console.log(character);
+        // console.log(games);
         this.Config = games.Facebook[character];
         if (!this.Config){
             throw new TypeError("Invalid config");
@@ -129,7 +129,7 @@ export class Facebook extends Phaser.Scene {
 
                 // Before leaving the scene, we need to remove wheel events
                 this.Wheel.removeEvents();
-                this.scene.start("CarGame");
+                this.scene.start("Result");
             }
         }
 

@@ -63,6 +63,7 @@ export class Preload extends Phaser.Scene {
 		this.load.on('progress', this.onProgress, this);
 		this.load.on('complete', this.onComplete, this);
 
+		this.load.json('ResultText', 'texts/ResultText.json');
 		this.load.json('Games', 'texts/Games.json');
 	}
 

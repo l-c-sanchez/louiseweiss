@@ -1,0 +1,45 @@
+{
+    "lucie": {
+        "contextIfSuccess": "Mais ce n’est pas si évident pour les autres jeunes.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon Frédéric Dabi, directeur général adjoint de l'institut de sondage Ifop.",
+        "contextIfFail" : "Ne pas aller voter est assez commun chez les jeunes comme votre personnage.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon Frédéric Dabi, directeur général adjoint de l'institut de sondage Ifop.",
+        "dialog" : {
+                "Choices": {
+                        "choice1": {
+                                "text": "",
+                                "stars": 0,
+                                "nextDialog": "arg1"
+                        },
+                        "2": {
+                                "text": "",
+                                "stars": 0,
+                                "nextDialog": "arg2"
+                        },
+                        "3": {
+                                "text": "",
+                                "stars": 0,
+                                "nextDialog": "arg3"
+                        }
+                },
+                "Dialogs": {
+                        "start": {
+                                "text": "Nous avons interrogé Anne Muxel, sociologue, pour découvrir qu’elles sont les raisons de la forte abstention des jeunes. Elle distingue plusieurs éléments d’explication :",
+                                "linkedChoices": ["choice1"]
+                        },
+                        "arg1": {
+                                "text": "Un manque d’intérêt des jeunes pour ce scrutin, alors que nombre d’eux ne savent pas comment s’informer",
+                                "linkedChoices": ["2"]
+                        },
+                        "arg2": {
+                                "text": "Une défiance envers les institutions européennes",
+                                "linkedChoices": ["3"]
+                        },
+                        "arg3": {
+                                "text": "L’Europe leur paraît détachée de leur quotidien",
+                                "linkedChoices": []
+                        }
+                }
+        }
+        
+
+    }
+}
