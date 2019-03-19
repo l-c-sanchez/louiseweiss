@@ -19,7 +19,8 @@ export class FacebookSheet extends Phaser.GameObjects.GameObject {
 	private Pos				: Phaser.Math.Vector2;
 	private Options			: DialogOptions;
 	private ContentPos		: Phaser.Math.Vector2;
-    private Graphics		: Phaser.GameObjects.Graphics;
+	private Graphics		: Phaser.GameObjects.Graphics;
+	public Reactions		: Phaser.GameObjects.Sprite;
 	public Like		    : Phaser.GameObjects.Sprite;
 	public LikeOk		    : Phaser.GameObjects.Sprite;
 	private ProfilePicture	: Phaser.GameObjects.Sprite;
@@ -91,32 +92,33 @@ export class FacebookSheet extends Phaser.GameObjects.GameObject {
 	private createText() {
 		let x = this.ContentPos.x;
 		let y = this.ContentPos.y;
-		let text = this.displayText(x, y, this.Post.publisher);
+		let text = this.displayText(x, y, this.Post.publisher, "bold");
 
-        y += text.PhaserText.displayHeight;
+        y += text.PhaserText.displayHeight + 15;
         
-		text = this.displayText(x, y, this.Post.text);
+		text = this.displayText(x, y, this.Post.text, "normal");
 		y += text.PhaserText.displayHeight;
-		text = this.displayText(x, y, String(this.Post.fake));
-		y += text.PhaserText.displayHeight;
-        text = this.displayText(x, y, String(this.Post.comments));
-        y += text.PhaserText.displayHeight;
-		text = this.displayText(x, y, String(this.Post.likes));
-        y = this.Pos.y + this.Options.windowHeight - this.Options.padding - this.Options.innerPadding ;
-        // console.log(this.Options);
-        // console.log(Config.Game.width, Config.Game.width - 50)
-        // x = this.WindowWidth - this.Options.innerPadding;
+
+		// do no display fake new (useful only for coding)
+		// text = this.displayText(x, y, String(this.Post.fake));
+		// y += text.PhaserText.displayHeight;
+        // text = this.displayText(x, y, String(this.Post.comments));
+        // y += text.PhaserText.displayHeight;
+		
+		y = this.Pos.y + this.Options.windowHeight - this.Options.padding - this.Options.innerPadding ;
+		// text = this.displayText(x + 15, y, String(this.Post.likes));
+		this.Reactions = this.Env.add.sprite(x, y, 'fb_reactions');
+		this.Reactions.setOrigin(0, 0);
         x = this.Pos.x + this.WindowWidth / 2;
-        // text = this.displayText(x, y, "J'aime");
-        // text.setOrigin(0.5, 0);
-        // text.setOrigin(1, 0);
-        //x += text.PhaserText.displayWidth;
 		this.addLikeButton(x, y);
 	}
 
-	private displayText(x: number, y: number, content: string): GameText {
-        let text = new GameText(this.Env, x, y, content);
-        text.setColor("1d2028");
+	private displayText(x: number, y: number, content: string, fontStyle: string): GameText {
+		let text = new GameText(this.Env, x, y, content);
+		text.setAlign("left");
+		text.setColor("1d2028");
+		text.setFontStyle(fontStyle)
+		text.setWordWrap(this.WindowWidth - this.Options.innerPadding);
 		return text;
 	}
 

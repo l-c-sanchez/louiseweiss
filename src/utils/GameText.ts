@@ -29,6 +29,10 @@ export class GameText {
 		this.PhaserText.setFontSize(size);
 	}
 
+	setFontStyle(type: string) {
+		this.PhaserText.setFontStyle(type);
+	}
+
 	setColor(color: string) {
 		this.PhaserText.setColor(color);
 	}
