@@ -18,11 +18,11 @@ export class Result extends Phaser.Scene {
 	}
 
 	init() {
-        console.log("in init - result scene");
+        // console.log("in init - result scene");
     }
 
 	preload() {
-        console.log("in preload - result scene");
+        // console.log("in preload - result scene");
     }
 
 	create() {
@@ -58,7 +58,7 @@ export class Result extends Phaser.Scene {
 
 	update() {
 
-        console.log("in update - result scene");
+        // console.log("in update - result scene");
     }
 
     startExplanation() {
@@ -77,7 +77,8 @@ export class Result extends Phaser.Scene {
 
     startResearcher() {
         this.Context.destroy();
-        var explanations = new DialogTree(this, this.Config.dialog, false, Anchor.Center, {fitContent:true});
+		var explanations = new DialogTree(this, this.Config.dialog, false, Anchor.Center, {fitContent:true});
+		this.add.existing(explanations);
     }
 
 

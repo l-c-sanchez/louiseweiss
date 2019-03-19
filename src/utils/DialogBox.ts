@@ -27,6 +27,7 @@ export interface DialogOptions {
 	offsetY?: number,
 	cropRight?: number,
 	cropLeft?: number,
+	textColor?: string,
 	borderThickness?: number,
 	borderColor?: number,
 	borderAlpha?: number,
@@ -128,12 +129,15 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		// this.createWindow();
 
 		this.TextObject = new GameText(this.Env, this.TextPos.x, this.TextPos.y, this.Text);
-		this.TextObject.setWordWrap(Config.Game.width - this.Options.padding * 2 - 25);
 		this.TextObject.setSize(this.Options.fontSize);
 		this.TextObject.setAlign('left');
+		this.TextObject.setColor(this.Options.textColor);
 		this.TextObject.PhaserText.setDepth(1);
 
 		this.createWindow();
+
+		this.TextObject.setWordWrap(this.Width - 25);
+
 		this.Frame.setDepth(0);
 		this.fitContent();
 
@@ -158,9 +162,12 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 			this.Height = this.Options.windowHeight;
 			this.PosY = Config.Game.height - this.Options.windowHeight - this.Options.padding + this.Options.offsetY;
 		}
-		this.Width = Config.Game.width - this.Options.padding * 2;
 
-		this.PosX = this.Options.padding + this.Options.offsetX;
+		this.Width = Config.Game.width - this.Options.padding * 2;
+		this.Width -= this.Options.cropRight;
+		this.Width -= this.Options.cropLeft;
+
+		this.PosX = this.Options.padding + this.Options.offsetX + this.Options.cropLeft;
 
 		if (this.Anchor == Anchor.Top) {
 			this.PosY = this.Options.padding + this.Options.offsetY;
@@ -287,9 +294,10 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		for (let i = 0; i < labels.length; ++i) {
 			let text = new GameText(this.Env, x, y, labels[i]);
 			text.setOrigin(0, 1);
-			text.setWordWrap(Config.Game.width - this.Options.padding * 2 - 25);
+			text.setWordWrap(this.Width - this.Options.padding * 2 - 25);
 			text.setSize(this.ButtonOptions.fontSize);
 			text.setAlign('left');
+			text.setColor(this.Options.textColor);
 			this.ButtonText.push(text);
 			let frameX = x - this.Options.innerPadding;
 			let frameY = y - text.PhaserText.displayHeight - this.Options.innerPadding;
@@ -317,6 +325,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 			text.setOrigin(0, 0);
 			// text.setWordWrap(Config.Game.width - this.Options.padding * 2 - 25);
 			text.setSize(this.ButtonOptions.fontSize);
+			text.setColor(this.Options.textColor);
 			this.ButtonText.push(text);
 			let frameX = x - this.Options.innerPadding;
 			let frameY = y - this.Options.innerPadding;
@@ -448,5 +457,9 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 
 	public getHeight(): number {
 		return (this.getContentHeight() + this.Options.innerPadding * 2);
+	}
+
+	public getPos(): Phaser.Math.Vector2 {
+		return (new Phaser.Math.Vector2(this.PosX, this.PosY));
 	}
 }

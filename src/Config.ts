@@ -55,6 +55,7 @@ export class Config {
 			offsetY: 0,
 			cropRight: 0,
 			cropLeft: 0,
+			textColor: '#ffffff',
 			borderThickness: 3,
 			borderColor: 0xfeb809,
 			borderAlpha: 1,

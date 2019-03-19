@@ -1,4 +1,4 @@
-import { DialogBox, Anchor, DialogOptions, Orientation } from "./DialogBox";
+import { DialogBox, Anchor, DialogOptions, Orientation, ButtonOptions } from "./DialogBox";
 import { DialogObj, ChoiceObj, DialogTreeObj } from "./DialogTree";
 import { Config } from "../Config";
 
@@ -6,31 +6,38 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 
 	private Env					: Phaser.Scene;
 	private Animate				: boolean;
-	private Options				: DialogOptions;
+	private MessageOptions		: DialogOptions;
+	private AnswerOptions		: DialogOptions;
 	private InputFieldOptions	: DialogOptions;
+	private ButtonOptions		: ButtonOptions;
 
 	private Dialogs				: DialogObj;
 	private Choices				: ChoiceObj;
 	private Messages			: Array<DialogBox>;
 	private InputField			: DialogBox;
+	private InputCamera			: Phaser.Cameras.Scene2D.Camera;
 	private ChoiceIndex			: string;
 	private DestroyBoxDelayed	: boolean;
 
-	constructor(env: Phaser.Scene, content: DialogTreeObj, animate: boolean, options?: DialogOptions) {
+	constructor(env: Phaser.Scene, content: DialogTreeObj, animate: boolean,
+			messageOptions: DialogOptions,
+			answerOptions: DialogOptions,
+			inputFieldOptions: DialogOptions,
+			buttonOptions) {
 		super(env, 'DialogPhone');
 		this.Env = env;
 		this.Animate = animate;
-		this.Options = options;
-		this.InputFieldOptions = {};
-		Object.assign(this.InputFieldOptions, options);
+		this.MessageOptions = messageOptions;
+		this.AnswerOptions = answerOptions;
+		this.InputFieldOptions = inputFieldOptions;
 		this.Dialogs = content.Dialogs;
 		this.Choices = content.Choices;
+		this.ButtonOptions = buttonOptions;
 		this.ChoiceIndex = null;
 		this.DestroyBoxDelayed = false;
 		this.Messages = new Array<DialogBox>();
 	
-		this.Options.offsetY = 0;
-
+		this.InputFieldOptions.offsetY = -Config.Game.height - 100;
 		this.initDialogBox();
 	}
 
@@ -38,13 +45,27 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 		if (this.ChoiceIndex != null) {
 			this.updateStarCount(this.Choices[this.ChoiceIndex].stars);
 			this.InputField.removeButtons();
-			this.showDialog(this.Choices[this.ChoiceIndex].nextDialog);
 
 			let answer = this.Choices[this.ChoiceIndex].text
-			let message = new DialogBox(this.Env, answer, this.Animate, Anchor.Top, this.Options);
-			this.Options.offsetY += message.getHeight();
+			let message = new DialogBox(this.Env, answer, this.Animate, Anchor.Top, this.AnswerOptions);
+			this.AnswerOptions.offsetY += message.getHeight();
+			this.MessageOptions.offsetY += message.getHeight();
 			this.Env.add.existing(message);
 			this.Messages.push(message);
+			this.setCameraScroll(message);
+
+			let nextDialog = this.Choices[this.ChoiceIndex].nextDialog;
+			if (nextDialog == "") {
+				this.destroy();
+				return;
+			}
+			this.Env.time.addEvent({
+				delay: Math.random() * 1000 + 500,
+				callback: () => {
+					this.showDialog(nextDialog);
+				},
+				callbackScope: this,
+			})
 
 			this.ChoiceIndex = null;
 		} else if (this.DestroyBoxDelayed) {
@@ -65,7 +86,16 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 			console.error('Error. There should be a Dialog with the key "start" in the Dialog Tree.');
 		}
 
+		this.AnswerOptions.cropRight = 0;
+		this.AnswerOptions.cropLeft = 50;
+		this.MessageOptions.cropRight = 50;
+		this.MessageOptions.cropLeft = 0;
+		this.AnswerOptions.offsetY = 0;
+		this.MessageOptions.offsetY = 0;
+
 		this.InputField = new DialogBox(this.Env, "", this.Animate, Anchor.Down, this.InputFieldOptions);
+		this.InputCamera = this.Env.cameras.add(0, 0, Config.Game.width, Config.Game.height);
+		this.InputCamera.setBackgroundColor(0xffffff);
 		this.showDialog('start');
 	}
 
@@ -74,14 +104,29 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 			console.error('Error. There is no Dialog with this id in the Tree');
 		}
 
-		let message = new DialogBox(this.Env, this.Dialogs[key].text, this.Animate, Anchor.Top, this.Options);
-		this.Options.offsetY += message.getHeight();
-		console.log(message.getHeight(), this.Options.offsetY);
-		this.Env.add.existing(message);
-		this.Messages.push(message);
-
 		let buttons = this.addButtons(this.Dialogs[key].linkedChoices);
 		this.addButtonsCallbacks(key, buttons);
+		this.Env.cameras.main.height = Config.Game.height - this.InputField.getHeight();
+		this.InputCamera.height = this.InputField.getHeight();
+		let pos = this.InputField.getPos();
+		this.InputCamera.setPosition(0, Config.Game.height - this.InputCamera.height);
+		this.InputCamera.setScroll(0, pos.y);
+
+		let message = new DialogBox(this.Env, this.Dialogs[key].text, this.Animate, Anchor.Top, this.MessageOptions);
+		this.AnswerOptions.offsetY += message.getHeight();
+		this.MessageOptions.offsetY += message.getHeight();
+		this.Env.add.existing(message);
+		this.Messages.push(message);
+		this.setCameraScroll(message);
+	}
+
+	private setCameraScroll(message: DialogBox) {
+		let messageBottom = message.getPos().y + message.getHeight();
+		let cameraBottom = this.Env.cameras.main.scrollY + this.Env.cameras.main.height;
+		console.log(messageBottom, cameraBottom);
+		if (messageBottom > cameraBottom) {
+			this.Env.cameras.main.scrollY += messageBottom - cameraBottom;
+		}
 	}
 
 	private addButtons(choiceArray: Array<string>): Array<Phaser.GameObjects.Sprite> {
@@ -91,7 +136,7 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 		if (!labels.length || (labels.length == 1 && labels[0] === "")) {
 			buttons.push(this.InputField.addArrowButton());
 		} else {
-			buttons = this.InputField.addButtons(labels, Orientation.Vertical, true);
+			buttons = this.InputField.addButtons(labels, Orientation.Vertical, true, this.ButtonOptions);
 		}
 		return buttons;
 	}
