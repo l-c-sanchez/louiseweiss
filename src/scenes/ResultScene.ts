@@ -77,7 +77,7 @@ export class Result extends Phaser.Scene {
 
     startResearcher() {
         this.Context.destroy();
-        var explanations = new DialogTree(this, this.Config.dialog, false, Anchor.Center);
+        var explanations = new DialogTree(this, this.Config.dialog, false, Anchor.Center, {fitContent:true});
     }
 
 

@@ -9,6 +9,8 @@ import { HudScene } from "./scenes/HudScene";
 import { CharacterChoice } from "./scenes/CharacterChoice";
 import { Facebook } from "./scenes/FacebookScene";
 import { Result } from "./scenes/ResultScene";
+import { Tilemaps } from "phaser";
+import { ClaraConv } from "./scenes/ClaraConv";
 
 export class App {
 
@@ -27,6 +29,7 @@ export class App {
 		this.Scenes.push(new CharacterChoice());
 		this.Scenes.push(new Facebook());
 		this.Scenes.push(new Result());
+		this.Scenes.push(new ClaraConv());
 		
 		Config.Phaser.scene = this.Scenes;
 

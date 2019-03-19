@@ -22,6 +22,11 @@ import { GameText } from "./GameText";
 */
 
 export interface DialogOptions {
+	fitContent?: boolean,
+	offsetX?: number,
+	offsetY?: number,
+	cropRight?: number,
+	cropLeft?: number,
 	borderThickness?: number,
 	borderColor?: number,
 	borderAlpha?: number,
@@ -75,6 +80,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	private Arrow			: Phaser.Physics.Arcade.Sprite;
 	private ArrowLeftLimit	: number;
 	private ArrowRightLimit	: number;
+	private ButtonsOrient	: Orientation;
 	private Buttons			: Array<Phaser.GameObjects.Sprite>;
 	private ButtonFrames	: Array<Phaser.GameObjects.Graphics>;
 	private ButtonText		: Array<GameText>;
@@ -92,7 +98,8 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		this.Anchor = anchor;
 		this.Animate = animate;
 		this.Text = text;
-		this.Options = Config.DialogBox.defaultOptions;
+		this.Options = {}
+		Object.assign(this.Options, Config.DialogBox.defaultOptions);
 		this.Arrow = null;
 		this.Buttons = new Array<Phaser.GameObjects.Sprite>();
 		this.ButtonFrames = new Array<Phaser.GameObjects.Graphics>();
@@ -118,12 +125,17 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 
 	private initWindow() {
 		this.computeTextPos();
-		this.createWindow();
+		// this.createWindow();
 
 		this.TextObject = new GameText(this.Env, this.TextPos.x, this.TextPos.y, this.Text);
 		this.TextObject.setWordWrap(Config.Game.width - this.Options.padding * 2 - 25);
 		this.TextObject.setSize(this.Options.fontSize);
 		this.TextObject.setAlign('left');
+		this.TextObject.PhaserText.setDepth(1);
+
+		this.createWindow();
+		this.Frame.setDepth(0);
+		this.fitContent();
 
 		this.showText();
 	}
@@ -139,15 +151,21 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	}
 
 	private createWindow() {
+		if (this.Options.fitContent) {
+			this.Height = this.getContentHeight();
+			this.PosY = Config.Game.height - this.Height - this.Options.padding + this.Options.offsetY;
+		} else {
+			this.Height = this.Options.windowHeight;
+			this.PosY = Config.Game.height - this.Options.windowHeight - this.Options.padding + this.Options.offsetY;
+		}
 		this.Width = Config.Game.width - this.Options.padding * 2;
-		this.Height = this.Options.windowHeight;
-		this.PosX = this.Options.padding;
-		this.PosY = Config.Game.height - this.Options.windowHeight - this.Options.padding;
+
+		this.PosX = this.Options.padding + this.Options.offsetX;
 
 		if (this.Anchor == Anchor.Top) {
-			this.PosY = this.Options.padding;
+			this.PosY = this.Options.padding + this.Options.offsetY;
 		} else if (this.Anchor == Anchor.Center) {
-			this.PosY = Config.Game.centerY - this.Options.windowHeight * 0.5;
+			this.PosY = Config.Game.centerY - this.Options.windowHeight * 0.5 + this.Options.offsetY;
 		}
 		this.Frame = this.Env.add.graphics();
 		this.createInnerWindow(this.PosX, this.PosY, this.Width, this.Height);
@@ -162,6 +180,15 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		this.ArrowLeftLimit = arrowX - Config.DialogBox.arrow.offset;
 		this.ArrowRightLimit = arrowX + Config.DialogBox.arrow.offset;
 		this.Arrow.setVelocityX(Config.DialogBox.arrow.speed);
+		this.Arrow.setDepth(1);
+	}
+
+	private repositionArrow(x: number, y: number, width: number, height: number) {
+		let arrowX = x + width - this.Options.arrowPadding;
+		let arrowY = y + height - this.Options.arrowPadding;
+		this.ArrowLeftLimit = arrowX - Config.DialogBox.arrow.offset;
+		this.ArrowRightLimit = arrowX + Config.DialogBox.arrow.offset;
+		this.Arrow.setPosition(arrowX, arrowY);
 	}
 
 	private createInnerWindow(x: number, y: number, width: number, height: number) {
@@ -209,6 +236,32 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		}
 	}
 
+	private fitContent() {
+		if (this.Frame != null)
+			this.Frame.destroy();
+		this.createWindow();
+		this.TextObject.setPosition(this.PosX + this.Options.innerPadding, this.PosY + this.Options.innerPadding);
+	}
+
+	private getContentHeight(): number {
+		let height = 0
+		if (this.Text != "") {
+			height += this.TextObject.PhaserText.displayHeight + this.Options.innerPadding * 2;
+		}
+		if (this.Arrow != null) {
+			height += this.Arrow.displayHeight;
+		} else if (this.Buttons.length > 0) {
+			if (this.ButtonsOrient == Orientation.Vertical) {
+				for (let i = 0; i < this.Buttons.length; ++i) {
+					height += this.Buttons[i].displayHeight + this.Options.innerPadding * 2;
+				}
+			} else {
+				height += this.Buttons[0].displayHeight + this.Options.innerPadding * 2;
+			}
+		}
+		return height;
+	}
+
 	private animateArrow() {
 		if (this.Arrow.x <= this.ArrowLeftLimit) {
 			this.Arrow.setVelocityX(Config.DialogBox.arrow.speed)
@@ -227,7 +280,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	** createVerticalButtons and createHorizontalButtons could be cleaned if we have time
 	*/
 
-	private createVerticalButtons(labels: string[], frame: boolean): Phaser.GameObjects.Sprite[] {
+	private createVerticalButtons(labels: string[], drawFrame: boolean): Phaser.GameObjects.Sprite[] {
 		let x = this.PosX + this.Options.innerPadding * 2;
 		let y = this.PosY + this.Height - this.Options.innerPadding * 2;
 
@@ -238,15 +291,17 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 			text.setSize(this.ButtonOptions.fontSize);
 			text.setAlign('left');
 			this.ButtonText.push(text);
-			let button = this.createButton(x, y, text.PhaserText.displayWidth, text.PhaserText.displayHeight);
-			this.Buttons.push(button);
-			if(frame) {
-				let frameX = x - this.Options.innerPadding;
-				let frameY = y - text.PhaserText.displayHeight - this.Options.innerPadding;
-				let frameWidth = this.Width - this.Options.innerPadding * 2;
-				let frameHeight = text.PhaserText.displayHeight + this.Options.innerPadding * 2;
+			let frameX = x - this.Options.innerPadding;
+			let frameY = y - text.PhaserText.displayHeight - this.Options.innerPadding;
+			let frameWidth = this.Width - this.Options.innerPadding * 2;
+			let frameHeight = text.PhaserText.displayHeight + this.Options.innerPadding * 2;
+			if(drawFrame) {
 				this.createButtonFrame(frameX, frameY, frameWidth, frameHeight);
 			}
+			let button = this.createButton(frameX, frameY, frameWidth, frameHeight);
+			this.Buttons.push(button);
+			button.setDepth(1);
+			text.PhaserText.setDepth(1);
 			y -= text.PhaserText.displayHeight + this.Options.innerPadding  * 3;
 		}
 		return this.Buttons;
@@ -272,9 +327,10 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 				frame = this.createButtonFrame(frameX, frameY, frameWidth, frameHeight);
 			}
 			let button = this.createButton(frameX, frameY, frameWidth, frameHeight);
+			button.setDepth(1);
 			parent.add([button, text.PhaserText, frame])
 			this.Buttons.push(button);
-			this.ButtonFrames.push(frame);
+			text.PhaserText.setDepth(1);
 			x += text.PhaserText.displayWidth + this.Options.innerPadding  * 3;
 		}
 
@@ -297,7 +353,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		let button = this.Env.add.sprite(x, y, 'Transparent');
 		button.displayWidth = width;
 		button.displayHeight = height;
-		button.setOrigin(0, 1);
+		button.setOrigin(0, 0);
 		button.setInteractive();
 		return button;
 	}
@@ -308,6 +364,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 			this.ButtonOptions.borderAlpha);
 		buttonFrame.strokeRect(x, y, width, height);
 		this.ButtonFrames.push(buttonFrame);
+		buttonFrame.setDepth(1);
 		return buttonFrame;
 	}
 	//#endregion
@@ -316,6 +373,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	public setText(text: string) {
 		this.Text = text;
 		this.showText();
+		this.fitContent();
 	}
 
 	public endAnimation() {
@@ -338,6 +396,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	}
 
 	public addArrowButton(): Phaser.GameObjects.Sprite {
+		this.ButtonsOrient = Orientation.Horizontal;
 		this.createArrow(this.PosX, this.PosY, this.Width, this.Height);
 		let arrowButton = this.Env.add.sprite(0, 0, 'Transparent');
 		arrowButton.setOrigin(0, 0);
@@ -345,6 +404,8 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		arrowButton.displayHeight = Config.Game.height;
 		arrowButton.setInteractive();
 		this.Buttons.push(arrowButton);
+		this.fitContent();
+		this.repositionArrow(this.PosX, this.PosY, this.Width, this.Height);
 		return arrowButton;
 	}
 
@@ -353,6 +414,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 			orientation = Orientation.Vertical;
 		if (frame == undefined)
 			frame = false;
+		this.ButtonsOrient = orientation;
 		this.ButtonOptions = Config.DialogBox.defaultButtonOptions;
 		if (options != undefined)
 			this.setButtonOptions(options);
@@ -363,6 +425,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		} else {
 			buttons = this.createHorizontalButtons(labels, frame);
 		}
+		this.fitContent();
 		return buttons;
 	}
 
@@ -383,7 +446,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 			this.Arrow.destroy();
 	}
 
-	// public getArrowButton(){
-	// 	return this.ArrowButton;
-	// }
+	public getHeight(): number {
+		return (this.getContentHeight() + this.Options.innerPadding * 2);
+	}
 }

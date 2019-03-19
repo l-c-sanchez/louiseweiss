@@ -50,13 +50,18 @@ export class Config {
 
 	public static DialogBox = {
 		defaultOptions: {
+			fitContent: false,
+			offsetX: 0,
+			offsetY: 0,
+			cropRight: 0,
+			cropLeft: 0,
 			borderThickness: 3,
 			borderColor: 0xfeb809,
 			borderAlpha: 1,
 			windowAlpha: 1,
 			windowColor: 0x303030,
 			windowHeight: 150,
-			padding: 32,
+			padding: 10,
 			dialogSpeed: 3,
 			arrowPadding: 20,
 			arrowScale: 1,
