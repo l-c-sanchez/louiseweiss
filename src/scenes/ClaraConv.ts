@@ -15,9 +15,6 @@ export class ClaraConv extends Phaser.Scene {
 
     init() {
 		this.Hud = <HudScene>this.scene.get("HudScene");
-        // this.Hud.setRemainingTime(Config.Facebook.time);
-        // this.Hud.pauseTimer(true);
-        // this.Cursors = this.input.keyboard.createCursorKeys();
 	}
 
 	preload() {
@@ -55,7 +52,6 @@ export class ClaraConv extends Phaser.Scene {
 			borderColor: 0x1083ff
 		}
 
-		// this.Dialogs = new DialogTree(this, dialogContent, false, Anchor.Down, { fitContent: true, windowHeight: 300, fontSize: 22 });
 		this.Dialogs = new DialogPhone(this, dialogContent, false, messageOptions, answerOptions,
 			inputFieldOptions, buttonOptions);
 

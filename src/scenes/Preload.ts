@@ -44,6 +44,8 @@ export class Preload extends Phaser.Scene {
 		this.load.image('LuciePortrait', 'sprites/lucie_portrait.png');
 
 		// Pacman
+		this.load.image('OfficeTileset', 'tilesets/OfficeTileset.png');
+		this.load.tilemapTiledJSON('ClaraPacmanMap', 'tilesets/ClaraPacman.json');
 		this.load.image('mapTiles', 'tilesets/PacmanMap.png');
 		this.load.spritesheet('boss', 'sprites/Boss32.png', { frameWidth:32, frameHeight:32});
 		this.load.spritesheet('clara', 'sprites/Clara32.png', { frameWidth:32, frameHeight:32});

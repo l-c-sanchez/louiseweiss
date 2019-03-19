@@ -55,7 +55,7 @@ class PacmanCharacter {
         var bestSquareDistance = 1000000000;
 
         for (var i = 0; i < this.Directions.length; ++i) {
-            if (this.Directions[i] !== null && this.Directions[i].index === 17 && i != this.Opposites[this.Current] && i != this.Current) {
+            if (this.Directions[i] !== null && this.Directions[i].index === 7 && i != this.Opposites[this.Current] && i != this.Current) {
                 if (bestMove == Pacman.NONE) {
                     bestMove = i;
                     bestSquareDistance = Phaser.Math.Distance.Squared(this.Directions[i].x * 32,  
@@ -157,7 +157,8 @@ export class Pacman extends Phaser.Scene {
         let button = this.StartDialog.addArrowButton();
         button.on('pointerup', this.startPacman, this);
 
-    }
+	}
+	
     startPacman() {
         // This avoid starting the game multiple times
         if (this.GameState != State.Paused){
@@ -168,47 +169,21 @@ export class Pacman extends Phaser.Scene {
         this.StartDialog.destroy();
         this.hud.pauseTimer(false);
 
-        var level = [
-            [0, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            [16, 17, 17, 17, 17, 17, 17, 17, 17, 18],
-            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
-            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
-            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
-            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
-            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
-            [16, 17, 17, 17, 17, 17, 17, 17, 17, 18],
-            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
-            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
-            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
-            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
-            [16, 17, 16, 16, 16, 17, 16, 16, 17, 18],
-            [16, 17, 17, 17, 17, 17, 17, 17, 17, 18],
-            [32, 33, 33, 33, 33, 33, 33, 33, 33, 34]
-        ];
+		this.TileMap = this.make.tilemap({ key: 'ClaraPacmanMap' });
+        var tiles = this.TileMap.addTilesetImage('OfficeTileset', 'OfficeTileset');
+		var layer = this.TileMap.createStaticLayer('layer0', tiles, 0, 0);
+		layer.setCollisionByProperty({ collides: true });
+		let posX = (Config.Game.width - layer.displayWidth) * 0.5
+		// layer.setPosition(posX, 0);
+		// layer.setCollisionBetween(0, 5);
+        // layer.setCollisionBetween(7, 49);
 
-        this.TileMap = this.make.tilemap({ data: level, tileWidth: 32, tileHeight: 32 });
-        var tiles = this.TileMap.addTilesetImage('mapTiles');
-        var layer = this.TileMap.createDynamicLayer(0, tiles, 0, 0);
-        layer.setCollisionBetween(0, 2);
-        layer.setCollision(16);
-        layer.setCollision(18);
-        layer.setCollisionBetween(32, 34);
-        var widthRatio = this.sys.canvas.width / (layer.displayWidth);
-		var heightRatio = this.sys.canvas.height / (layer.displayWidth);
-
-		var camX = -(this.sys.canvas.width - layer.displayWidth) / 4;
-		var camY = -(this.sys.canvas.height - layer.displayHeight) / 2;
-		this.cameras.main.setScroll(camX, camY);
-		this.cameras.main.zoom = widthRatio > heightRatio ? heightRatio : widthRatio;
-		this.ScaleRatio = 1;
-
-
-        const debugGraphics = this.add.graphics().setAlpha(0.75);
-        layer.renderDebug(debugGraphics, {
-          tileColor: null, // Color of non-colliding tiles
-          collidingTileColor: 0xF0FFFFFF, //new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-        //   faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        });
+        // const debugGraphics = this.add.graphics().setAlpha(0.75);
+        // layer.renderDebug(debugGraphics, {
+        //   tileColor: null, // Color of non-colliding tiles
+        //   collidingTileColor: 0xF0FFFFFF, //new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+        // //   faceColor: 0x303030FF// new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+        // });
 
         var claraAnims = ["", "left", "right", "up", "down" ];
         var bossAnims = ["", "boss_left", "boss_right", "boss_up", "boss_down" ];
@@ -261,12 +236,14 @@ export class Pacman extends Phaser.Scene {
             repeat: -1
         });
 
-        this.Boss = new PacmanCharacter(this, this.Config.sprite_follower, 272, 240, bossAnims);
+		let bossPos = this.TileMap.tileToWorldXY(4, 6);
+		this.Boss = new PacmanCharacter(this, this.Config.sprite_follower, bossPos.x + 16, bossPos.y + 16, bossAnims);
         this.Boss.setSpeed(60);
         // this.Boss.Sprite.setScale(0.5, 0.5);
         this.physics.add.collider(this.Boss.Sprite, layer);
 
-        this.Player = new PacmanCharacter(this, this.Config.sprite_char, 48, 48, claraAnims);
+		let playerPos = this.TileMap.tileToWorldXY(4, 8);
+        this.Player = new PacmanCharacter(this, this.Config.sprite_char, playerPos.x + 16, playerPos.y + 16, claraAnims);
         this.Player.setSpeed(60);
         // this.Player.Sprite.setScale(0.5, 0.5);
         this.Threshold = 10;//Math.ceil((32 - this.Player.displayWidth) / 2);
@@ -377,7 +354,7 @@ export class Pacman extends Phaser.Scene {
         var cx = Math.floor(character.Sprite.x);
         var cy = Math.floor(character.Sprite.y);
 
-		if (character.Directions[character.Turning] === null || character.Directions[character.Turning].index != 17) {
+		if (character.Directions[character.Turning] === null || character.Directions[character.Turning].index != 7) {
 			character.Turning = Pacman.NONE;
 			return false;
 		}
@@ -398,8 +375,8 @@ export class Pacman extends Phaser.Scene {
     }
     
     private checkDirection(direction: number, character: PacmanCharacter) {
-        if (character.Turning === direction || character.Directions[direction] === null || character.Directions[direction].index != 17) {
-            return;
+        if (character.Turning === direction || character.Directions[direction] === null || character.Directions[direction].index != 7) {
+			return;
         }
 
         if (character.Current === character.Opposites[direction]) {
