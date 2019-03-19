@@ -1,43 +1,277 @@
+
+
+
+
+
+
+
 {
+	"title": "Likez les informations vraies",
 	"lucie": [
 		{
-			"publisher": "F34ZERSF34R",
-            "text":"FAKE NEWS 1",
-            "fake": true,
+			"publisher": "L’Express",
+            "text":"Mais qui est donc “Captain Europe” ?",
+            "fake": 0,
+            "comments": 17,
+			"likes": 30,
+			"sprite": "https://www.google.fr/search?q=captain+Europe&rlz=1C5CHFA_enFR775FR775&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjwyPKbofzgAhXx8eAKHX80DRMQ_AUIDigB&biw=1535&bih=889#imgrc=dPeQ0GTs1kJXiM: "
+		},
+		{
+			"publisher": "Egalité et Réconciliation",
+            "text":"Macron, mandaté pour détruire le nationalisme français, plaide pour un nationalisme européen",
+            "fake": 1,
             "comments": 15,
 			"likes": 3,
 			"sprite": ""
-		},
+        },
 		{
-			"publisher": "F34ZERSF34R",
-            "text":"VRAIE NEWS 2",
-            "fake": false,
+					"publisher": "Russie Politics",
+					"text":"Le piège des élections européennes ou pourquoi ce sont les seules élections auxquelles il ne faut pas participer",
+						"fake": 1,
+					"comments": 9,
+					"likes": 12,
+					"sprite": ""
+				},
+
+		{
+			"publisher": "Le Gorafi",
+			"text":"Le Parlement européen limite le nombre d’emplois fictifs à 3 par député",
+			"fake": 1,
+            "comments": 9,
+			"likes": 12,
+			"sprite": ""
+		},
+
+        {
+			"publisher": "Marianne",
+			"text":"Lobbying XXL: le géant américain Coca-Cola sponsorise… la présidence de l’Union européenne",
+			"fake": 0,
+            "comments": 7,
+			"likes": 22,
+			"sprite": ""
+		},
+
+        {
+			"publisher": "RTL",
+			"text":"”Une Europe qui vient déterminer des normes sur les soutien-gorge et la taille des concombres, c’est une Europe qui ne nous aide pas à trouver notre place dans la mondialisation” (François-Xavier Bellamy, tête de liste Les Républicains)",
+			"fake": 0,
             "comments": 15,
-			"likes": 3,
+			"likes": 2,
+			"sprite": ""
+		},
+        {
+			"publisher": "Buzzbeed",
+			"text":"Face à la pression migratoire, la Commission européene interdit les animaux de compagnie en Europe",
+			"fake": 1,
+            "comments": 51,
+			"likes": 89,
+			"sprite": ""
+		},
+        {
+			"publisher": "France 2",
+			"text":"L’ALDE, le parti soutenu par La République en Marche, est financé par Bayer, Monsanto, Google et Microsoft",
+			"fake": 0,
+            "comments": 17,
+			"likes": 28,
+			"sprite": ""
+		},
+        {
+			"publisher": "Mediacity",
+			"text":"Le Parlement européen considère l’Eglise orthodoxe russe comme une organisation terroriste",
+			"fake": 1,
+            "comments": 17,
+			"likes": 28,
+			"sprite": ""
+		},
+      	{
+			"publisher": "Louis-Antoine Lenoir",
+			"text":"Les anglais avaient bien compris qu’il fallait quitter l’Union européenne avant l’arrivée de 80 millions de turcs",
+			"fake": 1,
+            "comments": 12,
+			"likes": 38,
+			"sprite": "https://www.google.fr/search?q=Turkey+is+joining+the+EU&rlz=1C5CHFA_enFR775FR775&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiVrrKhr_zgAhWKohQKHU4DDosQ_AUIDygC&biw=1535&bih=889#imgrc=x2lCHa4Wf9FVsM:"
+		},
+	    {
+			"publisher": "Le Monde",
+			"text":"La France s’oppose à l’idée d’un congé parental mieux rémunéré proposée par la Commission européenne ",
+			"fake": 0,
+            "comments": 19,
+			"likes": 24,
+			"sprite": ""
+		},
+      	{
+			"publisher": "Radio Classique",
+			"text":"Attentat dans la prison de Condé-sur-Sarthe: “On a accepté, dans notre pays, que la Cour européenne des Droits de l’Homme, interdise les fouilles des prisonniers” (Nicolas Dupont-Aignan)",
+			"fake": 0,
+            "comments": 52,
+			"likes": 1,
+			"sprite": ""
+		},
+     	{
+			"publisher": "Radio Classique",
+			"text":"Attentat dans la prison de Condé-sur-Sarthe: “On a accepté, dans notre pays, que la Cour européenne des Droits de l’Homme, interdise les fouilles des prisonniers” (Nicolas Dupont-Aignan)",
+			"fake": 0,
+            "comments": 52,
+			"likes": 1,
+			"sprite": ""
+		},
+    	{
+			"publisher": "Médiapart, le Club",
+			"text":"L’Europe rétablit la peine de mort. Mais oublie de prévenir les peuples européens de ce rétablissement, par Lucie Couvreur",
+			"fake": 1,
+            "comments": 52,
+			"likes": 1,
+			"sprite": ""
+		},
+    	{
+			"publisher": "Agora Vox",
+			"text":"Le traité européen de Lisbonne autorise à tuer des “émeutiers”",
+			"fake": 1,
+            "comments": 520,
+			"likes": 102,
+			"sprite": ""
+		},
+    	{
+			"publisher": "Le Gorafi",
+			"text":"Européennes: François Asselineau propose de supprimer la station “Europe” sur la ligne 3 à Paris",
+			"fake": 1,
+            "comments": 52,
+			"likes": 27,
+			"sprite": ""
+		},
+      	{
+			"publisher": "Français de Souche",
+			"text":"Yasmine, jeune femme voilée, remporte le prix de la “Jeune Européenne de l’année 2019” décerné par le Parlement européen",
+			"fake": 1,
+            "comments": 1,
+			"likes": 42,
+			"sprite": ""
+		},
+      	{
+			"publisher": "AFP Factuel",
+			"text":"Non, l’importation de boeuf aux hormones, saumon transgénique ou poulet au chlore n’est pas autorisé en France",
+			"fake": 0,
+            "comments": 1,
+			"likes": 0,
+			"sprite": ""
+		},
+
+		{
+			"publisher": "Libération",
+			"text":"La Commission européenne demande à la France d’ouvrir ses barrages hydroélectriques à la concurrence et rappelle Paris à l’ordre",
+			"fake": 0,
+            "comments": 3,
+			"likes": 2,
 			"sprite": ""
 		},
 		{
-			"publisher": "F34ZERSF34R",
-            "text":"FAKE NEWS 3",
-            "fake": true,
-            "comments": 1,
-			"likes": 3,
+			"publisher": "Emmanuel Macron",
+			"text":"C’est le moment de la Renaissance européenne. Aussi, résistant aux tentations du repli et des divisions, je vous propose de bâtir ensemble cette Renaissance autour de trois ambitions : la liberté, la protection et le progrès",
+			"fake": 0,
+            "comments": 134,
+			"likes": 200,
 			"sprite": ""
 		},
 		{
-			"publisher": "F34ZERSF34R",
-            "text":"FAKE NEWS 4",
-            "fake": true,
-            "comments": 1,
-			"likes": 3,
+			"publisher": "Laurent Wauquiez",
+			"text":"Nous voulons défendre un projet européen mais nous croyons que pour sauver l'Europe, il faut la changer. Ni sortie de l'Union européenne comme le propose Marine Le Pen ni toujours plus de ce qui ne marche pas comme le propose Emmanuel Macron.",
+		"fake": 0,
+            "comments": 213,
+			"likes": 238,
+			"sprite": ""
+		}
+,
+
+{
+			"publisher": "France Info ",
+			"text":"Le Parlement européen se mobilise contre les fake news pour les élections européennes de 2019.",
+"fake": 0,
+            "comments": 24,
+			"likes": 9,
 			"sprite": ""
 		},
+
+{
+			"publisher": "AFP",
+			"text":"'Tinder' électoral, dessins animés: les astuces pour faire voter les jeunes",
+"fake": 0,
+            "comments": 39,
+			"likes": 95,
+			"sprite": ""
+		},
+
+
+
+{
+			"publisher": "RFI",
+			"text":"Elections européennes: les «gilets jaunes» à l'assaut des urnes",
+"fake": 0,
+            "comments": 3,
+			"likes": 2,
+			"sprite": ""
+		},
+
+{
+			"publisher": "Foodwatch",
+			"text":"Coca Cola sponsorise la présidence roumaine du conseil de l'Union européenne. La malbouffe au cœur du pouvoir politique",
+"fake": 0,
+            "comments": 93,
+			"likes": 32,
+			"sprite": ""
+		},
+
+{
+			"publisher": "Lanceur d’alerte 75",
+			"text":"L'Union européenne est un complot de la CIA pour détruire la France",
+"fake": 1,
+            "comments": 3,
+			"likes": 2,
+			"sprite": ""
+		},
+
+{
+			"publisher": "Francois Ollande ",
+			"text":"Emmanuel Macron n’a pas su rassembler les progressistes en vue l’élection européenne. Après le Brexit, le Frexit me semble inévitable. ",
+"fake": 1,
+            "comments": 31,
+			"likes": 92,
+			"sprite": ""
+		},
+
+
+{
+			"publisher": "Manu Macron",
+			"text":"Le 26 mai, il n’y aura qu’un seul tour. Pour garantir la paix, il est temps d’en finir avec la souveraineté nationale pour une souveraineté européenne totale.",
+			"fake": 1,
+            "comments": 31,
+			"likes": 92,
+			"sprite": ""
+		},
+
+{
+			"publisher": "Front social",
+			"text":"L'Union Européenne est une dictature anti-peuples européens",
+"fake": 1,
+            "comments": 31,
+			"likes": 92,
+			"sprite": ""
+		},
+
+{
+			"publisher": "Organisation des vraies nations unies",
+			"text": "L'Union Européenne reste soumise aux lobbies industriels et bancaires. Son but est de détruire les nations pour les inclure dans une entité mondiale consumériste.",
+			"fake": 1,
+            "comments": 31,
+			"likes": 92,
+			"sprite": ""
+		},
+
 		{
-			"publisher": "F34ZERSF34R",
-            "text":"TRUE NEWS 5",
-            "fake": false,
-            "comments": 1,
-			"likes": 3,
+			"publisher": "Russia Now",
+			"text":"L'Union européenne nous entraine vers une 3e guerre mondiale.",
+			"fake": 1,
+            "comments": 31,
+			"likes": 92,
 			"sprite": ""
 		}
 	]
