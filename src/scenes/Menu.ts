@@ -29,7 +29,7 @@ export class Menu extends Phaser.Scene {
 		let picture = this.add.image(Config.Game.centerX, Config.Game.centerY * 1.1, "EuropeanFlag");
 		picture.setOrigin(0.5, 0.5);
 
-		let title = new GameText(this, Config.Game.centerX, Config.Game.centerY * 0.30, "Élections Européennes");
+		let title = new GameText(this, Config.Game.centerX, Config.Game.centerY * 0.30, "Moi, citoyen européen");
 		title.setOrigin(0.5, 0.5);
 		title.setSize(40);
 
