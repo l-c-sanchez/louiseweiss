@@ -253,8 +253,8 @@ export class Pacman extends Phaser.Scene {
 
         this.Stars = this.physics.add.group();
 
-        this.Stars.create(this.gridToWorld(2), this.gridToWorld(7), 'star');
-        this.Stars.create(this.gridToWorld(6), this.gridToWorld(1), 'star');
+        this.Stars.create(this.gridToWorld(1), this.gridToWorld(7), 'star');
+        this.Stars.create(this.gridToWorld(6), this.gridToWorld(2), 'star');
         this.Stars.create(this.gridToWorld(8), this.gridToWorld(8), 'star');
         this.Stars.create(this.gridToWorld(1), this.gridToWorld(12), 'star');
 
