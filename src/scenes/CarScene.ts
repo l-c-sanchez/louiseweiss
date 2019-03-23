@@ -181,8 +181,7 @@ export class CarGame extends Phaser.Scene {
         this.invicible = false;
         this.PlayerSpeed = Config.CarGame.playerSpeed;
         this.hud = <HudScene>this.scene.get("HudScene");
-        this.hud.setRemainingTime(Config.CarGame.time);
-        this.hud.pauseTimer(true);
+        this.hud.setRemainingTime(Config.CarGame.time, false);
     }
 
     public create() {
@@ -193,14 +192,6 @@ export class CarGame extends Phaser.Scene {
         if (!this.Config){
             throw new TypeError("Invalid config");
         }
-        // switch (character) {
-        //     case "clara": this.Config = games.CarGame.clara;
-        //         break;
-        //     case "Valentin": this.Config = games.CarGame.valentin;
-        //         break;
-        //     default:
-        //         this.Config = games.CarGame.valentin;
-        // }
         this.GameState = State.Paused;
 
         this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { windowHeight: 410, fontSize: 22 });
@@ -217,7 +208,7 @@ export class CarGame extends Phaser.Scene {
         this.GameState = State.Started;
 
         this.Generator.setup();
-        this.hud.pauseTimer(false);
+        this.hud.startTimer();
 
         // Create Player
         this.Player = this.physics.add.sprite(Config.Game.centerX, Config.Game.centerY / 2 * 3, 'voiture');

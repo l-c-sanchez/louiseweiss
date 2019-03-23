@@ -128,8 +128,7 @@ export class Pacman extends Phaser.Scene {
 
     public init() {
         this.hud = <HudScene>this.scene.get("HudScene");
-        this.hud.setRemainingTime(Config.Pacman.time);
-        this.hud.pauseTimer(true);
+        this.hud.setRemainingTime(Config.Pacman.time, false);
         this.gameEnded = false;
     }
 
@@ -167,7 +166,8 @@ export class Pacman extends Phaser.Scene {
         this.GameState = State.Started;
 
         this.StartDialog.destroy();
-        this.hud.pauseTimer(false);
+
+        this.hud.startTimer();
 
 		this.TileMap = this.make.tilemap({ key: 'ClaraPacmanMap' });
         var tiles = this.TileMap.addTilesetImage('OfficeTileset', 'OfficeTileset');

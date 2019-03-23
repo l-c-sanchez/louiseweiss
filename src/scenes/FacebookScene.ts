@@ -36,8 +36,7 @@ export class Facebook extends Phaser.Scene {
      
     init() {
         this.Hud = <HudScene>this.scene.get("HudScene");      
-        this.Hud.setRemainingTime(Config.Facebook.time);
-        this.Hud.pauseTimer(true);
+        this.Hud.setRemainingTime(Config.Facebook.time, false);
         this.Cursors = this.input.keyboard.createCursorKeys();
 	}
 
@@ -77,7 +76,7 @@ export class Facebook extends Phaser.Scene {
         this.GameState = State.Started;
 
         this.StartDialog.destroy();
-        this.Hud.pauseTimer(false);
+        this.Hud.startTimer();
         this.cameras.main.setBackgroundColor(Config.FacebookSheet.backgroundColor);
         this.createSheets();
 

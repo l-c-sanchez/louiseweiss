@@ -23,7 +23,7 @@ export class HudScene extends Phaser.Scene {
 		if (Config.Game.debugMode) {
 			console.log(this);
         }
-        this.timerEvent = this.time.addEvent({});
+
         // TODO: put star and counter at right positions.
         var star = this.add.image(Config.Game.centerX, 17, 'star');
 		star.setOrigin(0, 0.5);
@@ -43,21 +43,31 @@ export class HudScene extends Phaser.Scene {
         }
     }
 
-    public setRemainingTime(seconds: number){
+    public setRemainingTime(seconds: number, start: boolean){
         this.remainingTime = seconds;
         this.timeText.setText(this.remainingTime.toString());
+        if (start){
+            this.startTimer();
+        } else {
+            this.stopTimer();
+        }
+    }
 
-        // we reset the timer (instead of creating a new one). Thus, we can call setRemainingTime multiple times.
-        console.log("setTime");
-        this.timerEvent.reset({
+    public startTimer(){
+        // Remove any existing timer. Prevent from having a timer decreasing to quickly!
+        this.stopTimer();
+        this.timerEvent = this.time.addEvent({
             delay: 1000,
             callback: this.updateTime,
             callbackScope: this,
             loop: true
-		});
+        });
     }
-    public pauseTimer(request: boolean) {
-        this.timerEvent.paused = request;
+
+    public stopTimer(){
+        if (this.timerEvent){
+            this.timerEvent.remove();
+        }
     }
 
     public getRemainingTime(){
