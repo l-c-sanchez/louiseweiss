@@ -106,6 +106,7 @@ export class Pacman extends Phaser.Scene {
     Player!: PacmanCharacter;
     Boss!: PacmanCharacter;
     Stars!: Phaser.Physics.Arcade.Group;
+    RemainingStarCount: number;
     gameEnded: boolean;
     GameState: State;
     Config:any;
@@ -258,6 +259,8 @@ export class Pacman extends Phaser.Scene {
         this.Stars.create(this.gridToWorld(8), this.gridToWorld(8), 'star');
         this.Stars.create(this.gridToWorld(1), this.gridToWorld(12), 'star');
 
+        this.RemainingStarCount = 4;
+
         this.physics.add.overlap(this.Player.Sprite, this.Stars, this.collectStar, null, this);
         this.physics.add.overlap(this.Player.Sprite, this.Boss.Sprite, this.collideBoss, null, this);
 
@@ -313,7 +316,7 @@ export class Pacman extends Phaser.Scene {
             this.turn(this.Boss);
         }
 
-        if (this.hud.getRemainingTime() <= 0){
+        if (this.hud.getRemainingTime() <= 0 || this.RemainingStarCount <= 0){
             this.gameEnded = true;
         }
         if (this.gameEnded){
@@ -395,6 +398,7 @@ export class Pacman extends Phaser.Scene {
 
     private collectStar(player: Phaser.Physics.Arcade.Sprite, star: Phaser.Physics.Arcade.Sprite) {
         star.disableBody(true, true);
+        this.RemainingStarCount -= 1;
         this.registry.values.starCount += 1;
     }
     private collideBoss(player: Phaser.Physics.Arcade.Sprite, boss: Phaser.Physics.Arcade.Sprite) {
