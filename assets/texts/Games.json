@@ -11,6 +11,11 @@
 			"sprite_follower": "boss"
 		}
 	},
+	"Quizz": {
+		"clara": {
+			"instruction":  "Comme tous les matins, Clara se réveille à 9h. Consultante, elle doit ce matin se rendre dans une grande entreprise située en banlieue parisienne. Elle s’y rend en taxi."
+		}
+	},
     "Facebook": {
 		"lucie": {
 			"instruction":  "Dans les transports pour aller au boulot, Lucie consulte son fil d’actualité Facebook. Elle a cependant du mal à trouver des informations sur les élections européennes.\n\nAide-la à mieux repérer les informations. Sur chacune des pages, sélectionner les publications concernant le scrutin."

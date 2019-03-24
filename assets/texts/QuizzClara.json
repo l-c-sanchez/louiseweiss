@@ -1,0 +1,75 @@
+{
+	"Choices": {
+		"1A": {
+			"text": "Pour une révolution européenne",
+			"stars": -1,
+			"nextDialog": "2False"
+		},
+		"1B": {
+			"text": "Pour une renaissance européenne",
+			"stars": 2,
+			"nextDialog": "2True"
+		},
+		"1C": {
+			"text": "Pour une Europe en marche ",
+			"stars": -1,
+			"nextDialog": "2False"
+		},
+		"2A": {
+			"text": "Hé oui c’est fooou ! Un vrai écolo !",
+			"stars": -1,
+			"nextDialog": "3False"
+        },
+        "2B": {
+			"text": "Ca serait trop beau ! Il souhaite les diviser par deux !",
+			"stars": 2,
+			"nextDialog": "3True"
+        },
+        "3A": {
+			"text": "la fin de l’espace Schengen",
+			"stars": -1,
+			"nextDialog": "4False"
+        },
+        "3B": {
+			"text": "moins de contrôle aux frontières",
+			"stars": -1,
+			"nextDialog": "4False"
+        },
+        "3C": {
+			"text": "un office européen de l'asile",
+			"stars": -1,
+			"nextDialog": "4True"
+        }
+        
+	},
+	"Dialogs": {
+		"start": {
+			"text": "Je ne voulais pas espionner mais...j’ai reconnu le jingle de franceinfo ! (ma femme travaille là-bas, c’était elle à la matinale). Par contre vous écoutez trop bas héhé, je n’ai pas tout compris; par curiosité, c’est quoi déjà le titre de la lettre d’Emmanuel Macron ?",
+			"linkedChoices": ["1A", "1B", "1C"]
+		},
+		"2False": {
+			"text": "Renaissance, rien que ça ! J’ai aussi entendu un truc fou ! Emmanuel Macron souhaite bannir les pesticides d’ici à 2025 !",
+			"linkedChoices": ["2A", "2B"]
+		},
+		"2True": {
+			"text": "ah d’accord… (pas concentrée du tout elle, j’ai pas entendu ça) J’ai aussi entendu un truc fou ! Emmanuel Macron souhaite bannir les pesticides d’ici à 2025 !",
+			"linkedChoices": ["2A", "2B"]
+		},
+		"3True": {
+			"text": "…(je peux dire n’importe quoi, elle ne capte pas) Bon avant de nous quitter, il veut quoi notre cher président ?",
+            "linkedChoices": ["3A", "3B", "3C"]
+		},
+		"3False": {
+			"text": "Bien vu, je voulais voir si vous suiviez ! Bon avant de nous quitter, il veut quoi notre cher président ?",
+			"linkedChoices": ["3A", "3B", "3C"]
+        },
+        "4True": {
+			"text": "Merci ! (ouf, je suis prêt pour les questions actu de ma femme ce soir). Bye !",
+            "linkedChoices": []
+		},
+		"4False": {
+			"text": "D’accord, merci ! (c’est la reine des fake news elle)",
+			"linkedChoices": []
+		}
+	}
+}
