@@ -67,13 +67,18 @@ export class Preload extends Phaser.Scene {
 		this.load.image('heart', 'sprites/heart.png');
 		this.load.image('heart_empty', 'sprites/heart_empty.png');
 		this.load.image('fb_reactions', 'sprites/fb_reactions.png');
+
+		// Autres
 	
 		this.load.on('progress', this.onProgress, this);
 		this.load.on('complete', this.onComplete, this);
 
 		this.load.json('ResultText', 'texts/ResultText.json');
 		this.load.json('Games', 'texts/Games.json');
+
+		// QuizzClaira
 		this.load.json('QuizzClara', 'texts/QuizzClara.json');
+		this.load.audio('ClaraFlash', 'sounds/ClaraFlash.mp3');
 	}
 
 	create() {
