@@ -2,11 +2,15 @@
 	"Pacman": {
 		"clara": {
 			"instruction":  "Vous êtes dans le bureau de votre patron. Attention: vos choix dans cette scène seront déterminants quant à l’issue du jeu.",
+			"instruction_details_mobile": "Vous devez éviter votre patron qui est en colère... Faites glisser votre doigt dans la direction qui vous intéresse et essayer de ramasser un maximum d'étoiles. Vous avez trente secondes.",
+			"instruction_details_desktop": "Vous devez éviter votre patron qui est en colère... Utilisez les flèches de votre clavier pour aller dans la direction qui vous intéresse et essayer de ramasser un maximum d'étoiles. Vous avez trente secondes.",
 			"sprite_char": "clara",
 			"sprite_follower": "boss"
 		},
 		"valentin": {
 			"instruction": "Evitez les gilets jaunes (à changer)",
+			"instruction_details_mobile": "Vous ...",
+			"instruction_details_desktop": "Vous...",
 			"sprite_char": "clara",
 			"sprite_follower": "boss"
 		}

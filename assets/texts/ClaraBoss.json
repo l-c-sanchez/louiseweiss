@@ -1,0 +1,39 @@
+{
+	"Choices": {
+		"A1": {
+            "text": "Oui ?",
+            "stars": 0,
+            "nextDialog": "2"
+		},
+		"A2": {
+            "text": "Dimanche ? Mais ce sont les élections européennes.",
+            "stars": 0,
+            "nextDialog": "3"
+		},
+		"A3A": {
+			"text": "Ok",
+            "GameOver": true,
+            "stars": 0,
+            "nextDialog": ""
+        },
+        "A3B": {
+			"text": "Non",
+            "stars": 1,
+            "nextDialog": ""
+		}
+	},
+	"Dialogs": {
+		"start": {
+			"text": "Clara !",
+			"linkedChoices": ["A1"]
+		},
+		"2": {
+			"text": "Business is business. Un gros client vient de me contacter, il a besoin de tes services. Tu pars dimanche en Suisse.",
+			"linkedChoices": ["A2"]
+		},
+		"3": {
+			"text": "LOL. Tu pars.",
+			"linkedChoices": ["A3A", "A3B"]
+		}
+	}
+}
