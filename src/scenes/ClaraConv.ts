@@ -1,12 +1,14 @@
 import { Config } from "../Config";
 import { HudScene } from "./HudScene";
 import { DialogTree } from "../utils/DialogTree";
-import { Anchor, DialogOptions, ButtonOptions } from "../utils/DialogBox";
+import {  DialogBox, Anchor, DialogOptions, ButtonOptions } from "../utils/DialogBox";
 import { DialogPhone } from "../utils/DialogPhone";
 
 export class ClaraConv extends Phaser.Scene {
-	private Hud		: HudScene;
-	private Dialogs	: DialogPhone;
+	private Hud			 : HudScene;
+	private StartDialog	 : DialogBox = null;
+	private Dialogs		 : DialogPhone;
+	private Config       : any;
 	// private Dialogs	: DialogTree;
 
     constructor() {
@@ -22,9 +24,15 @@ export class ClaraConv extends Phaser.Scene {
 	}
 
 	create() {
-		let dialogContent = this.cache.json.get('ClaraConv');
-        this.cameras.main.setBackgroundColor("#ffffff");
+		var character: string = this.registry.get('character');
+        var games = this.cache.json.get('Games');
+
+		this.Config = games.Conv[character];
 		
+		let dialogContent = this.cache.json.get('ClaraConv');
+        this.cameras.main.setBackgroundColor("#ffffff"); 
+        this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { windowHeight: 410, fontSize: 22 });
+        
 		let messageOptions: DialogOptions = {
 			fitContent: true,
 			windowColor: 0xedecec,
@@ -54,6 +62,8 @@ export class ClaraConv extends Phaser.Scene {
 
 		this.Dialogs = new DialogPhone(this, dialogContent, false, messageOptions, answerOptions,
 			inputFieldOptions, buttonOptions);
+
+		
 
 		this.add.existing(this.Dialogs);
 		this.Dialogs.on('destroy', () => {

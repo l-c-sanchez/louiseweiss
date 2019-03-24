@@ -1,7 +1,7 @@
 {
 	"Pacman": {
 		"clara": {
-			"instruction":  "Vous souhaitez aller voter pour les élections européennes. Mais votre patron souhaite que vous vous déplaciez à l’étranger dans le cadre d’une réunion professionnelle.\n\nEt récoltez le plus d’étoiles possibles",
+			"instruction":  "Vous souhaitez aller voter pour les élections européennes.\n\nMais votre patron souhaite que vous vous déplaciez à l’étranger dans le cadre d’une réunion professionnelle.\n\nEt récoltez le plus d’étoiles possibles",
 			"sprite_char": "clara",
 			"sprite_follower": "boss"
 		},
@@ -13,7 +13,13 @@
 	},
 	"Quizz": {
 		"clara": {
-			"instruction":  "Comme tous les matins, Clara se réveille à 9h. Consultante, elle doit ce matin se rendre dans une grande entreprise située en banlieue parisienne. Elle s’y rend en taxi."
+			"instruction":  "Vous êtes dans un Uber pour vous rendre au travail. Vous prenez le temps d’écouter la radio.\n\nVos connaissances de l’actualité européenne seront testées.",
+			"duringFlash": "In progress"
+		}
+	},
+	"Conv": {
+		"clara": {
+			"instruction":  "1 mois avant le vote.\n\nPrenez le temps d’échanger avec votre fiancé."
 		}
 	},
     "Facebook": {
@@ -30,3 +36,4 @@
         }
 	}
 }
+
