@@ -15,6 +15,7 @@ export class HudScene extends Phaser.Scene {
 	init() {
         this.scene.bringToTop('HudScene');
         this.registry.set('starCount', 0);
+        this.registry.set('GameOver', false);
     }
 
 	preload() {}

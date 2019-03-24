@@ -1,7 +1,7 @@
 import { Config } from "../Config";
 import { HudScene } from "./HudScene";
 import { DialogBox, Anchor } from "../utils/DialogBox";
-import { DialogTree } from "../utils/DialogTree";
+import { DialogTree, DialogTreeObj } from "../utils/DialogTree";
 
 enum State {
     Paused,
@@ -145,25 +145,11 @@ export class Pacman extends Phaser.Scene {
         if (!this.Config){
             throw new TypeError("Invalid config");
         }
-        // switch (character) {
-        //     case "clara": this.Config = games.Pacman.clara;
-        //         break;
-        //     case "valentin": this.Config = games.Pacman.valentin;
-        //         break;
-        //     default:
-        //         this.Config = games.Pacman.clara;
-        // }
-
-
         this.GameState = State.Paused;
         this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
         this.add.existing(this.StartDialog);
         this.Button = this.StartDialog.addArrowButton();
         this.Button.on('pointerup', this.startPacman, this);
-        // if (this.Character == "valentin")
-        //     this.Button.on('pointerup', this.startPacman, this);
-        // else
-        //     this.Button.on('pointerup', this.startConvwithBoss, this);
 
     }
     startPacman() {
@@ -257,28 +243,47 @@ export class Pacman extends Phaser.Scene {
         this.physics.add.overlap(this.Player.Sprite, this.Stars, this.collectStar, null, this);
         this.physics.add.overlap(this.Player.Sprite, this.Boss.Sprite, this.collideBoss, null, this);
         // this.GameState = State.Paused;
-        if (this.Character == "valentin") 
-            this.beginGame();
-        else 
-            this.startConvwithBoss();
+        this.startConvwithBoss();
 
     }
     private startConvwithBoss() {
-        var games = this.cache.json.get('Games');
-        let dialogContent = this.cache.json.get('ClaraBoss');
+        var dialogContent:DialogTreeObj;
+
+        if (this.Character == "valentin")
+            dialogContent = this.cache.json.get('ClaraBoss');
+        else
+            dialogContent = this.cache.json.get('ClaraBoss');
         this.Dialogs = new DialogTree(this, dialogContent, false, Anchor.Down, {windowHeight: 500});
+        
         console.log("start conv with your boss")
         this.add.existing(this.Dialogs);
         this.Dialogs.on('destroy', () => {
-            this.beginGame();
+            var res : boolean = this.registry.get('GameOver'); 
+            if (res == true) {
+                this.scene.start('Result');
+            }
+            else
+                this.beginExplanations();
         });  
-        
-        
+    }
+    private beginExplanations() {
+
+        if (!this.sys.game.device.os.desktop ) {
+			this.StartDialog = new DialogBox(this, this.Config.instruction_details_mobile, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+        }
+        else 
+            this.StartDialog = new DialogBox(this, this.Config.instruction_details_desktop, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+        this.add.existing(this.StartDialog);
+        this.Button = this.StartDialog.addArrowButton();
+        this.Button.on('pointerup', this.beginGame, this);
+
     }
     private beginGame() {
         if (this.GameState != State.Paused){
             return;
         }
+        this.StartDialog.destroy();
+        this.Button.off("pointerup");
         this.hud.startTimer();
         this.Boss.setSpeed(60);
         this.Player.setSpeed(60);
@@ -424,4 +429,12 @@ export class Pacman extends Phaser.Scene {
         player.disableBody(true, true);
         this.gameEnded = true;
     }
+    private getStarCount(): number {
+		if (this.registry.has('starCount')) {
+			return (this.registry.get('starCount'));
+		} else {
+			console.warn("The starCount value should be initialized in the registry before this call.");
+			return (0);
+		}
+	}
 }
