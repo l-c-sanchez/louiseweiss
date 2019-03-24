@@ -5,9 +5,9 @@ import { Scene } from "phaser";
 import { DialogTree } from "../utils/DialogTree";
 
 export class Menu extends Phaser.Scene {
-	StartText	: GameText;
-	StartDialog	: DialogBox = null;
-	public Music		: Phaser.Sound.BaseSound;
+	StartText		: GameText;
+	StartDialog		: DialogBox = null;
+	public Music	: Phaser.Sound.BaseSound;
 
 	constructor() {
         super({ key: 'Menu', active: false });
@@ -39,7 +39,7 @@ export class Menu extends Phaser.Scene {
 
 		this.Music = this.sound.add('OdeToJoy', {
 			mute: false,
-			volume: 0,
+			volume: 1,
 			rate: 1,
 			detune: 0,
 			seek: 0,
@@ -73,7 +73,7 @@ export class Menu extends Phaser.Scene {
 
 	startGame() {
 		if (!this.sys.game.device.os.desktop && !this.scale.isFullscreen) {
-			// this.scale.toggleFullscreen();
+			this.scale.toggleFullscreen();
 		}
 		if (this.StartDialog === null) {
 			let text = this.cache.json.get('StartText');			
@@ -85,7 +85,7 @@ export class Menu extends Phaser.Scene {
 			let button = this.StartDialog.addArrowButton();
 			button.on('pointerup', () => {
 				if (this.StartDialog.isAnimationEnded()) {
-					this.scene.start('CharacterChoice');
+					this.scene.start('CharacterChoice', { music: this.Music });
 				}
 			});
 			this.add.existing(this.StartDialog);

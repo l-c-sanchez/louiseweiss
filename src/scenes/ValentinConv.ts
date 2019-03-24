@@ -27,6 +27,23 @@ export class ValentinConv extends Phaser.Scene {
 	create() {
         let character: string = this.registry.get('character');
         let games = this.cache.json.get('Games');
+		this.Config = games.Quizz[character];
+		console.log(character, games, this.Config);
+        if (!this.Config){
+            throw new TypeError("Invalid config");
+		}
+		
+		this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { fitContent: true, fontSize: 22 });
+
+		this.add.existing(this.StartDialog);
+		let button = this.StartDialog.addArrowButton();
+		button.on('pointerup', this.startQuizz, this);
+	}
+	
+	private startQuizz() {
+		this.StartDialog.destroy();
+        let character: string = this.registry.get('character');
+        let games = this.cache.json.get('Games');
 		this.Config = games.Conv[character];
 		console.log(character, games, this.Config);
         if (!this.Config){
@@ -40,7 +57,7 @@ export class ValentinConv extends Phaser.Scene {
 		this.add.existing(this.Quizz);
 		this.Quizz.on('destroy', this.showConvInstructions, this);
 	}
-	
+
 	private showConvInstructions() {
 		this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { fitContent: true, fontSize: 22 });
 

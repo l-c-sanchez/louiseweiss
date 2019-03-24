@@ -19,6 +19,9 @@
 		"clara": {
 			"instruction":  "Vous êtes dans un Uber pour vous rendre au travail. Vous prenez le temps d’écouter la radio.\n\nVos connaissances de l’actualité européenne seront testées.",
 			"duringFlash": "In progress"
+		},
+		"valentin": {
+			"instruction": "Vous arrivez chez vos patients, qui semblent avoir quelques questions pour vous."
 		}
 	},
 	"Conv": {

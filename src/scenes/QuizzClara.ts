@@ -29,7 +29,7 @@ export class QuizzClara extends Phaser.Scene {
     init() {
         this.Hud = <HudScene>this.scene.get("HudScene");
         // this.Hud.setRemainingTime(Config.QuizzClara.time, false);
-        this.Hud.setRemainingTime(3, false);
+        this.Hud.setRemainingTime(110, false);
 	}
 
 	preload() {

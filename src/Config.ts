@@ -110,7 +110,7 @@ export class Config {
 		rockProbability: 0.1,
 		corridorSize: 64,
 		tileSize: 32,
-		time: 1, // in seconds
+		time: 110, // in seconds
 		playerSpeed: 200,
 		camSpeed: -150
 	}

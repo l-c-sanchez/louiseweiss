@@ -5,13 +5,14 @@ import { CharacterSheet } from "../utils/CharacterSheet";
 export class CharacterChoice extends Phaser.Scene {
 	TextData	: any;
 	Title		: GameText;
+	Music		: Phaser.Sound.BaseSound;
 
 	constructor() {
         super({ key: 'CharacterChoice', active: false });
 	}
 
-	init() {
-
+	init(data: any) {
+		this.Music = data.music;
 	}
 
 	preload() {
@@ -45,6 +46,7 @@ export class CharacterChoice extends Phaser.Scene {
 			let sceneToLaunch = this.TextData.characters[i].sceneToLaunch;
 			let nameCharacter: string = this.TextData.characters[i].name;
 			sheet.addButton(() => {
+				this.Music.stop();
 				this.scene.launch('HudScene');
 				this.scene.start(sceneToLaunch);
 				this.registry.set('character', nameCharacter.toLowerCase());
