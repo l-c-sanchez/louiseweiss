@@ -3,112 +3,73 @@
 		"T1": {
 			"text": "",
 			"stars": 0,
-			"nextDialog": "D1"
+			"nextDialog": "Q1"
 		},
 		"T2": {
 			"text": "",
 			"stars": 0,
-			"nextDialog": "Q1"
-		},
-		"T3": {
-			"text": "",
-			"stars": 0,
-			"nextDialog": "D2"
-		},
-		"T4": {
-			"text": "",
-			"stars": 0,
 			"nextDialog": "Q2"
 		},
-		"T5": {
+		"T3": {
 			"text": "",
 			"stars": 0,
 			"nextDialog": "Q3"
 		},
 		"Q1A1": {
-			"text": "La tête de liste des gilets jaunes.",
-			"stars": -1,
-			"nextDialog": "Q1FAILURE"
+			"text": "C’est vrai, l’abstention ne fait que rendre le Parlement moins représentatif. Les eurodéputés vont nous représenter pendant 5 ans.",
+			"stars": 1,
+			"nextDialog": "D1"
 		},
 		"Q1A2": {
-			"text": "La candidate plébiscitée par les gilets jaunes.",
+			"text": "Moi non plus je ne vois pas pourquoi aller voter",
 			"stars": -1,
-			"nextDialog": "Q1FAILURE"
-		},
-		"Q1A3": {
-			"text": "Une ancienne figure de proue du mouvement.",
-			"stars": 1,
-			"nextDialog": "Q1SUCCESS"
+			"nextDialog": "D1"
 		},
 		"Q2A1": {
-			"text": "François Asselineau",
-			"stars": 1,
-			"nextDialog": "Q2SUCCESS"
+			"text": "On le sait, la France va céder son siège à l’ONU à l’Allemagne",
+			"stars": -1,
+			"nextDialog": "D2"
 		},
 		"Q2A2": {
-			"text": "Etienne Chouard",
-			"stars": -1,
-			"nextDialog": "Q2FAILURE"
+			"text": "En effet, la France reste un pays influent avec ses 79 sièges au Parlement à l’issue de ces élections.",
+			"stars": 1,
+			"nextDialog": "D2"
 		},
 		"Q3A1": {
-			"text": "Oui, ça une être une véritable vague jaune, Bernadette !",
-			"stars": -1,
-			"nextDialog": "Q3FAILURE"
+			"text": "Les pouvoirs du Parlement sont vastes. Il a des compétences de contrôle sur la Commission européenne. Et depuis 2014, il vote pour le président de la Commission européenne.",
+			"stars": 1,
+			"nextDialog": ""
 		},
 		"Q3A2": {
-			"text": "Pas vraiment, la principale liste est à moins de 5%...",
-			"stars": 1,
-			"nextDialog": "Q3SUCCESS"
+			"text": "Je suis d’accord, le Parlement n'a aucun pouvoir !",
+			"stars": -1,
+			"nextDialog": ""
 		}
 	},
 	"Dialogs": {
 		"start": {
-			"text": "Mamie :\nMon Valentin ! Vous avez pris votre temps !",
+			"text": "André :\nDe toute façon je ne vais pas aller voter le 26 mai, ça ne sert à rien.",
 			"linkedChoices": ["T1"]
 		},
+		"Q1": {
+			"text": "Josianne :\nMais André, tu sais bien que la législation européenne est de plus en plus transposée dans les Etats membres. Et le Parlement européen est la seule institution de l’UE à être élue au suffrage universel direct.",
+			"linkedChoices": ["Q1A1", "Q1A2"]
+		},
 		"D1": {
-			"text": "Papy :\nLes gilets jaunes vous ont arrêté jeune homme ? ou vous avez fait une grass mat ?",
+			"text": "André :\nDe toute façon, la France n’a pas de poids dans l’UE, dominée par l’Allemagne . Ils ont 96 eurodéputés sur 705 !",
 			"linkedChoices": ["T2"]
 		},
-		"Q1": {
-			"text": "Mamie :\nAh les gilets jaunes, rebelle que je suis, je les soutiens ! Par contre je suis perdue là, qui est cette jeune femme rousse là...Ingrid Levavasseur  ?",
-			"linkedChoices": ["Q1A1", "Q1A2", "Q1A3"]
-		},
-		"Q1SUCCESS": {
-			"text": "Papy :\nOui, c’est ça ! Elle a annoncé qu'elle abandonnait la liste du \"Ralliement d'initiative citoyenne\".",
-			"linkedChoices": ["T4"]
-		},
-		"Q1FAILURE": {
-			"text": "Papy :\nDiable !  Vous êtes en retard et vous dites des sottises !",
-			"linkedChoices": ["T3"]
-		},
-		"D2": {
-			"text": "Mamie :\nDu calme André",
-			"linkedChoices": ["T4"]
-		},
 		"Q2": {
-			"text": "Mamie :\nD’ailleurs, certains gilets jaunes n’appellent pas à voter pour un mystérieux personnage ? Quel est son nom déjà ?",
+			"text": "Josianne :\nEt juste derrière l’Allemagne ? La France !",
 			"linkedChoices": ["Q2A1", "Q2A2"]
 		},
-		"Q2SUCCESS": {
-			"text": "Mamie :\nAh oui, Monsieur Frexit...son discours souverainiste trouve donc un certain écho sur les ronds-points...",
-			"linkedChoices": ["T5"]
-		},
-		"Q2FAILURE": {
-			"text": "Papy :\nEt pourquoi pas Michel Houellebecq ? LOL",
-			"linkedChoices": ["T5"]
+		"D2": {
+			"text": "Josianne :\nC’est important de voter, le Parlement approuve le budget annuel de l’UE, qui était quand même de plus de 160 milliards d’euros en 2018. Et il a bien sûr un rôle législatif.",
+			"linkedChoices": ["T3"]
 		},
 		"Q3": {
-			"text": "Mamie :\nBref, de toute façon, les gilets jaunes heureusement sont en tête des sondages !",
+			"text": "André :\nOui mais c'est la Commission européenne qui a le monopole de l’initiative législative !",
 			"linkedChoices": ["Q3A1", "Q3A2"]
-		},
-		"Q3SUCCESS": {
-			"text": "Papy :\nVoila, comme ça ils n’auront aucun élu Parlement européen, ces casseurs !",
-			"linkedChoices": []
-		},
-		"Q3FAILURE": {
-			"text": "Papy :\nNon mais fichtre alors ! C’est fini les FAKES NEWS (comme disent les jeunes)",
-			"linkedChoices": []
 		}
 	}
 }

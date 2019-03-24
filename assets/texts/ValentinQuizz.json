@@ -63,51 +63,51 @@
 	},
 	"Dialogs": {
 		"start": {
-			"text": "Mamie :\nMon Valentin ! Vous avez pris votre temps !",
+			"text": "Josianne :\nMon Valentin ! Vous avez pris votre temps !",
 			"linkedChoices": ["T1"]
 		},
 		"D1": {
-			"text": "Papy :\nLes gilets jaunes vous ont arrêté jeune homme ? ou vous avez fait une grass mat ?",
+			"text": "André :\nLes gilets jaunes vous ont arrêté jeune homme ? ou vous avez fait une grass mat ?",
 			"linkedChoices": ["T2"]
 		},
 		"Q1": {
-			"text": "Mamie :\nAh les gilets jaunes, rebelle que je suis, je les soutiens ! Par contre je suis perdue là, qui est cette jeune femme rousse là...Ingrid Levavasseur  ?",
+			"text": "Josianne :\nAh les gilets jaunes, rebelle que je suis, je les soutiens ! Par contre je suis perdue là, qui est cette jeune femme rousse là...Ingrid Levavasseur  ?",
 			"linkedChoices": ["Q1A1", "Q1A2", "Q1A3"]
 		},
 		"Q1SUCCESS": {
-			"text": "Papy :\nOui, c’est ça ! Elle a annoncé qu'elle abandonnait la liste du \"Ralliement d'initiative citoyenne\".",
+			"text": "André :\nOui, c’est ça ! Elle a annoncé qu'elle abandonnait la liste du \"Ralliement d'initiative citoyenne\".",
 			"linkedChoices": ["T4"]
 		},
 		"Q1FAILURE": {
-			"text": "Papy :\nDiable !  Vous êtes en retard et vous dites des sottises !",
+			"text": "André :\nDiable !  Vous êtes en retard et vous dites des sottises !",
 			"linkedChoices": ["T3"]
 		},
 		"D2": {
-			"text": "Mamie :\nDu calme André",
+			"text": "Josianne :\nDu calme André",
 			"linkedChoices": ["T4"]
 		},
 		"Q2": {
-			"text": "Mamie :\nD’ailleurs, certains gilets jaunes n’appellent pas à voter pour un mystérieux personnage ? Quel est son nom déjà ?",
+			"text": "Josianne :\nD’ailleurs, certains gilets jaunes n’appellent pas à voter pour un mystérieux personnage ? Quel est son nom déjà ?",
 			"linkedChoices": ["Q2A1", "Q2A2"]
 		},
 		"Q2SUCCESS": {
-			"text": "Mamie :\nAh oui, Monsieur Frexit...son discours souverainiste trouve donc un certain écho sur les ronds-points...",
+			"text": "Josianne :\nAh oui, Monsieur Frexit...son discours souverainiste trouve donc un certain écho sur les ronds-points...",
 			"linkedChoices": ["T5"]
 		},
 		"Q2FAILURE": {
-			"text": "Papy :\nEt pourquoi pas Michel Houellebecq ? LOL",
+			"text": "André :\nEt pourquoi pas Michel Houellebecq ? LOL",
 			"linkedChoices": ["T5"]
 		},
 		"Q3": {
-			"text": "Mamie :\nBref, de toute façon, les gilets jaunes heureusement sont en tête des sondages !",
+			"text": "Josianne :\nBref, de toute façon, les gilets jaunes heureusement sont en tête des sondages !",
 			"linkedChoices": ["Q3A1", "Q3A2"]
 		},
 		"Q3SUCCESS": {
-			"text": "Papy :\nVoila, comme ça ils n’auront aucun élu Parlement européen, ces casseurs !",
+			"text": "André :\nVoila, comme ça ils n’auront aucun élu Parlement européen, ces casseurs !",
 			"linkedChoices": []
 		},
 		"Q3FAILURE": {
-			"text": "Papy :\nNon mais fichtre alors ! C’est fini les FAKES NEWS (comme disent les jeunes)",
+			"text": "André :\nNon mais fichtre alors ! C’est fini les FAKES NEWS (comme disent les jeunes)",
 			"linkedChoices": []
 		}
 	}
