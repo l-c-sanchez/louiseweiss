@@ -123,6 +123,10 @@ export class Config {
 		postPerPage: 2.5
 	}
 
+	public static QuizzClara = {
+		time: 170, // in seconds
+	}
+
 	public static FacebookSheet = {
 		defaultOptions: {
 			borderThickness: 1,

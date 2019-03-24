@@ -11,6 +11,7 @@ import { Facebook } from "./scenes/FacebookScene";
 import { Result } from "./scenes/ResultScene";
 import { Tilemaps } from "phaser";
 import { ClaraConv } from "./scenes/ClaraConv";
+import { QuizzClara } from "./scenes/QuizzClara";
 
 export class App {
 
@@ -29,7 +30,7 @@ export class App {
 		this.Scenes.push(new CharacterChoice());
 		this.Scenes.push(new Facebook());
 		this.Scenes.push(new Result());
-		this.Scenes.push(new ClaraConv());
+		this.Scenes.push(new QuizzClara());
 		
 		Config.Phaser.scene = this.Scenes;
 
