@@ -21,7 +21,6 @@ export class QuizzClara extends Phaser.Scene {
     Config       : any;
     TextDuringFlash : GameText
     Button : Phaser.GameObjects.Sprite
-	// private Dialogs	: DialogTree;
 
     constructor() {
         super({ key: 'QuizzClara', active: false });

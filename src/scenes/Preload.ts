@@ -50,6 +50,7 @@ export class Preload extends Phaser.Scene {
 		this.load.spritesheet('boss', 'sprites/Boss32.png', { frameWidth:32, frameHeight:32});
 		this.load.spritesheet('clara', 'sprites/Clara32.png', { frameWidth:32, frameHeight:32});
 		this.load.image('star', 'sprites/star.png');
+		this.load.json('ClaraBoss', 'texts/ClaraBoss.json');
 
 		// Car game
 		this.load.image('voiture', 'sprites/voiture.png');
@@ -76,7 +77,7 @@ export class Preload extends Phaser.Scene {
 		this.load.json('ResultText', 'texts/ResultText.json');
 		this.load.json('Games', 'texts/Games.json');
 
-		// QuizzClaira
+		// QuizzClara
 		this.load.json('QuizzClara', 'texts/QuizzClara.json');
 		this.load.audio('ClaraFlash', 'sounds/ClaraFlash.mp3');
 	}

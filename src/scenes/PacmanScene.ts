@@ -1,6 +1,7 @@
 import { Config } from "../Config";
 import { HudScene } from "./HudScene";
 import { DialogBox, Anchor } from "../utils/DialogBox";
+import { DialogTree } from "../utils/DialogTree";
 
 enum State {
     Paused,
@@ -102,6 +103,7 @@ export class Pacman extends Phaser.Scene {
     STAR_NB = 4;
 
     ScaleRatio!: number;
+    Character: string;
     TileMap!: Phaser.Tilemaps.Tilemap;
     Player!: PacmanCharacter;
     Boss!: PacmanCharacter;
@@ -110,6 +112,8 @@ export class Pacman extends Phaser.Scene {
     gameEnded: boolean;
     GameState: State;
     Config:any;
+    private Button 		 : Phaser.GameObjects.Sprite
+    private Dialogs	: DialogTree;
 
     StartDialog	 : DialogBox = null;
 
@@ -135,9 +139,9 @@ export class Pacman extends Phaser.Scene {
 
     public create() {
 	
-        var character: string = this.registry.get('character');
+        this.Character = this.registry.get('character');
         var games = this.cache.json.get('Games'); 
-        this.Config = games.Pacman[character];
+        this.Config = games.Pacman[this.Character];
         if (!this.Config){
             throw new TypeError("Invalid config");
         }
@@ -154,40 +158,27 @@ export class Pacman extends Phaser.Scene {
         this.GameState = State.Paused;
         this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
         this.add.existing(this.StartDialog);
-        let button = this.StartDialog.addArrowButton();
-        button.on('pointerup', this.startConvwithBoss, this);
+        this.Button = this.StartDialog.addArrowButton();
+        this.Button.on('pointerup', this.startPacman, this);
+        // if (this.Character == "valentin")
+        //     this.Button.on('pointerup', this.startPacman, this);
+        // else
+        //     this.Button.on('pointerup', this.startConvwithBoss, this);
 
-    }
-    startConvwithBoss() {
-        this.StartDialog.destroy();
-        console.log("start conv with your boss")
     }
     startPacman() {
         // This avoid starting the game multiple times
         if (this.GameState != State.Paused){
             return;
         }
-        this.GameState = State.Started;
-
-        
-
-        this.hud.startTimer();
+        this.StartDialog.destroy();
+        this.Button.off("pointerup");
 
 		this.TileMap = this.make.tilemap({ key: 'ClaraPacmanMap' });
         var tiles = this.TileMap.addTilesetImage('OfficeTileset', 'OfficeTileset');
 		var layer = this.TileMap.createStaticLayer('layer0', tiles, 0, 0);
 		layer.setCollisionByProperty({ collides: true });
 		let posX = (Config.Game.width - layer.displayWidth) * 0.5
-		// layer.setPosition(posX, 0);
-		// layer.setCollisionBetween(0, 5);
-        // layer.setCollisionBetween(7, 49);
-
-        // const debugGraphics = this.add.graphics().setAlpha(0.75);
-        // layer.renderDebug(debugGraphics, {
-        //   tileColor: null, // Color of non-colliding tiles
-        //   collidingTileColor: 0xF0FFFFFF, //new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-        // //   faceColor: 0x303030FF// new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        // });
 
         var claraAnims = ["", "left", "right", "up", "down" ];
         var bossAnims = ["", "boss_left", "boss_right", "boss_up", "boss_down" ];
@@ -241,14 +232,14 @@ export class Pacman extends Phaser.Scene {
         });
 
 		let bossPos = this.TileMap.tileToWorldXY(4, 2);
-		this.Boss = new PacmanCharacter(this, this.Config.sprite_follower, bossPos.x + 16, bossPos.y + 16, bossAnims);
-        this.Boss.setSpeed(60);
+        this.Boss = new PacmanCharacter(this, this.Config.sprite_follower, bossPos.x + 16, bossPos.y + 16, bossAnims);
+        
         // this.Boss.Sprite.setScale(0.5, 0.5);
         this.physics.add.collider(this.Boss.Sprite, layer);
 
 		let playerPos = this.TileMap.tileToWorldXY(4, 8);
         this.Player = new PacmanCharacter(this, this.Config.sprite_char, playerPos.x + 16, playerPos.y + 16, claraAnims);
-        this.Player.setSpeed(60);
+
         // this.Player.Sprite.setScale(0.5, 0.5);
         this.Threshold = 10;//Math.ceil((32 - this.Player.displayWidth) / 2);
         this.physics.add.collider(this.Player.Sprite, layer);
@@ -263,11 +254,35 @@ export class Pacman extends Phaser.Scene {
         this.Stars.create(this.gridToWorld(1), this.gridToWorld(12), 'star');
 
         this.RemainingStarCount = 4;
-
         this.physics.add.overlap(this.Player.Sprite, this.Stars, this.collectStar, null, this);
         this.physics.add.overlap(this.Player.Sprite, this.Boss.Sprite, this.collideBoss, null, this);
+        // this.GameState = State.Paused;
+        if (this.Character == "valentin") 
+            this.beginGame();
+        else 
+            this.startConvwithBoss();
 
-
+    }
+    private startConvwithBoss() {
+        var games = this.cache.json.get('Games');
+        let dialogContent = this.cache.json.get('ClaraBoss');
+        this.Dialogs = new DialogTree(this, dialogContent, false, Anchor.Down, {windowHeight: 500});
+        console.log("start conv with your boss")
+        this.add.existing(this.Dialogs);
+        this.Dialogs.on('destroy', () => {
+            this.beginGame();
+        });  
+        
+        
+    }
+    private beginGame() {
+        if (this.GameState != State.Paused){
+            return;
+        }
+        this.hud.startTimer();
+        this.Boss.setSpeed(60);
+        this.Player.setSpeed(60);
+        this.GameState = State.Started;
         var downX: number, upX: number, downY: number, upY: number, Threshold: number = 50;
         this.input.on('pointerdown', function (pointer : Phaser.Input.InputPlugin) {
             downX = pointer.x;
@@ -290,8 +305,8 @@ export class Pacman extends Phaser.Scene {
         this.move(Pacman.RIGHT, this.Player);
         this.move(Pacman.LEFT, this.Boss);
     }
-
     public update() {
+
         if (this.GameState != State.Started)
             return;
         this.Player.checkSpaceAround();

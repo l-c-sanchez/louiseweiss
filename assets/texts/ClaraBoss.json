@@ -1,0 +1,32 @@
+{
+	"Choices": {
+		"1": {
+			"text": "Oui ?"
+		},
+		"2": {
+			"text": "Dimanche ? Mais ce sont les élections."
+		},
+		"3A": {
+			"text": "Ok",
+            "stars": -100
+        },
+        "3B": {
+			"text": "Non",
+			"stars": 1
+		}
+	},
+	"Dialogs": {
+		"start": {
+			"text": "Clara !",
+			"linkedChoices": ["1"]
+		},
+		"2": {
+			"text": "Business is business. Un gros client vient de me contacter, il a besoin de tes services. Tu pars dimanche en Suisse.",
+			"linkedChoices": ["2"]
+		},
+		"3": {
+			"text": "LOL. Tu pars.",
+			"linkedChoices": ["3A", "3B"]
+		}
+	}
+}
