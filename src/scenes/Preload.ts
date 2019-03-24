@@ -56,6 +56,10 @@ export class Preload extends Phaser.Scene {
 		this.load.image('road', 'sprites/road.png');
 		this.load.image('road_line', 'sprites/road_line.png');
 		this.load.image('rock', 'sprites/cow.png');
+		this.load.audio('ValentinFlash', 'sounds/ValentinFlash.wav');
+
+		// Valentin Conv
+		this.load.json('ValentinConv', 'texts/ValentinConv.json');
 
 		// Facebook
 		this.load.json('FacebookText', 'texts/FacebookText.json');

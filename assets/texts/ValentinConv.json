@@ -1,0 +1,60 @@
+{
+	"Choices": {
+		"T1": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D1"
+		},
+		"T2": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "Q1"
+		},
+		"T3": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D2"
+		},
+		"Q1A1": {
+			"text": "La tête de liste des gilets jaunes.",
+			"stars": -1,
+			"nextDialog": "Q1FAILURE"
+		},
+		"Q1A2": {
+			"text": "La candidate plébiscitée par les gilets jaunes.",
+			"stars": -1,
+			"nextDialog": "Q1FAILURE"
+		},
+		"Q1A3": {
+			"text": "Une ancienne figure de proue du mouvement.",
+			"stars": 1,
+			"nextDialog": "Q1SUCCESS"
+		}
+	},
+	"Dialogs": {
+		"start": {
+			"text": "Mamie :\nMon Valentin ! Vous avez pris votre temps !",
+			"linkedChoices": ["T1"]
+		},
+		"D1": {
+			"text": "Papy :\nLes gilets jaunes vous ont arrêté jeune homme ? ou vous avez fait une grass mat ?",
+			"linkedChoices": ["T2"]
+		},
+		"Q1": {
+			"text": "Mamie :\nAh les gilets jaunes, rebelle que je suis, je les soutiens ! Par contre je suis perdue là, qui est cette jeune femme rousse là...Ingrid Levavasseur  ?",
+			"linkedChoices": ["Q1A1", "Q1A2", "Q1A3"]
+		},
+		"Q1SUCCESS": {
+			"text": "Papy :\nOui, c’est ça ! Elle a annoncé qu'elle abandonnait la liste du \"Ralliement d'initiative citoyenne\".",
+			"linkedChoices": []
+		},
+		"Q1FAILURE": {
+			"text": "Papy :\nDiable !  Vous êtes en retard et vous dites des sottises !",
+			"linkedChoices": ["T3"]
+		},
+		"D2": {
+			"text": "Mamie :\nDu calme André",
+			"linkedChoices": []
+		}
+	}
+}

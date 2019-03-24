@@ -63,7 +63,7 @@ export class Config {
 			windowColor: 0x303030,
 			windowHeight: 150,
 			padding: 10,
-			dialogSpeed: 3,
+			dialogSpeed: 4,
 			arrowPadding: 20,
 			arrowScale: 1,
 			fontSize: Config.GameText.defaultStyle.fontSize,
@@ -110,9 +110,9 @@ export class Config {
 		rockProbability: 0.1,
 		corridorSize: 64,
 		tileSize: 32,
-		time: 25, // in seconds
+		time: 5, // in seconds
 		playerSpeed: 200,
-		camSpeed: -120
+		camSpeed: -150
 	}
 
 	public static Facebook = {

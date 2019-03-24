@@ -233,7 +233,19 @@ export class CarGame extends Phaser.Scene {
 
         // Collision with objects
         this.physics.add.overlap(this.Player, this.Generator.StarGroup, this.collectStar, null, this);
-        this.physics.add.overlap(this.Player, this.Generator.RockGroup, this.collideRock, null, this);
+		this.physics.add.overlap(this.Player, this.Generator.RockGroup, this.collideRock, null, this);
+		
+		//Start sounds
+		let flash = this.sound.add('ValentinFlash', {
+			mute: false,
+			volume: 1,
+			rate: 1,
+			detune: 0,
+			seek: 0,
+			loop: false,
+			delay: 0
+		});
+		flash.play();
     }
 
 	private updateStarCount(difference: number) {
@@ -307,7 +319,7 @@ export class CarGame extends Phaser.Scene {
             this.GameEnded = true;            
         }
         if (this.GameEnded){
-            this.scene.start("Facebook");
+            this.scene.start("ValentinConv");
         }
 
     }

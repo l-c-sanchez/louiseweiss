@@ -76,23 +76,13 @@ export class Menu extends Phaser.Scene {
 			// this.scale.toggleFullscreen();
 		}
 		if (this.StartDialog === null) {
-			let text = this.cache.json.get('StartText');
-			// this.scene.launch('HudScene');
-			// let text = this.cache.json.get('DialogExample');
-			// let tree = new DialogTree(this, text, false, Anchor.Down, { windowHeight: 300 });
-			// this.add.existing(tree);
-			// tree.on('destroy', () => {
-			// 	this.scene.start('CharacterChoice');
-			// });
-			
-			// this.StartDialog = tree.Box;
+			let text = this.cache.json.get('StartText');			
 			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, {
 				fitContent: true,
 				windowHeight: 300,
 				fontSize: 22
 			});
 			let button = this.StartDialog.addArrowButton();
-
 			button.on('pointerup', () => {
 				if (this.StartDialog.isAnimationEnded()) {
 					this.scene.start('CharacterChoice');
