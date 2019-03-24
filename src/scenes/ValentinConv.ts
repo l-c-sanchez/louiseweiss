@@ -6,7 +6,8 @@ import { DialogPhone } from "../utils/DialogPhone";
 
 export class ValentinConv extends Phaser.Scene {
 	private Hud		: HudScene;
-	private Dialogs	: DialogTree;
+	private Quizz	: DialogTree;
+	private Conv	: DialogTree;
 
     constructor() {
         super({ key: 'ValentinConv', active: false });
@@ -21,13 +22,19 @@ export class ValentinConv extends Phaser.Scene {
 	}
 
 	create() {
-		let dialogContent = this.cache.json.get('ValentinConv');
+		let quizzContent = this.cache.json.get('ValentinQuizz');
+		let convContent = this.cache.json.get('ValentinConv');
 
-		this.Dialogs = new DialogTree(this, dialogContent, true, Anchor.Down, { windowHeight: 500 });
+		this.Quizz = new DialogTree(this, quizzContent, false, Anchor.Down, { windowHeight: 500 });
 
-		this.add.existing(this.Dialogs);
-		this.Dialogs.on('destroy', () => {
-			this.scene.start('Pacman');
+		this.add.existing(this.Quizz);
+		this.Quizz.on('destroy', () => {
+			this.Conv = new DialogTree(this, convContent, false, Anchor.Down, { windowHeight: 500 });
+
+			this.add.existing(this.Conv);
+			this.Conv.on('destroy', () => {
+				this.scene.start('Pacman');
+			});
 		});
     }
 

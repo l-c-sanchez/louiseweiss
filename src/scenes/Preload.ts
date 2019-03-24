@@ -59,6 +59,7 @@ export class Preload extends Phaser.Scene {
 		this.load.audio('ValentinFlash', 'sounds/ValentinFlash.wav');
 
 		// Valentin Conv
+		this.load.json('ValentinQuizz', 'texts/ValentinQuizz.json');
 		this.load.json('ValentinConv', 'texts/ValentinConv.json');
 
 		// Facebook
