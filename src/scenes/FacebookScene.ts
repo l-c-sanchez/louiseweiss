@@ -46,7 +46,7 @@ export class Facebook extends Phaser.Scene {
 
 	create() {
         // console.log("in create")
-        var character: string = this.registry.get('character');
+       var character: string = this.registry.get('character');
         var games = this.cache.json.get('Games');
         // console.log(character);
         // console.log(games);

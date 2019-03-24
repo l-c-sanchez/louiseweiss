@@ -1,7 +1,7 @@
 {
 	"Pacman": {
 		"clara": {
-			"instruction":  "Vous souhaitez aller voter pour les élections européennes.\n\nMais votre patron souhaite que vous vous déplaciez à l’étranger dans le cadre d’une réunion professionnelle.\n\nEt récoltez le plus d’étoiles possibles",
+			"instruction":  "Vous êtes dans le bureau de votre patron. Attention: vos choix dans cette scène seront déterminants quant à l’issue du jeu.",
 			"sprite_char": "clara",
 			"sprite_follower": "boss"
 		},

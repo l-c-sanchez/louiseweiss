@@ -39,7 +39,89 @@
                         }
                 }
         }
+    },
+    "clara": {
+        "contextIfSuccess": "success",
+        "contextIfFail" : "fail",
+        "dialog" : {
+                "Choices": {
+                        "choice1": {
+                                "text": "",
+                                "stars": 0,
+                                "nextDialog": "arg1"
+                        },
+                        "2": {
+                                "text": "",
+                                "stars": 0,
+                                "nextDialog": "arg2"
+                        },
+                        "3": {
+                                "text": "",
+                                "stars": 0,
+                                "nextDialog": "arg3"
+                        }
+                },
+                "Dialogs": {
+                        "start": {
+                                "text": "Nous avons interrogé Anne Muxel, sociologue, pour découvrir ... Elle distingue plusieurs éléments d’explication :",
+                                "linkedChoices": ["choice1"]
+                        },
+                        "arg1": {
+                                "text": "manque de temps",
+                                "linkedChoices": ["2"]
+                        },
+                        "arg2": {
+                                "text": "blabla",
+                                "linkedChoices": ["3"]
+                        },
+                        "arg3": {
+                                "text": "blabla",
+                                "linkedChoices": []
+                        }
+                }
+        }
+        },
         
+    "valentin": {
+        "contextIfSuccess": "success",
+        "contextIfFail" : "fail",
+        "dialog" : {
+                "Choices": {
+                        "choice1": {
+                                "text": "",
+                                "stars": 0,
+                                "nextDialog": "arg1"
+                        },
+                        "2": {
+                                "text": "",
+                                "stars": 0,
+                                "nextDialog": "arg2"
+                        },
+                        "3": {
+                                "text": "",
+                                "stars": 0,
+                                "nextDialog": "arg3"
+                        }
+                },
+                "Dialogs": {
+                        "start": {
+                                "text": "Nous avons interrogé Anne Muxel, sociologue, pour découvrir ... Elle distingue plusieurs éléments d’explication :",
+                                "linkedChoices": ["choice1"]
+                        },
+                        "arg1": {
+                                "text": "manque de temps",
+                                "linkedChoices": ["2"]
+                        },
+                        "arg2": {
+                                "text": "blabla",
+                                "linkedChoices": ["3"]
+                        },
+                        "arg3": {
+                                "text": "blabla",
+                                "linkedChoices": []
+                        }
+                }
+        }
+}
 
-    }
 }

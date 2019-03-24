@@ -155,10 +155,13 @@ export class Pacman extends Phaser.Scene {
         this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
         this.add.existing(this.StartDialog);
         let button = this.StartDialog.addArrowButton();
-        button.on('pointerup', this.startPacman, this);
+        button.on('pointerup', this.startConvwithBoss, this);
 
-	}
-	
+    }
+    startConvwithBoss() {
+        this.StartDialog.destroy();
+        console.log("start conv with your boss")
+    }
     startPacman() {
         // This avoid starting the game multiple times
         if (this.GameState != State.Paused){
@@ -166,7 +169,7 @@ export class Pacman extends Phaser.Scene {
         }
         this.GameState = State.Started;
 
-        this.StartDialog.destroy();
+        
 
         this.hud.startTimer();
 
@@ -237,7 +240,7 @@ export class Pacman extends Phaser.Scene {
             repeat: -1
         });
 
-		let bossPos = this.TileMap.tileToWorldXY(4, 6);
+		let bossPos = this.TileMap.tileToWorldXY(4, 2);
 		this.Boss = new PacmanCharacter(this, this.Config.sprite_follower, bossPos.x + 16, bossPos.y + 16, bossAnims);
         this.Boss.setSpeed(60);
         // this.Boss.Sprite.setScale(0.5, 0.5);
@@ -319,8 +322,9 @@ export class Pacman extends Phaser.Scene {
         if (this.hud.getRemainingTime() <= 0 || this.RemainingStarCount <= 0){
             this.gameEnded = true;
         }
+        // var character: string = this.registry.get('character');
         if (this.gameEnded){
-            this.scene.start('CarGame');
+            this.scene.start('Result');
         }
 
     }
