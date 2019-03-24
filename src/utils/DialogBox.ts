@@ -451,8 +451,10 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 			this.ButtonText[i].destroy();
 		}
 		this.ButtonText = new Array<GameText>();
-		if (this.Arrow != null)
+		if (this.Arrow != null) {
 			this.Arrow.destroy();
+			this.Arrow = null;
+		}
 	}
 
 	public getHeight(): number {
