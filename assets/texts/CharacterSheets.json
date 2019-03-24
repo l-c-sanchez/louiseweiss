@@ -8,7 +8,7 @@
 			"town": "Paris",
 			"stars": 3,
 			"sprite": "ClaraPortrait",
-			"sceneToLaunch": "Pacman"
+			"sceneToLaunch": "QuizzClara"
 		},
 		{
 			"name": "Valentin",
