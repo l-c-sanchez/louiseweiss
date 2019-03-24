@@ -1,6 +1,6 @@
 import { Config } from "../Config";
 import { HudScene } from "./HudScene";
-import { DialogTree } from "../utils/DialogTree";
+import { DialogTree, DialogTreeObj } from "../utils/DialogTree";
 import { Anchor, DialogOptions, ButtonOptions, DialogBox } from "../utils/DialogBox";
 import { DialogPhone } from "../utils/DialogPhone";
 
@@ -9,7 +9,8 @@ export class ValentinConv extends Phaser.Scene {
 	private Quizz		: DialogTree;
 	private Conv		: DialogTree;
     private Config		: any;
-    private StartDialog	: DialogBox = null;
+	private StartDialog	: DialogBox = null;
+	private StarsBefore	: number;
 
     constructor() {
         super({ key: 'ValentinConv', active: false });
@@ -50,12 +51,35 @@ export class ValentinConv extends Phaser.Scene {
 
 	private startConv() {
 		this.StartDialog.destroy();
+		this.StarsBefore = this.getStarCount();
 		let convContent = this.cache.json.get('ValentinConv');
+		this.Conv = new DialogTree(this, convContent, false, Anchor.Down, { windowHeight: 500 });
+		this.add.existing(this.Conv);
+		this.Conv.on('destroy', this.showResultDialog, this);
+	}
+
+	private showResultDialog() {
+		let starsAfter = this.getStarCount();
+		let convContent: DialogTreeObj = null;
+		if (starsAfter - this.StarsBefore >= 2) {
+			convContent = this.cache.json.get('ValentinEndConvSuccess');
+		} else {
+			convContent = this.cache.json.get('ValentinEndConvFailure');
+		}
 		this.Conv = new DialogTree(this, convContent, false, Anchor.Down, { windowHeight: 500 });
 		this.add.existing(this.Conv);
 		this.Conv.on('destroy', () => {
 			this.scene.start('Pacman');
-		});
+		}, this);
+	}
+
+	private getStarCount(): number {
+		if (this.registry.has('starCount')) {
+			return (this.registry.get('starCount'));
+		} else {
+			console.warn("The starCount value should be initialized in the registry before this call.");
+			return (0);
+		}
 	}
 
     update() {

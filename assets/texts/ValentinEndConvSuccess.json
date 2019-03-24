@@ -1,0 +1,19 @@
+{
+	"Choices": {
+		"T1": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D1"
+		}
+	},
+	"Dialogs": {
+		"start": {
+			"text": "André :\nBon vous me fatiguez là Valentin ! Vous arrivez en retard, et vous faites votre propagande d’européiste ! Je vais me coucher moi !",
+			"linkedChoices": ["T1"]
+		},
+		"D1": {
+			"text": "Josianne :\nNe l’écoutez pas mon Valentin. Je vous embrasse, à très vite",
+			"linkedChoices": []
+		}
+	}
+}

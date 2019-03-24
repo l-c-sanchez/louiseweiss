@@ -71,6 +71,11 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 	}
 
 	private showDialog(key: string) {
+		if (key === "") {
+			this.destroy();
+			return;
+		}
+
 		if (!this.Dialogs.hasOwnProperty(key)) {
 			console.error('Error. There is no Dialog with this id in the Tree');
 		}
