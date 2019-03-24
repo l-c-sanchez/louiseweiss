@@ -79,6 +79,7 @@ export class Menu extends Phaser.Scene {
 			let text = this.cache.json.get('StartText');			
 			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, {
 				fitContent: true,
+				offsetY: 40,
 				fontSize: 26
 			});
 			let button = this.StartDialog.addArrowButton();

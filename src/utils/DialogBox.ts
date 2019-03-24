@@ -134,12 +134,15 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		this.TextObject.setColor(this.Options.textColor);
 		this.TextObject.PhaserText.setDepth(1);
 
-		this.createWindow();
-
+		// this.createWindow();
+		this.Width = Config.Game.width - this.Options.padding * 2;
+		this.Width -= this.Options.cropRight;
+		this.Width -= this.Options.cropLeft;
+	
 		this.TextObject.setWordWrap(this.Width - 25);
 
-		this.Frame.setDepth(0);
 		this.fitContent();
+		this.Frame.setDepth(0);
 
 		this.showText();
 	}
@@ -158,22 +161,24 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		if (this.Options.fitContent) {
 			this.Height = this.getContentHeight();
 			this.PosY = Config.Game.height - this.Height - this.Options.padding + this.Options.offsetY;
+			if (this.Anchor == Anchor.Top) {
+				this.PosY = this.Options.padding + this.Options.offsetY;
+			} else if (this.Anchor == Anchor.Center) {
+				this.PosY = Config.Game.centerY - this.Height * 0.5 + this.Options.offsetY;
+			}
 		} else {
 			this.Height = this.Options.windowHeight;
 			this.PosY = Config.Game.height - this.Options.windowHeight - this.Options.padding + this.Options.offsetY;
+			if (this.Anchor == Anchor.Top) {
+				this.PosY = this.Options.padding + this.Options.offsetY;
+			} else if (this.Anchor == Anchor.Center) {
+				this.PosY = Config.Game.centerY - this.Options.windowHeight * 0.5 + this.Options.offsetY;
+			}
 		}
-
-		this.Width = Config.Game.width - this.Options.padding * 2;
-		this.Width -= this.Options.cropRight;
-		this.Width -= this.Options.cropLeft;
 
 		this.PosX = this.Options.padding + this.Options.offsetX + this.Options.cropLeft;
 
-		if (this.Anchor == Anchor.Top) {
-			this.PosY = this.Options.padding + this.Options.offsetY;
-		} else if (this.Anchor == Anchor.Center) {
-			this.PosY = Config.Game.centerY - this.Options.windowHeight * 0.5 + this.Options.offsetY;
-		}
+
 		this.Frame = this.Env.add.graphics();
 		this.createInnerWindow(this.PosX, this.PosY, this.Width, this.Height);
 		this.createOuterWindow(this.PosX, this.PosY, this.Width, this.Height);
