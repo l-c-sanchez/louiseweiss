@@ -21,7 +21,7 @@
 			"instruction": "évitez tous les trucs divertissants qui pourraient vous dévier du vote (à changer)"
 		},
 		"valentin": {
-			"instruction": "Vous prenez votre voiture pour rendre visite à l’une de vos patientes dans un petit village rural. La route est difficile: Evitez les vaches et collectez le plus d’étoiles européennes.\n\nBonus : Ecoutez avec attention la radio, une question vous sera posée à l’issue du jeu"
+			"instruction": "Vous prenez votre voiture pour rendre visite à un couple de patients dans un petit village rural. La route est difficile: Evitez les vaches et collectez le plus d’étoiles européennes.\n\nBonus : Ecoutez avec attention la radio."
         }
 	}
 }
