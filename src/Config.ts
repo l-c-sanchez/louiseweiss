@@ -149,4 +149,22 @@ export class Config {
 	public static Pacman = {
 		time: 30
 	}
+
+	public static Breakout = {
+		ballSize: 16,
+		paddle: {
+			width: 70,
+			height: 16
+		},
+		brick: {
+			width: 32,
+			height: 16
+		},
+		layout: {
+			rows: 7,
+			cols: 7,
+			top: 150 // Distance to top in px
+		},
+		text: "A beautiful and interesting text hidden behind the bricks ...."
+	}
 }

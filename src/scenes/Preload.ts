@@ -71,6 +71,11 @@ export class Preload extends Phaser.Scene {
 		this.load.image('heart_empty', 'sprites/heart_empty.png');
 		this.load.image('fb_reactions', 'sprites/fb_reactions.png');
 
+		// Breakout
+		this.load.image('ball', 'sprites/ball.png');
+		this.load.image('paddle', 'sprites/paddle.png');
+		this.load.image('brick', 'sprites/brick.png');
+
 		// Autres
 	
 		this.load.on('progress', this.onProgress, this);
