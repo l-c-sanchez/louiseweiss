@@ -154,6 +154,7 @@ export class CarGame extends Phaser.Scene {
     PlayerSpeed: number;
     TargetPos: number;
     Config:any;
+    Character:string;
 
     hud: HudScene;
 
@@ -177,18 +178,20 @@ export class CarGame extends Phaser.Scene {
     public init() {
         this.Generator = new Generator(this);
         this.CamSpeed = Config.CarGame.camSpeed;
+        this.Character = this.registry.get('character'); 
         this.GameEnded = false;
         this.invicible = false;
         this.PlayerSpeed = Config.CarGame.playerSpeed;
         this.hud = <HudScene>this.scene.get("HudScene");
-        this.hud.setRemainingTime(Config.CarGame.time, false);
+        if (this.Character == "lucie")
+            this.hud.setRemainingTime(Config.CarGame.time_Lucie, false);
+        else if (this.Character == "clara")
+            this.hud.setRemainingTime(Config.CarGame.time_Clara, false);
     }
 
     public create() {
-        var character: string = this.registry.get('character'); 
-        console.log(character);
         var games: any = this.cache.json.get('Games');
-        this.Config = games.CarGame[character];
+        this.Config = games.CarGame[this.Character];
         if (!this.Config){
             throw new TypeError("Invalid config");
         }
@@ -319,7 +322,10 @@ export class CarGame extends Phaser.Scene {
             this.GameEnded = true;            
         }
         if (this.GameEnded){
-            this.scene.start("ValentinConv");
+            if (this.Character == "valentin")
+                this.scene.start("ValentinConv");
+            else if (this.Character == "lucie")
+                this.scene.start("Result");
         }
 
     }

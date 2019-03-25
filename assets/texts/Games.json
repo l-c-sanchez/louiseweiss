@@ -30,6 +30,9 @@
 		},
 		"valentin": {
 			"instruction": "Le ton monte entre Josiane et André. Prenez part à ce débat sur l’Union européenne."
+		},
+		"lucie": {
+			"instruction": " Afin de passer le temps, Lucie aime  échanger avec Paul, son meilleur ami. Paul passe une année en Italie dans le cadre d’un échange universitaire. Répondre aux interrogations de ce dernier afin de récolter les étoiles."
 		}
 	},
     "Facebook": {
@@ -43,6 +46,9 @@
 		},
 		"valentin": {
 			"instruction": "Vous prenez votre voiture pour rendre visite à un couple de patients dans un petit village rural. La route est difficile: Evitez les vaches et collectez le plus d’étoiles européennes.\n\nBonus : Ecoutez avec attention la radio."
-        }
+				},
+		"lucie": {
+				"instruction": "Les amis de Lucie lui proposent d’aller boire un verre et sa famille l’invite déjeuner au restaurant. Aidez Lucie à résister à l’appel de la bouffe et de la bière pour qu’elle se rende aux bureaux de vote."
+		}
 	}
 }

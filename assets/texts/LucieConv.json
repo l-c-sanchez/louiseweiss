@@ -1,0 +1,161 @@
+{
+	"Choices": {
+		"A1": {
+			"text": "Yes & toi ? Je me demandais: comment tu as réussi à financer ton échange à l’étranger ? ",
+			"stars": 0,
+			"nextDialog": "Q2"
+		},
+		"A2": {
+			"text": "Qu’est-ce que c’est ?",
+			"stars": 0,
+			"nextDialog": "Q3"
+		},
+		"A3A": {
+			"text": "100 000",
+			"stars": -1,
+			"nextDialog": "Q4"
+		},
+		"A3B": {
+			"text": "9 millions",
+			"stars": 1,
+			"nextDialog": "Q4"
+		},
+		"A3C": {
+			"text": "70 millions",
+			"stars": -1,
+			"nextDialog": "Q4"
+		},
+		"A3D": {
+			"text": "1 milliard",
+			"stars": -1,
+			"nextDialog": "Q4"
+		},
+		"A4": {
+			"text": "Je ne savais pas, mais avec la crise le programme ne risque pas de disparaitre ?",
+			"stars": 0,
+			"nextDialog": "Q5"
+		},
+		"A5": {
+			"text": "Mais qui en profite vraiment ? La France doit être perdante dans tout ça ? Tous les étudiants étrangers doivent se battre pour venir à Paris ?",
+			"stars": 0,
+			"nextDialog": "Q6"
+		},
+		"A6A": {
+			"text": "La France envoie plus d’étudiants à l’étranger qu’elle n’en reçoit ",
+			"stars": 1,
+			"nextDialog": "Q7"
+		},
+		"A6B": {
+			"text": "Le France accueille plus d’étudiants étrangers européens qu’elle n’en envoie",
+			"stars": -1,
+			"nextDialog": "Q7"
+		},
+		"A7": {
+			"text": "Cool! Mais en faites quel est l’intérêt ?",
+			"stars": 0,
+			"nextDialog": "Q8"
+		},
+		"A8": {
+			"text": "A bon ? Comment ?",
+			"stars": 0,
+			"nextDialog": "Q9"
+		},
+		"A9": {
+			"text": "Trop cool!! Mais pour ceux qui ne vont pas à l’université ou ne font pas d’études ? Ils n’ont droit à rien de la part de l’Union européenne ?",
+			"stars": 0,
+			"nextDialog": "Q10"
+        },
+        "A10A": {
+			"text": "C’est des tickets interail donnés gratuitement aux jeunes de 18 ans",
+			"stars": 1,
+			"nextDialog": "Q11"
+        },
+        "A10B": {
+			"text": "C’est le festival de cuisine de l’Union européenne",
+			"stars": -1,
+			"nextDialog": "Q11"
+        },
+        "A10C": {
+			"text": "C’est l’agence touristique de l’Union européenne",
+			"stars": -1,
+			"nextDialog": "Q11"
+        },
+        "A10D": {
+			"text": "C’est une série TV en plusieurs langues qui parle de l’histoire et de la culture de l’Europe",
+			"stars": -1,
+			"nextDialog": "Q11"
+        },
+        "A11": {
+			"text": "Cool je vais me renseigner pour mon cousin & ma petite soeur! Je dois y aller. A+ Paul Zoubi Zouba. ",
+			"stars": 0,
+			"nextDialog": ""
+		}
+	},
+	"Dialogs": {
+		"start": {
+			"text": "Hello Lucie, ça va ? ",
+			"linkedChoices": [
+				"A1"
+			]
+		},
+		"Q2": {
+			"text": "Je me suis inscrit au programme Erasmus.",
+			"linkedChoices": [ "A2"
+			]
+		},
+		"Q3": {
+			"text": "Ce sont des aides de l’Union européenne versées aux étudiants pour qu’ils puissent étudier à l’étranger. Toi aussi tu pourrais en profiter, Erasmus s’adresse aussi aux apprentis, aux écoliers et même aux profs!! D’ailleurs tu sais combien de prof et d’étudiants ont pu partir à l’étranger au cours des 30 dernières années grâce aux aides versées par l’Europe ? ",
+			"linkedChoices": [
+				"A3A", "A3B", "A3C", "A3D"
+			]
+		},
+		"Q4": {
+			"text": "9 millions !! Qui n’ont pas fait qu’étudier pendant leur séjour à l’étranger… Beaucoup ont trouvé leur conjoint pendant leur échange. Leurs enfants constituent ce que l’on appelle les “bébés Erasmus”",
+			"linkedChoices": [
+				"A4"
+			]
+		},
+		"Q5": {
+			"text": "Au contraire, il s’étend considérablement. Entre 2014 et 2020, l’Union européenne estime que près de 4% des jeunes européens auront eu la possibilité d’effectuer un séjour à l’étranger dans le cadre de leurs études! ",
+			"linkedChoices": [
+				"A5"
+			]
+		},
+		"Q6": {
+			"text": "A ton avis: la France envoie plus d’étudiants à l’étranger qu’elle n’en reçoit ou l’inverse ? ",
+			"linkedChoices": [
+				"A6A", "A6B"
+			]
+		},
+		"Q7": {
+			"text": "La France envoie bien plus d’étudiants à l’étranger qu’elle n’en reçoit. En 2016-2017, près de 45 000 français sont partis à l’étranger grâce à Erasmus. Mais moins de 30 000 européens sont venus en France pour faire un échange dans le cadre de programme",
+			"linkedChoices": [
+				"A7"
+			]
+		},
+		"Q8": {
+			"text": "Gagner de l’expérience. Acquérir une nouvelle langue. Découvrir une nouvelle culture. S’ouvrir un peu sur le monde quoi. Après un Erasmus, il est même possible de rester à l’étranger.",
+			"linkedChoices": [
+				"A8"
+			]
+		},
+		"Q9": {
+			"text": "Grâce à l’espace Schengen et la zone euro, on a tous la possibilité de travailler sans permis de séjour, ni visa dans la majorité des pays européens! En ayant toujours accès à la sécurité sociale. Et en conservant la même monnaie. LE KIFFE TOTAL!!!",
+			"linkedChoices": [
+				"A9"
+			]
+		},
+		"Q10": {
+			"text": "Tu connais le programme Discover EU ?",
+			"linkedChoices": [
+				"A10A", "A10B", "A10C", "A10D"
+			]
+		},
+		"Q11": {
+			"text": "C’est un pass de train illimité qui permet de voyager pendant 1 mois dans toute l’Europe avec tes potes. Il est distribué gratuitement à 12 000 jeunes européens de 18 ans chaque année. Il coûte normalement 500 euros et permet de visiter jusqu’à 4 pays.",
+			"linkedChoices": [
+				"A11"
+			]
+		}
+	}
+}

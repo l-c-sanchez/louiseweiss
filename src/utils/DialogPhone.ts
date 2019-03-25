@@ -30,6 +30,7 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 		this.MessageOptions = messageOptions;
 		this.AnswerOptions = answerOptions;
 		this.InputFieldOptions = inputFieldOptions;
+		console.log(content)
 		this.Dialogs = content.Dialogs;
 		this.Choices = content.Choices;
 		this.ButtonOptions = buttonOptions;

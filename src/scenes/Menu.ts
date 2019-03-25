@@ -38,7 +38,7 @@ export class Menu extends Phaser.Scene {
 		this.StartText.setOrigin(0.5, 0);
 
 		this.Music = this.sound.add('OdeToJoy', {
-			mute: false,
+			mute: true,
 			volume: 1,
 			rate: 1,
 			detune: 0,

@@ -65,6 +65,9 @@ export class Preload extends Phaser.Scene {
 		this.load.json('ValentinEndConvSuccess', 'texts/ValentinEndConvSuccess.json');
 		this.load.json('ValentinEndConvFailure', 'texts/ValentinEndConvFailure.json');
 
+		// Lucie Conv
+		this.load.json('LucieConv', 'texts/LucieConv.json');
+
 		// Facebook
 		this.load.json('FacebookText', 'texts/FacebookText.json');
 		this.load.image('heart', 'sprites/heart.png');

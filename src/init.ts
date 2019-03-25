@@ -13,6 +13,7 @@ import { Tilemaps } from "phaser";
 import { ClaraConv } from "./scenes/ClaraConv";
 import { QuizzClara } from "./scenes/QuizzClara";
 import { ValentinConv } from "./scenes/ValentinConv";
+import { LucieConv } from "./scenes/LucieConv";
 import { BreakoutScene } from "./scenes/BreakoutScene";
 
 export class App {
@@ -36,6 +37,7 @@ export class App {
 		this.Scenes.push(new ClaraConv());
 		this.Scenes.push(new ValentinConv());
 		this.Scenes.push(new BreakoutScene());
+		this.Scenes.push(new LucieConv());
 		
 		Config.Phaser.scene = this.Scenes;
 

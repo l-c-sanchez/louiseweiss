@@ -110,13 +110,14 @@ export class Config {
 		rockProbability: 0.1,
 		corridorSize: 64,
 		tileSize: 32,
-		time: 110, // in seconds
+		time_Clara: 110, // in seconds
+		time_Lucie:20,
 		playerSpeed: 200,
 		camSpeed: -150
 	}
 
 	public static Facebook = {
-		time: 2, // in seconds
+		time:20, // in seconds
 		padding: 10,
 		topPadding: 20,
 		// We put 2.5 news per page. That way, the user will see that he needs to scroll
