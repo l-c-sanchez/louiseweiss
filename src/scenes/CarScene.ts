@@ -87,10 +87,10 @@ class Generator {
     Cols: number;
     Rows: number;
     Env: CarGame;
-    Layers: Array<Layer>
-    FloorGroup: Phaser.Physics.Arcade.Group
-    StarGroup: Phaser.Physics.Arcade.Group
-    RockGroup: Phaser.Physics.Arcade.Group
+    Layers: Array<Layer>;
+    FloorGroup: Phaser.Physics.Arcade.Group;
+    StarGroup: Phaser.Physics.Arcade.Group;
+    RockGroup: Phaser.Physics.Arcade.Group;
 
     constructor (Env) {
         
@@ -185,7 +185,7 @@ export class CarGame extends Phaser.Scene {
         this.hud = <HudScene>this.scene.get("HudScene");
         if (this.Character == "lucie")
             this.hud.setRemainingTime(Config.CarGame.time_Lucie, false);
-        else if (this.Character == "clara")
+        else if (this.Character == "clara" || this.Character == "valentin")
             this.hud.setRemainingTime(Config.CarGame.time_Clara, false);
     }
 
@@ -238,17 +238,19 @@ export class CarGame extends Phaser.Scene {
         this.physics.add.overlap(this.Player, this.Generator.StarGroup, this.collectStar, null, this);
 		this.physics.add.overlap(this.Player, this.Generator.RockGroup, this.collideRock, null, this);
 		
-		//Start sounds
-		let flash = this.sound.add('ValentinFlash', {
-			mute: false,
-			volume: 1,
-			rate: 1,
-			detune: 0,
-			seek: 0,
-			loop: false,
-			delay: 0
-		});
-		flash.play();
+        //Start sounds
+        if (this.Character == "valentin"){
+            let flash = this.sound.add('ValentinFlash', {
+                mute: false,
+                volume: 1,
+                rate: 1,
+                detune: 0,
+                seek: 0,
+                loop: false,
+                delay: 0
+            });
+            flash.play();
+        }
     }
 
 	private updateStarCount(difference: number) {

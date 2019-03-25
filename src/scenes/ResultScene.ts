@@ -12,6 +12,8 @@ export class Result extends Phaser.Scene {
     Result       : GameText;
     Config      : any;
     Context      : DialogBox;
+    private StartDialog : DialogBox = null;
+    private Button 		 : Phaser.GameObjects.Sprite
 
 	constructor() {
         super({ key: 'Result', active:false });
@@ -78,7 +80,21 @@ export class Result extends Phaser.Scene {
     startResearcher() {
         this.Context.destroy();
 		var explanations = new DialogTree(this, this.Config.dialog, false, Anchor.Center, {fitContent:true});
-		this.add.existing(explanations);
+        this.add.existing(explanations);
+        explanations.on('destroy', this.playWithOtherCharacter, this);
+    }
+    playWithOtherCharacter() {
+        var resultText = this.cache.json.get('ResultText');
+        this.StartDialog = new DialogBox(this, resultText.playAgain, false, Anchor.Center, { windowHeight: 210, fontSize: 22 });
+        this.Button = this.StartDialog.addArrowButton();
+		this.Button.on('pointerup', this.startCharacterChoice, this);
+    }
+    startCharacterChoice() {
+        this.registry.set('character', "");
+        this.registry.set('starCount', 0);
+        this.registry.set('GameOver', false);
+
+        this.scene.start('CharacterChoice')
     }
 
 
