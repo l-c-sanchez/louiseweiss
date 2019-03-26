@@ -15,7 +15,6 @@ class Layer {
     FloorGroup: Phaser.Physics.Arcade.Group
     StarGroup: Phaser.Physics.Arcade.Group
     RockGroup: Phaser.Physics.Arcade.Group
-    
     PosY: number
     Cols: number
     Env: CarGame
@@ -25,12 +24,14 @@ class Layer {
         floorGroup: Phaser.Physics.Arcade.Group, 
         starGroup: Phaser.Physics.Arcade.Group,
         rockGroup: Phaser.Physics.Arcade.Group,
+    
         y: number,
         withObjects: boolean = true) 
 	{
         this.Env = env;
         this.Cols = Config.CarGame.columns;
         this.PosY = y;
+        
 
         this.LayerSprites = [];
         this.StarGroup = starGroup;
@@ -64,7 +65,12 @@ class Layer {
             if (Math.random() < Config.CarGame.starProbability){
                 var column = Phaser.Math.Between(-2, 2);
                 var x = Config.Game.centerX + column * Config.CarGame.corridorSize;
-                var rock: Phaser.Physics.Arcade.Sprite = this.RockGroup.create(x, this.PosY, 'rock');
+                var rock: Phaser.Physics.Arcade.Sprite;
+                var character = this.Env.registry.get('character');
+                if (character == "valentin")
+                    rock = this.RockGroup.create(x, this.PosY, 'rock');
+                else
+                    rock = this.RockGroup.create(x, this.PosY, 'burger');
                 rock.setOrigin(0.5, 0.5);
                 this.LayerSprites.push(rock);
             }

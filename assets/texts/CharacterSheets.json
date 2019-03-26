@@ -26,7 +26,7 @@
 			"town": "Bar-Le-Duc",
 			"stars": 1,
 			"sprite": "LuciePortrait",
-			"sceneToLaunch": "Facebook",
+			"sceneToLaunch": "CarGame",
 			"_comment": "replace scene above with Facebook"
 		}
 	]
