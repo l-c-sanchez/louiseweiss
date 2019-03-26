@@ -66,8 +66,10 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	private Env				: Phaser.Scene;
 	private Frame			: Phaser.GameObjects.Graphics;
 	private TextObject		: GameText;
+	private FullTextObject	: GameText;
 
 	private Text			: string;
+	private CurrentText		: string;
 	private Anchor			: Anchor;
 	private Animate			: boolean;
 	private Options			: DialogOptions;
@@ -90,6 +92,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	private PosY: number;
 	private Width: number;
 	private Height: number;
+	private TextHeight: number;
 	//#endregion
 
 	//#region Constructor
@@ -128,6 +131,11 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		this.computeTextPos();
 		// this.createWindow();
 
+		this.FullTextObject = new GameText(this.Env, this.TextPos.x, this.TextPos.y, this.Text);
+		this.FullTextObject.setSize(this.Options.fontSize);
+		this.FullTextObject.setAlign('left');
+		this.FullTextObject.setColor("#00000000");
+
 		this.TextObject = new GameText(this.Env, this.TextPos.x, this.TextPos.y, this.Text);
 		this.TextObject.setSize(this.Options.fontSize);
 		this.TextObject.setAlign('left');
@@ -139,12 +147,15 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		this.Width -= this.Options.cropRight;
 		this.Width -= this.Options.cropLeft;
 	
-		this.TextObject.setWordWrap(this.Width - 25);
+		this.FullTextObject.setWordWrap(this.Width - 25);
+		this.TextHeight = this.FullTextObject.PhaserText.displayHeight;
 
 		this.fitContent();
 		this.Frame.setDepth(0);
 
 		this.showText();
+		// this.TextObject.setWordWrap(this.Width - 25);
+		this.TextObject.PhaserText.setWordWrapCallback(this.textWrap, this);
 	}
 
 	private computeTextPos() {
@@ -206,19 +217,19 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	private createInnerWindow(x: number, y: number, width: number, height: number) {
 		let offset = this.Options.borderThickness;
 		this.Frame.fillStyle(this.Options.windowColor, this.Options.windowAlpha);
-		this.Frame.fillRect(x + offset * 0.5, y + offset * 0.5, width - offset, height - offset);
+		this.Frame.fillRoundedRect(x + offset * 0.5, y + offset * 0.5, width - offset, height - offset);
 	}
 
 	private createOuterWindow(x: number, y: number, width: number, height: number) {
 		this.Frame.lineStyle(this.Options.borderThickness, this.Options.borderColor, this.Options.borderAlpha);
-		this.Frame.strokeRect(x, y, width, height);
+		this.Frame.strokeRoundedRect(x, y, width, height);
 	}
 
 	private showText() {
 		this.EventCounter = 0;
 		this.Dialog = this.Text.toString().split('');
-		this.TextObject.setText(this.Animate ? '' : this.Text);
-
+		this.CurrentText = this.Animate ? '' : this.Text;
+		this.TextObject.setText(this.CurrentText);
 		if (this.TimedEvent !== null) {
 			this.TimedEvent.remove(false);
 			this.TimedEvent = null;
@@ -240,8 +251,8 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 
 		++this.EventCounter;
 
-		// console.log(this.TextObject.PhaserText.text + this.Dialog[this.EventCounter - 1]);
-		this.TextObject.setText(this.TextObject.PhaserText.text + this.Dialog[this.EventCounter - 1]);
+		this.CurrentText += this.Dialog[this.EventCounter - 1];
+		this.TextObject.setText(this.CurrentText);
 		if (this.EventCounter === this.Dialog.length) {
 			this.TimedEvent.remove(false);
 			this.TimedEvent = null;
@@ -258,7 +269,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	private getContentHeight(): number {
 		let height = 0
 		if (this.Text != "") {
-			height += this.TextObject.PhaserText.displayHeight + this.Options.innerPadding * 2;
+			height += this.TextHeight + this.Options.innerPadding * 2;
 		}
 		if (this.Arrow != null) {
 			height += this.Arrow.displayHeight;
@@ -286,6 +297,20 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		for (const key in options) {
 			this.ButtonOptions[key] = options[key];
 		}
+	}
+
+	private textWrap(text: string, textObject: Phaser.GameObjects.Text) {
+		let original = this.FullTextObject.PhaserText.getWrappedText(this.Text);
+		let output = new Array<string>();
+		let cutPosition = 0;
+		text = text.replace(/\n+/g, ' ');
+		for (let i = 0; i < original.length && cutPosition < text.length; ++i) {
+			output.push(text.substr(cutPosition, original[i].length));
+			cutPosition += original[i].length;
+			// console.log(original[i] +  "|");
+			// console.log(output[output.length - 1] + "|");
+		}
+		return output;
 	}
 
 	/*
@@ -376,7 +401,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		let buttonFrame = this.Env.add.graphics();
 		buttonFrame.lineStyle(this.ButtonOptions.borderThickness, this.ButtonOptions.borderColor,
 			this.ButtonOptions.borderAlpha);
-		buttonFrame.strokeRect(x, y, width, height);
+		buttonFrame.strokeRoundedRect(x, y, width, height);
 		this.ButtonFrames.push(buttonFrame);
 		buttonFrame.setDepth(1);
 		return buttonFrame;
@@ -392,9 +417,9 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 
 	public endAnimation() {
 		if (this.TimedEvent != null) {
-			this.TextObject.setText(this.Text);
 			this.TimedEvent.remove(false);
 			this.TimedEvent = null;
+			this.TextObject.setText(this.Text);
 		}
 	}
 
@@ -404,6 +429,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 
 	public destroy() {
 		this.TextObject.PhaserText.destroy();
+		this.FullTextObject.PhaserText.destroy();
 		this.Frame.destroy();
 		this.removeButtons();
 		super.destroy();

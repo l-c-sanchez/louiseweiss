@@ -80,12 +80,12 @@ export class CharacterSheet extends Phaser.GameObjects.GameObject {
 	private createInnerWindow(x: number, y: number, width: number, height: number) {
 		let offset = this.Options.borderThickness;
 		this.Graphics.fillStyle(this.Options.windowColor, this.Options.windowAlpha);
-		this.Graphics.fillRect(x + offset * 0.5, y + offset * 0.5, width - offset, height - offset);
+		this.Graphics.fillRoundedRect(x + offset * 0.5, y + offset * 0.5, width - offset, height - offset);
 	}
 
 	private createOuterWindow(x: number, y: number, width: number, height: number) {
 		this.Graphics.lineStyle(this.Options.borderThickness, this.Options.borderColor, this.Options.borderAlpha);
-		this.Graphics.strokeRect(x, y, width, height);
+		this.Graphics.strokeRoundedRect(x, y, width, height);
 	}
 
 	private createSprite() {

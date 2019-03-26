@@ -73,11 +73,11 @@ export class Menu extends Phaser.Scene {
 
 	startGame() {
 		if (!this.sys.game.device.os.desktop && !this.scale.isFullscreen) {
-			this.scale.toggleFullscreen();
+			// this.scale.toggleFullscreen();
 		}
 		if (this.StartDialog === null) {
 			let text = this.cache.json.get('StartText');			
-			this.StartDialog = new DialogBox(this, text, false, Anchor.Center, {
+			this.StartDialog = new DialogBox(this, text, true, Anchor.Center, {
 				fitContent: true,
 				offsetY: 40,
 				fontSize: 26
@@ -86,6 +86,8 @@ export class Menu extends Phaser.Scene {
 			button.on('pointerup', () => {
 				if (this.StartDialog.isAnimationEnded()) {
 					this.scene.start('CharacterChoice', { music: this.Music });
+				} else {
+					this.StartDialog.endAnimation();
 				}
 			});
 			this.add.existing(this.StartDialog);
