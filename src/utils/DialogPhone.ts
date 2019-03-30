@@ -1,6 +1,7 @@
 import { DialogBox, Anchor, DialogOptions, Orientation, ButtonOptions } from "./DialogBox";
 import { DialogObj, ChoiceObj, DialogTreeObj } from "./DialogTree";
 import { Config } from "../Config";
+import { KineticScroll, KineticScrollSettings } from "./KineticScroll";
 
 export class DialogPhone extends Phaser.GameObjects.GameObject {
 
@@ -19,6 +20,10 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 	private ChoiceIndex			: string;
 	private DestroyBoxDelayed	: boolean;
 
+	private KineticScroll		: KineticScroll;
+	private Scrolling			: boolean;
+
+
 	constructor(env: Phaser.Scene, content: DialogTreeObj, animate: boolean,
 			messageOptions: DialogOptions,
 			answerOptions: DialogOptions,
@@ -30,15 +35,49 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 		this.MessageOptions = messageOptions;
 		this.AnswerOptions = answerOptions;
 		this.InputFieldOptions = inputFieldOptions;
-		console.log(content)
 		this.Dialogs = content.Dialogs;
 		this.Choices = content.Choices;
 		this.ButtonOptions = buttonOptions;
 		this.ChoiceIndex = null;
 		this.DestroyBoxDelayed = false;
 		this.Messages = new Array<DialogBox>();
+		this.Scrolling = false;
 	
-		this.InputFieldOptions.offsetY = -Config.Game.height - 100;
+		const settings: KineticScrollSettings = {
+            kineticMovement: true,
+            timeConstantScroll: 325,
+            horizontalScroll: false,
+            verticalScroll: true,
+            bounds: {left: 0, top: 0, bottom: 0, right: 300}
+        }
+		this.KineticScroll = new KineticScroll(this.Env, settings);
+		
+		this.Env.input.on(
+            'pointerdown',
+            function (pointer) {
+				if (this.Env.input.y < Config.Game.height - this.InputCamera.height) {
+					this.Scrolling = true;
+					this.KineticScroll.beginMove(pointer);
+				}
+            },
+            this
+        );
+        this.Env.input.on(
+            'pointerup', 
+            function (pointer) {
+				this.Scrolling = false;
+                this.KineticScroll.endMove();
+            },
+            this);
+        this.Env.input.on(
+            'pointermove', 
+            function (pointer) {
+                this.KineticScroll.move(pointer);
+            },
+            this
+        );
+
+		this.InputFieldOptions.offsetY = -Config.Game.height * 2;
 		this.initDialogBox();
 	}
 
@@ -49,8 +88,8 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 
 			let answer = this.Choices[this.ChoiceIndex].text
 			let message = new DialogBox(this.Env, answer, this.Animate, Anchor.Top, this.AnswerOptions);
-			this.AnswerOptions.offsetY += message.getHeight();
-			this.MessageOptions.offsetY += message.getHeight();
+			this.AnswerOptions.offsetY += message.getHeight() + this.AnswerOptions.padding;
+			this.MessageOptions.offsetY += message.getHeight() + this.AnswerOptions.padding;
 			this.Env.add.existing(message);
 			this.Messages.push(message);
 			this.setCameraScroll(message);
@@ -71,6 +110,10 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 			this.ChoiceIndex = null;
 		} else if (this.DestroyBoxDelayed) {
 			this.destroy();
+		}
+
+		if (this.KineticScroll){
+			this.KineticScroll.update();
 		}
 	}
 
@@ -114,8 +157,8 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 		this.InputCamera.setScroll(0, pos.y);
 
 		let message = new DialogBox(this.Env, this.Dialogs[key].text, this.Animate, Anchor.Top, this.MessageOptions);
-		this.AnswerOptions.offsetY += message.getHeight();
-		this.MessageOptions.offsetY += message.getHeight();
+		this.AnswerOptions.offsetY += message.getHeight() + this.MessageOptions.padding;
+		this.MessageOptions.offsetY += message.getHeight() + this.MessageOptions.padding;
 		this.Env.add.existing(message);
 		this.Messages.push(message);
 		this.setCameraScroll(message);
@@ -123,8 +166,8 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 
 	private setCameraScroll(message: DialogBox) {
 		let messageBottom = message.getPos().y + message.getHeight();
+		this.KineticScroll.setBottom(messageBottom);
 		let cameraBottom = this.Env.cameras.main.scrollY + this.Env.cameras.main.height;
-		console.log(messageBottom, cameraBottom);
 		if (messageBottom > cameraBottom) {
 			this.Env.cameras.main.scrollY += messageBottom - cameraBottom;
 		}
@@ -145,13 +188,15 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 	private addButtonsCallbacks(dialogKey: string, buttons: Array<Phaser.GameObjects.Sprite>) {
 		if (this.Dialogs[dialogKey].linkedChoices.length == 0) {
 			buttons[0].on('pointerup', () => {
-				this.DestroyBoxDelayed = true;
+				if (!this.Scrolling)
+					this.DestroyBoxDelayed = true;
 			}, this);
 		} else {
 			for (let i = 0; i < buttons.length; ++i) {
 				let choiceKey = this.Dialogs[dialogKey].linkedChoices[i];
 				buttons[i].on('pointerup', () => {
-					this.ChoiceIndex = choiceKey;
+					if (!this.Scrolling)
+						this.ChoiceIndex = choiceKey;
 				}, this);
 			}
 		}

@@ -63,7 +63,7 @@ export class Config {
 			windowColor: 0x303030,
 			windowHeight: 150,
 			padding: 10,
-			dialogSpeed: 3,
+			dialogSpeed: 3.5,
 			arrowPadding: 20,
 			arrowScale: 1,
 			fontSize: Config.GameText.defaultStyle.fontSize,

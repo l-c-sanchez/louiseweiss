@@ -305,7 +305,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		let cutPosition = 0;
 		text = text.replace(/\n+/g, ' ');
 		for (let i = 0; i < original.length && cutPosition < text.length; ++i) {
-			output.push(text.substr(cutPosition, original[i].length));
+			output.push(text.substr(cutPosition, original[i].length).trim());
 			cutPosition += original[i].length;
 			// console.log(original[i] +  "|");
 			// console.log(output[output.length - 1] + "|");
@@ -489,7 +489,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	}
 
 	public getHeight(): number {
-		return (this.getContentHeight() + this.Options.innerPadding * 2);
+		return (this.getContentHeight() /*+ this.Options.innerPadding * 2*/);
 	}
 
 	public getPos(): Phaser.Math.Vector2 {

@@ -126,7 +126,7 @@ export class Preload extends Phaser.Scene {
 
 	onComplete() {
 		this.time.addEvent({
-			delay: 1000,
+			delay: 500,
 			callback: () => { this.scene.start('Menu') },
 			callbackScope: this
 		});

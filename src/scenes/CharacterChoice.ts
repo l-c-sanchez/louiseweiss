@@ -1,6 +1,7 @@
 import { Config } from "../Config";
 import { GameText } from "../utils/GameText";
 import { CharacterSheet } from "../utils/CharacterSheet";
+import { DialogBox, Anchor } from "../utils/DialogBox";
 
 export class CharacterChoice extends Phaser.Scene {
 	TextData	: any;
@@ -44,29 +45,36 @@ export class CharacterChoice extends Phaser.Scene {
 			this.add.existing(sheet);
 
 			let sceneToLaunch = this.TextData.characters[i].sceneToLaunch;
-			let nameCharacter: string = this.TextData.characters[i].name;
+			let nameCharacter: string = this.TextData.characters[i].name.toLowerCase();
 			sheet.addButton(() => {
-				this.Music.stop();
-				this.scene.launch('HudScene');
-				this.scene.start(sceneToLaunch);
-				this.registry.set('character', nameCharacter.toLowerCase());
-				// this.game.sound.destroy();
-				console.log(this);
+				this.registry.set('character', nameCharacter);
+				this.showConfirmBox(nameCharacter, sceneToLaunch);
 			});
 
 			y += height + Config.CharacterChoice.padding;
 		}
 	}
 
-	// public onButtonPressed(hitArea: any, x: number, y: number, gameObject: Phaser.GameObjects.GameObject) {
-	// 	console.log(gameObject);
-	// 	let pointer = this.input.activePointer;
-	// 	if (pointer.justUp) {
-	// 		console.log(gameObject);
-	// 		// this.scene.start('HudScene');
-	// 	// 	this.scene.start(this.TextData.characters[i].sceneToLaunch);	
-	// 	}
-	// }
-
-	// onKeyReleased(key: KeyboardEvent) {	}
+	showConfirmBox(characterName: string, sceneToLaunch: string) {
+		let config = this.cache.json.get('Games');
+		let graphics = this.add.graphics();
+		graphics.fillStyle(0x000000, 0.8);
+		graphics.fillRect(0, 0, Config.Game.width, Config.Game.height);
+		let confirm = new DialogBox(this, config.start[characterName].instruction, true, Anchor.Center, {
+			fitContent: true,
+			offsetY: 40,
+			fontSize: 26
+		});
+		let button = confirm.addArrowButton();
+		button.on('pointerup', () => {
+			if (confirm.isAnimationEnded()) {
+				this.Music.stop();
+				this.scene.launch('HudScene');
+				this.scene.start(sceneToLaunch);
+			} else {
+				confirm.endAnimation();
+			}
+		});
+		this.add.existing(confirm);
+	}
 }

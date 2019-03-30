@@ -61,6 +61,10 @@ export class KineticScroll {
       }
     }
   
+	public setBottom(bottom: number) {
+		this.settings.bounds.bottom = bottom;
+	}
+
     beginMove (pointer) {
       this.pointerId = pointer.id;
       this.startX = this.scene.input.x;

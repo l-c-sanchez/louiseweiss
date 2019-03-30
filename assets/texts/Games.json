@@ -1,4 +1,15 @@
 {
+	"start": {
+		"clara": {
+			"instruction": "Arriveras-tu à l’emmener jusqu’à l’isoloir ?\n\nPlus tu récoltes d’étoiles, plus ton personnage a envie d’aller voter."
+		},
+		"valentin": {
+			"instruction": "Arriveras-tu à l’emmener jusqu’à l’isoloir ?\n\nPlus tu récoltes d’étoiles, plus ton personnage a envie d’aller voter."
+		},
+		"lucie": {
+			"instruction": "Arriveras-tu à l’emmener jusqu’à l’isoloir ?\n\nPlus tu récoltes d’étoiles, plus ton personnage a envie d’aller voter."
+		}
+	},
 	"Pacman": {
 		"clara": {
 			"instruction":  "Vous êtes dans le bureau de votre patron. Attention: vos choix dans cette scène seront déterminants quant à l’issue du jeu.",
@@ -32,12 +43,12 @@
 			"instruction": "Le ton monte entre Josiane et André. Prenez part à ce débat sur l’Union européenne."
 		},
 		"lucie": {
-			"instruction": " Afin de passer le temps, Lucie aime  échanger avec Paul, son meilleur ami. Paul passe une année en Italie dans le cadre d’un échange universitaire. Répondre aux interrogations de ce dernier afin de récolter les étoiles."
+			"instruction": "Paul, son meilleur ami, est pro-européen. Et il essaie de la convaincre d’aller voter…"
 		}
 	},
     "Facebook": {
 		"lucie": {
-			"instruction":  "Dans les transports pour aller au boulot, Lucie consulte son fil d’actualité Facebook. Elle a cependant du mal à trouver des informations sur les élections européennes.\n\nAide-la à mieux repérer les informations. Sur chacune des pages, sélectionner les publications concernant le scrutin."
+			"instruction":  "Mais difficile de distinguer le vrai du faux, les informations factuelles des exagérations ou des théories complotistes.\n\nAide Lucie en sélectionnant les publications qui ne sont pas erronées. Pour cela, il suffit de les “liker” en cliquant sur le coeur. "
 		}
     },
     "CarGame": {
