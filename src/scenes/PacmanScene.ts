@@ -9,12 +9,69 @@ enum State {
     Ended
 }
 
+enum Direction {
+    NONE = 0,
+    LEFT = 1,
+    RIGHT = 2,
+    UP = 3,
+    DOWN = 4
+}
+
+namespace Direction {
+    export function fromString(s: string): Direction {
+        switch(s) {
+            case "L":
+                return Direction.LEFT;
+            case "R":
+                return Direction.RIGHT;
+            case "D":
+            return Direction.DOWN;
+            case "U":
+                return Direction.UP;
+            default:
+                return Direction.NONE;
+         }
+    }
+
+    export function toString(direction: Direction): string {
+        switch(direction) {
+            case Direction.NONE:
+                return "NONE";
+            case Direction.LEFT:
+                return "LEFT";
+            case Direction.RIGHT:
+                return "RIGHT";
+            case Direction.UP:
+                return "UP";
+            case Direction.DOWN:
+                return "DOWN";
+        }
+    }
+
+    export function toVector(direction: Direction): Phaser.Math.Vector2 {
+        switch(direction) {
+            case Direction.NONE:
+                return new Phaser.Math.Vector2(0, 0);
+            case Direction.LEFT:
+                return new Phaser.Math.Vector2(-1, 0);
+            case Direction.RIGHT:
+                return new Phaser.Math.Vector2(1, 0);
+            case Direction.UP:
+                return new Phaser.Math.Vector2(0, -1);
+            case Direction.DOWN:
+                return new Phaser.Math.Vector2(0, 1);
+        }
+    }
+}
+
+
 class PacmanCharacter {
 
     Sprite: Phaser.Physics.Arcade.Sprite;
     Env: Pacman;
     Speed: number;
     Animations: Array<string>;
+    DirectionToAnimation: {[key: string]: string}
 
     Marker!: Phaser.Math.Vector2;
     Current!: number;
@@ -25,19 +82,29 @@ class PacmanCharacter {
     Directions: Array<Phaser.Tilemaps.Tile> = [ null, null, null, null, null ];
     Opposites: Array<number> = [ Pacman.NONE, Pacman.RIGHT, Pacman.LEFT, Pacman.DOWN, Pacman.UP ];
 
+    TargetPosition: Phaser.Math.Vector2;
+    CurrentDirection: Direction;
+
     constructor(env: Pacman, spriteName: string, spawnX: number, spawnY: number, animations: Array<string>) {
         this.Env = env;
         this.Sprite = this.Env.physics.add.sprite(spawnX, spawnY, spriteName);
         this.Speed = 10;
         this.Turning = Pacman.NONE;
         this.Animations = animations;
+        this.DirectionToAnimation = {
+            "NONE": animations[0],
+            "LEFT": animations[1],
+            "RIGHT": animations[2],
+            "UP": animations[3],
+            "DOWN": animations[4]
+        }
     }
 
     public setSpeed(speed: number) {
         this.Speed = speed;
     }
 
-    public checkSpaceAround() {
+    public checkSpaceAround(): void {
         this.Marker = new Phaser.Math.Vector2();
         var playerTile = this.Env.TileMap.getTileAtWorldXY(this.Sprite.x, this.Sprite.y);
         this.Marker.x = playerTile.x;
@@ -48,46 +115,42 @@ class PacmanCharacter {
         this.Directions[Pacman.DOWN] = this.Env.TileMap.getTileAt(playerTile.x, playerTile.y + 1);
     }
 
-    public automaticMove(target: PacmanCharacter) {
-        if (this.Turning != Pacman.NONE) {
+    /**
+     * Move character to the next tile in the chosen direction. Once final position is reached, it stops.
+     * To do that, character.checkPosition() has to be called in scene update method
+     */
+    public moveTo(scene: Pacman, direction: Direction){
+        if (this.CurrentDirection != direction){
+            this.Sprite.play(this.DirectionToAnimation[Direction.toString(direction)]);
+        }
+        let currentTile = scene.TileMap.worldToTileXY(this.Sprite.x, this.Sprite.y);
+        let delta = Direction.toVector(direction);
+        let target = scene.TileMap.tileToWorldXY(currentTile.x + delta.x, currentTile.y + delta.y);
+        // TargetPosition will be used for stopping
+        this.TargetPosition = new Phaser.Math.Vector2(target.x + 16, target.y + 16);
+
+        scene.physics.moveTo(this.Sprite, this.TargetPosition.x, this.TargetPosition.y, this.Speed);
+    }
+
+    /**
+     * This will stop the Sprite when it reaches the TargetPosition
+     */
+    public checkTargetPosition(): boolean {
+        if (!this.TargetPosition){
             return;
         }
-        var bestMove = Pacman.NONE;
-        var bestSquareDistance = 1000000000;
+        let threshold = 2;
+        if (Phaser.Math.Fuzzy.Equal(this.TargetPosition.x, this.Sprite.x, threshold) &&
+            Phaser.Math.Fuzzy.Equal(this.TargetPosition.y, this.Sprite.y, threshold)
+        ){
+            // Stop the movement and put sprite exactly to TargetPos
+            this.Sprite.setVelocity(0);
+            this.Sprite.x = this.TargetPosition.x;
+            this.Sprite.y = this.TargetPosition.y;
 
-        for (var i = 0; i < this.Directions.length; ++i) {
-            if (this.Directions[i] !== null && this.Directions[i].index === 7 && i != this.Opposites[this.Current] && i != this.Current) {
-                if (bestMove == Pacman.NONE) {
-                    bestMove = i;
-                    bestSquareDistance = Phaser.Math.Distance.Squared(this.Directions[i].x * 32,  
-                        this.Directions[i].y * 32, target.Sprite.x, target.Sprite.y);
-                }
-                else {             
-                    var SquareDistance = Phaser.Math.Distance.Squared(this.Directions[i].x * 32,  
-                    this.Directions[i].y * 32, target.Sprite.x, target.Sprite.y);
-                    
-                    if (SquareDistance < bestSquareDistance) {
-                        bestSquareDistance = SquareDistance;
-                        bestMove = i;
-                    }
-                }
-
-            }
-        }
-        if (bestMove == Pacman.NONE) {
-            this.Turning = Pacman.NONE;
-        } 
-        else {
-            var turnPoint = new Phaser.Math.Vector2(this.Marker.x * 32 + 16, this.Marker.y * 32 + 16);
-            if (turnPoint.x == this.PrevTurnPoint.x && turnPoint.y == this.PrevTurnPoint.y) {
-                this.Turning = Pacman.NONE;
-            } else {
-                this.Turning = bestMove;
-                this.TurnPoint.x = turnPoint.x;
-                this.TurnPoint.y = turnPoint.y;
-                this.PrevTurnPoint = this.TurnPoint;
-            }
-
+            return true;
+        } else {
+            return false;
         }
     }
 }
@@ -100,13 +163,15 @@ export class Pacman extends Phaser.Scene {
     static UP = 3;
     static DOWN = 4;
 
-    STAR_NB = 4;
+    STAR_NB: number = 4;
 
     ScaleRatio!: number;
     Character: string;
     TileMap!: Phaser.Tilemaps.Tilemap;
     Player!: PacmanCharacter;
+
     Boss!: PacmanCharacter;
+
     Stars!: Phaser.Physics.Arcade.Group;
     RemainingStarCount: number;
     gameEnded: boolean;
@@ -117,6 +182,7 @@ export class Pacman extends Phaser.Scene {
 
     StartDialog	 : DialogBox = null;
 
+    OptimalDirections: {[key: string]: string}
 
     // Player movement
     Cursors!: Phaser.Input.Keyboard.CursorKeys;
@@ -150,8 +216,8 @@ export class Pacman extends Phaser.Scene {
         this.add.existing(this.StartDialog);
         this.Button = this.StartDialog.addArrowButton();
         this.Button.on('pointerup', this.startPacman, this);
-
     }
+
     startPacman() {
         // This avoid starting the game multiple times
         if (this.GameState != State.Paused){
@@ -217,17 +283,14 @@ export class Pacman extends Phaser.Scene {
             repeat: -1
         });
 
-		let bossPos = this.TileMap.tileToWorldXY(4, 2);
+        let bossPos = this.TileMap.tileToWorldXY(3, 2);
         this.Boss = new PacmanCharacter(this, this.Config.sprite_follower, bossPos.x + 16, bossPos.y + 16, bossAnims);
-        
-        // this.Boss.Sprite.setScale(0.5, 0.5);
-        this.physics.add.collider(this.Boss.Sprite, layer);
+        this.physics.add.collider(this.Boss.Sprite, layer)
 
 		let playerPos = this.TileMap.tileToWorldXY(4, 8);
         this.Player = new PacmanCharacter(this, this.Config.sprite_char, playerPos.x + 16, playerPos.y + 16, claraAnims);
 
-        // this.Player.Sprite.setScale(0.5, 0.5);
-        this.Threshold = 10;//Math.ceil((32 - this.Player.displayWidth) / 2);
+        this.Threshold = 10;
         this.physics.add.collider(this.Player.Sprite, layer);
 
         this.Cursors = this.input.keyboard.createCursorKeys();
@@ -255,7 +318,6 @@ export class Pacman extends Phaser.Scene {
             dialogContent = this.cache.json.get('ClaraBoss');
         this.Dialogs = new DialogTree(this, dialogContent, false, Anchor.Down, {windowHeight: 500});
         
-        console.log("start conv with your boss")
         this.add.existing(this.Dialogs);
         this.Dialogs.on('destroy', () => {
             var res : boolean = this.registry.get('GameOver'); 
@@ -305,18 +367,15 @@ export class Pacman extends Phaser.Scene {
             } else if (upY > downY + Threshold) {
                 this.Swipe = 'down';
             }
-        });     
+        });
 
         this.move(Pacman.RIGHT, this.Player);
-        this.move(Pacman.LEFT, this.Boss);
     }
     public update() {
 
         if (this.GameState != State.Started)
             return;
         this.Player.checkSpaceAround();
-        this.Boss.checkSpaceAround();
-        this.Boss.automaticMove(this.Player);
 
         if (this.Cursors.right != undefined && this.Cursors.right.isDown || this.Swipe == 'right'){
             this.checkDirection(Pacman.RIGHT, this.Player);
@@ -335,18 +394,20 @@ export class Pacman extends Phaser.Scene {
         if (this.Player.Turning != this.Player.Current && this.Player.Turning !== Pacman.NONE) {
             this.turn(this.Player);
         }
-        if (this.Boss.Turning != this.Boss.Current && this.Boss.Turning !== Pacman.NONE) {
-            this.turn(this.Boss);
-        }
 
         if (this.hud.getRemainingTime() <= 0 || this.RemainingStarCount <= 0){
             this.gameEnded = true;
         }
-        // var character: string = this.registry.get('character');
         if (this.gameEnded){
             this.scene.start('Result');
         }
 
+        let targetReached = this.Boss.checkTargetPosition()
+        if (targetReached || !this.Boss.TargetPosition){
+            // do next move
+            let direction = this.getBossOptimalDirection();
+            this.Boss.moveTo(this, direction);
+        }
     }
 
     private move(direction: number, character: PacmanCharacter)
@@ -376,7 +437,7 @@ export class Pacman extends Phaser.Scene {
         
     }
 
-    private turn(character: PacmanCharacter)
+    private turn(character: PacmanCharacter): boolean
     {
         var cx = Math.floor(character.Sprite.x);
         var cy = Math.floor(character.Sprite.y);
@@ -400,7 +461,17 @@ export class Pacman extends Phaser.Scene {
 		
         return true;
     }
-    
+
+    public getBossOptimalDirection(): Direction {
+        // Getting coordinates in tiles
+        let bossPos = this.TileMap.worldToTileXY(this.Boss.Sprite.x, this.Boss.Sprite.y);
+        let playerPos = this.TileMap.worldToTileXY(this.Player.Sprite.x, this.Player.Sprite.y);
+
+        let optimalDirections = this.cache.json.get('directions');
+        let key = [bossPos.y, bossPos.x, playerPos.y, playerPos.x].join(',');
+        return Direction.fromString(optimalDirections[key]);
+    }
+
     private checkDirection(direction: number, character: PacmanCharacter) {
         if (character.Turning === direction || character.Directions[direction] === null || character.Directions[direction].index != 7) {
 			return;
@@ -429,6 +500,7 @@ export class Pacman extends Phaser.Scene {
         player.disableBody(true, true);
         this.gameEnded = true;
     }
+
     private getStarCount(): number {
 		if (this.registry.has('starCount')) {
 			return (this.registry.get('starCount'));

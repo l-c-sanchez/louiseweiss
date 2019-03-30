@@ -51,6 +51,7 @@ export class Preload extends Phaser.Scene {
 		this.load.spritesheet('clara', 'sprites/Clara32.png', { frameWidth:32, frameHeight:32});
 		this.load.image('star', 'sprites/star.png');
 		this.load.json('ClaraBoss', 'texts/ClaraBoss.json');
+		this.load.json('directions', 'data/directions.json');
 
 		// Car game
 		this.load.image('voiture', 'sprites/voiture.png');

@@ -13,6 +13,14 @@ npm install
 tsc
 ```
 
+### Generating the optimal directions for Pacman
+
+One of the games is a Pacman game. For this game, we generated a json file containing the shortest paths from a point of the map to another in order to move the boss character cleverly. To regenerate this file, you should run these command from the root of the project:
+
+```bash
+python3 scripts/shortest_path.py assets/tilesets/ClaraPacman.json assets/data/directions.json
+```
+
 ### Running the project
 
 Run this command in project root.
