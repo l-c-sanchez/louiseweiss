@@ -62,6 +62,22 @@ namespace Direction {
                 return new Phaser.Math.Vector2(0, 1);
         }
     }
+
+    export function opposite(direction: Direction): Direction {
+        switch(direction) {
+            case Direction.NONE:
+                return Direction.NONE;
+            case Direction.LEFT:
+                return Direction.RIGHT;
+            case Direction.RIGHT:
+                return Direction.LEFT;
+            case Direction.UP:
+                return Direction.DOWN;
+            case Direction.DOWN:
+                return Direction.UP;
+        }
+
+    }
 }
 
 
@@ -71,7 +87,7 @@ class PacmanCharacter {
     Env: Pacman;
     Speed: number;
     Animations: Array<string>;
-    DirectionToAnimation: {[key: string]: string}
+    DirectionToAnimation: {[key in Direction]: string}
 
     Marker!: Phaser.Math.Vector2;
     Current!: number;
@@ -91,28 +107,18 @@ class PacmanCharacter {
         this.Speed = 10;
         this.Turning = Pacman.NONE;
         this.Animations = animations;
+
         this.DirectionToAnimation = {
-            "NONE": animations[0],
-            "LEFT": animations[1],
-            "RIGHT": animations[2],
-            "UP": animations[3],
-            "DOWN": animations[4]
+            [Direction.NONE]: animations[0],
+            [Direction.LEFT]: animations[1],
+            [Direction.RIGHT]: animations[2],
+            [Direction.UP]: animations[3],
+            [Direction.DOWN]: animations[4]
         }
     }
 
     public setSpeed(speed: number) {
         this.Speed = speed;
-    }
-
-    public checkSpaceAround(): void {
-        this.Marker = new Phaser.Math.Vector2();
-        var playerTile = this.Env.TileMap.getTileAtWorldXY(this.Sprite.x, this.Sprite.y);
-        this.Marker.x = playerTile.x;
-        this.Marker.y = playerTile.y;
-        this.Directions[Pacman.LEFT] = this.Env.TileMap.getTileAt(playerTile.x - 1, playerTile.y);
-        this.Directions[Pacman.RIGHT] = this.Env.TileMap.getTileAt(playerTile.x + 1, playerTile.y);
-        this.Directions[Pacman.UP] = this.Env.TileMap.getTileAt(playerTile.x, playerTile.y - 1);
-        this.Directions[Pacman.DOWN] = this.Env.TileMap.getTileAt(playerTile.x, playerTile.y + 1);
     }
 
     /**
@@ -121,8 +127,9 @@ class PacmanCharacter {
      */
     public moveTo(scene: Pacman, direction: Direction){
         if (this.CurrentDirection != direction){
-            this.Sprite.play(this.DirectionToAnimation[Direction.toString(direction)]);
+            this.Sprite.play(this.DirectionToAnimation[direction]);
         }
+        this.CurrentDirection = direction;
         let currentTile = scene.TileMap.worldToTileXY(this.Sprite.x, this.Sprite.y);
         let delta = Direction.toVector(direction);
         let target = scene.TileMap.tileToWorldXY(currentTile.x + delta.x, currentTile.y + delta.y);
@@ -176,7 +183,7 @@ export class Pacman extends Phaser.Scene {
     RemainingStarCount: number;
     GameEnded: boolean;
     GameState: State;
-    Config:any;
+    Config: any;
     private Button 		 : Phaser.GameObjects.Sprite
     private Dialogs	: DialogTree;
 
@@ -218,7 +225,7 @@ export class Pacman extends Phaser.Scene {
         this.Button.on('pointerup', this.startPacman, this);
     }
 
-    startPacman() {
+    private startPacman() {
         // This avoid starting the game multiple times
         if (this.GameState != State.Paused){
             return;
@@ -230,7 +237,6 @@ export class Pacman extends Phaser.Scene {
         var tiles = this.TileMap.addTilesetImage('OfficeTileset', 'OfficeTileset');
 		var layer = this.TileMap.createStaticLayer('layer0', tiles, 0, 0);
 		layer.setCollisionByProperty({ collides: true });
-		let posX = (Config.Game.width - layer.displayWidth) * 0.5
 
         var claraAnims = ["", "left", "right", "up", "down" ];
         var bossAnims = ["", "boss_left", "boss_right", "boss_up", "boss_down" ];
@@ -289,34 +295,26 @@ export class Pacman extends Phaser.Scene {
 
 		let playerPos = this.TileMap.tileToWorldXY(4, 8);
         this.Player = new PacmanCharacter(this, this.Config.sprite_char, playerPos.x + 16, playerPos.y + 16, claraAnims);
+        this.physics.add.collider(this.Player.Sprite, layer);
 
         this.Threshold = 10;
-        this.physics.add.collider(this.Player.Sprite, layer);
 
         this.Cursors = this.input.keyboard.createCursorKeys();
 
         this.Stars = this.physics.add.group();
-
         this.Stars.create(this.gridToWorld(1), this.gridToWorld(7), 'star');
         this.Stars.create(this.gridToWorld(6), this.gridToWorld(2), 'star');
         this.Stars.create(this.gridToWorld(8), this.gridToWorld(8), 'star');
         this.Stars.create(this.gridToWorld(1), this.gridToWorld(12), 'star');
-
         this.RemainingStarCount = 4;
+
         this.physics.add.overlap(this.Player.Sprite, this.Stars, this.collectStar, null, this);
         this.physics.add.overlap(this.Player.Sprite, this.Boss.Sprite, this.collideBoss, null, this);
-        // this.GameState = State.Paused;
         this.startConvwithBoss();
-
     }
 
     private startConvwithBoss() {
-        var dialogContent:DialogTreeObj;
-
-        if (this.Character == "valentin")
-            dialogContent = this.cache.json.get('ClaraBoss');
-        else
-            dialogContent = this.cache.json.get('ClaraBoss');
+        var dialogContent: DialogTreeObj = this.cache.json.get('ClaraBoss');
         this.Dialogs = new DialogTree(this, dialogContent, false, Anchor.Down, {windowHeight: 500});
         
         this.add.existing(this.Dialogs);
@@ -331,12 +329,11 @@ export class Pacman extends Phaser.Scene {
     }
 
     private beginExplanations() {
-
         if (!this.sys.game.device.os.desktop ) {
 			this.StartDialog = new DialogBox(this, this.Config.instruction_details_mobile, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
-        }
-        else 
+        } else {
             this.StartDialog = new DialogBox(this, this.Config.instruction_details_desktop, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+        }
         this.add.existing(this.StartDialog);
         this.Button = this.StartDialog.addArrowButton();
         this.Button.on('pointerup', this.beginGame, this);
@@ -370,97 +367,76 @@ export class Pacman extends Phaser.Scene {
                 this.Swipe = 'down';
             }
         });
-        this.move(Pacman.RIGHT, this.Player);
+        this.Player.moveTo(this, Direction.RIGHT);
     }
 
     public update() {
-        if (this.GameState != State.Started)
+        if (this.GameState != State.Started){
             return;
-        this.Player.checkSpaceAround();
+        }
 
+        // player movement
+        let targetPlayerDirection: Direction = Direction.NONE;
         if (this.Cursors.right != undefined && this.Cursors.right.isDown || this.Swipe == 'right'){
-            this.checkDirection(Pacman.RIGHT, this.Player);
-        }
-        else if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == 'left'){
-            this.checkDirection(Pacman.LEFT, this.Player);
-        }
-        else if (this.Cursors.up != undefined && this.Cursors.up.isDown || this.Swipe == 'up'){
-            this.checkDirection(Pacman.UP, this.Player);
-        }
-        else if (this.Cursors.down != undefined && this.Cursors.down.isDown || this.Swipe == 'down'){
-            this.checkDirection(Pacman.DOWN, this.Player);
+            targetPlayerDirection = Direction.RIGHT;
+        } else if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == 'left'){
+            targetPlayerDirection = Direction.LEFT;
+        } else if (this.Cursors.up != undefined && this.Cursors.up.isDown || this.Swipe == 'up'){
+            targetPlayerDirection = Direction.UP;
+        } else if (this.Cursors.down != undefined && this.Cursors.down.isDown || this.Swipe == 'down'){
+            targetPlayerDirection = Direction.DOWN;
         }
         this.Swipe = '';
-
-        if (this.Player.Turning != this.Player.Current && this.Player.Turning !== Pacman.NONE) {
-            this.turn(this.Player);
+        if (this.canMoveTo(this.Player, targetPlayerDirection)){
+            this.Player.moveTo(this, targetPlayerDirection);
         }
 
-        if (this.Hud.getRemainingTime() <= 0 || this.RemainingStarCount <= 0){
-            this.GameEnded = true;
-        }
-        if (this.GameEnded){
-            this.scene.start('Result');
-        }
-
-        // Boss logic
+        // Boss movement
         let targetReached = this.Boss.checkTargetPosition()
         if (targetReached || !this.Boss.TargetPosition){
             // do next move
             let direction = this.getBossOptimalDirection();
             this.Boss.moveTo(this, direction);
         }
-    }
 
-    private move(direction: number, character: PacmanCharacter)
-    {
-        if (direction === Pacman.LEFT) {
-            character.Sprite.setVelocityX(-character.Speed);
-            if (character.Sprite.anims.currentAnim !== this.anims.get('left')) {
-                character.Sprite.anims.play(character.Animations[Pacman.LEFT], true);
-            }
-        } else if (direction === Pacman.RIGHT) {
-            character.Sprite.setVelocityX(character.Speed);
-            if (character.Sprite.anims.currentAnim !== this.anims.get('right')) {
-                character.Sprite.anims.play(character.Animations[Pacman.RIGHT], true);
-            }
-        } else if (direction === Pacman.UP) {
-            character.Sprite.setVelocityY(-character.Speed);
-            if (character.Sprite.anims.currentAnim !== this.anims.get('up')) {
-                character.Sprite.anims.play(character.Animations[Pacman.UP], true);
-            }
-        } else {
-            character.Sprite.setVelocityY(character.Speed);
-            if (character.Sprite.anims.currentAnim !== this.anims.get('down')) {
-                character.Sprite.anims.play(character.Animations[Pacman.DOWN], true);
-            }
+        // End of game
+        if (this.Hud.getRemainingTime() <= 0 || this.RemainingStarCount <= 0){
+            this.GameEnded = true;
         }
-        character.Current = direction;
-        
+        if (this.GameEnded){
+            this.scene.start('Result');
+        }
     }
 
-    private turn(character: PacmanCharacter): boolean {
-        var cx = Math.floor(character.Sprite.x);
-        var cy = Math.floor(character.Sprite.y);
+    private canMoveTo(character: PacmanCharacter, direction: Direction): boolean {
+        if (direction === Direction.NONE){
+            return false;
+        }
+        // We can always keep going in same direction or make a U-turn
+        if (direction === Direction.opposite(character.CurrentDirection)
+            || direction === character.CurrentDirection){
+            return true;
+        }
 
-		if (character.Directions[character.Turning] === null || character.Directions[character.Turning].index != 7) {
-			character.Turning = Pacman.NONE;
-			return false;
-		}
-
-        if (!Phaser.Math.Fuzzy.Equal(cx, character.TurnPoint.x, this.Threshold)
-            || !Phaser.Math.Fuzzy.Equal(cy, character.TurnPoint.y, this.Threshold)) {
+        let charPos: Phaser.Math.Vector2 = new Phaser.Math.Vector2(character.Sprite.x, character.Sprite.y);
+        let tilePos: Phaser.Math.Vector2 = this.TileMap.worldToTileXY(charPos.x, charPos.y);
+        // Is the tile in that direction free?
+        let delta: Phaser.Math.Vector2 = Direction.toVector(direction);
+        let targetTile = this.TileMap.getTileAt(tilePos.x + delta.x, tilePos.y + delta.y);
+        if (targetTile && targetTile.collides){
             return false;
         }
 
-        character.Sprite.x = character.TurnPoint.x;
-        character.Sprite.y = character.TurnPoint.y;
-
-        character.Sprite.body.reset(character.TurnPoint.x, character.TurnPoint.y);
-        this.move(character.Turning, character);
-		character.Turning = Pacman.NONE;
-		
-        return true;
+        // Is the character at an intersection?
+        let targetPos = this.tileToWorld(tilePos);
+        if (!Phaser.Math.Fuzzy.Equal(charPos.x, targetPos.x, this.Threshold)
+            || !Phaser.Math.Fuzzy.Equal(charPos.y, targetPos.y, this.Threshold)) {
+            return false;
+        } else {
+            // We put the character exactly at the intersection and stop it.
+            character.Sprite.body.reset(targetPos.x, targetPos.y);
+            return true;
+        }
     }
 
     public getBossOptimalDirection(): Direction {
@@ -473,23 +449,13 @@ export class Pacman extends Phaser.Scene {
         return Direction.fromString(optimalDirections[key]);
     }
 
-    private checkDirection(direction: number, character: PacmanCharacter) {
-        if (character.Turning === direction || character.Directions[direction] === null || character.Directions[direction].index != 7) {
-			return;
-        }
-
-        if (character.Current === character.Opposites[direction]) {
-            this.move(direction, character);
-        } else {
-            character.Turning = direction;
-
-            character.TurnPoint.x = character.Marker.x * 32 + 16;
-            character.TurnPoint.y = character.Marker.y * 32 + 16;
-        }
-    }
-
     private gridToWorld(pos: number) {
         return (pos * 32 + 16);
+    }
+
+    private tileToWorld(position: Phaser.Math.Vector2): Phaser.Math.Vector2 {
+        let tilePos = this.TileMap.tileToWorldXY(position.x, position.y);
+        return new Phaser.Math.Vector2(tilePos.x + 16, tilePos.y + 16);
     }
 
     private collectStar(player: Phaser.Physics.Arcade.Sprite, star: Phaser.Physics.Arcade.Sprite) {
