@@ -174,7 +174,7 @@ export class Pacman extends Phaser.Scene {
 
     Stars!: Phaser.Physics.Arcade.Group;
     RemainingStarCount: number;
-    gameEnded: boolean;
+    GameEnded: boolean;
     GameState: State;
     Config:any;
     private Button 		 : Phaser.GameObjects.Sprite
@@ -189,7 +189,7 @@ export class Pacman extends Phaser.Scene {
     Swipe!: string;
     Threshold!: number;
 
-    hud: HudScene;
+    Hud: HudScene;
 
     constructor() {
         super({ key: 'Pacman', active:false});
@@ -198,9 +198,9 @@ export class Pacman extends Phaser.Scene {
     preload(){}
 
     public init() {
-        this.hud = <HudScene>this.scene.get("HudScene");
-        this.hud.setRemainingTime(Config.Pacman.time, false);
-        this.gameEnded = false;
+        this.Hud = <HudScene>this.scene.get("HudScene");
+        this.Hud.setRemainingTime(Config.Pacman.time, false);
+        this.GameEnded = false;
     }
 
     public create() {
@@ -309,6 +309,7 @@ export class Pacman extends Phaser.Scene {
         this.startConvwithBoss();
 
     }
+
     private startConvwithBoss() {
         var dialogContent:DialogTreeObj;
 
@@ -328,6 +329,7 @@ export class Pacman extends Phaser.Scene {
                 this.beginExplanations();
         });  
     }
+
     private beginExplanations() {
 
         if (!this.sys.game.device.os.desktop ) {
@@ -338,15 +340,15 @@ export class Pacman extends Phaser.Scene {
         this.add.existing(this.StartDialog);
         this.Button = this.StartDialog.addArrowButton();
         this.Button.on('pointerup', this.beginGame, this);
-
     }
+
     private beginGame() {
         if (this.GameState != State.Paused){
             return;
         }
         this.StartDialog.destroy();
         this.Button.off("pointerup");
-        this.hud.startTimer();
+        this.Hud.startTimer();
         this.Boss.setSpeed(60);
         this.Player.setSpeed(60);
         this.GameState = State.Started;
@@ -368,11 +370,10 @@ export class Pacman extends Phaser.Scene {
                 this.Swipe = 'down';
             }
         });
-
         this.move(Pacman.RIGHT, this.Player);
     }
-    public update() {
 
+    public update() {
         if (this.GameState != State.Started)
             return;
         this.Player.checkSpaceAround();
@@ -395,13 +396,14 @@ export class Pacman extends Phaser.Scene {
             this.turn(this.Player);
         }
 
-        if (this.hud.getRemainingTime() <= 0 || this.RemainingStarCount <= 0){
-            this.gameEnded = true;
+        if (this.Hud.getRemainingTime() <= 0 || this.RemainingStarCount <= 0){
+            this.GameEnded = true;
         }
-        if (this.gameEnded){
+        if (this.GameEnded){
             this.scene.start('Result');
         }
 
+        // Boss logic
         let targetReached = this.Boss.checkTargetPosition()
         if (targetReached || !this.Boss.TargetPosition){
             // do next move
@@ -437,8 +439,7 @@ export class Pacman extends Phaser.Scene {
         
     }
 
-    private turn(character: PacmanCharacter): boolean
-    {
+    private turn(character: PacmanCharacter): boolean {
         var cx = Math.floor(character.Sprite.x);
         var cy = Math.floor(character.Sprite.y);
 
@@ -498,7 +499,7 @@ export class Pacman extends Phaser.Scene {
     }
     private collideBoss(player: Phaser.Physics.Arcade.Sprite, boss: Phaser.Physics.Arcade.Sprite) {
         player.disableBody(true, true);
-        this.gameEnded = true;
+        this.GameEnded = true;
     }
 
     private getStarCount(): number {

@@ -3,10 +3,10 @@ import { GameText } from "../utils/GameText";
 
 export class HudScene extends Phaser.Scene {
 
-    private starCountText: GameText;
-    private timeText: GameText;
-    private remainingTime: number;
-    private timerEvent: Phaser.Time.TimerEvent;
+    private StarCountText: GameText;
+    private TimeText: GameText;
+    private RemainingTime: number;
+    private TimerEvent: Phaser.Time.TimerEvent;
 
 	constructor() {
         super({ key: 'HudScene', active: false });
@@ -28,10 +28,10 @@ export class HudScene extends Phaser.Scene {
         // TODO: put star and counter at right positions.
         var star = this.add.image(Config.Game.centerX, 17, 'star');
 		star.setOrigin(0, 0.5);
-        this.starCountText = new GameText(this, Config.Game.centerX - 15, 17, "0");
-        this.starCountText.setOrigin(1, 0.5)
-        this.timeText = new GameText(this, Config.Game.centerX / 2, 17, "");
-        this.timeText.setOrigin(0, 0.5);
+        this.StarCountText = new GameText(this, Config.Game.centerX - 15, 17, "0");
+        this.StarCountText.setOrigin(1, 0.5)
+        this.TimeText = new GameText(this, Config.Game.centerX / 2, 17, "");
+        this.TimeText.setOrigin(0, 0.5);
         
         this.registry.events.on('changedata', this.updateData, this);
     }
@@ -40,13 +40,13 @@ export class HudScene extends Phaser.Scene {
     
     private updateData(parent, key, data){
         if (key === 'starCount'){
-            this.starCountText.setText(data.toString());
+            this.StarCountText.setText(data.toString());
         }
     }
 
     public setRemainingTime(seconds: number, start: boolean){
-        this.remainingTime = seconds;
-        this.timeText.setText(this.remainingTime.toString());
+        this.RemainingTime = seconds;
+        this.TimeText.setText(this.RemainingTime.toString());
         if (start){
             this.startTimer();
         } else {
@@ -57,7 +57,7 @@ export class HudScene extends Phaser.Scene {
     public startTimer(){
         // Remove any existing timer. Prevent from having a timer decreasing to quickly!
         this.stopTimer();
-        this.timerEvent = this.time.addEvent({
+        this.TimerEvent = this.time.addEvent({
             delay: 1000,
             callback: this.updateTime,
             callbackScope: this,
@@ -66,19 +66,19 @@ export class HudScene extends Phaser.Scene {
     }
 
     public stopTimer(){
-        if (this.timerEvent){
-            this.timerEvent.remove();
+        if (this.TimerEvent){
+            this.TimerEvent.remove();
         }
     }
 
     public getRemainingTime(){
-        return this.remainingTime;
+        return this.RemainingTime;
     }
 
     private updateTime(){
-        if (this.remainingTime > 0){
-            this.remainingTime -= 1;
+        if (this.RemainingTime > 0){
+            this.RemainingTime -= 1;
         }
-        this.timeText.setText(this.remainingTime.toString());
+        this.TimeText.setText(this.RemainingTime.toString());
     }
 }
