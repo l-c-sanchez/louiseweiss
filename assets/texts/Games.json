@@ -37,12 +37,15 @@
 	},
 	"Conv": {
 		"clara": {
+
 			"instruction":  "1 mois avant le vote.\n\nPrenez le temps d’échanger avec votre fiancé."
 		},
 		"valentin": {
 			"instruction": "Le ton monte entre Josiane et André. Prenez part à ce débat sur l’Union européenne."
 		},
 		"lucie": {
+			"sprite_char":"lucie",
+			"posList": [{"x":8,"y":0}, {"x":8,"y":7},  {"x":4,"y":7}, {"x":4,"y":8}],
 			"instruction": "Paul, son meilleur ami, est pro-européen. Et il essaie de la convaincre d’aller voter…"
 		}
 	},

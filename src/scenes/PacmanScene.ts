@@ -219,7 +219,6 @@ export class Pacman extends Phaser.Scene {
     }
 
     startPacman() {
-        // This avoid starting the game multiple times
         if (this.GameState != State.Paused){
             return;
         }
@@ -317,7 +316,7 @@ export class Pacman extends Phaser.Scene {
             dialogContent = this.cache.json.get('ClaraBoss');
         else
             dialogContent = this.cache.json.get('ClaraBoss');
-        this.Dialogs = new DialogTree(this, dialogContent, false, Anchor.Down, {windowHeight: 500});
+        this.Dialogs = new DialogTree(this, dialogContent, false, Anchor.Bottom, {windowHeight: 500});
         
         this.add.existing(this.Dialogs);
         this.Dialogs.on('destroy', () => {

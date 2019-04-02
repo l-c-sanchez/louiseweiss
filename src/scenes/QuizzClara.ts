@@ -85,7 +85,7 @@ export class QuizzClara extends Phaser.Scene {
             this.cameras.main.setBackgroundColor("#ffffff");
             
     
-            this.Dialogs = new DialogTree(this, dialogContent, false, Anchor.Down, {windowHeight: 500});
+            this.Dialogs = new DialogTree(this, dialogContent, false, Anchor.Bottom, {windowHeight: 500});
     
             this.add.existing(this.Dialogs);
             this.Dialogs.on('destroy', () => {

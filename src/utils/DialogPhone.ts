@@ -137,7 +137,7 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 		this.AnswerOptions.offsetY = 0;
 		this.MessageOptions.offsetY = 0;
 
-		this.InputField = new DialogBox(this.Env, "", this.Animate, Anchor.Down, this.InputFieldOptions);
+		this.InputField = new DialogBox(this.Env, "", this.Animate, Anchor.Bottom, this.InputFieldOptions);
 		this.InputCamera = this.Env.cameras.add(0, 0, Config.Game.width, Config.Game.height);
 		this.InputCamera.setBackgroundColor(0xffffff);
 		this.showDialog('start');

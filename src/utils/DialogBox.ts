@@ -51,7 +51,7 @@ export interface ButtonOptions {
 
 export enum Anchor {
 	Top,
-	Down,
+	Bottom,
 	Center
 }
 

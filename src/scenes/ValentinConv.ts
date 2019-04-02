@@ -52,7 +52,7 @@ export class ValentinConv extends Phaser.Scene {
 
 		let quizzContent = this.cache.json.get('ValentinQuizz');
 
-		this.Quizz = new DialogTree(this, quizzContent, false, Anchor.Down, { fitContent: true });
+		this.Quizz = new DialogTree(this, quizzContent, false, Anchor.Bottom, { fitContent: true });
 
 		this.add.existing(this.Quizz);
 		this.Quizz.on('destroy', this.showConvInstructions, this);
@@ -70,7 +70,7 @@ export class ValentinConv extends Phaser.Scene {
 		this.StartDialog.destroy();
 		this.StarsBefore = this.getStarCount();
 		let convContent = this.cache.json.get('ValentinConv');
-		this.Conv = new DialogTree(this, convContent, false, Anchor.Down, { fitContent: true });
+		this.Conv = new DialogTree(this, convContent, false, Anchor.Bottom, { fitContent: true });
 		this.add.existing(this.Conv);
 		this.Conv.on('destroy', this.showResultDialog, this);
 	}
@@ -83,7 +83,7 @@ export class ValentinConv extends Phaser.Scene {
 		} else {
 			convContent = this.cache.json.get('ValentinEndConvFailure');
 		}
-		this.Conv = new DialogTree(this, convContent, false, Anchor.Down, { fitContent: true });
+		this.Conv = new DialogTree(this, convContent, false, Anchor.Bottom, { fitContent: true });
 		this.add.existing(this.Conv);
 		this.Conv.on('destroy', () => {
 			this.scene.start('Pacman');
