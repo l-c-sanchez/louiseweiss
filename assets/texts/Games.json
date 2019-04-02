@@ -46,7 +46,9 @@
 		"lucie": {
 			"sprite_char":"lucie",
 			"posList": [{"x":8,"y":0}, {"x":8,"y":7},  {"x":4,"y":7}, {"x":4,"y":8}],
-			"instruction": "Paul, son meilleur ami, est pro-européen. Et il essaie de la convaincre d’aller voter…"
+			"instruction1": "J-15 avant le vote",
+			"instruction2": "dring dring...",
+			"instruction3": "Oh c'est Paul"
 		}
 	},
     "Facebook": {

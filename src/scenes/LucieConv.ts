@@ -35,11 +35,7 @@ export class LucieConv extends Phaser.Scene {
 
 		this.Config = games.Conv[character];
 
-		
-        this.StartDialog = new DialogBox(this, this.Config.instruction, true, Anchor.Bottom, {
-			fitContent: true,
-			fontSize: 22
-		});
+	
 		this.TileMap = this.make.tilemap({ key: 'LivingRoom' });
 		var tiles = [this.TileMap.addTilesetImage('OfficeTileset', 'OfficeTileset'), 
 					this.TileMap.addTilesetImage('BlackTile', 'BlackTile'),
@@ -77,21 +73,29 @@ export class LucieConv extends Phaser.Scene {
 		var pos = this.TileMap.tileToWorldXY(8, 0);
 		this.Sprite = this.physics.add.sprite(pos.x + this.TileMap.tileWidth / 2, pos.y + this.TileMap.tileWidth / 2, this.Config.sprite_char);
 		
-
+        this.StartDialog = new DialogBox(this, this.Config.instruction1, true, Anchor.Bottom, {
+			fitContent: true,
+			fontSize: 22,
+			offsetY:-120
+		});
+		// this.Button = this.StartDialog.addArrowButton();
+		this.add.existing(this.StartDialog);
 
 		// pos = this.TileMap.tileToWorldXY(4, 7);
-		this.Button = this.StartDialog.addArrowButton();
-		this.Button.on('pointerup', () => {
-			if (this.StartDialog.isAnimationEnded()) {
-				this.startConv()
-			} else {
-				this.StartDialog.endAnimation();
-			}
-		}, this);
-		this.add.existing(this.StartDialog);
+		// this.Button = this.StartDialog.addArrowButton();
+		// this.Button.on('pointerup', () => {
+		// 	if (this.StartDialog.isAnimationEnded()) {
+		// 		this.startConv()
+		// 	} else {
+		// 		this.StartDialog.endAnimation();
+		// 	}
+		// }, this);
+		// this.add.existing(this.StartDialog);
 	}
 
 	startConv() {
+		this.TileMap.destroy();
+		this.Sprite.destroy();
         let dialogContent = this.cache.json.get('LucieConv');
 		this.cameras.main.setBackgroundColor("#ffffff"); 
 		this.Button.off("pointerup");
@@ -130,6 +134,7 @@ export class LucieConv extends Phaser.Scene {
 			inputFieldOptions, buttonOptions);
 		this.add.existing(this.Dialogs);
 		this.Dialogs.on('destroy', () => {
+			
 			this.scene.start('Facebook');
 		});
     }
@@ -171,11 +176,59 @@ export class LucieConv extends Phaser.Scene {
 					this.Stop = true;
 					this.Sprite.anims.stop();
 					this.Sprite.setVelocity(0, 0);
+					this.time.addEvent({
+						delay: 500,
+						callback: () => { 
+							this.time.addEvent({
+								delay: 500,
+								callback: this.startInstruction2,
+								callbackScope: this
+							});
+						},
+						callbackScope: this
+					});
 				}
 		}
 		// this.physics.moveTo(sprite, pos.x + this.TileMap.tileWidth / 2, pos.y + this.TileMap.tileWidth / 2, 25);
 
 		// // pos = this.TileMap.tileToWorldXY(4, 7);
 
-    }
+	}
+	startInstruction2() {
+
+		this.StartDialog.destroy();
+		this.StartDialog = new DialogBox(this, this.Config.instruction2, true, Anchor.Bottom, {
+			fitContent: true,
+			fontSize: 22,
+			offsetY:-120
+		});
+		
+		this.Button = this.StartDialog.addArrowButton();
+		this.Button.on('pointerup', () => {
+			if (this.StartDialog.isAnimationEnded()) {
+				this.startInstruction3()
+			} else {
+				this.StartDialog.endAnimation();
+			}
+		}, this);
+		this.add.existing(this.StartDialog);
+	}
+	startInstruction3() {
+		this.StartDialog.destroy();
+		this.StartDialog = new DialogBox(this, this.Config.instruction3, true, Anchor.Bottom, {
+			fitContent: true,
+			fontSize: 22,
+			offsetY:-120
+		});
+		
+		this.Button = this.StartDialog.addArrowButton();
+		this.Button.on('pointerup', () => {
+			if (this.StartDialog.isAnimationEnded()) {
+				this.startConv()
+			} else {
+				this.StartDialog.endAnimation();
+			}
+		}, this);
+		this.add.existing(this.StartDialog);
+	}
 }
