@@ -12,7 +12,7 @@ export class LucieConv extends Phaser.Scene {
 	private Config       	: any;
 	private Button 		 	: Phaser.GameObjects.Sprite;
 	private Sprite			: Phaser.Physics.Arcade.Sprite;
-	private TileMap!		: Phaser.Tilemaps.Tilemap;
+	private TileMap			: Phaser.Tilemaps.Tilemap;
 	private CurrentIndex	: number;
 	private Stop: Boolean = false;
 	// private Dialogs	: DialogTree;

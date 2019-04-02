@@ -74,6 +74,11 @@ export class Preload extends Phaser.Scene {
 		this.load.image('OfficeTilesetBis', 'tilesets/OfficeTilesetBis.png');
 		this.load.spritesheet('lucie', 'sprites/Lucie32.png', { frameWidth:32, frameHeight:32});
 
+		// Lucie Bus
+		this.load.tilemapTiledJSON('WaitingBus', 'tilesets/WaitingBus.json');
+		this.load.image('RailwayStation', 'tilesets/RailwayStation.png');
+		this.load.image('RoadTile', 'tilesets/RoadTile.png');
+
 		// Facebook
 		this.load.json('FacebookText', 'texts/FacebookText.json');
 		this.load.image('heart', 'sprites/heart.png');

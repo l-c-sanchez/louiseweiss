@@ -15,6 +15,7 @@ import { QuizzClara } from "./scenes/QuizzClara";
 import { ValentinConv } from "./scenes/ValentinConv";
 import { LucieConv } from "./scenes/LucieConv";
 import { BreakoutScene } from "./scenes/BreakoutScene";
+import { LucieBus } from "./scenes/LucieBus";
 
 export class App {
 
@@ -38,6 +39,7 @@ export class App {
 		this.Scenes.push(new ValentinConv());
 		this.Scenes.push(new BreakoutScene());
 		this.Scenes.push(new LucieConv());
+		this.Scenes.push(new LucieBus());
 		
 		Config.Phaser.scene = this.Scenes;
 
