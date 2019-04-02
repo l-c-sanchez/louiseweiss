@@ -1,6 +1,4 @@
-import { Config } from "../Config";
 import { HudScene } from "./HudScene";
-import { DialogTree } from "../utils/DialogTree";
 import {  DialogBox, Anchor, DialogOptions, ButtonOptions } from "../utils/DialogBox";
 import { DialogPhone } from "../utils/DialogPhone";
 
