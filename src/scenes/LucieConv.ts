@@ -1,11 +1,15 @@
-import { Config } from "../Config";
 import { HudScene } from "./HudScene";
-import { DialogTree } from "../utils/DialogTree";
 import {  DialogBox, Anchor, DialogOptions, ButtonOptions } from "../utils/DialogBox";
 import { DialogPhone } from "../utils/DialogPhone";
-import { KineticScrollSettings, KineticScroll } from "../utils/KineticScroll";
+
+enum SceneState {
+	Idle,
+	GoToTable,
+	GoToPhone,
+};
 
 export class LucieConv extends Phaser.Scene {
+
 	private Hud			 	: HudScene;
 	private StartDialog	 	: DialogBox = null;
 	private Dialogs		 	: DialogPhone;
@@ -14,7 +18,8 @@ export class LucieConv extends Phaser.Scene {
 	private Sprite			: Phaser.Physics.Arcade.Sprite;
 	private TileMap			: Phaser.Tilemaps.Tilemap;
 	private CurrentIndex	: number;
-	private Stop: Boolean = false;
+	private Target			: Phaser.Math.Vector2;
+	private CurrentState	: SceneState;
 	// private Dialogs	: DialogTree;
 
     constructor() {
@@ -32,19 +37,20 @@ export class LucieConv extends Phaser.Scene {
 	create() {
 		var character: string = this.registry.get('character');
         var games = this.cache.json.get('Games');
-
 		this.Config = games.Conv[character];
 
-	
-		this.TileMap = this.make.tilemap({ key: 'LivingRoom' });
-		var tiles = [this.TileMap.addTilesetImage('OfficeTileset', 'OfficeTileset'), 
-					this.TileMap.addTilesetImage('BlackTile', 'BlackTile'),
-					this.TileMap.addTilesetImage('OfficeTilesetBis', 'OfficeTilesetBis')];
-		var fond = this.TileMap.createStaticLayer('fond', tiles, 0, 0);
-		var office = this.TileMap.createStaticLayer('office', tiles, 0, 0);
-		var tasseandmobile = this.TileMap.createStaticLayer('tasseandmobile', tiles, 0, 0);
 		this.cameras.main.setBackgroundColor('#000000');
-		var lucieAnims = ["", "left", "right", "up", "down" ];
+
+		this.TileMap = this.make.tilemap({ key: 'LivingRoom' });
+		var tiles = [
+			this.TileMap.addTilesetImage('OfficeTileset', 'OfficeTileset'), 
+			this.TileMap.addTilesetImage('BlackTile', 'BlackTile'),
+			this.TileMap.addTilesetImage('OfficeTilesetBis', 'OfficeTilesetBis')
+		];
+		this.TileMap.createStaticLayer('fond', tiles, 0, 0);
+		this.TileMap.createStaticLayer('office', tiles, 0, 0);
+		this.TileMap.createStaticLayer('tasseandmobile', tiles, 0, 0);
+
         this.anims.create({
             key:"right",
             frames:this.anims.generateFrameNumbers(this.Config.sprite_char, { start: 1, end:6 }),
@@ -56,29 +62,22 @@ export class LucieConv extends Phaser.Scene {
             frames:this.anims.generateFrameNumbers(this.Config.sprite_char, { start: 7, end:13 }),
             frameRate: 10,
             repeat: -1
-        });
-        this.anims.create({
-            key:"up",
-            frames:this.anims.generateFrameNumbers(this.Config.sprite_char, { start: 1, end:6 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({
-            key:"down",
-            frames:this.anims.generateFrameNumbers(this.Config.sprite_char, { start: 7, end:13 }),
-            frameRate: 10,
-            repeat: -1
 		});
+
 		this.CurrentIndex = 0;
-		var pos = this.TileMap.tileToWorldXY(8, 0);
-		this.Sprite = this.physics.add.sprite(pos.x + this.TileMap.tileWidth / 2, pos.y + this.TileMap.tileWidth / 2, this.Config.sprite_char);
+		this.CurrentState = SceneState.GoToTable;
+
+		this.Target = this.TileMap.tileToWorldXY(8, 0);
+		this.Target.x += this.TileMap.tileWidth / 2;
+		this.Target.y += this.TileMap.tileWidth / 2;
+
+		this.Sprite = this.physics.add.sprite(this.Target.x , this.Target.y, this.Config.sprite_char);
 		
         this.StartDialog = new DialogBox(this, this.Config.instruction1, true, Anchor.Bottom, {
 			fitContent: true,
 			fontSize: 22,
 			offsetY:-120
 		});
-		// this.Button = this.StartDialog.addArrowButton();
 		this.add.existing(this.StartDialog);
 	}
 
@@ -129,108 +128,95 @@ export class LucieConv extends Phaser.Scene {
     }
 
     update() {
-	
-		if (this.Stop == true)
-			return
-		var pos = this.Config.posList[this.CurrentIndex];
-		var target = this.TileMap.tileToWorldXY(pos.x, pos.y);
-		target.x += this.TileMap.tileWidth / 2;
-		target.y += this.TileMap.tileWidth / 2;
-		if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, target.x, 0.5)
-			&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, target.y, 0.5)) {
-				this.CurrentIndex++;
-				if (this.CurrentIndex < this.Config.posList.length - 1) {
-					pos = this.Config.posList[this.CurrentIndex];
-					var target2 = this.TileMap.tileToWorldXY(pos.x, pos.y);
-					target2.x += this.TileMap.tileWidth / 2;
-					target2.y += this.TileMap.tileWidth / 2;
-					var direction_x = target.x - target2.x;
-					var direction_y = target.y - target2.y;
-					if (this.Sprite.anims.currentAnim !== this.anims.get('left') && direction_x < 0) {
-						this.Sprite.anims.play('left', true);
-					}
-					else if (this.Sprite.anims.currentAnim !== this.anims.get('right') && direction_x >= 0) {
-						this.Sprite.anims.play('right', true);
-					}
-					else if (this.Sprite.anims.currentAnim !== this.anims.get('up') && direction_y < 0) {
-						this.Sprite.anims.play('up', true);
-					}
-					else if (this.Sprite.anims.currentAnim !== this.anims.get('down') && direction_y >= 0) {
-						this.Sprite.anims.play('down', true);
-					}
-
-					this.physics.moveTo(this.Sprite, target2.x, target2.y,80);
-				}
-				else  {
-					console.log(this.CurrentIndex)
-					this.Stop = true;
-					this.Sprite.anims.stop();
-					this.Sprite.setVelocity(0, 0);
-					this.time.addEvent({
-						delay: 500,
-						callback: () => { 
-							this.time.addEvent({
-								delay: 500,
-								callback: this.startInstruction2,
-								callbackScope: this
-							});
-						},
-						callbackScope: this
-					});
-				}
-		} else if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, target.x, 0.5)
-		&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, target.y, 0.5)) {
-			this.Stop = true;
-			this.Sprite.anims.stop();
-			this.Sprite.setVelocity(0, 0);
-			this.time.addEvent({
-				delay: 500,
-				callback: () => { 
-					this.time.addEvent({
-						delay: 500,
-						callback: this.startInstruction3,
-						callbackScope: this
-					});
-				},
-				callbackScope: this
-			});
-
-
+		switch (this.CurrentState) {
+			case SceneState.GoToTable:
+				this.updateGoToTable();		
+				break;
+			case SceneState.GoToPhone:
+				this.updateGoToPhone();
+				break;
+			default:
+				break;
+		}
 	}
 
+	private updateGoToTable() {
+		if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, this.Target.x, 0.5)
+			&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, this.Target.y, 0.5)) {
+			this.CurrentIndex++;
+			if (this.CurrentIndex < this.Config.posList.length) {
+				var pos = this.Config.posList[this.CurrentIndex];
+				var target = this.TileMap.tileToWorldXY(pos.x, pos.y);
+				target.x += this.TileMap.tileWidth / 2;
+				target.y += this.TileMap.tileWidth / 2;
+				this.moveTo(target);
+			}
+			else  {
+				this.Sprite.anims.stop();
+				this.Sprite.setVelocity(0, 0);
+				this.time.addEvent({
+					delay: 2000,
+					callback: this.startInstruction2,
+					callbackScope: this
+				});
+				this.CurrentState = SceneState.Idle;
+			}
+		}
 	}
-	startInstruction2() {
+
+	private updateGoToPhone() {
+		if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, this.Target.x, 0.5)
+			&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, this.Target.y, 0.5)) {
+				this.Sprite.anims.stop();
+				this.Sprite.setVelocity(0, 0);
+				this.time.addEvent({
+					delay: 500,
+					callback: this.startInstruction3,
+					callbackScope: this
+				});
+				this.CurrentState = SceneState.Idle;
+		}
+	}
+
+	private moveTo(target: Phaser.Math.Vector2) {
+		var direction_x = this.Sprite.x - target.x;
+
+		if (this.Sprite.anims.currentAnim !== this.anims.get('right') && direction_x < 0) {
+			this.Sprite.anims.play('right', true);
+		}
+		else if (this.Sprite.anims.currentAnim !== this.anims.get('left') && direction_x >= 0) {
+			this.Sprite.anims.play('left', true);
+		}
+
+		this.physics.moveTo(this.Sprite, target.x, target.y,60);
+		this.Target = target;
+	}
+
+	private startInstruction2() {
 		this.StartDialog.destroy();
 		this.StartDialog = new DialogBox(this, this.Config.instruction2, true, Anchor.Bottom, {
 			fitContent: true,
 			fontSize: 22,
 			offsetY:-120
 		});
-		this.Stop = true;
-		console.log(this.Stop);
-		this.Button = this.StartDialog.addArrowButton();
-		this.Button.on('pointerup', () => {
-			if (this.StartDialog.isAnimationEnded()) {
-				this.startInstruction3()
-			} else {
-				this.StartDialog.endAnimation();
-			}
-		}, this);
-		this.add.existing(this.StartDialog);
+
+		this.time.addEvent({
+			delay: 1000,
+			callback: () => {
+
+				var target = this.TileMap.tileToWorldXY(5, 8);
+				target.x += this.TileMap.tileWidth / 2;
+				target.y += this.TileMap.tileWidth / 2;
+
+				this.moveTo(target);
+				this.CurrentState = SceneState.GoToPhone;
+			},
+			callbackScope: this
+		});
 	}
 
-	startInstruction3() {
+	private startInstruction3() {
 		this.StartDialog.destroy();
-		this.Stop = false;
-		if (this.Sprite.anims.currentAnim !== this.anims.get('right')) {
-			this.Sprite.anims.play('right', true);
-		}
-		var pos = this.Config.posList[4]
-		var target2 = this.TileMap.tileToWorldXY(pos.x, pos.y);
-		target2.x += this.TileMap.tileWidth / 2;
-		target2.y += this.TileMap.tileWidth / 2;
-		this.physics.moveTo(this.Sprite, target2.x, target2.y,80);
-
 		this.StartDialog = new DialogBox(this, this.Config.instruction3, true, Anchor.Bottom, {
 			fitContent: true,
 			fontSize: 22,
@@ -240,7 +226,6 @@ export class LucieConv extends Phaser.Scene {
 		this.Button = this.StartDialog.addArrowButton();
 		this.Button.on('pointerup', () => {
 			if (this.StartDialog.isAnimationEnded()) {
-				// this.Stop = true;
 				this.StartDialog.destroy();
 				this.startConv()
 			} else {

@@ -45,10 +45,17 @@
 		},
 		"lucie": {
 			"sprite_char":"lucie",
-			"posList": [{"x":8,"y":0}, {"x":8,"y":7},  {"x":4,"y":7}, {"x":4,"y":8}, {"x":5,"y":8}],
+			"posList": [{"x":8,"y":0}, {"x":8,"y":7}, {"x":4,"y":8}],
 			"instruction1": "J-15 avant le vote",
 			"instruction2": "dring dring...",
 			"instruction3": "Oh c'est Paul"
+		}
+	},
+	"Bus": {
+		"lucie" : {
+			"sprite_char":"lucie",
+			"posList": [{"x":7,"y":19}, {"x":7,"y":7}, {"x":3,"y":7}, {"x":3,"y":6}],
+			"instruction1": "J-7 avant le vote"
 		}
 	},
     "Facebook": {

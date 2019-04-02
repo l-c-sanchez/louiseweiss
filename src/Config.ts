@@ -117,7 +117,7 @@ export class Config {
 	}
 
 	public static Facebook = {
-		time:120, // in seconds
+		time: 30, // in seconds
 		padding: 10,
 		topPadding: 20,
 		// We put 2.5 news per page. That way, the user will see that he needs to scroll
