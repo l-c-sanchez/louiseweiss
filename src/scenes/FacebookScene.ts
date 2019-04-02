@@ -45,11 +45,8 @@ export class Facebook extends Phaser.Scene {
 	}
 
 	create() {
-        // console.log("in create")
-       var character: string = this.registry.get('character');
+		var character: string = this.registry.get('character');
         var games = this.cache.json.get('Games');
-        // console.log(character);
-        // console.log(games);
         this.Config = games.Facebook[character];
         if (!this.Config){
             throw new TypeError("Invalid config");
@@ -123,7 +120,7 @@ export class Facebook extends Phaser.Scene {
             if (this.GameState == State.Started){
                 this.GameState = State.Ended;
                 // update global number of stars
-                this.registry.values.starCount += this.getStarNumber();
+                // this.registry.values.starCount += this.getStarNumber();
                 // TODO: disable like controls / go to next scene?
 
                 // Before leaving the scene, we need to remove wheel events
@@ -183,12 +180,26 @@ export class Facebook extends Phaser.Scene {
             this.Sheets.push(sheet);
             this.add.existing(sheet);
             sheet.addButton(() => {
-                sheet.changeButton();
+				sheet.changeButton();
+				sheet.removeButtonCallback();
+				this.updateStarCount(sheet.getStarNumber());
+				let color = sheet.isRealNews() ? 0x00FF00 : 0xFF0000;
+				sheet.drawFrame(color);
             });
             y += sheetHeight + padding;
 		}
     }
-    
+	
+	private updateStarCount(difference: number) {
+		if (this.registry.has('starCount')) {
+			let stars: number = this.registry.get('starCount');
+			stars = Math.max(0, stars + difference);
+			this.registry.set('starCount', stars);
+		} else {
+			console.warn("The starCount value should be initialized in the registry before this call.");
+		}
+	}
+
     private getStarNumber(): number {
         let starNumber = 0;
         for (let sheet of this.Sheets){

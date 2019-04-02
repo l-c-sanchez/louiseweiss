@@ -53,17 +53,17 @@
 		"A5C": {
 			"text": "Ok je vais essayer de jeter un coup d’oeil. A plus !",
 			"stars": 1,
-			"nextDialog": "Q7"
+			"nextDialog": ""
 		},
 		"A5D": {
 			"text": "Oui, mais ce n’est pas facile de savoir ce qui est vrai ou faux sur l’Europe… Bon, je vais essayer de jeter un coup d’oeil. A bientôt !",
 			"stars": 0,
-			"nextDialog": "Q7"
+			"nextDialog": ""
 		},
 		"A6": {
 			"text": "Mouais… J’y crois pas trop mais ok, j’essaierai de jeter un coup d’oeil… Bon je dois y aller, A bientôt !",
 			"stars": 0,
-			"nextDialog": "Q7"
+			"nextDialog": ""
 		}
 	},
 	"Dialogs": {

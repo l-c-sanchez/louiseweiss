@@ -9,7 +9,8 @@ export interface Post {
     fake: boolean,
     comments: number,
     likes: number,
-    sprite: string
+	sprite: string,
+	explanation: string
 }
 
 export class FacebookSheet extends Phaser.GameObjects.GameObject {
@@ -21,10 +22,15 @@ export class FacebookSheet extends Phaser.GameObjects.GameObject {
 	private ContentPos		: Phaser.Math.Vector2;
 	private Graphics		: Phaser.GameObjects.Graphics;
 	public Reactions		: Phaser.GameObjects.Sprite;
-	public Like		    : Phaser.GameObjects.Sprite;
+	public Like		    	: Phaser.GameObjects.Sprite;
 	public LikeOk		    : Phaser.GameObjects.Sprite;
 	private ProfilePicture	: Phaser.GameObjects.Sprite;
+	private Explanation		: GameText;
+
 	private WindowWidth		: number;
+	private WindowHeight	: number;
+	private PosX			: number;
+	private PosY			: number;
 
     constructor(env: Phaser.Scene, x: number, y: number, post: Post, options?: DialogOptions) {
 		super(env, 'facebooksheet');
@@ -60,12 +66,12 @@ export class FacebookSheet extends Phaser.GameObjects.GameObject {
 
 	private createWindow() {
 		this.WindowWidth = Config.Game.width - this.Options.padding * 2;
-		let height = this.Options.windowHeight;
-		let x = this.Pos.x + this.Options.padding;
-		let y = this.Pos.y + this.Options.padding;
+		this.WindowHeight = this.Options.windowHeight;
+		this.PosX = this.Pos.x + this.Options.padding;
+		this.PosY = this.Pos.y + this.Options.padding;
 		this.Graphics = this.Env.add.graphics();
-		this.createOuterWindow(x, y, this.WindowWidth, height);
-		this.createInnerWindow(x, y, this.WindowWidth, height);
+		this.createOuterWindow(this.PosX, this.PosY, this.WindowWidth, this.WindowHeight);
+		this.createInnerWindow(this.PosX, this.PosY, this.WindowWidth, this.WindowHeight);
 	}
 
 	private createInnerWindow(x: number, y: number, width: number, height: number) {
@@ -97,10 +103,15 @@ export class FacebookSheet extends Phaser.GameObjects.GameObject {
         y += text.PhaserText.displayHeight + 15;
         
 		text = this.displayText(x, y, this.Post.text, "normal");
-		y += text.PhaserText.displayHeight;
+		y += text.PhaserText.displayHeight + this.Options.innerPadding * 2;
 
+		
 		// do no display fake new (useful only for coding)
-		// text = this.displayText(x, y, String(this.Post.fake));
+		this.Explanation = new GameText(this.Env, x, y, this.Post.explanation);
+		let color = this.Post.fake ? "#FF0000" : "#00FF00";
+		this.Explanation.setColor(color);
+		this.Explanation.setWordWrap(this.WindowWidth - this.Options.innerPadding);
+		this.Explanation.setAlpha(0);
 		// y += text.PhaserText.displayHeight;
         // text = this.displayText(x, y, String(this.Post.comments));
         // y += text.PhaserText.displayHeight;
@@ -116,7 +127,7 @@ export class FacebookSheet extends Phaser.GameObjects.GameObject {
 	private displayText(x: number, y: number, content: string, fontStyle: string): GameText {
 		let text = new GameText(this.Env, x, y, content);
 		text.setAlign("left");
-		text.setColor("1d2028");
+		text.setColor("#1d2028");
 		text.setFontStyle(fontStyle)
 		text.setWordWrap(this.WindowWidth - this.Options.innerPadding);
 		return text;
@@ -137,17 +148,34 @@ export class FacebookSheet extends Phaser.GameObjects.GameObject {
 		this.Like.on('pointerup', callback, this.Env);
 	}
 
+	public removeButtonCallback() {
+		this.Like.off('pointerup');
+	}
+
 	public changeButton() {
 		this.LikeOk.visible = !this.LikeOk.visible
+		this.Explanation.setAlpha(1);
 	}
 
 	public putLikeOkVisible() {
 		this.LikeOk.visible = true;
 	}
 
+	public isRealNews(): boolean {
+		if (this.Post.fake)
+			return false;
+		return true;
+	}
+
+	public drawFrame(color: number)
+	{
+		this.Graphics.lineStyle(5, color, this.Options.borderAlpha);
+		this.Graphics.strokeRect(this.PosX, this.PosY, this.WindowWidth, this.WindowHeight);
+	}
+
 	public getStarNumber(): number {
-		if (this.LikeOk.visible){
-			if (this.Post.fake){
+		if (this.LikeOk.visible) {
+			if (this.Post.fake) {
 				return -1;
 			} else {
 				return 1;
