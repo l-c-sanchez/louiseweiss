@@ -80,17 +80,6 @@ export class LucieConv extends Phaser.Scene {
 		});
 		// this.Button = this.StartDialog.addArrowButton();
 		this.add.existing(this.StartDialog);
-
-		// pos = this.TileMap.tileToWorldXY(4, 7);
-		// this.Button = this.StartDialog.addArrowButton();
-		// this.Button.on('pointerup', () => {
-		// 	if (this.StartDialog.isAnimationEnded()) {
-		// 		this.startConv()
-		// 	} else {
-		// 		this.StartDialog.endAnimation();
-		// 	}
-		// }, this);
-		// this.add.existing(this.StartDialog);
 	}
 
 	startConv() {
@@ -140,6 +129,7 @@ export class LucieConv extends Phaser.Scene {
     }
 
     update() {
+	
 		if (this.Stop == true)
 			return
 		var pos = this.Config.posList[this.CurrentIndex];
@@ -149,8 +139,7 @@ export class LucieConv extends Phaser.Scene {
 		if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, target.x, 0.5)
 			&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, target.y, 0.5)) {
 				this.CurrentIndex++;
-				if (this.CurrentIndex < this.Config.posList.length) {
-					
+				if (this.CurrentIndex < this.Config.posList.length - 1) {
 					pos = this.Config.posList[this.CurrentIndex];
 					var target2 = this.TileMap.tileToWorldXY(pos.x, pos.y);
 					target2.x += this.TileMap.tileWidth / 2;
@@ -172,7 +161,8 @@ export class LucieConv extends Phaser.Scene {
 
 					this.physics.moveTo(this.Sprite, target2.x, target2.y,80);
 				}
-				else {
+				else  {
+					console.log(this.CurrentIndex)
 					this.Stop = true;
 					this.Sprite.anims.stop();
 					this.Sprite.setVelocity(0, 0);
@@ -188,21 +178,36 @@ export class LucieConv extends Phaser.Scene {
 						callbackScope: this
 					});
 				}
-		}
-		// this.physics.moveTo(sprite, pos.x + this.TileMap.tileWidth / 2, pos.y + this.TileMap.tileWidth / 2, 25);
+		} else if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, target.x, 0.5)
+		&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, target.y, 0.5)) {
+			this.Stop = true;
+			this.Sprite.anims.stop();
+			this.Sprite.setVelocity(0, 0);
+			this.time.addEvent({
+				delay: 500,
+				callback: () => { 
+					this.time.addEvent({
+						delay: 500,
+						callback: this.startInstruction3,
+						callbackScope: this
+					});
+				},
+				callbackScope: this
+			});
 
-		// // pos = this.TileMap.tileToWorldXY(4, 7);
+
+	}
 
 	}
 	startInstruction2() {
-
 		this.StartDialog.destroy();
 		this.StartDialog = new DialogBox(this, this.Config.instruction2, true, Anchor.Bottom, {
 			fitContent: true,
 			fontSize: 22,
 			offsetY:-120
 		});
-		
+		this.Stop = true;
+		console.log(this.Stop);
 		this.Button = this.StartDialog.addArrowButton();
 		this.Button.on('pointerup', () => {
 			if (this.StartDialog.isAnimationEnded()) {
@@ -213,22 +218,35 @@ export class LucieConv extends Phaser.Scene {
 		}, this);
 		this.add.existing(this.StartDialog);
 	}
+
 	startInstruction3() {
 		this.StartDialog.destroy();
+		this.Stop = false;
+		if (this.Sprite.anims.currentAnim !== this.anims.get('right')) {
+			this.Sprite.anims.play('right', true);
+		}
+		var pos = this.Config.posList[4]
+		var target2 = this.TileMap.tileToWorldXY(pos.x, pos.y);
+		target2.x += this.TileMap.tileWidth / 2;
+		target2.y += this.TileMap.tileWidth / 2;
+		this.physics.moveTo(this.Sprite, target2.x, target2.y,80);
+
 		this.StartDialog = new DialogBox(this, this.Config.instruction3, true, Anchor.Bottom, {
 			fitContent: true,
 			fontSize: 22,
 			offsetY:-120
 		});
-		
+		this.add.existing(this.StartDialog);
 		this.Button = this.StartDialog.addArrowButton();
 		this.Button.on('pointerup', () => {
 			if (this.StartDialog.isAnimationEnded()) {
+				// this.Stop = true;
+				this.StartDialog.destroy();
 				this.startConv()
 			} else {
 				this.StartDialog.endAnimation();
 			}
 		}, this);
-		this.add.existing(this.StartDialog);
+
 	}
 }

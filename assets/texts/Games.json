@@ -45,7 +45,7 @@
 		},
 		"lucie": {
 			"sprite_char":"lucie",
-			"posList": [{"x":8,"y":0}, {"x":8,"y":7},  {"x":40,"y":7}, {"x":4,"y":8}],
+			"posList": [{"x":8,"y":0}, {"x":8,"y":7},  {"x":4,"y":7}, {"x":4,"y":8}, {"x":5,"y":8}],
 			"instruction1": "J-15 avant le vote",
 			"instruction2": "dring dring...",
 			"instruction3": "Oh c'est Paul"
