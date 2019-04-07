@@ -59,14 +59,14 @@
 			"sprite_char":"lucie",
 			"posList": [{"x":7,"y":19}, {"x":7,"y":7}, {"x":3,"y":7}, {"x":3,"y":6}],
 			"busPosList": [{"x":-3,"y":4}, {"x":3,"y":4}],
-			"instruction1": "J-7 avant le vote",
-			"instruction2": "Lucie :\n30 mins de trajet à tuer.",
-			"instruction3": "Lucie :\nAllez, je vais essayer de m'informer comme Paul me l'a conseillé!"
+			"instruction1": "Une semaine plus tard, Lucie sort du travail.",
+			"instruction2": "Lucie :\nC'est parti pour 30 minutes de trajet...",
+			"instruction3": "Lucie :\nJe vais essayer de m'informer comme Paul me l'a conseillé !"
 		}
 	},
     "Facebook": {
 		"lucie": {
-			"instruction":  "Mais difficile de distinguer le vrai du faux, les informations factuelles des exagérations ou des théories complotistes.\n\nAide Lucie en sélectionnant les publications qui ne sont pas erronées. Pour cela, il suffit de les “liker” en cliquant sur le coeur. "
+			"instruction":  "Mais difficile de distinguer le vrai du faux.\n\n Aide Lucie à sélectionner les publications qui ne sont pas erronées. Pour cela, évite les fake news. Et like les informations fiables en cliquant sur le coeur. "
 		}
     },
     "CarGame": {
