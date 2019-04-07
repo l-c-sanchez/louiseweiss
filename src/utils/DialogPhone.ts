@@ -118,6 +118,8 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 	}
 
 	destroy() {
+		// this.InputCamera.destroy();
+		// this.Env.cameras.main.height = Config.Game.height;
 		for (let i = 0; i < this.Messages.length; ++i) {
 			this.Messages[i].destroy();
 		}
