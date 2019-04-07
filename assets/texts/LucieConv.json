@@ -3,12 +3,12 @@
 		"A1A": {
 			"text": "Un peu fatiguée, j’ai une mission en intérim qui a fini à 1h du matin hier…",
 			"stars": 0,
-			"nextDialog": "Q2A"
+			"nextDialog": ""
 		},
 		"A1B": {
 			"text": "Bien et toi ?",
 			"stars": 0,
-			"nextDialog": "Q2B"
+			"nextDialog": ""
 		},
 		"A2A": {
 			"text": "Franchement je suis pas sûre, je vois pas trop l’intérêt…",

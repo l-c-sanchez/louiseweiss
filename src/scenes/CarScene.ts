@@ -234,7 +234,10 @@ export class CarGame extends Phaser.Scene {
         this.hud.startTimer();
 
         // Create Player
-        this.Player = this.physics.add.sprite(Config.Game.centerX, Config.Game.centerY / 2 * 3, 'voiture');
+        if (this.Character == "lucie")
+            this.Player = this.physics.add.sprite(Config.Game.centerX, Config.Game.centerY / 2 * 3, 'lucie');
+        else
+            this.Player = this.physics.add.sprite(Config.Game.centerX, Config.Game.centerY / 2 * 3, 'voiture');
         this.Player.setOrigin(0.5, 0.5);
         this.Player.setDepth(10);        
         this.Player.setScale(2, 2);
