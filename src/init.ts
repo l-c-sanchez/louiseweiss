@@ -16,6 +16,7 @@ import { ValentinConv } from "./scenes/ValentinConv";
 import { LucieConv } from "./scenes/LucieConv";
 import { BreakoutScene } from "./scenes/BreakoutScene";
 import { LucieBus } from "./scenes/LucieBus";
+import { LucieFriends } from "./scenes/LucieFriends";
 
 export class App {
 
@@ -40,6 +41,7 @@ export class App {
 		this.Scenes.push(new BreakoutScene());
 		this.Scenes.push(new LucieConv());
 		this.Scenes.push(new LucieBus());
+		this.Scenes.push(new LucieFriends());
 		
 		Config.Phaser.scene = this.Scenes;
 

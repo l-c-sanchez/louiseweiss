@@ -204,14 +204,15 @@ export class CarGame extends Phaser.Scene {
         }
         this.GameState = State.Paused;
 
-        this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { fitContent: true, fontSize: 22 });
-        this.add.existing(this.StartDialog);
-        let button = this.StartDialog.addArrowButton();
-        button.on('pointerup', this.startInstruction, this);
+        // this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { fitContent: true, fontSize: 22 });
+        // this.add.existing(this.StartDialog);
+        // let button = this.StartDialog.addArrowButton();
+		// button.on('pointerup', this.startInstruction, this);
+		this.startInstruction();
     }
 
     public startInstruction() {
-        this.StartDialog.destroy();
+        // this.StartDialog.destroy();
         var instruction_details;
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
             instruction_details = this.Config.instruction_details_mobile;
