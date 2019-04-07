@@ -76,6 +76,7 @@ export class Preload extends Phaser.Scene {
 
 		// Lucie Bus
 		this.load.tilemapTiledJSON('WaitingBus', 'tilesets/WaitingBus.json');
+		this.load.tilemapTiledJSON('LeavingBus', 'tilesets/LucieOut.json');
 		this.load.image('RailwayStation', 'tilesets/RailwayStation.png');
 		this.load.image('RoadTile', 'tilesets/RoadTile.png');
 		this.load.image('Bus', 'sprites/Bus.png');

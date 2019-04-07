@@ -69,9 +69,9 @@ export class Result extends Phaser.Scene {
         this.Result.destroy()
 
         if (this.Success == false) 
-            this.Context = new DialogBox(this, this.Config.contextIfFail, false, Anchor.Center, { windowHeight: 410, fontSize: 22 });
+            this.Context = new DialogBox(this, this.Config.contextIfFail, true, Anchor.Center, { fitContent:true, fontSize: 22 });
         else
-            this.Context = new DialogBox(this, this.Config.contextIfSuccess, false, Anchor.Center, { windowHeight: 410, fontSize: 22 });
+            this.Context = new DialogBox(this, this.Config.contextIfSuccess, true, Anchor.Center, { fitContent:true, fontSize: 22 });
         this.add.existing(this.Context);
         var button = this.Context.addArrowButton();
         button.on('pointerup', this.startResearcher, this);
@@ -79,13 +79,13 @@ export class Result extends Phaser.Scene {
 
     startResearcher() {
         this.Context.destroy();
-		var explanations = new DialogTree(this, this.Config.dialog, false, Anchor.Center, {fitContent:true});
+		var explanations = new DialogTree(this, this.Config.dialog, true, Anchor.Bottom, {fitContent:true});
         this.add.existing(explanations);
         explanations.on('destroy', this.playWithOtherCharacter, this);
     }
     playWithOtherCharacter() {
         var resultText = this.cache.json.get('ResultText');
-        this.StartDialog = new DialogBox(this, resultText.playAgain, false, Anchor.Center, { windowHeight: 210, fontSize: 22 });
+        this.StartDialog = new DialogBox(this, resultText.playAgain, true, Anchor.Center, { fitContent:true, fontSize: 22 });
         this.Button = this.StartDialog.addArrowButton();
 		this.Button.on('pointerup', this.startCharacterChoice, this);
     }

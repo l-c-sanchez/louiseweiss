@@ -111,7 +111,7 @@ export class Config {
 		corridorSize: 64,
 		tileSize: 32,
 		time_Clara: 110, // in seconds
-		time_Lucie:20,
+		time_Lucie:1,
 		playerSpeed: 200,
 		camSpeed: -150
 	};

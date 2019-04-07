@@ -132,7 +132,7 @@ export class Facebook extends Phaser.Scene {
 
                 // Before leaving the scene, we need to remove wheel events
                 this.Wheel.removeEvents();
-                this.scene.start("CarGame");
+                this.scene.start("LucieFriends");
             }
         }
 

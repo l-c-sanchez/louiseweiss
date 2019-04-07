@@ -1,10 +1,14 @@
 {
     "playAgain" : "Voulez-vous jouer avec un autre personnage ?", 
         "lucie": {
-        "contextIfSuccess": "Mais ce n’est pas si évident pour les autres jeunes.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon Frédéric Dabi, directeur général adjoint de l'institut de sondage Ifop.",
-        "contextIfFail" : "Ne pas aller voter est assez commun chez les jeunes comme votre personnage.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon Frédéric Dabi, directeur général adjoint de l'institut de sondage Ifop.",
+        "contextIfSuccess": "Mais ce n’est pas si évident pour les autres jeunes.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, En 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon l'institut de sondage Ifop.",
+        "contextIfFail" : "Ne pas aller voter est assez commun chez les jeunes comme votre personnage.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon l'institut de sondage Ifop.",
         "dialog" : {
                 "Choices": {
+                        "choice0": {
+                                "text": "",
+                                "nextDialog": "arg0"
+                        }, 
                         "choice1": {
                                 "text": "",
                                 "stars": 0,
@@ -23,8 +27,13 @@
                 },
                 "Dialogs": {
                         "start": {
+                                "text": "Une étude de l’INSEE précise que moins de 18% des jeunes votent de façon systématique. Cela est particulièrement vrai pour les classes populaires, les non-diplômés et à l’est de la France.",
+                                "linkedChoices": ["choice0"]
+                        },
+                        "arg0": {
                                 "text": "Nous avons interrogé Anne Muxel, sociologue, pour découvrir qu’elles sont les raisons de la forte abstention des jeunes. Elle distingue plusieurs éléments d’explication :",
                                 "linkedChoices": ["choice1"]
+
                         },
                         "arg1": {
                                 "text": "Un manque d’intérêt des jeunes pour ce scrutin, alors que nombre d’eux ne savent pas comment s’informer",
