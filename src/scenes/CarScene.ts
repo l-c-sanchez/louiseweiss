@@ -213,11 +213,9 @@ export class CarGame extends Phaser.Scene {
 
     public startInstruction() {
         // this.StartDialog.destroy();
-        var instruction_details;
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
+        var instruction_details = this.Config.instruction_details_desktop;
+		if(!this.sys.game.device.os.desktop)
             instruction_details = this.Config.instruction_details_mobile;
-        else
-            instruction_details = this.Config.instruction_details_desktop;
         this.StartDialog = new DialogBox(this, instruction_details, false, Anchor.Center, { fitContent: true, fontSize: 22 });
         this.add.existing(this.StartDialog);
         let button = this.StartDialog.addArrowButton();
