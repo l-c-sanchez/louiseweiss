@@ -104,11 +104,10 @@ export class LucieBus extends Phaser.Scene {
 	}
 
 	private updateBusLeaving() {
-		console.log("bus leaving");
-		console.log(this.BusSprite.x)
-		// if (Phaser.Math.Fuzzy.Equal(this.BusSprite.x, , 2)) {
-		// 	console.log("on part !!");
-		// }
+		if (Phaser.Math.Fuzzy.Equal(this.BusSprite.x, this.BusTarget.x, 0.5)
+			&& Phaser.Math.Fuzzy.Equal(this.BusSprite.y, this.BusTarget.y, 0.5)) {
+			this.scene.start('Facebook');
+		}
 	}
 
 	private updateGoToBusStop() {
@@ -125,12 +124,7 @@ export class LucieBus extends Phaser.Scene {
 			else  {
 				this.LucieSprite.anims.stop();
 				this.LucieSprite.setVelocity(0, 0);
-			// 	this.time.addEvent({
-			// 		delay: 2000,
-			// 		callback: this.startInstruction2,
-			// 		callbackScope: this
-			// 	});
-				this.CurrentState = SceneState.BusArriving;
+				this.startInstruction2();
 			}
 		}
 	}
@@ -151,7 +145,7 @@ export class LucieBus extends Phaser.Scene {
 				this.BusSprite.setVelocity(0, 0);
 				this.time.addEvent({
 					delay: 2000,
-					callback: this.startInstruction2,
+					callback: this.startInstruction3,
 					callbackScope: this
 				});
 				this.CurrentState = SceneState.Idle;
@@ -167,11 +161,22 @@ export class LucieBus extends Phaser.Scene {
 			offsetY:-120
 		});
 
+		this.CurrentState = SceneState.BusArriving;
+	}
+
+	private startInstruction3() {
+		this.StartDialog.destroy();
+		this.StartDialog = new DialogBox(this, this.Config.instruction3, true, Anchor.Bottom, {
+			fitContent: true,
+			fontSize: 22,
+			offsetY:-120
+		});
+
 		this.time.addEvent({
 			delay: 1000,
 			callback: () => {
-				var target = this.TileMap.tileToWorldXY(10, 4);
-				this.moveBus(target);
+				this.BusTarget = this.TileMap.tileToWorldXY(13, 4);
+				this.moveBus(this.BusTarget);
 				this.LucieSprite.destroy();
 				this.CurrentState = SceneState.BusLeaving;
 			},
