@@ -117,14 +117,29 @@ export class LucieConv extends Phaser.Scene {
 		let buttonOptions: ButtonOptions = {
 			borderColor: 0x1083ff
 		}
-
-		this.Dialogs = new DialogPhone(this, dialogContent, false, messageOptions, answerOptions,
-			inputFieldOptions, buttonOptions);
-		this.add.existing(this.Dialogs);
-		this.Dialogs.on('destroy', () => {
-			// this.Dialogs.destroy();
-			this.LucieGetOut();
+		this.StartDialog.destroy();
+		this.StartDialog = new DialogBox(this, this.Config.instruction4, true, Anchor.Center, {
+			fitContent: true,
+			fontSize: 22,
+			offsetY:-120
 		});
+		this.add.existing(this.StartDialog);
+		this.Button = this.StartDialog.addArrowButton();
+		this.Button.on('pointerup', () => {
+			if (this.StartDialog.isAnimationEnded()) {
+				this.StartDialog.destroy();
+				this.Dialogs = new DialogPhone(this, dialogContent, false, messageOptions, answerOptions,
+					inputFieldOptions, buttonOptions);
+				this.add.existing(this.Dialogs);
+				this.Dialogs.on('destroy', () => {
+					// this.Dialogs.destroy();
+					this.LucieGetOut();
+				});
+			} else {
+				this.StartDialog.endAnimation();
+			}
+		}, this);
+
     }
 
     update() {
@@ -256,6 +271,25 @@ export class LucieConv extends Phaser.Scene {
 
 	}
 
+	// private startInstruction4() {
+	// 	this.StartDialog.destroy();
+	// 	this.StartDialog = new DialogBox(this, this.Config.instruction4, true, Anchor.Bottom, {
+	// 		fitContent: true,
+	// 		fontSize: 22,
+	// 		offsetY:-120
+	// 	});
+	// 	this.add.existing(this.StartDialog);
+	// 	this.Button = this.StartDialog.addArrowButton();
+	// 	this.Button.on('pointerup', () => {
+	// 		if (this.StartDialog.isAnimationEnded()) {
+	// 			this.StartDialog.destroy();
+	// 			this.startConv()
+	// 		} else {
+	// 			this.StartDialog.endAnimation();
+	// 		}
+	// 	}, this);
+	// }
+
 	private startEnd() {
 		this.StartDialog.destroy();
 		this.StartDialog = new DialogBox(this, this.Config.end, true, Anchor.Bottom, {
@@ -276,7 +310,7 @@ export class LucieConv extends Phaser.Scene {
 
 	private LucieGetOut() {
 		this.cameras.main.setBackgroundColor('#000000');
-
+		console.log("test");
 		this.TileMap = this.make.tilemap({ key: 'LivingRoom' });
 		var tiles = [
 			this.TileMap.addTilesetImage('OfficeTileset', 'OfficeTileset'), 

@@ -1,33 +1,38 @@
 {
 	"Choices": {
 		"A1A": {
-			"text": "Un peu fatiguée, j’ai une mission en intérim qui a fini à 1h du matin hier…",
+			"text": "Un peu fatiguée, j’ai eu une mission d'intérim hier soir… Et toi ?",
 			"stars": 0,
-			"nextDialog": ""
+			"nextDialog": "Q1A"
 		},
 		"A1B": {
 			"text": "Bien et toi ?",
 			"stars": 0,
-			"nextDialog": ""
+			"nextDialog": "Q1B"
 		},
-		"A2A": {
-			"text": "Franchement je suis pas sûre, je vois pas trop l’intérêt…",
+		"A1": {
+			"text": "Pourquoi ?",
+			"stars": 0,
+			"nextDialog": "Q2"
+		},
+		"A2": {
+			"text": "Moi je ne suis pas trop tout ça… Je ne suis même pas encore sûre d’aller voter...",
 			"stars": 0,
 			"nextDialog": "Q3"
 		},
 		"A3A": {
-			"text": "Je ne sais même pas ce que c’est…",
+			"text": "Erasmus ? Je ne sais même pas ce que c’est…",
 			"stars": 0,
 			"nextDialog": "Q4A"
 		},
 		"A3B": {
-			"text": "Oui mais tu vois, moi ça ne me sert à rien… Toi tu as la chance d’être étudiant.",
+			"text": "Oui mais tu vois, moi ça ne me sert à rien… Toi, tu as la chance d’être étudiant.",
 			"stars": 0,
 			"nextDialog": "Q4B"
 		},
 		"A4A": {
 			"text": "Oui, mais je suis sûre qu’on est perdant… Je pense qu’il n’y pas beaucoup d’étudiants qui peuvent en profiter en France.",
-			"stars": -1,
+			"stars": 0,
 			"nextDialog": "Q5A"
 		},
 		"A4B": {
@@ -41,12 +46,12 @@
 			"nextDialog": "Q5B"
 		},
 		"A5A": {
-			"text": "Ah, je ne savais pas, c’est intéressant ! Mais ce n’est pas facile de savoir ce qui est vrai ou faux sur l’Europe…",
+			"text": "Ah, je ne savais pas, intéressant ! Pas facile de savoir ce qui est vrai ou faux sur l’Europe…",
 			"stars": 1,
 			"nextDialog": "Q6"
 		},
 		"A5B": {
-			"text": "T’es sûr que c’est pas des chiffres bidons ? Y a plein de fausses infos sur l’Europe :/",
+			"text": "T’es sûr que c’est pas des chiffres bidons ? Moi j’y crois pas trop.",
 			"stars": 0,
 			"nextDialog": "Q6"
 		},
@@ -56,12 +61,12 @@
 			"nextDialog": ""
 		},
 		"A5D": {
-			"text": "Oui, mais ce n’est pas facile de savoir ce qui est vrai ou faux sur l’Europe… Bon, je vais essayer de jeter un coup d’oeil. A bientôt !",
-			"stars": 0,
+			"text": "Oui, mais ce n’est pas facile de savoir ce qui est vrai ou faux sur l’Europe. Je vais essayer de jeter un coup d’oeil. A bientôt !",
+			"stars": 1,
 			"nextDialog": ""
 		},
-		"A6": {
-			"text": "Mouais… J’y crois pas trop mais ok, j’essaierai de jeter un coup d’oeil… Bon je dois y aller, A bientôt !",
+		"A7": {
+			"text": "Mouais… Ok, je jetterai un coup d’oeil… Bon je dois aller au taf. A bientôt !",
 			"stars": 0,
 			"nextDialog": ""
 		}
@@ -71,16 +76,20 @@
 			"text": "Salut Lucie, ça va ?",
 			"linkedChoices": ["A1A", "A1B"]
 		},
-		"Q2A": {
-			"text": "Oh je suis désolé, j’espère que tu seras quand même assez en forme pour le 26 mai ? Tu te souviens, tu m’avais promis d’aller voter ?",
-			"linkedChoices": ["A2A"]
+		"Q1A": {
+			"text": "Ah mince. Repose toi bien. Moi je me suis pris la tête à un dîner hier...",
+			"linkedChoices": ["A1"]
 		},
-		"Q2B": {
-			"text": "Super :-) Tu te souviens de la promesse que tu m’as faite ? D’aller voter le 26 mai ?",
-			"linkedChoices": ["A2A"]
+		"Q1B": {
+			"text": "Pas top ! Je me suis pris la tête à un dîner hier...",
+			"linkedChoices": ["A1"]
+		},
+		"Q2": {
+			"text": "Je me suis disputé avec des potes à propos des élections européennes. ",
+			"linkedChoices": ["A2"]
 		},
 		"Q3": {
-			"text": "Tu devrais… L’Europe c’est vraiment très important pour tout le monde. L’espace Schengen permet à tout le monde de voyager sans visa. Et regarde, si j’ai pu partir à l’étranger, c’est grâce à Erasmus.",
+			"text": "Tu devrais… L’Europe, c’est important pour tout le monde. L’espace Schengen nous permet à tous de voyager sans visa. Et regarde, si j’ai pu partir à l’étranger, c’est grâce à Erasmus.",
 			"linkedChoices": ["A3A", "A3B"]
 		},
 		"Q4A": {
@@ -88,11 +97,11 @@
 			"linkedChoices": ["A4A", "A4B"]
 		},
 		"Q4B": {
-			"text": "Oui, mais j’ai lu dans un article que les profs, les écoliers et les apprentis y avaient le droit… T’es pas apprentie toi ?",
+			"text": "Oui, mais même les profs, les écoliers et les apprentis y ont droit… T’es pas apprentie toi ?",
 			"linkedChoices": ["A4C"]
 		},
 		"Q5A": {
-			"text": "Non, c’est l’inverse. Chaque année, près de 45 000 Français partent à l’étranger grâce à Erasmus.",
+			"text": "Non, au contraire! Chaque année, près de 45 000 Français partent à l’étranger grâce à Erasmus. C’est bien plus que les étudiants européens qui viennent étudier dans l’Hexagone. ",
 			"linkedChoices": ["A5A", "A5B"]
 		},
 		"Q5B": {
@@ -100,12 +109,12 @@
 			"linkedChoices": ["A5C", "A5D"]
 		},
 		"Q6": {
-			"text": "L’Europe offre aussi plein d’autres avantages. Il y a pleins d’articles sur le sujet :-)",
-			"linkedChoices": ["A6", "A5C"]
+			"text": "Renseigne-toi, il y a plein d’articles sur le sujet. Et tu verras l’Europe a bien d’autres avantages.",
+			"linkedChoices": ["A7"]
 		},
 		"Q7": {
 			"text": "A très vite ! Et oublie pas d’aller voter !",
-			"linkedChoices": []
+			"linkedChoices": ["A7"]
 		}
 	}
 }

@@ -47,9 +47,10 @@
 			"sprite_char":"lucie",
 			"posList": [{"x":8,"y":0}, {"x":8,"y":7}, {"x":4,"y":8}],
 			"outPosList": [{"x":5,"y":8}, {"x":8,"y":6}, {"x":8,"y":0}],
-			"instruction1": "J-15 avant le vote",
-			"instruction2": "dring dring...",
-			"instruction3": "Oh c'est Paul",
+			"instruction1": "26 mars 2019, 2 mois avant le vote. Lucie vient de se réveiller.",
+			"instruction2": "Dring, dring...",
+			"instruction3": "Lucie :\nOh, Paul vient de m'envoyer un message...",
+			"instruction4" : "Fais preuve de curiosité durant la discussion pour gagner des étoiles.",
 			"end": "Je dois y aller..."
 		}
 	},
