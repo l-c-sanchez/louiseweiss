@@ -55,7 +55,7 @@ export class Result extends Phaser.Scene {
         this.Result.setOrigin(0.5, 0);
         this.Result.setSize(30);
         this.Result.setWordWrap(Config.Game.width - 10);
-        this.input.on('pointerup', this.startExplanation, this);
+		this.input.on('pointerup', this.startExplanation, this);
 	}
 
 	update() {
@@ -69,25 +69,37 @@ export class Result extends Phaser.Scene {
         this.Result.destroy()
 
         if (this.Success == false) 
-            this.Context = new DialogBox(this, this.Config.contextIfFail, true, Anchor.Center, { fitContent:true, fontSize: 22 });
+            this.Context = new DialogBox(this, this.Config.contextIfFail, true, Anchor.Center, { fitContent: true, fontSize: 22 });
         else
-            this.Context = new DialogBox(this, this.Config.contextIfSuccess, true, Anchor.Center, { fitContent:true, fontSize: 22 });
+            this.Context = new DialogBox(this, this.Config.contextIfSuccess, true, Anchor.Center, { fitContent: true, fontSize: 22 });
         this.add.existing(this.Context);
         var button = this.Context.addArrowButton();
-        button.on('pointerup', this.startResearcher, this);
+		button.on('pointerup', () => {
+			if (this.Context.isAnimationEnded()) {
+				this.startResearcher();
+			} else {
+				this.Context.endAnimation();
+			}
+		}, this);
     }
 
     startResearcher() {
         this.Context.destroy();
-		var explanations = new DialogTree(this, this.Config.dialog, true, Anchor.Bottom, {fitContent:true});
+		var explanations = new DialogTree(this, this.Config.dialog, true, Anchor.Center, {fitContent:true});
         this.add.existing(explanations);
         explanations.on('destroy', this.playWithOtherCharacter, this);
     }
     playWithOtherCharacter() {
         var resultText = this.cache.json.get('ResultText');
-        this.StartDialog = new DialogBox(this, resultText.playAgain, true, Anchor.Center, { fitContent:true, fontSize: 22 });
+        this.StartDialog = new DialogBox(this, resultText.playAgain, true, Anchor.Center, { fitContent: true, fontSize: 22 });
         this.Button = this.StartDialog.addArrowButton();
-		this.Button.on('pointerup', this.startCharacterChoice, this);
+		this.Button.on('pointerup', () => {
+			if (this.StartDialog.isAnimationEnded()) {
+				this.startCharacterChoice();
+			} else {
+				this.StartDialog.endAnimation();
+			}
+		}, this);
     }
     startCharacterChoice() {
         this.registry.set('character', "");

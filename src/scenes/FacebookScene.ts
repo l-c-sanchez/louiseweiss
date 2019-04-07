@@ -21,7 +21,10 @@ export class Facebook extends Phaser.Scene {
     Hud          : HudScene;
     GameEnded    : boolean;
     GameState    : State;
-    Config       : any;
+	Config       : any;
+	
+	RightAnswers : number = 0;
+	WrongAnswers : number = 0;
     
     KineticScroll : KineticScroll;
     Wheel         : MouseWheel;
@@ -131,8 +134,33 @@ export class Facebook extends Phaser.Scene {
                 // TODO: disable like controls / go to next scene?
 
                 // Before leaving the scene, we need to remove wheel events
-                this.Wheel.removeEvents();
-                this.scene.start("LucieFriends");
+				this.Wheel.removeEvents();
+				this.input.removeAllListeners();
+				this.cameras.main.setScroll(0, 0);
+
+				var graphics = this.add.graphics();
+				graphics.fillStyle(0x000000, 0.8);
+				graphics.fillRect(0, 0, Config.Game.width, Config.Game.height);
+
+				let text = "Tu as eu " + this.RightAnswers.toString() + " réponses justes et " + this.WrongAnswers.toString() + " réponses fausses."
+
+				let endDialog = new DialogBox(this, text, true, Anchor.Center, {
+					fitContent: true,
+					offsetY: 40,
+					fontSize: 26
+				});
+
+				let button = endDialog.addArrowButton();
+				button.on('pointerup', () => {
+					if (endDialog.isAnimationEnded()) {
+                        this.scene.start("LucieBusLeave");
+						// this.scene.start("LucieFriends");
+					} else {
+						endDialog.endAnimation();
+					}
+				});
+
+				this.add.existing(endDialog);
             }
         }
 
@@ -189,7 +217,12 @@ export class Facebook extends Phaser.Scene {
             sheet.addButton(() => {
 				sheet.changeButton();
 				sheet.removeButtonCallback();
-				this.updateStarCount(sheet.getStarNumber());
+				var starNumber = sheet.getStarNumber();
+				if (starNumber == 1)
+					this.RightAnswers++;
+				else if (starNumber == -1)
+					this.WrongAnswers++;
+				this.updateStarCount(starNumber);
 				let color = sheet.isRealNews() ? 0x00FF00 : 0xFF0000;
 				sheet.drawFrame(color);
             });

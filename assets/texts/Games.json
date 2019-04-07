@@ -54,6 +54,13 @@
 			"end": "Je dois y aller..."
 		}
 	},
+	"BusOut": {
+		"lucie" : {
+			"sprite_char":"lucie",
+			"posList": [{"x":7,"y":19}, {"x":7,"y":7}, {"x":3,"y":7}, {"x":3,"y":6}],
+			"busPosList": [{"x":6,"y":8}, {"x":12,"y":8}]
+		}
+	},
 	"Bus": {
 		"lucie" : {
 			"sprite_char":"lucie",
