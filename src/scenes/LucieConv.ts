@@ -194,12 +194,10 @@ export class LucieConv extends Phaser.Scene {
 			this.Target.x += this.TileMap.tileWidth / 2;
 			this.Target.y += this.TileMap.tileWidth / 2;
 			this.moveTo(this.Target);
-
 		}
 
 		if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, this.Target.x, 0.5)
-		&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, 0, 0.5)) {
-			console.log("stop !!!")
+		&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, 0, 1)) {
 			this.Sprite.anims.stop();
 			this.Sprite.setVelocity(0, 0);	
 			this.Sprite.destroy();
@@ -276,7 +274,7 @@ export class LucieConv extends Phaser.Scene {
 		});
 		this.add.existing(this.StartDialog);
 		this.time.addEvent({
-			delay: 200,
+			delay: 1000,
 			callback: () => {
 				this.Target = this.TileMap.tileToWorldXY(8, 5);
 				this.Target.x += this.TileMap.tileWidth / 2;

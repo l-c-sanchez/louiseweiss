@@ -95,9 +95,20 @@ export class LucieBus extends Phaser.Scene {
 			case SceneState.BusArriving:
 				this.updateBusArriving();
 				break;
+			case SceneState.BusLeaving:
+				this.updateBusLeaving();
+				break;
 			default:
 				break;
 		}
+	}
+
+	private updateBusLeaving() {
+		console.log("bus leaving");
+		console.log(this.BusSprite.x)
+		// if (Phaser.Math.Fuzzy.Equal(this.BusSprite.x, , 2)) {
+		// 	console.log("on part !!");
+		// }
 	}
 
 	private updateGoToBusStop() {
@@ -161,6 +172,7 @@ export class LucieBus extends Phaser.Scene {
 			callback: () => {
 				var target = this.TileMap.tileToWorldXY(10, 4);
 				this.moveBus(target);
+				this.LucieSprite.destroy();
 				this.CurrentState = SceneState.BusLeaving;
 			},
 			callbackScope: this
@@ -177,12 +189,12 @@ export class LucieBus extends Phaser.Scene {
 			this.LucieSprite.anims.play('left', true);
 		}
 
-		this.physics.moveTo(this.LucieSprite, target.x, target.y,60);
+		this.physics.moveTo(this.LucieSprite, target.x, target.y,120);
 		this.Target = target;
 	}
 
 	private moveBus(target: Phaser.Math.Vector2) {
-		this.physics.moveTo(this.BusSprite, target.x, target.y,60);
+		this.physics.moveTo(this.BusSprite, target.x, target.y,120);
 		this.BusTarget = target;
 	}
 }
