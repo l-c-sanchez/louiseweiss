@@ -15,9 +15,12 @@ export class LucieBus extends Phaser.Scene {
 	private Config      	: any;
 	private StartDialog		: DialogBox = null;
 	private TileMap			: Phaser.Tilemaps.Tilemap;
-	private Sprite			: Phaser.Physics.Arcade.Sprite;
+	private LucieSprite		: Phaser.Physics.Arcade.Sprite;
+	private BusSprite		: Phaser.Physics.Arcade.Sprite;
 	private CurrentIndex	: number;
+	private BusCurrentIndex	: number;
 	private Target			: Phaser.Math.Vector2;
+	private BusTarget		: Phaser.Math.Vector2;
 	private CurrentState	: SceneState;
 	// private Dialogs	: DialogTree;
 
@@ -63,15 +66,19 @@ export class LucieBus extends Phaser.Scene {
         });
 
 		this.CurrentIndex = 0;
+		this.BusCurrentIndex = 0;
 		this.CurrentState = SceneState.GoToBusStop;
 
 		var pos = this.Config.posList[this.CurrentIndex];
 		this.Target = this.TileMap.tileToWorldXY(pos.x, pos.y);
 		// this.Target.x += this.TileMap.tileWidth / 2;
 		// this.Target.y += this.TileMap.tileWidth / 2;
+		this.LucieSprite = this.physics.add.sprite(this.Target.x , this.Target.y, this.Config.sprite_char);
 
-		this.Sprite = this.physics.add.sprite(this.Target.x , this.Target.y, this.Config.sprite_char);
-		
+		pos = this.Config.busPosList[this.BusCurrentIndex];
+		this.BusTarget = this.TileMap.tileToWorldXY(pos.x, pos.y);
+		this.BusSprite = this.physics.add.sprite(this.BusTarget.x , this.BusTarget.y, 'Bus');		
+
         this.StartDialog = new DialogBox(this, this.Config.instruction1, true, Anchor.Bottom, {
 			fitContent: true,
 			fontSize: 22,
@@ -85,46 +92,97 @@ export class LucieBus extends Phaser.Scene {
 			case SceneState.GoToBusStop:
 				this.updateGoToBusStop();		
 				break;
+			case SceneState.BusArriving:
+				this.updateBusArriving();
+				break;
 			default:
 				break;
 		}
 	}
 
 	private updateGoToBusStop() {
-		if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, this.Target.x, 0.5)
-			&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, this.Target.y, 0.5)) {
+		if (Phaser.Math.Fuzzy.Equal(this.LucieSprite.x, this.Target.x, 0.5)
+			&& Phaser.Math.Fuzzy.Equal(this.LucieSprite.y, this.Target.y, 0.5)) {
 			this.CurrentIndex++;
 			if (this.CurrentIndex < this.Config.posList.length) {
 				var pos = this.Config.posList[this.CurrentIndex];
 				var target = this.TileMap.tileToWorldXY(pos.x, pos.y);
 				// target.x += this.TileMap.tileWidth / 2;
 				// target.y += this.TileMap.tileWidth / 2;
-				this.moveTo(target);
+				this.moveLucie(target);
 			}
 			else  {
-				this.Sprite.anims.stop();
-				this.Sprite.setVelocity(0, 0);
+				this.LucieSprite.anims.stop();
+				this.LucieSprite.setVelocity(0, 0);
 			// 	this.time.addEvent({
 			// 		delay: 2000,
 			// 		callback: this.startInstruction2,
 			// 		callbackScope: this
 			// 	});
+				this.CurrentState = SceneState.BusArriving;
+			}
+		}
+	}
+
+	private updateBusArriving() {
+		if (Phaser.Math.Fuzzy.Equal(this.BusSprite.x, this.BusTarget.x, 0.5)
+			&& Phaser.Math.Fuzzy.Equal(this.BusSprite.y, this.BusTarget.y, 0.5)) {
+			this.BusCurrentIndex++;
+			if (this.BusCurrentIndex < this.Config.busPosList.length) {
+				var pos = this.Config.busPosList[this.BusCurrentIndex];
+				var target = this.TileMap.tileToWorldXY(pos.x, pos.y);
+				// target.x += this.TileMap.tileWidth / 2;
+				// target.y += this.TileMap.tileWidth / 2;
+				this.moveBus(target);
+			}
+			else  {
+				// this.LucieSprite.anims.stop();
+				this.BusSprite.setVelocity(0, 0);
+				this.time.addEvent({
+					delay: 2000,
+					callback: this.startInstruction2,
+					callbackScope: this
+				});
 				this.CurrentState = SceneState.Idle;
 			}
 		}
 	}
 
-	private moveTo(target: Phaser.Math.Vector2) {
-		var direction_x = this.Sprite.x - target.x;
+	private startInstruction2() {
+		this.StartDialog.destroy();
+		this.StartDialog = new DialogBox(this, this.Config.instruction2, true, Anchor.Bottom, {
+			fitContent: true,
+			fontSize: 22,
+			offsetY:-120
+		});
 
-		if (this.Sprite.anims.currentAnim !== this.anims.get('right') && direction_x < 0) {
-			this.Sprite.anims.play('right', true);
+		this.time.addEvent({
+			delay: 1000,
+			callback: () => {
+				var target = this.TileMap.tileToWorldXY(10, 4);
+				this.moveBus(target);
+				this.CurrentState = SceneState.BusLeaving;
+			},
+			callbackScope: this
+		});
+	}
+
+	private moveLucie(target: Phaser.Math.Vector2) {
+		var direction_x = this.LucieSprite.x - target.x;
+
+		if (this.LucieSprite.anims.currentAnim !== this.anims.get('right') && direction_x < 0) {
+			this.LucieSprite.anims.play('right', true);
 		}
-		else if (this.Sprite.anims.currentAnim !== this.anims.get('left') && direction_x >= 0) {
-			this.Sprite.anims.play('left', true);
+		else if (this.LucieSprite.anims.currentAnim !== this.anims.get('left') && direction_x >= 0) {
+			this.LucieSprite.anims.play('left', true);
 		}
 
-		this.physics.moveTo(this.Sprite, target.x, target.y,60);
+		this.physics.moveTo(this.LucieSprite, target.x, target.y,60);
 		this.Target = target;
+	}
+
+	private moveBus(target: Phaser.Math.Vector2) {
+		this.physics.moveTo(this.BusSprite, target.x, target.y,60);
+		this.BusTarget = target;
 	}
 }

@@ -55,7 +55,10 @@
 		"lucie" : {
 			"sprite_char":"lucie",
 			"posList": [{"x":7,"y":19}, {"x":7,"y":7}, {"x":3,"y":7}, {"x":3,"y":6}],
-			"instruction1": "J-7 avant le vote"
+			"busPosList": [{"x":-3,"y":4}, {"x":3,"y":4}],
+			"instruction1": "J-7 avant le vote",
+			"instruction2": "Lucie :\n30 mins de trajet à tuer.",
+			"instruction3": "Lucie :\nAllez, je vais essayer de m'informer comme Paul me l'a conseillé!"
 		}
 	},
     "Facebook": {
