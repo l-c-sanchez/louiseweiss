@@ -33,6 +33,9 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 	public Box					: DialogBox;
 	private ChoiceIndex			: string;
 	private DestroyBoxDelayed	: boolean;
+	private Animate				: boolean;
+	private Anchor				: Anchor;
+	private Options				: DialogOptions;
 
 	constructor(env: Phaser.Scene, content: DialogTreeObj, animate: boolean, anchor: Anchor, options?: DialogOptions) {
 		super(env, 'DialogTree');
@@ -41,8 +44,11 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 		this.Choices = content.Choices;
 		this.ChoiceIndex = null;
 		this.DestroyBoxDelayed = false;
+		this.Animate = animate;
+		this.Anchor = anchor;
+		this.Options = options;
 	
-		this.initDialogBox(animate, anchor, options);
+		this.initDialogBox();
 	}
 
 	preUpdate() {
@@ -51,7 +57,7 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 			console.log(this.Choices[this.ChoiceIndex].GameOver)
 			if (this.Choices[this.ChoiceIndex].GameOver == true) 
 				this.Env.registry.set('GameOver', true);
-			this.Box.removeButtons();
+			this.Box.destroy();
 			this.showDialog(this.Choices[this.ChoiceIndex].nextDialog);
 			this.ChoiceIndex = null;
 		} else if (this.DestroyBoxDelayed) {
@@ -64,13 +70,11 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 		super.destroy();
 	}
 
-	private initDialogBox(animate: boolean, anchor: Anchor, options?: DialogOptions) {
+	private initDialogBox() {
 		if (!this.Dialogs.hasOwnProperty('start')) {
 			console.error('Error. There should be a Dialog with the key "start" in the Dialog Tree.');
 		}
 
-		this.Box = new DialogBox(this.Env, "", animate, anchor, options);
-		this.Env.add.existing(this.Box);
 		this.showDialog('start');
 	}
 
@@ -84,7 +88,8 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 			console.error('Error. There is no Dialog with this id in the Tree');
 		}
 
-		this.Box.setText(this.Dialogs[key].text);
+		this.Box = new DialogBox(this.Env, this.Dialogs[key].text, this.Animate, this.Anchor, this.Options);
+		this.Env.add.existing(this.Box);
 		let buttons = this.addButtons(this.Dialogs[key].linkedChoices);
 		this.addButtonsCallbacks(key, buttons);
 	}
@@ -104,13 +109,21 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 	private addButtonsCallbacks(dialogKey: string, buttons: Array<Phaser.GameObjects.Sprite>) {
 		if (this.Dialogs[dialogKey].linkedChoices.length == 0) {
 			buttons[0].on('pointerup', () => {
-				this.DestroyBoxDelayed = true;
+				if (this.Box.isAnimationEnded()) {
+					this.DestroyBoxDelayed = true;
+				} else {
+					this.Box.endAnimation();
+				}
 			}, this);
 		} else {
 			for (let i = 0; i < buttons.length; ++i) {
 				let choiceKey = this.Dialogs[dialogKey].linkedChoices[i];
 				buttons[i].on('pointerup', () => {
-					this.ChoiceIndex = choiceKey;
+					if (this.Box.isAnimationEnded()) {
+						this.ChoiceIndex = choiceKey;
+					} else {
+						this.Box.endAnimation();
+					}
 				}, this);
 			}
 		}
