@@ -219,7 +219,7 @@ export class LucieConv extends Phaser.Scene {
 		}
 
 		// this.physics.moveTo(this.Sprite, target.x, target.y,60);
-		this.physics.moveTo(this.Sprite, target.x, target.y,120);
+		this.physics.moveTo(this.Sprite, target.x, target.y,60);
 		this.Target = target;
 	}
 
@@ -277,7 +277,7 @@ export class LucieConv extends Phaser.Scene {
 		this.time.addEvent({
 			delay: 1000,
 			callback: () => {
-				this.Target = this.TileMap.tileToWorldXY(8, 5);
+				this.Target = this.TileMap.tileToWorldXY(8, 8);
 				this.Target.x += this.TileMap.tileWidth / 2;
 				this.Target.y += this.TileMap.tileWidth / 2;
 				this.moveTo(this.Target);
