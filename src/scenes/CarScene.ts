@@ -235,11 +235,13 @@ export class CarGame extends Phaser.Scene {
         // Create Player
         if (this.Character == "lucie")
             this.Player = this.physics.add.sprite(Config.Game.centerX, Config.Game.centerY / 2 * 3, 'lucie');
-        else
+		else
+		{
             this.Player = this.physics.add.sprite(Config.Game.centerX, Config.Game.centerY / 2 * 3, 'voiture');
-        this.Player.setOrigin(0.5, 0.5);
+			this.Player.setScale(2, 2);
+		}
+		this.Player.setOrigin(0.5, 0.5);
         this.Player.setDepth(10);        
-        this.Player.setScale(2, 2);
 
         // Dealing with Swipes
         this.Cursors = this.input.keyboard.createCursorKeys();
@@ -331,12 +333,12 @@ export class CarGame extends Phaser.Scene {
         this.updateCamera(deltaTime);
         this.Generator.update();
         this.Player.y += this.CamSpeed * deltaTime;
-        var corridor = Config.CarGame.corridorSize;
-        if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == "left" ){
+		var corridor = Config.CarGame.corridorSize;
+        if (this.Cursors.left != undefined && Phaser.Input.Keyboard.JustDown(this.Cursors.left) || this.Swipe == "left" ){
             this.moveTo(this.Player.x -  corridor);
             this.Swipe = "";
         }
-        else if (this.Cursors.right != undefined && this.Cursors.right.isDown || this.Swipe == "right") {
+        else if (this.Cursors.right != undefined && Phaser.Input.Keyboard.JustDown(this.Cursors.right) || this.Swipe == "right") {
             this.moveTo(this.Player.x + corridor);
             this.Swipe = "";
         }
