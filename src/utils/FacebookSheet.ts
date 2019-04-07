@@ -136,7 +136,7 @@ export class FacebookSheet extends Phaser.GameObjects.GameObject {
 	private addLikeButton(x: number, y: number) {
 		this.Like = this.Env.add.sprite(x, y, 'heart_empty');
 		this.LikeOk = this.Env.add.sprite(x, y, 'heart');
-		this.Like.depth = 1;
+		this.Like.depth = 0;
 		this.LikeOk.depth = 0;
 		this.LikeOk.visible = false;
 		this.Like.setOrigin(0, 0);
