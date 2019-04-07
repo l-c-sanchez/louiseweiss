@@ -165,8 +165,6 @@ export class LucieConv extends Phaser.Scene {
 				this.CurrentState = SceneState.Idle;
 			}
 		}
-
-	
 	}
 
 	private updateGoToPhone() {
@@ -184,28 +182,42 @@ export class LucieConv extends Phaser.Scene {
 	}
 
 	private updateGetOutOfLivingRoom() {
-		console.log("here");
+		// console.log("here");
+		// if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, this.Target.x, 0.5)
+		// 	&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, this.Target.y, 0.5)) {
+		// 	console.log("test");
+		// 	// this.Sprite.anims.stop();
+		// 	// this.Sprite.setVelocity(0, 0);
+		// 	this.Target = this.TileMap.tileToWorldXY(8, 0);
+		// 	this.Target.x += this.TileMap.tileWidth / 2;
+		// 	this.Target.y += this.TileMap.tileWidth / 2;
+		// 	this.moveTo(this.Target);
+		// }
+
+		// if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, this.Target.x, 0.5)
+		// 	&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, 0, 0.5)) {
+		// 	console.log("stop !!!")
+		// 	this.Sprite.anims.stop();
+		// 	this.Sprite.setVelocity(0, 0);	
+		// 	this.Sprite.destroy();
+		// 	this.scene.start('LucieBus');	
+
+		// }
+	
 		if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, this.Target.x, 0.5)
 			&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, this.Target.y, 0.5)) {
-			console.log("test");
-			// this.Sprite.anims.stop();
-			// this.Sprite.setVelocity(0, 0);
-			this.Target = this.TileMap.tileToWorldXY(8, 0);
-			this.Target.x += this.TileMap.tileWidth / 2;
-			this.Target.y += this.TileMap.tileWidth / 2;
-			this.moveTo(this.Target);
+			this.CurrentIndex++;
+			if (this.CurrentIndex < this.Config.outPosList.length) {
+				var pos = this.Config.outPosList[this.CurrentIndex];
+				var target = this.TileMap.tileToWorldXY(pos.x, pos.y);
+				target.x += this.TileMap.tileWidth / 2;
+				target.y += this.TileMap.tileWidth / 2;
+				this.moveTo(target);
+			}
+			else  {
+				this.scene.start('LucieBus');
+			}
 		}
-
-		if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, this.Target.x, 0.5)
-			&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, 0, 0.5)) {
-			console.log("stop !!!")
-			this.Sprite.anims.stop();
-			this.Sprite.setVelocity(0, 0);	
-			this.Sprite.destroy();
-			this.scene.start('LucieBus');	
-
-		}
-	
 	}
 
 	private moveTo(target: Phaser.Math.Vector2) {
@@ -277,9 +289,6 @@ export class LucieConv extends Phaser.Scene {
 		this.time.addEvent({
 			delay: 1000,
 			callback: () => {
-				this.Target = this.TileMap.tileToWorldXY(8, 8);
-				this.Target.x += this.TileMap.tileWidth / 2;
-				this.Target.y += this.TileMap.tileWidth / 2;
 				this.moveTo(this.Target);
 				this.CurrentState = SceneState.GetOutOfLivingRoom;
 			},
@@ -316,7 +325,8 @@ export class LucieConv extends Phaser.Scene {
 		this.CurrentIndex = 0;
 		this.CurrentState = SceneState.GetOutOfLivingRoom;
 
-		this.Target = this.TileMap.tileToWorldXY(5, 8);
+		var pos = this.Config.outPosList[this.CurrentIndex];
+		this.Target = this.TileMap.tileToWorldXY(pos.x, pos.y);
 		this.Target.x += this.TileMap.tileWidth / 2;
 		this.Target.y += this.TileMap.tileWidth / 2;
 

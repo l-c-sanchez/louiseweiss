@@ -101,7 +101,7 @@ export class Config {
 
 	public static CharacterChoice = {
 		padding: 10
-	}
+	};
 
 	public static CarGame = {
 		rows: 20,
@@ -114,7 +114,7 @@ export class Config {
 		time_Lucie:20,
 		playerSpeed: 200,
 		camSpeed: -150
-	}
+	};
 
 	public static Facebook = {
 		time: 30, // in seconds
@@ -122,11 +122,11 @@ export class Config {
 		topPadding: 20,
 		// We put 2.5 news per page. That way, the user will see that he needs to scroll
 		postPerPage: 2.2
-	}
+	};
 
 	public static QuizzClara = {
 		time: 170, // in seconds
-	}
+	};
 
 	public static FacebookSheet = {
 		defaultOptions: {
@@ -149,7 +149,7 @@ export class Config {
 
 	public static Pacman = {
 		time: 30
-	}
+	};
 
 	public static Breakout = {
 		ballSize: 16,
@@ -167,5 +167,5 @@ export class Config {
 			top: 150 // Distance to top in px
 		},
 		text: "A beautiful and interesting text hidden behind the bricks ...."
-	}
+	};
 }
