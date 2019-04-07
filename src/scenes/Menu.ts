@@ -33,7 +33,7 @@ export class Menu extends Phaser.Scene {
 		title.setOrigin(0.5, 0.5);
 		title.setSize(40);
 
-		this.StartText = new GameText(this, Config.Game.centerX, Config.Game.centerY, "START");
+		this.StartText = new GameText(this, Config.Game.centerX, Config.Game.centerY, "JOUER");
 		this.StartText.setSize(40);
 		this.StartText.setOrigin(0.5, 0);
 

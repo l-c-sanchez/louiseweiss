@@ -185,20 +185,16 @@ export class LucieConv extends Phaser.Scene {
 
 	private updateGetOutOfLivingRoom() {
 		console.log("here");
+		console.log(this.Sprite.y,  this.Target.y)
 		if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, this.Target.x, 0.5)
 			&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, this.Target.y, 0.5)) {
-			console.log("test");
-			// this.Sprite.anims.stop();
-			// this.Sprite.setVelocity(0, 0);
 			this.Target = this.TileMap.tileToWorldXY(8, 0);
 			this.Target.x += this.TileMap.tileWidth / 2;
 			this.Target.y += this.TileMap.tileWidth / 2;
 			this.moveTo(this.Target);
 		}
 
-		if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, this.Target.x, 0.5)
-			&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, 0, 0.5)) {
-			console.log("stop !!!")
+		if (Phaser.Math.Fuzzy.Equal(this.Sprite.y, 0, 0.5)) {
 			this.Sprite.anims.stop();
 			this.Sprite.setVelocity(0, 0);	
 			this.Sprite.destroy();
@@ -277,7 +273,7 @@ export class LucieConv extends Phaser.Scene {
 		this.time.addEvent({
 			delay: 1000,
 			callback: () => {
-				this.Target = this.TileMap.tileToWorldXY(8, 8);
+				this.Target = this.TileMap.tileToWorldXY(8, 7);
 				this.Target.x += this.TileMap.tileWidth / 2;
 				this.Target.y += this.TileMap.tileWidth / 2;
 				this.moveTo(this.Target);

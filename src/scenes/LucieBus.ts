@@ -194,12 +194,12 @@ export class LucieBus extends Phaser.Scene {
 			this.LucieSprite.anims.play('left', true);
 		}
 
-		this.physics.moveTo(this.LucieSprite, target.x, target.y,120);
+		this.physics.moveTo(this.LucieSprite, target.x, target.y,60);
 		this.Target = target;
 	}
 
 	private moveBus(target: Phaser.Math.Vector2) {
-		this.physics.moveTo(this.BusSprite, target.x, target.y,120);
+		this.physics.moveTo(this.BusSprite, target.x, target.y,60);
 		this.BusTarget = target;
 	}
 }
