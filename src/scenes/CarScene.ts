@@ -161,7 +161,8 @@ export class CarGame extends Phaser.Scene {
     PlayerSpeed: number;
     TargetPos: number;
     Config:any;
-    Character:string;
+	Character:string;
+	PlayerMoving: boolean = false;
 
     hud: HudScene;
 
@@ -335,14 +336,17 @@ export class CarGame extends Phaser.Scene {
         this.Generator.update();
         this.Player.y += this.CamSpeed * deltaTime;
 		var corridor = Config.CarGame.corridorSize;
-        if (this.Cursors.left != undefined && Phaser.Input.Keyboard.JustDown(this.Cursors.left) || this.Swipe == "left" ){
-            this.moveTo(this.Player.x -  corridor);
-            this.Swipe = "";
-        }
-        else if (this.Cursors.right != undefined && Phaser.Input.Keyboard.JustDown(this.Cursors.right) || this.Swipe == "right") {
-            this.moveTo(this.Player.x + corridor);
-            this.Swipe = "";
-        }
+		if (!this.PlayerMoving)
+		{
+			if (this.Cursors.left != undefined && Phaser.Input.Keyboard.JustDown(this.Cursors.left) || this.Swipe == "left" ){
+				this.moveTo(this.Player.x -  corridor);
+				this.Swipe = "";
+			}
+			else if (this.Cursors.right != undefined && Phaser.Input.Keyboard.JustDown(this.Cursors.right) || this.Swipe == "right") {
+				this.moveTo(this.Player.x + corridor);
+				this.Swipe = "";
+			}
+		}
         this.move();
 
         if (this.hud.getRemainingTime() <= 0){
@@ -366,7 +370,8 @@ export class CarGame extends Phaser.Scene {
         if (x - this.Player.x < 0)
             this.Player.setVelocityX(-this.PlayerSpeed);
         else
-            this.Player.setVelocityX(this.PlayerSpeed);
+			this.Player.setVelocityX(this.PlayerSpeed);
+		this.PlayerMoving = true;
     }
 
     private move() {
@@ -374,7 +379,8 @@ export class CarGame extends Phaser.Scene {
         if ((speedX > 0 && this.Player.x >= this.TargetPos) ||
             (speedX < 0 && this.Player.x <= this.TargetPos)) {
                 this.Player.setVelocityX(0);
-                this.Player.x = this.TargetPos;
+				this.Player.x = this.TargetPos;
+				this.PlayerMoving = false;
         }
     }
 
