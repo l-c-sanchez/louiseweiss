@@ -2,254 +2,194 @@
 	"title": "Likez les informations vraies",
 	"lucie": [
 		{
-			"publisher": "L’Express",
-			"text": "Mais qui est donc “Captain Europe” ?",
+            "publisher": "Le Gorafi",
+            "text":"Le Parlement européen limite le nombre d’emplois fictifs à 3 par député",
+            "fake": 1,
+           	"comments": 9,
+            "likes": 12,
+   			"explanation": "Faux : Le Gorafi est un site d’information satirique"
+
+        },
+
+       {
+            "publisher": "France 2",
+            "text":"L’ALDE, le parti européen soutenu par La République en Marche, est financé par Bayer, Monsanto, Google et Microsoft",
+            "fake": 0,
+           	"comments": 17,
+            "likes": 28,
+ 			"explanation": "Vrai : Cette pratique est interdite en France mais pas au sein des institutions européennes. En Marche appelle à mettre un terme à cette pratique au sein de l’UE"
+        },
+ 	   {
+            "publisher": "Le Monde",
+            "text":"La France s’oppose à l’idée d’un congé parental mieux rémunéré proposée par la Commission européenne",
+            "fake": 0,
+           	"comments": 19,
+            "likes": 24,
+ 			"explanation": "Vrai : la mesure prévoit 4 mois de congés rémunérés tant pour les pères et pour les mères. Mais la France que 12 Etats membres estiment qu’il s’agit d’une mesure trop coûteuse."
+        },
+       {
+            "publisher": "Mediacity",
+            "text":"Le Parlement européen considère l’Eglise orthodoxe russe comme une organisation terroriste",
+            "fake": 1,
+           "comments": 17,
+            "likes": 28,
+ 			"explanation": "Faux : il s’agit d’une fake news véhiculé par l’extrême droite géorgienne en 2016"
+        },
+
+       {
+            "publisher": "IFOP",
+            "text":"Sondages élections européennes: LREM (22,5%), RN (21%), LR (14%), LFI (8,5%), EELV (8%) et DLA (5.5%)",
+            "fake": 0,
+           "comments": 52,
+            "likes": 1,
+ 			"explanation": "Vrai : sondage du 1er avril. On retrouve ensuite Place Public/PS (5%), les Gilets Jaunes (3,5%), Génération.s (3%), PCF (2%), UDI (2%) et les Patriotes (1,5%)"
+        },
+       {
+            "publisher": "Agora Vox",
+            "text":"Le traité européen de Lisbonne autorise à tuer des manifestants en cas d’émeute",
+            "fake": 1,
+           	"comments": 520,
+            "likes": 102,
+ 			"explanation": "Faux : Il s’agit d’un intox publiée sur un blog de gilets jeunes en février 2019 et se basant sur une interprétation incorrecte de la Convention Européenne des Droits de l’Homme"
+        },
+
+       {
+            "publisher": "AFP Factuel",
+            "text":"Non, l’importation de boeuf aux hormones, saumon transgénique ou poulet au chlore n’est pas autorisé en France",
+            "fake": 0,
+           	"comments": 1,
+            "likes": 0,
+ 			"explanation": "Faux : Jordan Bardella, tête de liste RN,  a propagé cette rumeur en février dernier lors d’un meeting. L’importation de ces 3 produits est pourtant interdite au sein de l’UE"
+        },
+        {
+            "publisher": "Libération",
+            "text":"La Commission européenne demande à la France d’ouvrir ses barrages hydroélectriques à la concurrence et rappelle Paris à l’ordre",
+            "fake": 0,
+           	"comments": 3,
+            "likes": 2,
+ 			"explanation": "Vrai : La Commission européenne a lancé en décembre une procédure d’infraction contre plusieurs pays dont la France “pour faire en sorte que les marchés publics dans le secteur de l’énergie hydroélectrique soient attribués et renouvelés dans le respect du droit de l’UE"
+        },
+        {
+            "publisher": "Le Soir",
+            "text":"Emmanuel Macron réclame une “renaissance européenne” autour de trois piliers: “liberté, protection, progrès”. Le président français appelle à sauver une “Europe en danger” face au “repli nationaliste” ",
+            "fake": 0,
+           "comments": 134,
+            "likes": 200,
+ "explanation": "Vrai : Le locataire de l’Elysée a publié une tribune en 22 langues en mars dernier où il explique que ‘l’Europe n’a jamais été autant en danger”"
+        },
+        {
+            "publisher": "Toute l’Europe",
+            "text":"Européennes: LR appelle dans son programme à “lutter contre l’immigration illégale et le terrorisme islamiste”",
+            "fake": 0,
+           "comments": 134,
+            "likes": 200,
+ "explanation": "Vrai : Le Conseil National des Républicains a publié une série de 75 propositions pour l’Europe en mars dernier"
+        },
+{
+            "publisher": "BFM Politique",
+            "text":" Nathalie Loiseau, tête de liste LREM: “Une banque européenne du climat c’est tout sauf un machin : nous proposons de mettre le paquet parce que l’objectif c’est la neutralité carbone en 2050” ",
+"fake": 0,
+           "comments": 39,
+            "likes": 95,
+ "explanation": "Vrai : La tête de liste LREM a fait cette proposition sur le plateau de BFM TV fin mars"
+        },
+
+{
+            "publisher": "AFP",
+            "text":"'Tinder' électoral, dessins animés: les astuces pour faire voter les jeunes",
+"fake": 0,
+           "comments": 39,
+            "likes": 95,
+ "explanation": "Vrai : Les associations multiplient les initiatives pour mobiliser la jeunesse qui boude les scrutins européens, à trois mois des élections de mai"
+        },
+
+       {
+            "publisher": "Buzzbeed",
+            "text":"Face à la pression migratoire, la Commission européenne interdit les animaux de compagnie en Europe",
+            "fake": 1,
+           "comments": 51,
+            "likes": 89,
+ "explanation": "Faux : Buzzbeed est un site parodiant Buzzfeed"
+        },
+
+{
+            "publisher": "BFM TV",
+            "text":"'Jordan Bardella, tête de liste RN, appelle à un “référendum contre Macron aux européennes de mai prochain”",
+"fake": 0,
+           "comments": 39,
+            "likes": 95,
+ "explanation": "Vrai : La tête de liste du Rassemblement national pour les européennes estime dans une interview à BFM que l’Europe est à un “tournant historique” "
+        },
+
+{
+            "publisher": "Libération",
+            "text":"Jean-Luc Mélenchon appelle à “sortir des traités qui organisent l’UE”",
+"fake": 0,
+           "comments": 39,
+            "likes": 95,
+ "explanation": "Vrai : Dans une tribune publié dans Libération fin mars, le leader de la France Insoumise répond aux proposition formulées par le président de la République en exigeant de se retirer de l’ordolibéralisme et de l’atlantisme de l’UE"
+        },
+		{
+            "publisher": "Le Monde",
+            "text":"Européenne: Le PS et Place Publique s’allient, Glucksmann tête de liste",
 			"fake": 0,
-			"comments": 17,
-			"likes": 30,
-			"sprite": "https://www.google.fr/search?q=captain+Europe&rlz=1C5CHFA_enFR775FR775&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjwyPKbofzgAhXx8eAKHX80DRMQ_AUIDigB&biw=1535&bih=889#imgrc=dPeQ0GTs1kJXiM: ",
-			"explanation": "Ouiiiii bravo!"
+           "comments": 39,
+            "likes": 95,
+ 			"explanation": "Vrai : Après des mois de négociations, les deux formations ont accepté de présenter une liste commune en mars dernier"
 		},
 		{
-			"publisher": "Egalité et Réconciliation",
-			"text": "Macron, mandaté pour détruire le nationalisme français, plaide pour un nationalisme européen",
-			"fake": 1,
-			"comments": 15,
-			"likes": 3,
-			"sprite": "",
-			"explanation": "Eh non, c'est balot..."
-		},
-		{
-			"publisher": "Russie Politics",
-			"text": "Le piège des élections européennes ou pourquoi ce sont les seules élections auxquelles il ne faut pas participer",
-			"fake": 1,
-			"comments": 9,
-			"likes": 12,
-			"sprite": ""
-		},
-		{
-			"publisher": "Le Gorafi",
-			"text": "Le Parlement européen limite le nombre d’emplois fictifs à 3 par député",
-			"fake": 1,
-			"comments": 9,
-			"likes": 12,
-			"sprite": ""
-		},
-		{
-			"publisher": "Marianne",
-			"text": "Lobbying XXL: le géant américain Coca-Cola sponsorise… la présidence de l’Union européenne",
+            "publisher": "Toute l’Europe",
+            "text":" Européennes: Asselineau & Philippot, les deux derniers partisans d’un Frexit non négociable",
 			"fake": 0,
-			"comments": 7,
-			"likes": 22,
-			"sprite": ""
-		},
-		{
-			"publisher": "RTL",
-			"text": "”Une Europe qui vient déterminer des normes sur les soutien-gorge et la taille des concombres, c’est une Europe qui ne nous aide pas à trouver notre place dans la mondialisation” (François-Xavier Bellamy, tête de liste Les Républicains)",
+           "comments": 39,
+            "likes": 95,
+ 			"explanation": "Vrai : Les deux tête de liste aux européennes exigent une sortie immédiate et inconditionnelle de l’Union européenne. Leurs partis refusent cependant de s’allier"
+        },
+
+{
+            "publisher": "Foodwatch",
+            "text":"Coca Cola sponsorise la présidence roumaine du conseil de l'Union européenne. La malbouffe au cœur du pouvoir politique",
 			"fake": 0,
-			"comments": 15,
-			"likes": 2,
-			"sprite": ""
-		},
-		{
-			"publisher": "Buzzbeed",
-			"text": "Face à la pression migratoire, la Commission européene interdit les animaux de compagnie en Europe",
-			"fake": 1,
-			"comments": 51,
-			"likes": 89,
-			"sprite": ""
-		},
-		{
-			"publisher": "France 2",
-			"text": "L’ALDE, le parti soutenu par La République en Marche, est financé par Bayer, Monsanto, Google et Microsoft",
+           	"comments": 93,
+            "likes": 32,
+ 			"explanation": "Vrai : La présidence roumaine du Conseil de l’Union européenne, d’une durée de 6 mois, est effectivement soutenu par des multinationals tels que Mercedes, Coca Cola et Renault"
+        },
+{
+            "publisher": "Le JDD",
+            "text":"'Pour 'en finir avec l'Europe de Monsanto', Jadot (EELV) propose “Green New Deal”",
 			"fake": 0,
-			"comments": 17,
-			"likes": 28,
-			"sprite": ""
-		},
-		{
-			"publisher": "Mediacity",
-			"text": "Le Parlement européen considère l’Eglise orthodoxe russe comme une organisation terroriste",
+           	"comments": 39,
+            "likes": 95,
+ 			"explanation": "Vrai : Dans une tribune publié fin mars, le candidat écologiste exige un plan de 100 milliards d’euros pour les énergies renouvelables et l'isolation des logements sur 20 ans. Objectif ? 100 % de renouvelable et des millions d'emplois afin de défendre une Europe écologiste, solidaire et fédérale"
+        },
+
+{
+            "publisher": "Lanceur d’alerte 75",
+            "text":"L'Union européenne est un complot de la CIA pour détruire la France",
 			"fake": 1,
-			"comments": 17,
-			"likes": 28,
-			"sprite": ""
-		},
-		{
-			"publisher": "Louis-Antoine Lenoir",
-			"text": "Les anglais avaient bien compris qu’il fallait quitter l’Union européenne avant l’arrivée de 80 millions de turcs",
-			"fake": 1,
-			"comments": 12,
-			"likes": 38,
-			"sprite": "https://www.google.fr/search?q=Turkey+is+joining+the+EU&rlz=1C5CHFA_enFR775FR775&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiVrrKhr_zgAhWKohQKHU4DDosQ_AUIDygC&biw=1535&bih=889#imgrc=x2lCHa4Wf9FVsM:"
-		},
-		{
-			"publisher": "Le Monde",
-			"text": "La France s’oppose à l’idée d’un congé parental mieux rémunéré proposée par la Commission européenne ",
-			"fake": 0,
-			"comments": 19,
-			"likes": 24,
-			"sprite": ""
-		},
-		{
-			"publisher": "Radio Classique",
-			"text": "Attentat dans la prison de Condé-sur-Sarthe: “On a accepté, dans notre pays, que la Cour européenne des Droits de l’Homme, interdise les fouilles des prisonniers” (Nicolas Dupont-Aignan)",
-			"fake": 0,
-			"comments": 52,
-			"likes": 1,
-			"sprite": ""
-		},
-		{
-			"publisher": "Radio Classique",
-			"text": "Attentat dans la prison de Condé-sur-Sarthe: “On a accepté, dans notre pays, que la Cour européenne des Droits de l’Homme, interdise les fouilles des prisonniers” (Nicolas Dupont-Aignan)",
-			"fake": 0,
-			"comments": 52,
-			"likes": 1,
-			"sprite": ""
-		},
-		{
-			"publisher": "Médiapart, le Club",
-			"text": "L’Europe rétablit la peine de mort. Mais oublie de prévenir les peuples européens de ce rétablissement, par Lucie Couvreur",
-			"fake": 1,
-			"comments": 52,
-			"likes": 1,
-			"sprite": ""
-		},
-		{
-			"publisher": "Agora Vox",
-			"text": "Le traité européen de Lisbonne autorise à tuer des “émeutiers”",
-			"fake": 1,
-			"comments": 520,
-			"likes": 102,
-			"sprite": ""
-		},
-		{
-			"publisher": "Le Gorafi",
-			"text": "Européennes: François Asselineau propose de supprimer la station “Europe” sur la ligne 3 à Paris",
-			"fake": 1,
-			"comments": 52,
-			"likes": 27,
-			"sprite": ""
-		},
-		{
-			"publisher": "Français de Souche",
-			"text": "Yasmine, jeune femme voilée, remporte le prix de la “Jeune Européenne de l’année 2019” décerné par le Parlement européen",
-			"fake": 1,
-			"comments": 1,
-			"likes": 42,
-			"sprite": ""
-		},
-		{
-			"publisher": "AFP Factuel",
-			"text": "Non, l’importation de boeuf aux hormones, saumon transgénique ou poulet au chlore n’est pas autorisé en France",
-			"fake": 0,
-			"comments": 1,
-			"likes": 0,
-			"sprite": ""
-		},
-		{
-			"publisher": "Libération",
-			"text": "La Commission européenne demande à la France d’ouvrir ses barrages hydroélectriques à la concurrence et rappelle Paris à l’ordre",
-			"fake": 0,
-			"comments": 3,
-			"likes": 2,
-			"sprite": ""
-		},
-		{
-			"publisher": "Emmanuel Macron",
-			"text": "C’est le moment de la Renaissance européenne. Aussi, résistant aux tentations du repli et des divisions, je vous propose de bâtir ensemble cette Renaissance autour de trois ambitions : la liberté, la protection et le progrès",
-			"fake": 0,
-			"comments": 134,
-			"likes": 200,
-			"sprite": ""
-		},
-		{
-			"publisher": "Laurent Wauquiez",
-			"text": "Nous voulons défendre un projet européen mais nous croyons que pour sauver l'Europe, il faut la changer. Ni sortie de l'Union européenne comme le propose Marine Le Pen ni toujours plus de ce qui ne marche pas comme le propose Emmanuel Macron.",
-			"fake": 0,
-			"comments": 213,
-			"likes": 238,
-			"sprite": ""
-		},
-		{
-			"publisher": "France Info ",
-			"text": "Le Parlement européen se mobilise contre les fake news pour les élections européennes de 2019.",
-			"fake": 0,
-			"comments": 24,
-			"likes": 9,
-			"sprite": ""
-		},
-		{
-			"publisher": "AFP",
-			"text": "'Tinder' électoral, dessins animés: les astuces pour faire voter les jeunes",
-			"fake": 0,
-			"comments": 39,
-			"likes": 95,
-			"sprite": ""
-		},
-		{
-			"publisher": "RFI",
-			"text": "Elections européennes: les «gilets jaunes» à l'assaut des urnes",
-			"fake": 0,
-			"comments": 3,
-			"likes": 2,
-			"sprite": ""
-		},
-		{
-			"publisher": "Foodwatch",
-			"text": "Coca Cola sponsorise la présidence roumaine du conseil de l'Union européenne. La malbouffe au cœur du pouvoir politique",
-			"fake": 0,
-			"comments": 93,
-			"likes": 32,
-			"sprite": ""
-		},
-		{
-			"publisher": "Lanceur d’alerte 75",
-			"text": "L'Union européenne est un complot de la CIA pour détruire la France",
-			"fake": 1,
-			"comments": 3,
-			"likes": 2,
-			"sprite": ""
-		},
-		{
-			"publisher": "Francois Ollande ",
-			"text": "Emmanuel Macron n’a pas su rassembler les progressistes en vue l’élection européenne. Après le Brexit, le Frexit me semble inévitable. ",
-			"fake": 1,
-			"comments": 31,
-			"likes": 92,
-			"sprite": ""
-		},
-		{
-			"publisher": "Manu Macron",
-			"text": "Le 26 mai, il n’y aura qu’un seul tour. Pour garantir la paix, il est temps d’en finir avec la souveraineté nationale pour une souveraineté européenne totale.",
-			"fake": 1,
-			"comments": 31,
-			"likes": 92,
-			"sprite": ""
-		},
-		{
-			"publisher": "Front social",
-			"text": "L'Union Européenne est une dictature anti-peuples européens",
-			"fake": 1,
-			"comments": 31,
-			"likes": 92,
-			"sprite": ""
-		},
-		{
-			"publisher": "Organisation des vraies nations unies",
-			"text": "L'Union Européenne reste soumise aux lobbies industriels et bancaires. Son but est de détruire les nations pour les inclure dans une entité mondiale consumériste.",
-			"fake": 1,
-			"comments": 31,
-			"likes": 92,
-			"sprite": ""
-		},
-		{
-			"publisher": "Russia Now",
-			"text": "L'Union européenne nous entraine vers une 3e guerre mondiale.",
-			"fake": 1,
-			"comments": 31,
-			"likes": 92,
-			"sprite": ""
-		}
+           	"comments": 3,
+            "likes": 2,
+ 			"explanation": "Faux : Cette théorie, mise en avant par l’ancien général Philippe de Villiers est critiquée par les historiens"
+        },
+
+{
+            "publisher": "Manu Macron",
+            "text":"Le 26 mai, il n’y aura qu’un seul tour. Pour garantir la paix, il est temps d’en finir avec la souveraineté nationale pour une souveraineté européenne totale.",
+            "fake": 1,
+           	"comments": 31,
+            "likes": 92,
+			"explanation": "Faux : Il s’agit d’un compte parodique du chef de l’Etat comme il existe des centaines sur Twitter "
+        },
+
+
+        {
+            "publisher": "Russia Now",
+            "text":"L'Union européenne nous entraîne vers une 3e guerre mondiale.",
+            "fake": 1,
+           	"comments": 31,
+            "likes": 92,
+ 			"explanation": "Faux : Cette information est mise en avant par certains activistes d’extrême droite russe afin de dénigrer le travail de l’Union européenne"
+        }
+
 	]
 }

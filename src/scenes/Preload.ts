@@ -16,7 +16,7 @@ export class Preload extends Phaser.Scene {
 	}
 
 	preload() {
-		let title = new GameText(this, Config.Game.centerX, Config.Game.centerY * 0.30, "Élections Européennes");
+		let title = new GameText(this, Config.Game.centerX, Config.Game.centerY * 0.30, "Moi, citoyen européen");
 		title.setOrigin(0.5, 0.5);
 		title.setSize(40);
 

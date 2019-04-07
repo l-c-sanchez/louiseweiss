@@ -154,6 +154,7 @@ enum SwipeDirection {
 }
 
 export class CarGame extends Phaser.Scene {
+    Games: any;
     Generator: Generator;
     CamSpeed: number;
     Player: Phaser.Physics.Arcade.Sprite;
@@ -196,7 +197,7 @@ export class CarGame extends Phaser.Scene {
     }
 
     public create() {
-        var games: any = this.cache.json.get('Games');
+        var games = this.cache.json.get('Games');
         this.Config = games.CarGame[this.Character];
         if (!this.Config){
             throw new TypeError("Invalid config");
@@ -204,6 +205,19 @@ export class CarGame extends Phaser.Scene {
         this.GameState = State.Paused;
 
         this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { fitContent: true, fontSize: 22 });
+        this.add.existing(this.StartDialog);
+        let button = this.StartDialog.addArrowButton();
+        button.on('pointerup', this.startInstruction, this);
+    }
+
+    public startInstruction() {
+        this.StartDialog.destroy();
+        var instruction_details;
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
+            instruction_details = this.Config.instruction_details_mobile;
+        else
+            instruction_details = this.Config.instruction_details_desktop;
+        this.StartDialog = new DialogBox(this, instruction_details, false, Anchor.Center, { fitContent: true, fontSize: 22 });
         this.add.existing(this.StartDialog);
         let button = this.StartDialog.addArrowButton();
         button.on('pointerup', this.startCarGame, this);

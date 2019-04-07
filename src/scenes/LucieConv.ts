@@ -123,7 +123,7 @@ export class LucieConv extends Phaser.Scene {
 		this.add.existing(this.Dialogs);
 		this.Dialogs.on('destroy', () => {
 			
-			this.scene.start('Facebook');
+			this.scene.start('LucieBus');
 		});
     }
 

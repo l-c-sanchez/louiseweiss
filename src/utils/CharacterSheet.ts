@@ -106,14 +106,15 @@ export class CharacterSheet extends Phaser.GameObjects.GameObject {
 		y += text.PhaserText.displayHeight;
 		text = this.displayText(x, y, "Age   : " + this.Character.age);
 		y += text.PhaserText.displayHeight;
-		text = this.displayText(x, y, "Job   : " + this.Character.job);
+		text = this.displayText(x, y, "Emploi   : " + this.Character.job);
 		y += text.PhaserText.displayHeight;
-		text = this.displayText(x, y, "Ville : " + this.Character.town);
-		y = this.Pos.y + this.Options.windowHeight - this.Options.padding - this.Options.innerPadding ;
-		text = this.displayText(x, y, "Politisation : ");
+		text = this.displayText(x, y, "Habite : " + this.Character.town);
+		y += text.PhaserText.displayHeight + this.Options.padding + this.Options.innerPadding;
+		// y = this.Pos.y + this.Options.windowHeight - this.Options.padding - this.Options.innerPadding ;
+		text = this.displayText(x, y, "Intérêt pour la politique :");
 		text.setOrigin(0, 0);
-		x += text.PhaserText.displayWidth;
-		this.addStars(x, y, this.Character.stars);
+		// x += text.PhaserText.displayWidth;
+		this.addStars(x, y + text.PhaserText.displayHeight, this.Character.stars);
 	}
 
 	private displayText(x: number, y: number, content: string): GameText {
