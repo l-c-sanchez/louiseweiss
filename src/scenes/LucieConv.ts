@@ -122,7 +122,7 @@ export class LucieConv extends Phaser.Scene {
 			inputFieldOptions, buttonOptions);
 		this.add.existing(this.Dialogs);
 		this.Dialogs.on('destroy', () => {
-			this.Dialogs.destroy();
+			// this.Dialogs.destroy();
 			this.LucieGetOut();
 		});
     }
@@ -186,7 +186,7 @@ export class LucieConv extends Phaser.Scene {
 	private updateGetOutOfLivingRoom() {
 		console.log("here");
 		if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, this.Target.x, 0.5)
-		&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, this.Target.y, 0.5)) {
+			&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, this.Target.y, 0.5)) {
 			console.log("test");
 			// this.Sprite.anims.stop();
 			// this.Sprite.setVelocity(0, 0);
@@ -197,7 +197,12 @@ export class LucieConv extends Phaser.Scene {
 		}
 
 		if (Phaser.Math.Fuzzy.Equal(this.Sprite.x, this.Target.x, 0.5)
+<<<<<<< HEAD
 		&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, 0, 1)) {
+=======
+			&& Phaser.Math.Fuzzy.Equal(this.Sprite.y, 0, 0.5)) {
+			console.log("stop !!!")
+>>>>>>> f3f34fdfe6dd16f7a76189aad4f376d9c0518d1a
 			this.Sprite.anims.stop();
 			this.Sprite.setVelocity(0, 0);	
 			this.Sprite.destroy();
