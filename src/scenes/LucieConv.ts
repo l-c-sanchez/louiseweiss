@@ -310,6 +310,8 @@ export class LucieConv extends Phaser.Scene {
 
 	private LucieGetOut() {
 		this.cameras.main.setBackgroundColor('#000000');
+		this.cameras.main.setScroll(0, 0);
+
 		console.log("test");
 		this.TileMap = this.make.tilemap({ key: 'LivingRoom' });
 		var tiles = [

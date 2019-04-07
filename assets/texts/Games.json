@@ -79,7 +79,11 @@
 			"instruction_details_desktop": "Avec les flèches de ton clavier, déplace Valentin à droite et à gauche pour éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles."
 				},
 		"lucie": {
-				"instruction": "Les amis de Lucie lui proposent d’aller boire un verre et sa famille l’invite déjeuner au restaurant. Aidez Lucie à résister à l’appel de la bouffe et de la bière pour qu’elle se rende aux bureaux de vote.",
+				"sprite_char":"lucie",
+				"instruction1": "Dring, dring...",
+				"instruction2": "Arthur :\nHey Lucie! Ça te dis de manger au fast food ce midi?",
+				"instruction3": "Dring, dring...",
+				"instruction4": "Virginie :\nCoucou louloute, tu viens au bar avec tout le monde ce soir?",
 				"instruction_details_mobile": "Glisse ton doigt vers la gauche ou vers la droite pour déplacer Lucie et éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles.",
 				"instruction_details_desktop": "Avec les flèches de ton clavier, déplace Lucie à droite et à gauche pour éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles."
 		}
