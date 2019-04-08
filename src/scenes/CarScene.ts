@@ -23,7 +23,7 @@ class Layer {
         env: CarGame,
         floorGroup: Phaser.Physics.Arcade.Group, 
         starGroup: Phaser.Physics.Arcade.Group,
-        rockGroup: Phaser.Physics.Arcade.Group,
+        obstacleGroup: Phaser.Physics.Arcade.Group,
     
         y: number,
         withObjects: boolean = true) 
@@ -35,7 +35,7 @@ class Layer {
 
         this.LayerSprites = [];
         this.StarGroup = starGroup;
-        this.RockGroup = rockGroup;
+        this.RockGroup = obstacleGroup;
         this.FloorGroup = floorGroup;
         this.createLayer(withObjects);
     }
@@ -65,16 +65,21 @@ class Layer {
             if (Math.random() < Config.CarGame.starProbability){
                 var column = Phaser.Math.Between(-2, 2);
                 var x = Config.Game.centerX + column * Config.CarGame.corridorSize;
-                var rock: Phaser.Physics.Arcade.Sprite;
-                var character = this.Env.registry.get('character');
-                if (character == "valentin")
-                    rock = this.RockGroup.create(x, this.PosY, 'rock');
-                else
-                    rock = this.RockGroup.create(x, this.PosY, 'burger');
-                rock.setOrigin(0.5, 0.5);
-                this.LayerSprites.push(rock);
+
+                let obstacleName = this.getObstacleName();
+                let obstacle = this.RockGroup.create(x, this.PosY, obstacleName);
+                obstacle.setOrigin(0.5, 0.5);
+                this.LayerSprites.push(obstacle);
             }
         }
+    }
+
+    private getObstacleName(){
+        let character = this.Env.registry.get('character');
+        let obstacles = Config.CarGame.obstacles[character];
+        // Choose randomly among the obstacles
+        let idx = Phaser.Math.Between(0, obstacles.length - 1);
+        return obstacles[idx];
     }
 
     public destroy() {
@@ -96,7 +101,7 @@ class Generator {
     Layers: Array<Layer>;
     FloorGroup: Phaser.Physics.Arcade.Group;
     StarGroup: Phaser.Physics.Arcade.Group;
-    RockGroup: Phaser.Physics.Arcade.Group;
+    ObstacleGroup: Phaser.Physics.Arcade.Group;
 
     constructor (Env) {
         
@@ -108,10 +113,10 @@ class Generator {
 
         this.FloorGroup = this.Env.physics.add.group();
         this.StarGroup = this.Env.physics.add.group();
-        this.RockGroup = this.Env.physics.add.group();
+        this.ObstacleGroup = this.Env.physics.add.group();
         this.FloorGroup.setDepth(0, 0);
         this.StarGroup.setDepth(1, 0);
-        this.RockGroup.setDepth(1, 0);
+        this.ObstacleGroup.setDepth(1, 0);
     }
 
     public setup() {
@@ -122,7 +127,7 @@ class Generator {
 
         for (let ty = 0; ty < rows; ty++){
             y = (ty * Config.CarGame.tileSize)
-            this.Layers.push(new Layer(this.Env, this.FloorGroup, this.StarGroup, this.RockGroup, y, false));
+            this.Layers.push(new Layer(this.Env, this.FloorGroup, this.StarGroup, this.ObstacleGroup, y, false));
         }
 	}
 	
@@ -143,7 +148,7 @@ class Generator {
 	
     private appendLayer() {
         let y = this.Layers[0].PosY - Config.CarGame.tileSize;
-        this.Layers.unshift(new Layer(this.Env, this.FloorGroup, this.StarGroup, this.RockGroup, y));
+        this.Layers.unshift(new Layer(this.Env, this.FloorGroup, this.StarGroup, this.ObstacleGroup, y));
     }
 }
 
@@ -262,7 +267,7 @@ export class CarGame extends Phaser.Scene {
 
         // Collision with objects
         this.physics.add.overlap(this.Player, this.Generator.StarGroup, this.collectStar, null, this);
-		this.physics.add.overlap(this.Player, this.Generator.RockGroup, this.collideRock, null, this);
+		this.physics.add.overlap(this.Player, this.Generator.ObstacleGroup, this.collideObstacle, null, this);
 		
         //Start sounds
         if (this.Character == "valentin"){
@@ -294,7 +299,7 @@ export class CarGame extends Phaser.Scene {
 		this.updateStarCount(1);
     }
 
-    private collideRock(player: Phaser.Physics.Arcade.Sprite, rock: Phaser.Physics.Arcade.Sprite) {
+    private collideObstacle(player: Phaser.Physics.Arcade.Sprite, rock: Phaser.Physics.Arcade.Sprite) {
         rock.disableBody(true, true);
 
         if (!this.invicible){

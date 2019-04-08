@@ -113,7 +113,11 @@ export class Config {
 		time_Clara: 110, // in seconds
 		time_Lucie: 20,
 		playerSpeed: 200,
-		camSpeed: -150
+		camSpeed: -150,
+		obstacles: {
+			valentin: ['rock'],
+			lucie: ['burger', 'beer']
+		}
 	};
 
 	public static Facebook = {
