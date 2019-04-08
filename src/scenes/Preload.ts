@@ -27,6 +27,7 @@ export class Preload extends Phaser.Scene {
 		//General
 		// this.load.image('Transparent', 'sprites/ButtonDebug.png');
 		this.load.image('Transparent', 'sprites/transparent.png');
+		this.load.audio('ringtone', 'sounds/ringtone.mp3')
 
 		//Dialogs
 		this.load.image('Arrow', 'sprites/Arrow.png');
@@ -58,6 +59,7 @@ export class Preload extends Phaser.Scene {
 		this.load.image('road', 'sprites/road.png');
 		this.load.image('road_line', 'sprites/road_line.png');
 		this.load.image('burger', 'sprites/burger.png');
+		this.load.image('beer', 'sprites/beer.png');
 		this.load.image('rock', 'sprites/cow.png');
 		this.load.audio('ValentinFlash', 'sounds/ValentinFlash.wav');
 
@@ -80,6 +82,7 @@ export class Preload extends Phaser.Scene {
 		this.load.image('RailwayStation', 'tilesets/RailwayStation.png');
 		this.load.image('RoadTile', 'tilesets/RoadTile.png');
 		this.load.image('Bus', 'sprites/Bus.png');
+		this.load.json('LucieBusLeaveConv', 'texts/LucieBusLeaveConv.json');
 
 		// Facebook
 		this.load.json('FacebookText', 'texts/FacebookText.json');

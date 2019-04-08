@@ -1,0 +1,20 @@
+{
+	"Choices": {
+		"win": {
+			"text": "J’ai commencé à m’y intéresser, j’y vois déjà plus clair. Je te tiens au courant !",
+			"stars": 0,
+			"nextDialog": ""
+		},
+        "lose": {
+			"text": "Sincèrement, j’ai du mal à tout comprendre… Je verrai, on en reparle !",
+			"stars": 0,
+			"nextDialog": ""
+		}
+	},
+	"Dialogs": {
+		"start": {
+			"text": "Salut Lucie ! Juste pour info, je viens de lire qu’on a seulement jusqu’au 31 mars pour s’inscrire sur les listes. Tu t’es décidée d’ailleurs, tu vas voter ?",
+			"linkedChoices": ["win", "lose"]
+		}
+	}
+}

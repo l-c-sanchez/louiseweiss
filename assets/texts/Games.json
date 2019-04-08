@@ -58,7 +58,8 @@
 		"lucie" : {
 			"sprite_char":"lucie",
 			"posList": [{"x":7,"y":19}, {"x":7,"y":7}, {"x":3,"y":7}, {"x":3,"y":6}],
-			"busPosList": [{"x":6,"y":8}, {"x":12,"y":8}]
+			"busPosList": [{"x":6,"y":8}, {"x":12,"y":8}],
+			"message_received": "Tu as reçu un nouveau message de Paul."
 		}
 	},
 	"Bus": {
@@ -71,12 +72,12 @@
 			"instruction3": "Lucie :\nJe vais essayer de m'informer comme Paul me l'a conseillé !"
 		}
 	},
-    "Facebook": {
+	"Facebook": {
 		"lucie": {
 			"instruction":  "Mais difficile de distinguer le vrai du faux.\n\n Aide Lucie à sélectionner les publications qui ne sont pas erronées. Pour cela, évite les fake news. Et like les informations fiables en cliquant sur le coeur. "
 		}
-    },
-    "CarGame": {
+	},
+	"CarGame": {
 		"clara": {
 			"instruction": "évitez tous les trucs divertissants qui pourraient vous dévier du vote (à changer)"
 		},
