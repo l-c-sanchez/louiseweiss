@@ -111,34 +111,12 @@ export class LucieFriends extends Phaser.Scene {
 		arrow.addListener('pointerup', () => {
 			if (this.StartDialog.isAnimationEnded()) {
 				this.StartDialog.destroy();
-				this.startInstruction3()
+				this.startInstruction4()
 			} else {
 				this.StartDialog.endAnimation();
 			}
 		}, this);
 		this.add.existing(this.StartDialog);
-	}
-
-	private startInstruction3() {
-		this.time.addEvent({
-			delay: 1000,
-			callback: () => {
-				this.StartDialog.destroy();
-				this.StartDialog = new DialogBox(this, this.Config.instruction3, true, Anchor.Bottom, {
-					fitContent: true,
-					fontSize: 22,
-					offsetY:-120
-				});
-				this.add.existing(this.StartDialog);
-		
-				this.time.addEvent({
-					delay: 2000,
-					callback: this.startInstruction4,
-					callbackScope: this
-				});
-			},
-			callbackScope: this
-		});
 	}
 
 	private startInstruction4() {
