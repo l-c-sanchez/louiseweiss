@@ -1,14 +1,14 @@
 {
 	"Choices": {
 		"A1": {
-            "text": "Oui ?",
-            "stars": 0,
-            "nextDialog": "2"
+			"text": "Oui ?",
+			"stars": 0,
+			"nextDialog": "2"
 		},
 		"A2": {
-            "text": "Dimanche ? Mais ce sont les élections européennes.",
-            "stars": 0,
-            "nextDialog": "3"
+			"text": "Dimanche ? Mais ce sont les élections européennes.",
+			"stars": 0,
+			"nextDialog": "3"
 		},
 		"A3A": {
 			"text": "Ok",

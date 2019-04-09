@@ -68,7 +68,7 @@
 	},
 	"Dialogs": {
 		"start": {
-			"text": "Ça roule BB ?",
+			"text": "Hey Clara, as-tu vu les dernières informations sur le ralentissement de la croissance en Europe? C’est une mauvaise nouvelle pour notre entreprise.",
 			"linkedChoices": [
 				"1"
 			]

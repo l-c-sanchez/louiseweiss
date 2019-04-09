@@ -212,7 +212,8 @@ export class Pacman extends Phaser.Scene {
             throw new TypeError("Invalid config");
         }
         this.GameState = State.Paused;
-        this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+        console.log("before start dialog");
+        this.StartDialog = new DialogBox(this, this.Config.instruction, true, Anchor.Center, { fitContent:true, fontSize: 22 });
         this.add.existing(this.StartDialog);
         this.Button = this.StartDialog.addArrowButton();
         this.Button.on('pointerup', this.startPacman, this);
@@ -316,7 +317,7 @@ export class Pacman extends Phaser.Scene {
             dialogContent = this.cache.json.get('ClaraBoss');
         else
             dialogContent = this.cache.json.get('ClaraBoss');
-        this.Dialogs = new DialogTree(this, dialogContent, false, Anchor.Bottom, {windowHeight: 500});
+        this.Dialogs = new DialogTree(this, dialogContent, true, Anchor.Bottom, { fitContent:true });
         
         this.add.existing(this.Dialogs);
         this.Dialogs.on('destroy', () => {
