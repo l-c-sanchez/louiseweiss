@@ -212,7 +212,7 @@ export class Pacman extends Phaser.Scene {
             throw new TypeError("Invalid config");
         }
         this.GameState = State.Paused;
-        console.log("before start dialog");
+
         this.StartDialog = new DialogBox(this, this.Config.instruction, true, Anchor.Center, { fitContent:true, fontSize: 22 });
         this.add.existing(this.StartDialog);
         this.Button = this.StartDialog.addArrowButton();
@@ -231,7 +231,7 @@ export class Pacman extends Phaser.Scene {
         }
         this.StartDialog.destroy();
         this.Button.off("pointerup");
-
+        this.cameras.main.setBackgroundColor('#000000');
 		this.TileMap = this.make.tilemap({ key: 'ClaraPacmanMap' });
         var tiles = this.TileMap.addTilesetImage('OfficeTileset', 'OfficeTileset');
 		var layer = this.TileMap.createStaticLayer('layer0', tiles, 0, 0);
@@ -289,7 +289,7 @@ export class Pacman extends Phaser.Scene {
             repeat: -1
         });
 
-        let bossPos = this.TileMap.tileToWorldXY(3, 2);
+        let bossPos = this.TileMap.tileToWorldXY(4,6)
         this.Boss = new PacmanCharacter(this, this.Config.sprite_follower, bossPos.x + 16, bossPos.y + 16, bossAnims);
         this.physics.add.collider(this.Boss.Sprite, layer)
 
@@ -313,6 +313,7 @@ export class Pacman extends Phaser.Scene {
         this.physics.add.overlap(this.Player.Sprite, this.Boss.Sprite, this.collideBoss, null, this);
         // this.GameState = State.Paused;
         this.startConvwithBoss();
+        // this.Player.moveTo(this, direction);
 
     }
 
@@ -329,11 +330,28 @@ export class Pacman extends Phaser.Scene {
         this.Dialogs.on('destroy', () => {
             var res : boolean = this.registry.get('GameOver'); 
             if (res == true) {
-                this.scene.start('Result');
+                this.showProcuration(1);
             }
             else
                 this.beginExplanations();
         });  
+    }
+
+    private showProcuration(from) {
+        if (from == 1)
+            this.StartDialog = new DialogBox(this, this.Config.result_proc_yes, true, Anchor.Center, { fitContent:true, fontSize: 22 });
+        else
+            this.StartDialog = new DialogBox(this, this.Config.result_proc_no, true, Anchor.Center, { fitContent:true, fontSize: 22 });
+        this.add.existing(this.StartDialog);
+        this.Button = this.StartDialog.addArrowButton();
+		this.Button.on('pointerup', () => {
+			if (this.StartDialog.isAnimationEnded()) {
+				this.scene.start('Result');
+			} else {
+				this.StartDialog.endAnimation();
+			}
+		}, this);
+        
     }
 
     private beginExplanations() {
@@ -412,7 +430,14 @@ export class Pacman extends Phaser.Scene {
             this.GameEnded = true;
         }
         if (this.GameEnded){
-            this.scene.start('Result');
+            // console.log(this.RemainingStarCount);
+            // console.log(this.InitialStarCount);
+            // this.InitialStarCount 
+            var result = this.registry.get('GameOver');
+            if (result == true)
+                this.showProcuration(0);
+            else
+                this.scene.start('Result');
         }
 
         // Boss logic
@@ -511,6 +536,7 @@ export class Pacman extends Phaser.Scene {
     }
     private collideBoss(player: Phaser.Physics.Arcade.Sprite, boss: Phaser.Physics.Arcade.Sprite) {
         player.disableBody(true, true);
+        this.registry.set('GameOver', true);
         this.GameEnded = true;
     }
 

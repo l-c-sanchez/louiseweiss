@@ -9,7 +9,7 @@ export class Result extends Phaser.Scene {
     StarCount    : Number;
     Character    : String;
     Success      : Boolean;
-    Result       : GameText;
+    Result       : DialogBox;
     Config      : any;
     Context      : DialogBox;
     private StartDialog : DialogBox = null;
@@ -51,11 +51,24 @@ export class Result extends Phaser.Scene {
             this.Success = false;
             textToDisplay = "Malheureusement, vous n'avez pas réussi à réunir les 12 étoiles nécessaires pour que votre personnage " + nameCapitalized + " aille voter."
         }
-        this.Result = new GameText(this, Config.Game.centerX, Config.Game.centerY * 0.3, textToDisplay);
-        this.Result.setOrigin(0.5, 0);
-        this.Result.setSize(30);
-        this.Result.setWordWrap(Config.Game.width - 10);
-		this.input.on('pointerup', this.startExplanation, this);
+
+        var res : boolean = this.registry.get('GameOver'); 
+        if (res != true) {
+            this.Result = new DialogBox(this, textToDisplay, true, Anchor.Center, { fitContent: true, fontSize: 22 });
+            this.Button = this.Result.addArrowButton();
+            this.Button.on('pointerup', () => {
+                if (this.Result.isAnimationEnded()) {
+                    this.Result.destroy();
+                    this.Button.destroy();
+                    this.startExplanation();
+                } else {
+                    this.Result.endAnimation();
+                }
+            }, this);
+            this.add.existing(this.Result);
+        }
+        else
+            this.startExplanation();
 	}
 
 	update() {
@@ -64,9 +77,13 @@ export class Result extends Phaser.Scene {
     }
 
     startExplanation() {
+        
         console.log("in start explanation");
-        this.input.off("pointerup");
-        this.Result.destroy()
+        // this.input.off("pointerup");
+        // if (this.Result)
+        //     this.Result.destroy();
+        // if (this.Button)
+        //     this.Button.destroy();
 
         if (this.Success == false) 
             this.Context = new DialogBox(this, this.Config.contextIfFail, true, Anchor.Center, { fitContent: true, fontSize: 22 });
