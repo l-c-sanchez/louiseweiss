@@ -67,7 +67,7 @@
 			"sprite_char":"lucie",
 			"posList": [{"x":7,"y":19}, {"x":7,"y":7}, {"x":3,"y":7}, {"x":3,"y":6}],
 			"busPosList": [{"x":-3,"y":4}, {"x":3,"y":4}],
-			"instruction1": "Une semaine plus tard, Lucie sort du travail.",
+			"instruction1": "Le lendemain, Lucie sort du travail.",
 			"instruction2": "Lucie :\nC'est parti pour 30 minutes de trajet...",
 			"instruction3": "Lucie :\nJe vais essayer de m'informer comme Paul me l'a conseillé !"
 		}
@@ -88,6 +88,7 @@
 				},
 		"lucie": {
 				"sprite_char":"lucie",
+				"instruction0": "26 mai 2019, jour du vote.",
 				"instruction1": "Dring, dring...",
 				"instruction2": "Arthur :\nHey Lucie! Ça te dis de manger au fast food ce midi?",
 				"instruction3": "Dring, dring...",

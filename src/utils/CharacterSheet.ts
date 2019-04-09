@@ -100,21 +100,21 @@ export class CharacterSheet extends Phaser.GameObjects.GameObject {
 
 	private createText() {
 		let x = this.ContentPos.x;
-		let y = this.ContentPos.y;
+		let y = this.ContentPos.y + 15;
 		let text = this.displayText(x, y, "Nom   : " + this.Character.name);
 
-		y += text.PhaserText.displayHeight;
+		y += (text.PhaserText.displayHeight);
 		text = this.displayText(x, y, "Age   : " + this.Character.age);
 		y += text.PhaserText.displayHeight;
 		text = this.displayText(x, y, "Emploi   : " + this.Character.job);
-		y += text.PhaserText.displayHeight;
-		text = this.displayText(x, y, "Habite : " + this.Character.town);
-		y += text.PhaserText.displayHeight + this.Options.padding + this.Options.innerPadding;
+		y += (text.PhaserText.displayHeight * 2);
+		text = this.displayText(x, y, "Habite " + this.Character.town);
+		// y += text.PhaserText.displayHeight + this.Options.padding + this.Options.innerPadding;
 		// y = this.Pos.y + this.Options.windowHeight - this.Options.padding - this.Options.innerPadding ;
-		text = this.displayText(x, y, "Intérêt pour la politique :");
-		text.setOrigin(0, 0);
-		// x += text.PhaserText.displayWidth;
-		this.addStars(x, y + text.PhaserText.displayHeight, this.Character.stars);
+		// text = this.displayText(x, y, "Intérêt pour la politique :");
+		// text.setOrigin(0, 0);
+		// // x += text.PhaserText.displayWidth;
+		// this.addStars(x, y + text.PhaserText.displayHeight, this.Character.stars);
 	}
 
 	private displayText(x: number, y: number, content: string): GameText {

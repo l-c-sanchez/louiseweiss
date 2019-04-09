@@ -85,7 +85,6 @@ export class LucieConv extends Phaser.Scene {
 		this.TileMap.destroy();
 		this.Sprite.destroy();
         let dialogContent = this.cache.json.get('LucieConv');
-		this.cameras.main.setBackgroundColor("#ffffff"); 
 		this.Button.off("pointerup");
 		this.StartDialog.destroy();
 		let messageOptions: DialogOptions = {
@@ -118,6 +117,7 @@ export class LucieConv extends Phaser.Scene {
 			borderColor: 0x1083ff
 		}
 		this.StartDialog.destroy();
+		this.cameras.main.setBackgroundColor('0x020050'); 
 		this.StartDialog = new DialogBox(this, this.Config.instruction4, true, Anchor.Center, {
 			fitContent: true,
 			fontSize: 22,
@@ -128,6 +128,7 @@ export class LucieConv extends Phaser.Scene {
 		this.Button.on('pointerup', () => {
 			if (this.StartDialog.isAnimationEnded()) {
 				this.StartDialog.destroy();
+				this.cameras.main.setBackgroundColor("#ffffff"); 
 				this.Dialogs = new DialogPhone(this, dialogContent, false, messageOptions, answerOptions,
 					inputFieldOptions, buttonOptions);
 				this.add.existing(this.Dialogs);
@@ -209,6 +210,8 @@ export class LucieConv extends Phaser.Scene {
 			}
 			else  {
 				this.scene.start('LucieBus');
+	
+				
 			}
 		}
 	}
@@ -230,6 +233,9 @@ export class LucieConv extends Phaser.Scene {
 
 	private startInstruction2() {
 		this.StartDialog.destroy();
+		let ringtone = this.sound.add('ringtone', {volume: 1});
+		ringtone.play();
+
 		this.StartDialog = new DialogBox(this, this.Config.instruction2, true, Anchor.Bottom, {
 			fitContent: true,
 			fontSize: 22,
@@ -312,7 +318,6 @@ export class LucieConv extends Phaser.Scene {
 		this.cameras.main.setBackgroundColor('#000000');
 		this.cameras.main.setScroll(0, 0);
 
-		console.log("test");
 		this.TileMap = this.make.tilemap({ key: 'LivingRoom' });
 		var tiles = [
 			this.TileMap.addTilesetImage('OfficeTileset', 'OfficeTileset'), 

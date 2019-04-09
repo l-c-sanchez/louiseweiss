@@ -33,6 +33,7 @@ export class LucieBusLeave extends Phaser.Scene {
 	}
 
 	create() {
+        console.log("in create bus leave")
 		var character: string = this.registry.get('character');
         var games = this.cache.json.get('Games');
 		this.Config = games.BusOut[character];
@@ -177,7 +178,7 @@ export class LucieBusLeave extends Phaser.Scene {
 		dialogs.on('destroy', () => {
 
             // TODO: start the right scene after that.
-			this.scene.start('Pacman');
+			this.scene.start("LucieFriends");
 		});
     }
 

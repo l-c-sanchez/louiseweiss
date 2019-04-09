@@ -5,7 +5,7 @@
 			"name": "Clara",
 			"age": "35 ans",
 			"job": "Cadre",
-			"town": "Paris",
+			"town": "dans une grande ville",
 			"stars": 3,
 			"sprite": "ClaraPortrait",
 			"sceneToLaunch": "QuizzClara"
@@ -14,7 +14,7 @@
 			"name": "Valentin",
 			"age": "52 ans",
 			"job": "Infirmier",
-			"town": "Village",
+			"town": "dans un village",
 			"stars": 2,
 			"sprite": "ValentinPortrait",
 			"sceneToLaunch": "CarGame"
@@ -23,11 +23,11 @@
 			"name": "Lucie",
 			"age": "24 ans",
 			"job": "Intérimaire",
-			"town": "Ville moyenne",
+			"town": "une ville moyenne",
 			"stars": 1,
 			"sprite": "LuciePortrait",
 			"sceneToLaunch": "LucieConv",
-			"_comment": "replace scene above with Facebook"
+			"_comment": "replace scene above with LucieConv"
 		}
 	]
 }

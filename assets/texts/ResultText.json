@@ -1,7 +1,7 @@
 {
     "playAgain" : "Voulez-vous jouer avec un autre personnage ?", 
         "lucie": {
-        "contextIfSuccess": "Mais ce n’est pas si évident pour les autres jeunes.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, En 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon l'institut de sondage Ifop.",
+        "contextIfSuccess": "Mais ce n’est pas si évident pour les autres jeunes.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon l'institut de sondage Ifop.",
         "contextIfFail" : "Ne pas aller voter est assez commun chez les jeunes comme votre personnage.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon l'institut de sondage Ifop.",
         "dialog" : {
                 "Choices": {

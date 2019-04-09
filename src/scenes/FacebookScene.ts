@@ -61,6 +61,7 @@ export class Facebook extends Phaser.Scene {
         // }
         this.GameState = State.Paused;
         this.TextData = this.cache.json.get('FacebookText'); 
+
         this.StartDialog = new DialogBox(this, this.Config.instruction, true, Anchor.Center, { fontSize: 22, fitContent: true });
         
         this.add.existing(this.StartDialog);
@@ -153,8 +154,8 @@ export class Facebook extends Phaser.Scene {
 				let button = endDialog.addArrowButton();
 				button.on('pointerup', () => {
 					if (endDialog.isAnimationEnded()) {
-                        // this.scene.start("LucieBusLeave");
-						this.scene.start("LucieFriends");
+                        this.scene.start("LucieBusLeave");
+						// this.scene.start("LucieFriends");
 					} else {
 						endDialog.endAnimation();
 					}

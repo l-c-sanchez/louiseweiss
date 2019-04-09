@@ -56,7 +56,33 @@ export class LucieFriends extends Phaser.Scene {
 		pos.y += this.TileMap.tileWidth / 2;
 		this.LucieSprite = this.physics.add.sprite(pos.x , pos.y, this.Config.sprite_char);
 
-        this.StartDialog = new DialogBox(this, this.Config.instruction1, true, Anchor.Bottom, {
+		this.StartDialog = new DialogBox(this, this.Config.instruction0, true, Anchor.Bottom, {
+			fitContent: true,
+			fontSize: 22,
+			offsetY:-120
+		});
+
+		var arrow = this.StartDialog.addArrowButton();
+		arrow.addListener('pointerup', () => {
+			if (this.StartDialog.isAnimationEnded()) {
+				this.StartDialog.destroy();
+				this.startInstruction1()
+			} else {
+				this.StartDialog.endAnimation();
+			}
+		}, this);
+		this.add.existing(this.StartDialog);
+		
+
+	}
+
+    update() {
+
+	}
+
+	private startInstruction1(){
+		this.StartDialog.destroy();
+		this.StartDialog = new DialogBox(this, this.Config.instruction1, true, Anchor.Bottom, {
 			fitContent: true,
 			fontSize: 22,
 			offsetY:-120
@@ -70,11 +96,10 @@ export class LucieFriends extends Phaser.Scene {
 		});
 	}
 
-    update() {
-
-	}
 
 	private startInstruction2() {
+		let ringtone = this.sound.add('ringtone', {volume: 1});
+		ringtone.play();
 		this.StartDialog.destroy();
 		this.StartDialog = new DialogBox(this, this.Config.instruction2, true, Anchor.Bottom, {
 			fitContent: true,

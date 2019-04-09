@@ -100,7 +100,7 @@ export class Config {
 	};
 
 	public static CharacterChoice = {
-		padding: 10
+		padding: 20
 	};
 
 	public static CarGame = {
