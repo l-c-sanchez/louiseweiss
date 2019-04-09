@@ -82,7 +82,7 @@
 			"instruction": "évitez tous les trucs divertissants qui pourraient vous dévier du vote (à changer)"
 		},
 		"valentin": {
-			"instruction": "Vous prenez votre voiture pour rendre visite à un couple de patients dans un petit village rural. La route est difficile: Evitez les vaches et collectez le plus d’étoiles européennes.\n\nBonus : Ecoutez avec attention la radio.",
+			"instruction": "Valentin a allumé la radio dans sa voiture. Mais écoute-t-il vraiment?\n\nLa route est difficile. Evite les vaches, collecte les étoiles et concentre-toi sur les informations.",
 			"instruction_details_mobile": "Glisse ton doigt vers la gauche ou vers la droite pour déplacer Valentin et éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles.",
 			"instruction_details_desktop": "Avec les flèches de ton clavier, déplace Valentin à droite et à gauche pour éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles."
 				},
@@ -95,6 +95,16 @@
 				"instruction": "Lucie est partagée. Elle aimerait aller voter mais ses amis la sollicitent. Sauras-tu éviter ces derniers obstacles ?",
 				"instruction_details_mobile": "Glisse ton doigt vers la gauche ou vers la droite pour déplacer Lucie et éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles.",
 				"instruction_details_desktop": "Avec les flèches de ton clavier, déplace Lucie à droite et à gauche pour éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles."
+		}
+	},
+	"Car": {
+		"valentin": {
+			"sprite_char":"lucie",
+			"posList": [{"x":10,"y":10}, {"x":4,"y":10}],
+			"carPosList": [{"x":3,"y":10}, {"x":3,"y":0}],
+			"instruction1": "22 mars 2019. 2 mois avant le vote.",
+			"instruction2": "Valentin :\nDéjà 8h ! Je vais être en retard chez mes patients.",
+			"instruction3": "Valentin :\nIl faut que je me dépêche !"
 		}
 	}
 }

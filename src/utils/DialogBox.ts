@@ -254,7 +254,6 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		++this.EventCounter;
 
 		this.CurrentText += this.Dialog[this.EventCounter - 1];
-		console.log(this.Text);
 		this.TextObject.setText(this.CurrentText);
 		if (this.EventCounter === this.Dialog.length) {
 			this.TimedEvent.remove(false);

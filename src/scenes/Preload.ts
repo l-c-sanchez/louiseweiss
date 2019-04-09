@@ -56,11 +56,14 @@ export class Preload extends Phaser.Scene {
 
 		// Car game
 		this.load.image('voiture', 'sprites/voiture.png');
+		this.load.image('EnemyCar1', 'sprites/EnemyCar1.png');
+		this.load.image('EnemyCar2', 'sprites/EnemyCar2.png');
+		this.load.image('EnemyCar3', 'sprites/EnemyCar3.png');
 		this.load.image('road', 'sprites/road.png');
 		this.load.image('road_line', 'sprites/road_line.png');
 		this.load.image('burger', 'sprites/burger.png');
 		this.load.image('beer', 'sprites/beer.png');
-		this.load.image('rock', 'sprites/cow.png');
+		this.load.image('Cow', 'sprites/cow.png');
 		this.load.audio('ValentinFlash', 'sounds/ValentinFlash.mp3');
 
 		// Valentin Conv

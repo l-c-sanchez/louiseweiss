@@ -106,16 +106,16 @@ export class Config {
 	public static CarGame = {
 		rows: 20,
 		columns: 12,
-		starProbability: 0.2,
-		rockProbability: 0.1,
+		starProbability: 0.05,
+		rockProbability: 0.4,
 		corridorSize: 64,
 		tileSize: 32,
-		time_Clara: 110, // in seconds
+		time_Valentin: 30, // in seconds
 		time_Lucie: 20,
 		playerSpeed: 200,
 		camSpeed: -150,
 		obstacles: {
-			valentin: ['rock'],
+			valentin: ['Cow', 'EnemyCar1', 'EnemyCar2', 'EnemyCar3'],
 			lucie: ['burger', 'beer']
 		}
 	};

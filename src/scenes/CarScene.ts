@@ -62,7 +62,7 @@ class Layer {
                 star.setOrigin(0.5, 0.5);
                 this.LayerSprites.push(star);
             }
-            if (Math.random() < Config.CarGame.starProbability){
+            if (Math.random() < Config.CarGame.rockProbability){
                 var column = Phaser.Math.Between(-2, 2);
                 var x = Config.Game.centerX + column * Config.CarGame.corridorSize;
 
@@ -199,7 +199,7 @@ export class CarGame extends Phaser.Scene {
         if (this.Character == "lucie")
             this.hud.setRemainingTime(Config.CarGame.time_Lucie, false);
         else if (this.Character == "clara" || this.Character == "valentin")
-            this.hud.setRemainingTime(Config.CarGame.time_Clara, false);
+            this.hud.setRemainingTime(Config.CarGame.time_Valentin, false);
     }
 
     public create() {
