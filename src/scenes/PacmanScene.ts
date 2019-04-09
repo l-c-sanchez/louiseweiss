@@ -216,7 +216,13 @@ export class Pacman extends Phaser.Scene {
         this.StartDialog = new DialogBox(this, this.Config.instruction, true, Anchor.Center, { fitContent:true, fontSize: 22 });
         this.add.existing(this.StartDialog);
         this.Button = this.StartDialog.addArrowButton();
-        this.Button.on('pointerup', this.startPacman, this);
+		this.Button.on('pointerup', () => {
+			if (this.StartDialog.isAnimationEnded()) {
+				this.startPacman();
+			} else {
+				this.StartDialog.endAnimation();
+			}
+		}, this);
     }
 
     startPacman() {
@@ -339,7 +345,13 @@ export class Pacman extends Phaser.Scene {
             this.StartDialog = new DialogBox(this, this.Config.instruction_details_desktop, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
         this.add.existing(this.StartDialog);
         this.Button = this.StartDialog.addArrowButton();
-        this.Button.on('pointerup', this.beginGame, this);
+		this.Button.on('pointerup', () => {
+			if (this.StartDialog.isAnimationEnded()) {
+				this.beginGame();
+			} else {
+				this.StartDialog.endAnimation();
+			}
+		}, this);
     }
 
     private beginGame() {
