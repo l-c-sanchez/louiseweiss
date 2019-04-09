@@ -23,6 +23,8 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 	private KineticScroll		: KineticScroll;
 	private Scrolling			: boolean;
 
+	private PointsCrop			: number = 270;
+	private MessageCrop			: number;
 
 	constructor(env: Phaser.Scene, content: DialogTreeObj, animate: boolean,
 			messageOptions: DialogOptions,
@@ -99,13 +101,7 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 				this.destroy();
 				return;
 			}
-			this.Env.time.addEvent({
-				delay: Math.random() * 1000 + 500,
-				callback: () => {
-					this.showDialog(nextDialog);
-				},
-				callbackScope: this,
-			})
+			this.waitingDisplay(nextDialog);
 
 			this.ChoiceIndex = null;
 		} else if (this.DestroyBoxDelayed) {
@@ -127,6 +123,39 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 		super.destroy();
 	}
 
+	private waitingDisplay(nextDialog: string) {
+		let pointsText = '...';
+		this.MessageOptions.cropRight = this.PointsCrop;
+		let points = new DialogBox(this.Env, pointsText, this.Animate, Anchor.Top, this.MessageOptions);
+		this.Env.add.existing(points);
+		this.setCameraScroll(points);
+
+		pointsText = ' ';
+		points.setText(pointsText);
+		let pointsEvent = this.Env.time.addEvent({
+			delay: 300,
+			callback: () => {
+				if (pointsText.length == 4)
+					pointsText = ' ';
+				else
+					pointsText += '.';
+				points.setText(pointsText);
+			},
+			loop: true,
+			callbackScope: this
+		})
+
+		this.Env.time.addEvent({
+			delay: Math.random() * 1000 + 1000,
+			callback: () => {
+				pointsEvent.remove();
+				points.destroy();
+				this.showDialog(nextDialog);
+			},
+			callbackScope: this,
+		})
+	}
+
 	private initDialogBox() {
 		if (!this.Dialogs.hasOwnProperty('start')) {
 			console.error('Error. There should be a Dialog with the key "start" in the Dialog Tree.');
@@ -135,6 +164,7 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 		this.AnswerOptions.cropRight = 0;
 		this.AnswerOptions.cropLeft = 50;
 		this.MessageOptions.cropRight = 50;
+		this.MessageCrop = 50;
 		this.MessageOptions.cropLeft = 0;
 		this.AnswerOptions.offsetY = 0;
 		this.MessageOptions.offsetY = 0;
@@ -158,6 +188,7 @@ export class DialogPhone extends Phaser.GameObjects.GameObject {
 		this.InputCamera.setPosition(0, Config.Game.height - this.InputCamera.height);
 		this.InputCamera.setScroll(0, pos.y);
 
+		this.MessageOptions.cropRight = this.MessageCrop;
 		let message = new DialogBox(this.Env, this.Dialogs[key].text, this.Animate, Anchor.Top, this.MessageOptions);
 		this.AnswerOptions.offsetY += message.getHeight() + this.MessageOptions.padding;
 		this.MessageOptions.offsetY += message.getHeight() + this.MessageOptions.padding;
