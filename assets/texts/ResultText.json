@@ -51,8 +51,8 @@
         }
     },
     "clara": {
-        "contextIfSuccess": "success",
-        "contextIfFail" : "fail",
+        "contextIfSuccess": "Aux européennes de 2014, l’abstention a été inférieure à la moyenne nationale chez les cadres.",
+        "contextIfFail" : "Aux européennes de 2014, l’abstention a été inférieure à la moyenne nationale chez les cadres.",
         "dialog" : {
                 "Choices": {
                         "choice1": {
@@ -73,19 +73,19 @@
                 },
                 "Dialogs": {
                         "start": {
-                                "text": "Nous avons interrogé Anne Muxel, sociologue, pour découvrir ... Elle distingue plusieurs éléments d’explication :",
+                                "text": "Selon Ipsos, 47% des cadres et professions intellectuelles supérieures ont été votés contre 44% des électeurs",
                                 "linkedChoices": ["choice1"]
                         },
                         "arg1": {
-                                "text": "manque de temps",
+                                "text": "Depuis le référendum sur le traité de Maastricht en 1992, les enjeux européens clivent la société française.",
                                 "linkedChoices": ["2"]
                         },
                         "arg2": {
-                                "text": "blabla",
+                                "text": "Les catégories CSP+, comme les cadres, sont traditionnellement plus europhiles. ",
                                 "linkedChoices": ["3"]
                         },
                         "arg3": {
-                                "text": "blabla",
+                                "text": "68% des cadres se sentent citoyens de l’UE contre 56% des Français, selon un sondage BVA publié en mars 2019. ",
                                 "linkedChoices": []
                         }
                 }
