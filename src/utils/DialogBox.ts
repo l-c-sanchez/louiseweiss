@@ -147,7 +147,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		this.Width -= this.Options.cropRight;
 		this.Width -= this.Options.cropLeft;
 	
-		this.FullTextObject.setWordWrap(this.Width - 25);
+		this.FullTextObject.setWordWrap(this.Width - this.Options.innerPadding * 2);
 		this.TextHeight = this.FullTextObject.PhaserText.displayHeight;
 
 		this.fitContent();
@@ -217,12 +217,14 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	private createInnerWindow(x: number, y: number, width: number, height: number) {
 		let offset = this.Options.borderThickness;
 		this.Frame.fillStyle(this.Options.windowColor, this.Options.windowAlpha);
-		this.Frame.fillRoundedRect(x + offset * 0.5, y + offset * 0.5, width - offset, height - offset);
+		this.Frame.fillRect(x + offset * 0.5, y + offset * 0.5, width - offset, height - offset);
+		// this.Frame.fillRoundedRect(x + offset * 0.5, y + offset * 0.5, width - offset, height - offset);
 	}
 
 	private createOuterWindow(x: number, y: number, width: number, height: number) {
 		this.Frame.lineStyle(this.Options.borderThickness, this.Options.borderColor, this.Options.borderAlpha);
-		this.Frame.strokeRoundedRect(x, y, width, height);
+		this.Frame.strokeRect(x, y, width, height);
+		// this.Frame.strokeRoundedRect(x, y, width, height);
 	}
 
 	private showText() {
@@ -402,7 +404,8 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		let buttonFrame = this.Env.add.graphics();
 		buttonFrame.lineStyle(this.ButtonOptions.borderThickness, this.ButtonOptions.borderColor,
 			this.ButtonOptions.borderAlpha);
-		buttonFrame.strokeRoundedRect(x, y, width, height);
+		buttonFrame.strokeRect(x, y, width, height);
+		// buttonFrame.strokeRoundedRect(x, y, width, height);
 		this.ButtonFrames.push(buttonFrame);
 		buttonFrame.setDepth(1);
 		return buttonFrame;
