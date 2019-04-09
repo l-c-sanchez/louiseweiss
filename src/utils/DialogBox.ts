@@ -303,7 +303,8 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 		let original = this.FullTextObject.PhaserText.getWrappedText(this.Text);
 		let output = new Array<string>();
 		let cutPosition = 0;
-		text = text.replace(/\n+/g, ' ');
+		text = text.replace(/\n\n/g, ' ');
+		text = text.replace(/\n/g, '');
 		for (let i = 0; i < original.length && cutPosition < text.length; ++i) {
 			output.push(text.substr(cutPosition, original[i].length).trim());
 			cutPosition += original[i].length;

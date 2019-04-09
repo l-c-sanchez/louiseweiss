@@ -101,12 +101,12 @@ export class CharacterSheet extends Phaser.GameObjects.GameObject {
 	private createText() {
 		let x = this.ContentPos.x;
 		let y = this.ContentPos.y;
-		let text = this.displayText(x, y, "Nom   : " + this.Character.name);
+		let text = this.displayText(x, y, "Nom    : " + this.Character.name);
 
 		y += text.PhaserText.displayHeight;
-		text = this.displayText(x, y, "Age   : " + this.Character.age);
+		text = this.displayText(x, y, "Age    : " + this.Character.age);
 		y += text.PhaserText.displayHeight;
-		text = this.displayText(x, y, "Emploi   : " + this.Character.job);
+		text = this.displayText(x, y, "Emploi : " + this.Character.job);
 		y += text.PhaserText.displayHeight;
 		text = this.displayText(x, y, "Habite : " + this.Character.town);
 		y += text.PhaserText.displayHeight + this.Options.padding + this.Options.innerPadding;
