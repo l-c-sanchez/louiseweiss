@@ -113,6 +113,7 @@ export class Preload extends Phaser.Scene {
 
 		// QuizzClara
 		this.load.json('QuizzClara', 'texts/QuizzClara.json');
+		this.load.json('QuizzClaraResults', 'texts/QuizzClaraResults.json');
 		this.load.audio('ClaraFlash', 'sounds/ClaraFlash.mp3');
 	}
 
