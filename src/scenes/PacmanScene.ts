@@ -437,7 +437,8 @@ export class Pacman extends Phaser.Scene {
             if (result == true)
                 this.showProcuration(0);
             else
-                this.scene.start('Result');
+				this.scene.start('Result');
+			this.GameState = State.Ended;
         }
 
         // Boss logic
