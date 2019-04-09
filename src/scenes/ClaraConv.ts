@@ -37,37 +37,42 @@ export class ClaraConv extends Phaser.Scene {
 		this.cameras.main.setBackgroundColor("#ffffff"); 
 		this.Button.off("pointerup");
 		this.StartDialog.destroy();
+
+		// TODO: We should define some global default settings for all conversations.
 		let messageOptions: DialogOptions = {
 			fitContent: true,
 			windowColor: 0xedecec,
 			textColor: "#000000",
 			borderThickness: 0,
-			fontSize: 22
+			fontSize: 20,
+			padding: 10
 		};
-
 		let answerOptions: DialogOptions = {
 			fitContent: true,
 			windowColor: 0x1083ff,
 			borderThickness: 0,
-			fontSize: 22
+			fontSize: 20,
+			padding: 10
 		};
-
 		let inputFieldOptions: DialogOptions = {
 			fitContent: true,
 			windowColor: 0xffffff,
 			textColor: "#000000",
 			borderThickness: 0,
-			fontSize: 22
+			fontSize: 20,
+			padding: 0,
 		}
-
 		let buttonOptions: ButtonOptions = {
 			borderColor: 0x1083ff
 		}
 
+		this.StartDialog.destroy();
+		this.cameras.main.setBackgroundColor("#ffffff"); 
 		this.Dialogs = new DialogPhone(this, dialogContent, false, messageOptions, answerOptions,
 			inputFieldOptions, buttonOptions);
 		this.add.existing(this.Dialogs);
 		this.Dialogs.on('destroy', () => {
+			console.log('destroyed, let s start pacman');
 			this.scene.start('Pacman');
 		});
     }

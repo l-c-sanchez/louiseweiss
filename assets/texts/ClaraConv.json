@@ -1,144 +1,129 @@
 {
 	"Choices": {
-		"1": {
-			"text": "Oui mon chat ^_^ ... Tu veux quoi ?",
+		"C1": {
+			"text": "Salut Marie. Tu t’en sors dans ton travail ?",	
 			"stars": 0,
-			"nextDialog": "2"
+			"nextDialog": "M2"
 		},
-		"demenagement": {
-			"text": "Basta, on déménage !",
-			"stars": 5,
-			"nextDialog": "3"
-		},
-		"barcelone": {
-			"text": "Barcelone.",
+		"C2": {
+			"text": "Pourquoi ?",
 			"stars": 0,
-			"nextDialog": "4"
+			"nextDialog": "M3"
 		},
-		"lol": {
-			"text": "Mais quelle patate. Quand tu es travailleur, tu peux librement t’installer dans un autre pays de l’Espace économique européen. SANS titre de séjour ou de travail.",
+		"C3": {
+			"text": "Un vrai chaos. Au moins, on sait ce qui nous attendrait en cas de de Frexit.",
 			"stars": 0,
-			"nextDialog": "5"
+			"nextDialog": "M4"
 		},
-		"details": {
-			"text": "Ya certaines conditions à remplir les 5 premières années; et suivant le pays, il faut se faire enregistrer auprès des autorités locales...",
+		"C4": {
+			"text": "Oui, c’est sûr. Je ne sais encore pour quelle liste mais je voterai certainement pour un parti européiste. Mon entreprise a besoin de l’espace Schengen et de la zone euro pour exporter.",
 			"stars": 0,
-			"nextDialog": "6"
+			"nextDialog": "M5"
 		},
-		"eleve": {
-			"text": "Non mon, élève. On te file un droit au séjour permanent.",
+		"C5A": {
+			"text": "Oui, l’UE est la 1ère puissance économique mondiale.",
+			"stars": -1,
+			"nextDialog": "M6B"
+		},
+		"C5B": {
+			"text": "Oui, l’UE est la 2ème puissance économique mondiale.",
+			"stars": 1,
+			"nextDialog": "M6A"
+		},
+		"C5C": {
+			"text": "Oui, l’UE est la 3ème puissance économique mondiale.",
+			"stars": -1,
+			"nextDialog": "M6B"
+		},
+		"C6": {
+			"text": "Pas faux. Mais moi je trouve parfois qu’elle libéralise un peu trop nos services publics (chemins de fer, barrages, espaces aériens par exemple).",
 			"stars": 0,
-			"nextDialog": "7"
+			"nextDialog": "M7"
 		},
-		"niais": {
-			"text": "T’es niais mais je t’aime.",
+		"C7": {
+			"text": "Je ne suis pas d’accord, cela aurait mis fin à la concurrence entre les entreprise. On se serait retrouvé dans une situation de monopole. Des centaines de milliers de petites et moyennes entreprises européennes auraient mis la clé sous la porte.",
 			"stars": 0,
-			"nextDialog": ""
+			"nextDialog": "M8"
 		},
-		"voyage": {
-			"text": "On part en voyage !",
-			"stars": 5,
-			"nextDialog": "10"
-		},
-		"circulation": {
-			"text": "Heeeeu la liberté de circulation des personnes, banane ? L’espace Schengen ?... Voyager LIBREMENT ! Entre les 26 pays de l'espace Schengen !",
+		"C8": {
+			"text": "Yes, c’est la troisième amende de ce type pour un total de 8.5 milliards d’euros. Je ne pense pas que la France aurait pu infliger une telle amende face à une entreprise si puissante.",
 			"stars": 0,
-			"nextDialog": "11"
+			"nextDialog": "M9"
 		},
-		"arg": {
-			"text": "Nope, dans 22 des 28 pays de l’Union européenne. Et 4 autres Etats : Norvège, Islande, Suisse et Liechtenstein.",
-			"stars": 0,
-			"nextDialog": "12"
+		"C9A": {
+			"text": "GAFAM ? Google Apple Ford Alibaba McDonald’s ?",
+			"stars": -1,
+			"nextDialog": "M10B"
 		},
-		"culture": {
-			"text": "Pour ta culture G : 40% du tourisme mondial s'effectue dans l'Union européenne",
-			"stars": 0,
-			"nextDialog": "13"
+		"C9B": {
+			"text": "GAFAM ? Google Airbnb Facebook Amazon Microsoft ?",
+			"stars": -1,
+			"nextDialog": "M10B"
 		},
-		"but": {
-			"text": "Où tu veux...sauf Espagne et Italie! ",
-			"stars": 0,
-			"nextDialog": "14"
+		"C9C": {
+			"text": "GAFAM ? Google Apple Facebook Amazon Microsoft ?",
+			"stars": 1,
+			"nextDialog": "M10A"
 		},
-		"morale": {
-			"text": "T’as tout compris patate",
+		"C10": {
+			"text": "Ils veulent les taxer et harmoniser les impôts sur les entreprises. Parce que certains Etats tels que l’Irlande taxent ses entreprises à hauteur de 12% tandis que d’autres pays comme la France les taxe à 33%.",
 			"stars": 0,
 			"nextDialog": ""
 		}
 	},
 	"Dialogs": {
 		"start": {
-			"text": "Hey Clara, as-tu vu les dernières informations sur le ralentissement de la croissance en Europe? C’est une mauvaise nouvelle pour notre entreprise.",
-			"linkedChoices": [
-				"1"
-			]
+			"text": "Hello Clara !",
+			"linkedChoices": ["C1"],
+			"_comment": ["C1"]
 		},
-		"2": {
-			"text": "Toujours marre de mon travail. J'ai besoin d'aaaaair !",
-			"linkedChoices": [
-				"demenagement",
-				"voyage"
-			]
+		"M2": {
+			"text": "Pas vraiment, j’en peux plus de ce Brexit ! On est tous stressés dans ma boite.",
+			"linkedChoices": ["C2"]
 		},
-		"3": {
-			"text": "Wow, du calme haha ! Et où, Dijon?",
-			"linkedChoices": [
-				"barcelone"
-			]
+		"M3": {
+			"text": "90% de notre chiffre d’affaires se fait avec la Grande-Bretagne, alors forcément... On essaie de se tenir prêt... Mais on ne sait toujours pas quand le Royaume-Uni va sortir de l’UE... ",
+			"linkedChoices": ["C3"]
 		},
-		"4": {
-			"text": "Joke ? Et le visa ?",
-			"linkedChoices": [
-				"lol"
-			]
+		"M4": {
+			"text": "C’est sûr,... Tu penses aller voter aux européennes ?",
+			"linkedChoices": ["C4"]
 		},
-		"5": {
-			"text": "C’est tout ?",
-			"linkedChoices": [
-				"details"
-			]
+		"M5": {
+			"text": "Pareil pour ma compagnie. L’UE, c’est un marché de 500 millions de personnes. On met la clé sous la porte si on ne peut plus vendre nos produits au sein du marché unique.",
+			"linkedChoices": ["C5A", "C5B", "C5C"]
 		},
-		"6": {
-			"text": "Et après on te vire, madame la professeur ?",
-			"linkedChoices": [
-				"eleve"
-			]
+		"M6A": {
+			"text": "Bien vu ! \n\nMais puissante ou pas, certains estiment que la Commission européenne est trop libérale. C’est vrai qu’elle a été dirigée par la droite lors des 15 dernières années. Mais je ne pense pas que ce soit un problème.",
+			"linkedChoices": ["C6"]
 		},
-		"7": {
-			"text": "Sympa… #jaimel’UE <3 <3",
-			"linkedChoices": [
-				"niais"
-			]
+		"M6B": {
+			"text": "Non, c’est la 2ème puissance mondiale.\n\nMais puissante ou pas, certains estiment que la Commission européenne est trop libérale. C’est vrai qu’elle a été dirigée par la droite lors des 15 dernières années. Mais je ne pense pas que ce soit un problème.",
+			"linkedChoices": ["C6"]
 		},
-		"10": {
-			"text": "Heeeeu tu me prends de court ! Sans passeport, je suis coincé ici.",
-			"linkedChoices": [
-				"circulation"
-			]
+		"M7": {
+			"text": "Oui, tu as raison. D’ailleurs, au nom de la concurrence, la commission a récemment refusé la fusion du français Alstom et de l’allemand Siemens. C’est une erreur économique. Nous aurions pu créer un géant européen du transport !",
+			"linkedChoices": ["C7"]
 		},
-		"11": {
-			"text": "Partout dans l’Union européenne ?",
-			"linkedChoices": [
-				"arg"
-			]
+		"M8": {
+			"text": "Tu as peut-être raison... A propos d’Europe, j’ai lu il y a quelques semaines que la commission européenne avait condamné Apple ?",
+			"linkedChoices": ["C8"]
 		},
-		"12": {
-			"text": "... Stylé ",
-			"linkedChoices": [
-				"culture"
-			]
+		"M9": {
+			"text": "Tu as raison, sur ce sujet, l’Europe a imposé aux géants de la Tech le RGPD, qui protège nos données personnelles.\n\nD’ailleurs la Commission européenne travaille sur un projet de taxation des GAFAM ...",
+			"linkedChoices": ["C9A", "C9B", "C9C"]
 		},
-		"13": {
-			"text": " OK l’ex-sciencespiste; Et on va où ?",
-			"linkedChoices": [
-				"but"
-			]
+		"M10A": {
+			"text": "C’est ça !\n\nEt qu’est-ce que l’Europe compte faire ?",
+			"linkedChoices": ["C10"]
 		},
-		"14": {
-			"text": "Du tourisme sauf dans les pays les plus touristiques ! ",
-			"linkedChoices": [
-				"morale"
-			]
+		"M10B": {
+			"text": "Non, les GAFAMS, ce sont Google, Apple, Facebook, Amazon et Microsoft.\n\nEt qu’est-ce que l’Europe compte faire ?",
+			"linkedChoices": ["C10"]
+		},
+		"M11": {
+			"text": "Intéressant. On verra bien ce que les candidats proposent… Je vais essayer de m’informer !",
+			"linkedChoices": []
 		}
 	}
 }
