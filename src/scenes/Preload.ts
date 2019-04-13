@@ -104,6 +104,8 @@ export class Preload extends Phaser.Scene {
 
 		// Clara Town
 		this.load.tilemapTiledJSON('claratown', 'tilesets/claratown.json');
+		this.load.image('galletcity', 'tilesets/galletcity.png');
+		this.load.spritesheet('radio', 'sprites/radio.png', { frameWidth:32, frameHeight:32});
 
 		// Autres
 	
