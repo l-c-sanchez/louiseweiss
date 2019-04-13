@@ -28,11 +28,11 @@
 			"linkedChoices": ["A1"]
 		},
 		"Q2": {
-			"text": "Business is business. Un gros client vient de me contacter, il a besoin de tes services. Tu pars dimanche en Suisse.",
+			"text": "Un gros client en Allemagne m’a appelé, il s’inquiète des relations économiques avec le Royaume-Uni après le Brexit. Il a besoin de tes services, tu pars dimanche matin à Berlin.",
 			"linkedChoices": ["A2"]
 		},
 		"3": {
-			"text": "LOL. Tu pars.",
+			"text": "Elle est bien bonne ! Tu pars.",
 			"linkedChoices": ["A3A", "A3B"]
 		}
 	}

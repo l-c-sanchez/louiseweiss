@@ -12,7 +12,7 @@
 	},
 	"Pacman": {
 		"clara": {
-			"instruction":  "Vous êtes dans le bureau de votre patron. Attention: vos choix dans cette scène seront déterminants quant à l’issue du jeu.",
+			"instruction":  "19 mai 2019. 1 semaine avant le vote.\n\nVous êtes dans le bureau de votre patron. Attention: vos choix dans cette scène seront déterminants quant à l’issue du jeu.",
 			"instruction_details_mobile": "Vous devez éviter votre patron qui est en colère... Faites glisser votre doigt dans la direction qui vous intéresse et essayer de ramasser un maximum d'étoiles. Vous avez trente secondes.",
 			"instruction_details_desktop": "Vous devez éviter votre patron qui est en colère... Utilisez les flèches de votre clavier pour aller dans la direction qui vous intéresse et essayer de ramasser un maximum d'étoiles. Vous avez trente secondes.",
 			"result_proc_yes": "Vous avez décidé de privilégier votre travail, et de vous rendre en Suisse le jour des élections européennes. Pourtant, Clara pourra quand même voter. Avant de partir, elle a fait une demande de procuration au commissariat de police. Son frère, inscrit aussi sur les listes électorales de Paris, votera pour elle. ",
@@ -40,7 +40,7 @@
 	"Conv": {
 		"clara": {
 
-			"instruction":  "1 mois avant le vote.\n\nPrenez le temps d’échanger avec votre fiancé."
+			"instruction":  "Clara reçoit un message de son amie Gwen, qui travaille dans une entreprise de pêche en Bretagne."
 		},
 		"valentin": {
 			"instruction": "Le ton monte entre Josiane et André. Prenez part à ce débat sur l’Union européenne."

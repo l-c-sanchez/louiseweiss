@@ -8,7 +8,7 @@
 			"town": "dans une grande ville",
 			"stars": 3,
 			"sprite": "ClaraPortrait",
-			"sceneToLaunch": "Pacman",
+			"sceneToLaunch": "ClaraConv",
 			"_comment": "QuizzClara"
 		},
 		{
