@@ -40,7 +40,11 @@
 	"Conv": {
 		"clara": {
 
-			"instruction":  "Clara reçoit un message de son amie Gwen, qui travaille dans une entreprise de pêche en Bretagne."
+			"posList": [{"x":1,"y":2}, {"x":8,"y":2}],
+			"sprite_char": "clara",
+			"instruction":  "5 avril 2019. 2 mois avant le vote. Clara vient d'arriver au travail.",
+			"message_received": "Clara a reçu un message de son amie Gwen, qui travaille dans une entreprise de pêche en Bretagne.",
+			"message_received_ring": "Dring, dring..."
 		},
 		"valentin": {
 			"instruction": "Le ton monte entre Josiane et André. Prenez part à ce débat sur l’Union européenne."
@@ -61,7 +65,7 @@
 			"sprite_char":"lucie",
 			"posList": [{"x":7,"y":19}, {"x":7,"y":7}, {"x":3,"y":7}, {"x":3,"y":6}],
 			"busPosList": [{"x":6,"y":8}, {"x":12,"y":8}],
-			"message_received": "Tu as reçu un nouveau message de Paul."
+			"message_received": "Lucie a reçu un nouveau message de Paul."
 		}
 	},
 	"Bus": {
