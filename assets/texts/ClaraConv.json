@@ -16,7 +16,7 @@
 			"nextDialog": "M4"
 		},
 		"C4": {
-			"text": "Oui, c’est sûr. Je ne sais encore pour quelle liste mais je voterai certainement pour un parti européiste. Mon entreprise a besoin de l’espace Schengen et de la zone euro pour exporter.",
+			"text": "Oui, je ne sais encore pour quelle liste mais je voterai certainement pour un parti européiste. Mon entreprise a besoin de l’espace Schengen et de la zone euro pour exporter.",
 			"stars": 0,
 			"nextDialog": "M5"
 		},
@@ -36,7 +36,7 @@
 			"nextDialog": "M6B"
 		},
 		"C6": {
-			"text": "Pas faux. Mais moi je trouve parfois qu’elle libéralise un peu trop nos services publics (chemins de fer, barrages, espaces aériens par exemple).",
+			"text": "Pas faux. Mais moi je trouve parfois qu’elle libéralise un peu trop nos services publics.",
 			"stars": 0,
 			"nextDialog": "M7"
 		},
@@ -66,7 +66,12 @@
 			"nextDialog": "M10A"
 		},
 		"C10": {
-			"text": "Ils veulent les taxer et harmoniser les impôts sur les entreprises. Parce que certains Etats tels que l’Irlande taxent ses entreprises à hauteur de 12% tandis que d’autres pays comme la France les taxe à 33%.",
+			"text": "Ils veulent les taxer et harmoniser les impôts sur les entreprises. Parce que certains Etats tels que l’Irlande taxent ses entreprises à hauteur de 12% tandis que d’autres pays comme la France les taxent à 33%.",
+			"stars": 0,
+			"nextDialog": "M11"
+		},
+		"C11": {
+			"text": "A très vite",
 			"stars": 0,
 			"nextDialog": ""
 		}
@@ -86,11 +91,11 @@
 			"linkedChoices": ["C3"]
 		},
 		"M4": {
-			"text": "C’est sûr,... Tu penses aller voter aux européennes ?",
+			"text": "C’est sûr... Tu penses aller voter aux européennes ?",
 			"linkedChoices": ["C4"]
 		},
 		"M5": {
-			"text": "Pareil pour ma compagnie. L’UE, c’est un marché de 500 millions de personnes. On met la clé sous la porte si on ne peut plus vendre nos produits au sein du marché unique.",
+			"text": "D’autant qu’à 28, les Etats-membres font le poid face aux géants économiques comme la Chine, le Japon ou les Etats-Unis.",
 			"linkedChoices": ["C5A", "C5B", "C5C"]
 		},
 		"M6A": {
@@ -123,7 +128,7 @@
 		},
 		"M11": {
 			"text": "Intéressant. On verra bien ce que les candidats proposent… Je vais essayer de m’informer !",
-			"linkedChoices": []
+			"linkedChoices": ["C11"]
 		}
 	}
 }
