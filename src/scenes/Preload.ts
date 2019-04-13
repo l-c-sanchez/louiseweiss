@@ -25,7 +25,6 @@ export class Preload extends Phaser.Scene {
 		this.load.setPath(/*Config.Phaser.url + */'assets/');
 
 		//General
-		// this.load.image('Transparent', 'sprites/ButtonDebug.png');
 		this.load.image('Transparent', 'sprites/transparent.png');
 		this.load.audio('ringtone', 'sounds/ringtone.mp3')
 
@@ -102,6 +101,9 @@ export class Preload extends Phaser.Scene {
 		this.load.image('ball', 'sprites/ball.png');
 		this.load.image('paddle', 'sprites/paddle.png');
 		this.load.image('brick', 'sprites/brick.png');
+
+		// Clara Town
+		this.load.tilemapTiledJSON('claratown', 'tilesets/claratown.json');
 
 		// Autres
 	
