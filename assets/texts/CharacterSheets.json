@@ -8,8 +8,8 @@
 			"town": "dans une grande ville",
 			"stars": 3,
 			"sprite": "ClaraPortrait",
-			"sceneToLaunch": "ClaraConv",
-			"_comment": "QuizzClara"
+			"sceneToLaunch": "ClaraTown",
+			"_comment": "ClaraTown"
 		},
 		{
 			"name": "Valentin",
