@@ -52,8 +52,8 @@
         }
     },
     "clara": {
-        "contextIfSuccess": "Aux Européennes de 2014, l’abstention a été inférieure à la moyenne nationale chez les cadres. Selon Ipsos, 47% des cadres et professions intellectuelles supérieures ont voté contre 44% des électeurs en moyenne.",
-        "contextIfFail" : "Aux Européennes de 2014, l’abstention a été inférieure à la moyenne nationale chez les cadres. Selon Ipsos, 47% des cadres et professions intellectuelles supérieures ont voté contre 44% des électeurs en moyenne.",
+        "contextIfSuccess": "Mais la majorité des français boudent ce scrutin, qu’ils perçoivent comme étant peu lisible.",
+        "contextIfFail" : "Comme vous, la majorité des français boudent ce scrutin, qu’ils perçoivent comme étant peu lisible.",
         "dialog" : {
                 "Choices": {
                         "choice1": {
@@ -74,19 +74,19 @@
                 },
                 "Dialogs": {
                         "start": {
-                                "text": "Pourquoi ? Tout d’abord, les catégories CSP+, comme les cadres, sont traditionnellement plus europhiles.",
+                                "text": "Les couches populaires et modestes sont traditionnellement plus eurosceptiques. Aux Européennes de 2014, ils ont massivement choisi l’abstention et le vote FN.",
                                 "linkedChoices": ["choice1"]
                         },
                         "arg1": {
-                                "text": "Depuis le référendum sur le traité de Maastricht en 1992, les enjeux européens clivent la société française.",
+                                "text": "Selon Ipsos, 69% des chômeurs, 68% des employés et 65% des ouvriers se sont abstenus aux Européennes de 2014.",
                                 "linkedChoices": ["2"]
                         },
                         "arg2": {
-                                "text": "68% des cadres se sentent citoyens de l’UE contre 56% des Français, selon un sondage BVA publié en mars 2019.",
+                                "text": "Selon la même étude, l’abstention s'élevait à 70% chez les personnes issues de foyer gagnant moins de 20 000 euros bruts par an. ",
                                 "linkedChoices": ["3"]
                         },
                         "arg3": {
-                                "text": "En outre, selon les chercheurs interrogés, les cadres sont plus enclins au vote car ils sont plus informés que la moyenne. Ils perçoivent plus facilement les bénéfices que le vote pourrait leur apporter.",
+                                "text": "Selon un sondage BVA publié fin mars 2019, le sentiment majoritaire est que l’UE est une construction « artificielle ». Une vision critique largement partagée par les ruraux (60%), qui ont du mal à voir les bénéfices ou les réalisation concrètes au quotidien.",
                                 "linkedChoices": []
                         }
                 }
