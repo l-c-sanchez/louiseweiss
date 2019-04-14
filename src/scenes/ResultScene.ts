@@ -45,7 +45,7 @@ export class Result extends Phaser.Scene {
 
         if (this.StarCount >= 12) {
             this.Success = true;
-            textToDisplay = "Bravo, vous avez réussi à réunir " + this.StarCount + "étoiles et votre personnage " + nameCapitalized + "est allé" + fem + " voter."
+            textToDisplay = "Bravo, vous avez réussi à réunir " + this.StarCount + " étoiles et votre personnage " + nameCapitalized + " est allé" + fem + " voter."
         }
         else {
             this.Success = false;
@@ -116,7 +116,8 @@ export class Result extends Phaser.Scene {
 			} else {
 				this.StartDialog.endAnimation();
 			}
-		}, this);
+        }, this);
+        this.add.existing(this.StartDialog);
     }
     startCharacterChoice() {
         this.registry.set('character', "");

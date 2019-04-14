@@ -1,7 +1,7 @@
 {
 	"Choices": {
 		"C1": {
-			"text": "Salut Marie. Tu t’en sors dans ton travail ?",	
+			"text": "Salut Gwen. Tu t’en sors dans ton travail ?",	
 			"stars": 0,
 			"nextDialog": "M2"
 		},
@@ -17,12 +17,12 @@
 		},
 		"C4": {
 			"text": "Oui, je ne sais encore pour quelle liste mais je voterai certainement pour un parti européiste. Mon entreprise a besoin de l’espace Schengen et de la zone euro pour exporter.",
-			"stars": 0,
+			"stars": 2,
 			"nextDialog": "M5"
 		},
 		"C5A": {
 			"text": "Oui, l’UE est la 1ère puissance économique mondiale.",
-			"stars": -1,
+			"stars": 0,
 			"nextDialog": "M6B"
 		},
 		"C5B": {
@@ -32,7 +32,7 @@
 		},
 		"C5C": {
 			"text": "Oui, l’UE est la 3ème puissance économique mondiale.",
-			"stars": -1,
+			"stars": 0,
 			"nextDialog": "M6B"
 		},
 		"C6": {
@@ -52,12 +52,12 @@
 		},
 		"C9A": {
 			"text": "GAFAM ? Google Apple Ford Alibaba McDonald’s ?",
-			"stars": -1,
+			"stars": 0,
 			"nextDialog": "M10B"
 		},
 		"C9B": {
 			"text": "GAFAM ? Google Airbnb Facebook Amazon Microsoft ?",
-			"stars": -1,
+			"stars": 0,
 			"nextDialog": "M10B"
 		},
 		"C9C": {
@@ -67,7 +67,7 @@
 		},
 		"C10": {
 			"text": "Ils veulent les taxer et harmoniser les impôts sur les entreprises. Parce que certains Etats tels que l’Irlande taxent ses entreprises à hauteur de 12% tandis que d’autres pays comme la France les taxent à 33%.",
-			"stars": 0,
+			"stars": 1,
 			"nextDialog": "M11"
 		},
 		"C11": {

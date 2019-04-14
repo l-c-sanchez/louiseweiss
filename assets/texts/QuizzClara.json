@@ -6,45 +6,45 @@
 			"nextDialog": "Q2"
 		},
 		"A2A": {
-			"text": "Pour une révolution européenne",
+			"text": "La fin de l’espace Schengen ",
 			"stars": 0,
 			"nextDialog": "Q3False"
 		},
 		"A2B": {
-			"text": "Pour une renaissance européenne",
+			"text": "Moins de contrôle aux frontières",
 			"stars": 1,
-			"nextDialog": "Q3True"
+			"nextDialog": "Q3False"
 		},
 		"A2C": {
-			"text": "Pour une Europe en marche",
+			"text": "Un office européen de l'asile",
 			"stars": 0,
-			"nextDialog": "Q3False"
+			"nextDialog": "Q3True"
         },
         "A3A": {
-			"text": "Vrai",
+			"text": "Une zone regroupant 19 des 28 Etats membres de l’UE ayant adopté l’euro",
 			"stars": 0,
 			"nextDialog": "Q4False"
         },
         "A3B": {
-			"text": "Faux",
+			"text": "Un espace de libre circulation des personnes entre 26 Etats",
 			"stars": 1,
 			"nextDialog": "Q4True"
+		},
+		"A3C": {
+			"text": "Un sommet européen annuel au Luxembourg",
+			"stars": 0,
+			"nextDialog": "Q4False"
         },
         "A4A": {
-			"text": "la fin de l’espace Schengen ",
+			"text": "Vrai",
 			"stars": 0,
 			"nextDialog": "Q5False"
 		},
 		"A4B": {
-			"text": "moins de contrôle aux frontières",
-			"stars": 0,
-			"nextDialog": "Q5False"
-        },
-        "A4C": {
-			"text": "un office européen de l'asile",
+			"text": "Faux",
 			"stars": 1,
 			"nextDialog": "Q5True"
-		},
+        },
 		"A5": {
 			"text": "",
 			"stars": 0,
@@ -57,31 +57,31 @@
 			"linkedChoices": ["A1"]
 		},
 		"Q2": {
-			"text": "Quel est le nom de la tribune d’Emmanuel Macron adressée au 28 pays de l’Union européenne ? ",
+			"text": "Emmanuel Macron plaide pour :",
 			"linkedChoices": ["A2A", "A2B", "A2C"]
 		},
 		"Q3True": {
-			"text": "Exact !\n\nProchaine question : Emmanuel Macron propose de bannir les pesticides d’ici 2025.",
+			"text": "Exact !\n\nProchaine question : Emmanuel Macron relance le débat sur Schengen. De quoi parle-t-on exactement ?",
 			"linkedChoices": ["A3A", "A3B"]
 		},
 		"Q3False": {
-			"text": "Tu t'es trompé. La bonne réponse était 'Pour une renaissance européenne'.\n\nProchaine question : Emmanuel Macron propose de bannir les pesticides d’ici 2025.",
-            "linkedChoices": ["A3A", "A3B"]
+			"text": "Tu t'es trompé. La bonne réponse était 'un office européen de l'asile'.\n\nProchaine question : Emmanuel Macron relance le débat sur Schengen. De quoi parle-t-on exactement ?",
+            "linkedChoices": ["A3A", "A3B", "A3C"]
 		},
         "Q4True": {
-			"text": "Bravo, c'était la bonne réponse.\n\nProchaine question : Emmanuel Macron plaide pour...",
-            "linkedChoices": ["A4A", "A4B", "A4C"]
+			"text": "Bravo, c'était la bonne réponse.\n\nProchaine question : Emmanuel Macron propose de bannir les pesticides d’ici 2025...",
+            "linkedChoices": ["A4A", "A4B"]
 		},
 		"Q4False": {
-			"text": "Non, c'est faux...\n\nProchaine question : Emmanuel Macron plaide pour...",
-			"linkedChoices": ["A4A", "A4B", "A4C"]
+			"text": "Non, la bonne réponse était 'Un espace de libre circulation des personnes'.\n\nProchaine question : Emmanuel Macron propose de bannir les pesticides d’ici 2025...",
+			"linkedChoices": ["A4A", "A4B"]
 		},
 		"Q5True": {
 			"text": "Bonne réponse !\n\n",
             "linkedChoices": ["A5"]
 		},
 		"Q5False": {
-			"text": "Eh non... Emmanuel Macron plaide pour un office européen de l'asile",
+			"text": "Eh non... C'est faux ! Il propose de les diviser par deux d'ici 2025.",
 			"linkedChoices": ["A5"]
 		}
 	}

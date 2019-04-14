@@ -1,5 +1,5 @@
 {
-    "playAgain" : "Voulez-vous jouer avec un autre personnage ?", 
+    "playAgain" : "Joue avec un autre personnage pour en apprendre plus", 
         "lucie": {
         "contextIfSuccess": "Mais ce n’est pas si évident pour les autres jeunes.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon l'institut de sondage Ifop.",
         "contextIfFail" : "Ne pas aller voter est assez commun chez les jeunes comme votre personnage.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon l'institut de sondage Ifop.",
@@ -52,8 +52,8 @@
         }
     },
     "clara": {
-        "contextIfSuccess": "Aux européennes de 2014, l’abstention a été inférieure à la moyenne nationale chez les cadres.",
-        "contextIfFail" : "Aux européennes de 2014, l’abstention a été inférieure à la moyenne nationale chez les cadres.",
+        "contextIfSuccess": "Aux Européennes de 2014, l’abstention a été inférieure à la moyenne nationale chez les cadres. Selon Ipsos, 47% des cadres et professions intellectuelles supérieures ont voté contre 44% des électeurs en moyenne.",
+        "contextIfFail" : "Aux Européennes de 2014, l’abstention a été inférieure à la moyenne nationale chez les cadres. Selon Ipsos, 47% des cadres et professions intellectuelles supérieures ont voté contre 44% des électeurs en moyenne.",
         "dialog" : {
                 "Choices": {
                         "choice1": {
@@ -74,7 +74,7 @@
                 },
                 "Dialogs": {
                         "start": {
-                                "text": "Selon Ipsos, 47% des cadres et professions intellectuelles supérieures ont été votés contre 44% des électeurs",
+                                "text": "Pourquoi ? Tout d’abord, les catégories CSP+, comme les cadres, sont traditionnellement plus europhiles.",
                                 "linkedChoices": ["choice1"]
                         },
                         "arg1": {
@@ -82,11 +82,11 @@
                                 "linkedChoices": ["2"]
                         },
                         "arg2": {
-                                "text": "Les catégories CSP+, comme les cadres, sont traditionnellement plus europhiles. ",
+                                "text": "68% des cadres se sentent citoyens de l’UE contre 56% des Français, selon un sondage BVA publié en mars 2019.",
                                 "linkedChoices": ["3"]
                         },
                         "arg3": {
-                                "text": "68% des cadres se sentent citoyens de l’UE contre 56% des Français, selon un sondage BVA publié en mars 2019. ",
+                                "text": "En outre, selon les chercheurs interrogés, les cadres sont plus enclins au vote car ils sont plus informés que la moyenne. Ils perçoivent plus facilement les bénéfices que le vote pourrait leur apporter.",
                                 "linkedChoices": []
                         }
                 }

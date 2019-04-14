@@ -37,6 +37,18 @@
 			"instruction": "Vous arrivez chez vos patients, qui semblent avoir quelques questions pour vous."
 		}
 	},
+	"ClaraTown": {
+		"clara": {
+			"uberPosList": [{"x":8.5,"y":20}, {"x":8.5,"y":10.5}],
+			"instruction": "4 mars 2019. 9 heures.\n\nClara est en route pour le travail.",
+			"instructionUber_mobile": "Dans le taxi, la radio est allumée.\n\nÉcoute avec attention les informations puis réponds aux questions sur l’actualité européenne.\n\nSi possible, allume le son de ton ordinateur.",
+			"instructionUber_desktop": "Dans le taxi, la radio est allumée.\n\nÉcoute avec attention les informations puis réponds aux questions sur l’actualité européenne.\n\nSi possible, allume le son de ton téléphone.",
+			"firstpart":  "“Une 'renaissance européenne' :  c'est le titre de cette tribune qu’Emmanuel Macron a adressée aux citoyens européens ce matin. Trois chapitres : plus de protection, plus de liberté et enfin plus de progrès.",
+			"secondpart": "Le président plaide notamment pour la remise à plat de l'espace Schengen et la création d’un office européen de l’asile.",
+			"thirdpart": "Et puis, en matière d’écologie, deux objectifs affichés par l’exécutif : zéro carbone en 2050 et la division par deux des pesticides en 2025.",
+			"fourthpart": "Un texte qui devrait servir de colonne vertébrale à la liste de la majorité pour les européennes. Liste qui sera normalement dévoilée la semaine prochaine.”"
+		}
+	},
 	"Conv": {
 		"clara": {
 
