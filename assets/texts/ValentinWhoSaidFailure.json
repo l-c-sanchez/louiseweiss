@@ -1,0 +1,19 @@
+{
+	"Choices": {
+		"T1": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D1"
+		}
+	},
+	"Dialogs": {
+		"start": {
+			"text": "A une semaine du vote, tu ne connais toujours pas les principales listes.",
+			"linkedChoices": ["T1"]
+		},
+		"D1": {
+			"text": "Mais tu n’as pas le temps de t’y intéresser plus longuement, tu dois retourner voir tes patients, Josiane et André.",
+			"linkedChoices": []
+		}
+	}
+}

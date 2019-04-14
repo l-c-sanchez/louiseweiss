@@ -1,0 +1,225 @@
+{
+	"Choices": {
+		"Q1A1": {
+			"text": "Nathalie Loiseau (La République En Marche)",
+			"stars": 0,
+			"nextDialog": "Q1F"
+		},
+		"Q1A2": {
+			"text": "Yannick Jadot (Europe Écologie Les Verts)",
+			"stars": 1,
+			"nextDialog": "Q1S"
+		},
+		"Q1A3": {
+			"text": "Jean Lassale (Résistons !)",
+			"stars": 0,
+			"nextDialog": "Q1F"
+		},
+		"TQ2": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "Q2"
+		},
+		"Q2A1": {
+			"text": "Nicolas Dupont-Aignan (Les Patriotes)",
+			"stars": 0,
+			"nextDialog": "Q2F"
+		},
+		"Q2A2": {
+			"text": "Jordan Bardella (Rassemblement national)",
+			"stars": 1,
+			"nextDialog": "Q2S"
+		},
+		"Q2A3": {
+			"text": "François-Xavier Bellamy (Les Républicains)",
+			"stars": 0,
+			"nextDialog": "Q2F"
+		},
+		"TQ3": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "Q3"
+		},
+		"Q3A1": {
+			"text": "Yannick Jadot (EELV)",
+			"stars": 0,
+			"nextDialog": "Q3F"
+		},
+		"Q3A2": {
+			"text": "Nathalie Loiseau (LREM)",
+			"stars": 0,
+			"nextDialog": "Q3F"
+		},
+		"Q3A3": {
+			"text": "Benoît Hamon (Génération.s)",
+			"stars": 1,
+			"nextDialog": "Q3S"
+		},
+		"TQ4": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "Q4"
+		},
+		"Q4A1": {
+			"text": "Nathalie Loiseau (LREM)",
+			"stars": 1,
+			"nextDialog": "Q4S"
+		},
+		"Q4A2": {
+			"text": "Nicolas Dupont-Aignan (Les Patriotes)",
+			"stars": 0,
+			"nextDialog": "Q4F"
+		},
+		"Q4A3": {
+			"text": "Manon Aubry (France insoumise)",
+			"stars": 0,
+			"nextDialog": "Q4F"
+		},
+		"TQ5": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "Q5"
+		},
+		"Q5A1": {
+			"text": "François-Xavier Bellamy (LR)",
+			"stars": 1,
+			"nextDialog": "Q5S"
+		},
+		"Q5A2": {
+			"text": "Florian Philippot (Les Patriotes)",
+			"stars": 0,
+			"nextDialog": "Q5F"
+		},
+		"Q5A3": {
+			"text": "Manon Aubry (France insoumise)",
+			"stars": 0,
+			"nextDialog": "Q5F"
+		},
+		"TQ6": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "Q6"
+		},
+		"Q6A1": {
+			"text": "François-Xavier Bellamy (LR)",
+			"stars": 0,
+			"nextDialog": "Q6F"
+		},
+		"Q6A2": {
+			"text": "Yannick Jadot (EELV)",
+			"stars": 0,
+			"nextDialog": "Q6F"
+		},
+		"Q6A3": {
+			"text": "Manon Aubry (France insoumise)",
+			"stars": 1,
+			"nextDialog": "Q6S"
+		},
+		"TQ7": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "Q7"
+		},
+		"Q7A1": {
+			"text": "Jordan Bardella (RN)",
+			"stars": 0,
+			"nextDialog": "Q7F"
+		},
+		"Q7A2": {
+			"text": "Florian Philippot (Les Patriotes)",
+			"stars": 1,
+			"nextDialog": "Q7S"
+		},
+		"Q7A3": {
+			"text": "Nathalie Arthaud (Lutte ouvrière)",
+			"stars": 0,
+			"nextDialog": "Q7F"
+		}
+	},
+	"Dialogs": {
+		"start": {
+			"text": "Qui propose un \"Green New Deal\" de 100 milliards d’euros en faveur d’investissements écologiques ?",
+			"linkedChoices": ["Q1A1", "Q1A2", "Q1A3"]
+		},
+		"Q1F": {
+			"text": "Faux, la bonne réponse était Yannick Jadot (Europe Écologie Les Verts).",
+			"linkedChoices": ["TQ2"]
+		},
+		"Q1S": {
+			"text": "Bonne réponse, bravo !",
+			"linkedChoices": ["TQ2"]
+		},
+		"Q2": {
+			"text": "Qui propose une sortie de l’espace Schengen, l'expulsion des étrangers en situation illégale et la réduction de l'immigration légale à un solde annuel de 10.000 ?",
+			"linkedChoices": ["Q2A1", "Q2A2", "Q2A3"]
+		},
+		"Q2F": {
+			"text": "Faux, la bonne réponse était Jordan Bardella (Rassemblement national).",
+			"linkedChoices": ["TQ3"]
+		},
+		"Q2S": {
+			"text": "Bonne réponse, bravo !",
+			"linkedChoices": ["TQ3"]
+		},
+		"Q3": {
+			"text": "Qui propose une \"taxe robot\" européenne et un ISF européen ?",
+			"linkedChoices": ["Q3A1", "Q3A2", "Q3A3"]
+		},
+		"Q3F": {
+			"text": "Faux, la bonne réponse était Benoît Hamon (Génération.s).",
+			"linkedChoices": ["TQ4"]
+		},
+		"Q3S": {
+			"text": "Bonne réponse, bravo !",
+			"linkedChoices": ["TQ4"]
+		},
+		"Q4": {
+			"text": "Qui propose un \"bouclier social\" en Europe avec une même rémunération sur le même lieu de travail, et un salaire minimum européen \"adapté à chaque pays\" ?",
+			"linkedChoices": ["Q4A1", "Q4A2", "Q4A3"]
+		},
+		"Q4F": {
+			"text": "Faux, la bonne réponse était Nathalie Loiseau (LREM).",
+			"linkedChoices": ["TQ5"]
+		},
+		"Q4S": {
+			"text": "Bonne réponse, bravo !",
+			"linkedChoices": ["TQ5"]
+		},
+		"Q5": {
+			"text": "Qui propose d’inscrire les \"racines judéo-chrétiennes de l'Europe et l'héritage gréco-romain et celui des Lumières\" dans les traités ?",
+			"linkedChoices": ["Q5A1", "Q5A2", "Q5A3"]
+		},
+		"Q5F": {
+			"text": "Faux, la bonne réponse était François-Xavier Bellamy (LR).",
+			"linkedChoices": ["TQ6"]
+		},
+		"Q5S": {
+			"text": "Bonne réponse, bravo !",
+			"linkedChoices": ["TQ6"]
+		},
+		"Q6": {
+			"text": "Qui propose un droit de révocation des députés et responsables publics européens par référendum ?",
+			"linkedChoices": ["Q6A1", "Q6A2", "Q6A3"]
+		},
+		"Q6F": {
+			"text": "Faux, la bonne réponse était Manon Aubry (France insoumise).",
+			"linkedChoices": ["TQ7"]
+		},
+		"Q6S": {
+			"text": "Bonne réponse, bravo !",
+			"linkedChoices": ["TQ7"]
+		},
+		"Q7": {
+			"text": "Qui défend le \"Frexit\", la sortie de la France de l’Union européenne ?",
+			"linkedChoices": ["Q7A1", "Q7A2", "Q7A3"]
+		},
+		"Q7F": {
+			"text": "Faux, la bonne réponse était Florian Philippot (Les Patriotes).",
+			"linkedChoices": []
+		},
+		"Q7S": {
+			"text": "Bonne réponse, bravo !",
+			"linkedChoices": []
+		}
+	}
+}

@@ -54,7 +54,6 @@ export class DialogTree extends Phaser.GameObjects.GameObject {
 	preUpdate() {
 		if (this.ChoiceIndex != null) {
 			this.updateStarCount(this.Choices[this.ChoiceIndex].stars);
-			console.log(this.Choices[this.ChoiceIndex].GameOver)
 			if (this.Choices[this.ChoiceIndex].GameOver == true) 
 				this.Env.registry.set('GameOver', true);
 			this.Box.destroy();

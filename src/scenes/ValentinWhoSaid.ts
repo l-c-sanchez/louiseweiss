@@ -10,7 +10,7 @@ enum SceneState {
 	Moving
 };
 
-export class ValentinConv extends Phaser.Scene {
+export class ValentinWhoSaid extends Phaser.Scene {
 	private Hud			: HudScene;
 	private Quizz		: DialogTree;
     private Config		: any;
@@ -20,10 +20,12 @@ export class ValentinConv extends Phaser.Scene {
 	private Target			: Phaser.Math.Vector2;
 	private CurrentState	: SceneState;
 	private EndMoveCallback	: any;
-
+	private CurrentIndex	: number;
+	private StartDialog		: DialogBox = null;
+	private StarsBefore		: number;
 
     constructor() {
-        super({ key: 'ValentinConv', active: false });
+        super({ key: 'ValentinWhoSaid', active: false });
     }
 
     init() {
@@ -37,14 +39,14 @@ export class ValentinConv extends Phaser.Scene {
 	create() {
         let character: string = this.registry.get('character');
         let games = this.cache.json.get('Games');
-		this.Config = games.Conv[character];
+		this.Config = games.WhoSaid[character];
         if (!this.Config){
             throw new TypeError("Invalid config");
 		}
 		
 		this.cameras.main.setBackgroundColor('#000000');
 
-		this.TileMap = this.make.tilemap({ key: 'PatientHouse2' });
+		this.TileMap = this.make.tilemap({ key: 'ValentinHouse' });
 		var tiles = [
 			this.TileMap.addTilesetImage('Interiors', 'Interiors'), 
 			this.TileMap.addTilesetImage('house', 'house')
@@ -66,53 +68,37 @@ export class ValentinConv extends Phaser.Scene {
             repeat: -1
         });
 
-		var pos = this.TileMap.tileToWorldXY(8, 9);
-		pos.x += this.TileMap.tileWidth / 2;
-		pos.y += this.TileMap.tileWidth / 2;
-		var mamie = this.physics.add.sprite(pos.x , pos.y, 'Mamie');
-		mamie.setFlipX(true);
-
-		pos = this.TileMap.tileToWorldXY(7, 8);
-		pos.x += this.TileMap.tileWidth / 2;
-		pos.y += this.TileMap.tileWidth / 2;
-		var papi = this.physics.add.sprite(pos.x , pos.y, 'Papi');
-
-		pos = this.TileMap.tileToWorldXY(3, 9);
-		pos.x += this.TileMap.tileWidth / 2;
-		pos.y += this.TileMap.tileWidth / 2;
-		this.ValentinSprite = this.physics.add.sprite(pos.x , pos.y, this.Config.sprite_char);
-
-		this.CurrentState = SceneState.Moving;
-
-		this.Target = this.TileMap.tileToWorldXY(6, 9);
+		this.CurrentIndex = 0;
+	
+		var pos = this.Config.posList[this.CurrentIndex];
+		this.Target = this.TileMap.tileToWorldXY(pos.x, pos.y);
 		this.Target.x += this.TileMap.tileWidth / 2;
 		this.Target.y += this.TileMap.tileWidth / 2;
-		this.moveValentin(this.Target);
-		this.EndMoveCallback = this.startQuizz;
+		this.ValentinSprite = this.physics.add.sprite(this.Target.x , this.Target.y, this.Config.sprite_char);
+
+		this.CurrentState = SceneState.Moving;
+		this.EndMoveCallback = this.startInstruction2;
+
+        this.StartDialog = new DialogBox(this, this.Config.instruction1, true, Anchor.Bottom, {
+			fitContent: true,
+			fontSize: 22,
+			// offsetY:-120
+		});
+		this.add.existing(this.StartDialog);
 
 	}
 	
 	private startQuizz() {
-        let character: string = this.registry.get('character');
-        let games = this.cache.json.get('Games');
-		this.Config = games.Conv[character];
-		console.log(character, games, this.Config);
-        if (!this.Config){
-            throw new TypeError("Invalid config");
-        }
+		this.StartDialog.destroy();
 
-		let quizzContent = this.cache.json.get('ValentinQuizz');
+		this.StarsBefore = this.getStarCount();
 
+		let quizzContent = this.cache.json.get('ValentinWhoSaid');
 		this.Quizz = new DialogTree(this, quizzContent, true, Anchor.Bottom, { fitContent: true });
 
 		this.add.existing(this.Quizz);
 		this.Quizz.on('destroy', () => {
-			this.Target = this.TileMap.tileToWorldXY(4, 14);
-			this.Target.x += this.TileMap.tileWidth / 2;
-			this.Target.y += this.TileMap.tileWidth / 2;
-			this.moveValentin(this.Target);
-			this.CurrentState = SceneState.Moving;
-			this.EndMoveCallback = () => { this.scene.start('ValentinCar') };
+			this.showResultDialog();
 		}, this);
 	}
 
@@ -129,11 +115,73 @@ export class ValentinConv extends Phaser.Scene {
 	private updateMove() {
 		if (Phaser.Math.Fuzzy.Equal(this.ValentinSprite.x, this.Target.x, 0.5)
 			&& Phaser.Math.Fuzzy.Equal(this.ValentinSprite.y, this.Target.y, 0.5)) {
+			this.CurrentIndex++;
+			if (this.CurrentIndex < this.Config.posList.length) {
+				var pos = this.Config.posList[this.CurrentIndex];
+				var target = this.TileMap.tileToWorldXY(pos.x, pos.y);
+				target.x += this.TileMap.tileWidth / 2;
+				target.y += this.TileMap.tileWidth / 2;
+				this.moveValentin(target);
+			} else {
 				this.ValentinSprite.anims.pause();
 				this.ValentinSprite.setVelocity(0, 0);
 				this.CurrentState = SceneState.Idle;
 				this.EndMoveCallback();
+			}
 		}
+	}
+
+	private startInstruction2() {
+		this.StartDialog.destroy();
+		this.StartDialog = new DialogBox(this, this.Config.instruction2, true, Anchor.Bottom, {
+			fitContent: true,
+			fontSize: 22,
+			// offsetY:-120
+		});
+
+		this.add.existing(this.StartDialog);
+		let button = this.StartDialog.addArrowButton();
+		button.on('pointerup', () => {
+			if (this.StartDialog.isAnimationEnded()) {
+				this.startGameInstructions();
+			} else {
+				this.StartDialog.endAnimation();
+			}
+		}, this);
+	}
+
+	private startGameInstructions() {
+		this.StartDialog.destroy();
+		this.StartDialog = new DialogBox(this, this.Config.instruction, true, Anchor.Center, {
+			fitContent: true,
+			fontSize: 22,
+			// offsetY:-120
+		});
+
+		this.add.existing(this.StartDialog);
+		let button = this.StartDialog.addArrowButton();
+		button.on('pointerup', () => {
+			if (this.StartDialog.isAnimationEnded()) {
+				this.startQuizz();
+			} else {
+				this.StartDialog.endAnimation();
+			}
+		}, this);
+	}
+
+	private showResultDialog() {
+		let starsAfter = this.getStarCount();
+		let convContent: DialogTreeObj = null;
+		if (starsAfter - this.StarsBefore >= 4) {
+			convContent = this.cache.json.get('ValentinWhoSaidSuccess');
+		} else {
+			convContent = this.cache.json.get('ValentinWhoSaidFailure');
+		}
+		this.Quizz = new DialogTree(this, convContent, false, Anchor.Bottom, { fitContent: true });
+		this.add.existing(this.Quizz);
+		this.Quizz.on('destroy', () => {
+			this.scene.start('ValentinConv');
+		}, this);
 	}
 
 	private moveValentin(target: Phaser.Math.Vector2) {
@@ -150,5 +198,14 @@ export class ValentinConv extends Phaser.Scene {
 
 		this.physics.moveTo(this.ValentinSprite, target.x, target.y,60);
 		this.Target = target;
+	}
+
+	private getStarCount(): number {
+		if (this.registry.has('starCount')) {
+			return (this.registry.get('starCount'));
+		} else {
+			console.warn("The starCount value should be initialized in the registry before this call.");
+			return (0);
+		}
 	}
 }

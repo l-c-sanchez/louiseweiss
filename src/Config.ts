@@ -115,7 +115,7 @@ export class Config {
 		playerSpeed: 200,
 		camSpeed: -150,
 		obstacles: {
-			valentin: ['Cow', 'EnemyCar1', 'EnemyCar2', 'EnemyCar3'],
+			valentin: ['Cow'], //, 'EnemyCar1', 'EnemyCar2', 'EnemyCar3'],
 			lucie: ['burger', 'beer']
 		}
 	};

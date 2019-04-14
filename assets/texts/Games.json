@@ -34,6 +34,7 @@
 			"duringFlash": "In progress"
 		},
 		"valentin": {
+			"sprite_char": "lucie",
 			"instruction": "Vous arrivez chez vos patients, qui semblent avoir quelques questions pour vous."
 		}
 	},
@@ -59,7 +60,8 @@
 			"message_received_ring": "Dring, dring..."
 		},
 		"valentin": {
-			"instruction": "Le ton monte entre Josiane et André. Prenez part à ce débat sur l’Union européenne."
+			"sprite_char": "lucie",
+			"instruction": "Valentin est de nouveau chez André et Josiane qui se disputent au sujet des Européennes. Il doit choisir un camp. Soutiens André ou Josiane. Attention : en fonction de tes réponses et de ton intérêt pour le scrutin, tu gagneras ou perdras des étoiles."
 		},
 		"lucie": {
 			"sprite_char":"lucie",
@@ -123,6 +125,21 @@
 			"instruction1": "22 mars 2019. 2 mois avant le vote.",
 			"instruction2": "Valentin :\nDéjà 8h ! Je vais être en retard chez mes patients.",
 			"instruction3": "Valentin :\nIl faut que je me dépêche !"
+		}
+	},
+	"WhoSaid": {
+		"valentin": {
+			"sprite_char":"lucie",
+			"posList": [{"x":7,"y":13}, {"x":7,"y":11}, {"x":8,"y":11}, {"x":8,"y":6}, {"x":3,"y":4}],
+			"instruction1": "19 mai 2019. Une semaine avant le vote.",
+			"instruction2": "Valentin :\nBon, voyons voir si j'arrive à y voir plus clair dans ces élections.",
+			"instruction": "Valentin prend enfin le temps de s’informer sur les programmes politiques. Mais avec une quinzaine de listes et des noms de candidats qu’il ne connaît pas, il a du mal à tout retenir. Aide-le à y voir plus clair avant qu’il ne reparte travailler. "
+		}
+	},
+	"PatientStreet": {
+		"valentin": {
+			"sprite_char":"lucie",
+			"posList": [{"x":4,"y":11}, {"x":4,"y":7}]
 		}
 	}
 }
