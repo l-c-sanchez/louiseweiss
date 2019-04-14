@@ -8,7 +8,7 @@
 	},
 	"Dialogs": {
 		"start": {
-			"text": "Josianne :\nVous ne m’avez pas beaucoup soutenue là Valentin. On est toujours déçus par les gens qu'on aime. Bon, à bientôt…",
+			"text": "Josianne :\nVous ne m’avez pas beaucoup soutenue là Valentin. Bon, à bientôt…",
 			"linkedChoices": ["T1"]
 		},
 		"D1": {

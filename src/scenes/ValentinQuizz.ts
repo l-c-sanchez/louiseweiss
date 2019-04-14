@@ -112,7 +112,7 @@ export class ValentinQuizz extends Phaser.Scene {
 			this.Target.y += this.TileMap.tileWidth / 2;
 			this.moveValentin(this.Target);
 			this.CurrentState = SceneState.Moving;
-			this.EndMoveCallback = () => { this.scene.start('ValentinCar') };
+			this.EndMoveCallback = () => { this.scene.start('ValentinWhoSaid') };
 		}, this);
 	}
 

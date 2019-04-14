@@ -101,6 +101,7 @@ export class Preload extends Phaser.Scene {
 		this.load.json('ValentinWhoSaid', 'texts/ValentinWhoSaid.json');
 		this.load.json('ValentinWhoSaidFailure', 'texts/ValentinWhoSaidFailure.json');
 		this.load.json('ValentinWhoSaidSuccess', 'texts/ValentinWhoSaidSuccess.json');
+		this.load.spritesheet('valentin', 'sprites/valentin32.png', { frameWidth:32, frameHeight:32});
 
 		// Facebook
 		this.load.json('FacebookText', 'texts/FacebookText.json');

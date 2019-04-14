@@ -174,7 +174,7 @@
 			"linkedChoices": ["TQ4"]
 		},
 		"Q4": {
-			"text": "Qui propose un \"bouclier social\" en Europe avec une même rémunération sur le même lieu de travail, et un salaire minimum européen \"adapté à chaque pays\" ?",
+			"text": "Qui propose un \"bouclier social\" en Europe avec une \"même rémunération sur le même lieu de travail\", et un \"salaire minimum européen adapté à chaque pays\" ?",
 			"linkedChoices": ["Q4A1", "Q4A2", "Q4A3"]
 		},
 		"Q4F": {
