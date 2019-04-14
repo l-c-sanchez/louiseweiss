@@ -39,7 +39,8 @@ export interface DialogOptions {
 	arrowPadding?: number,
 	arrowScale?: number,
 	fontSize?: number,
-	innerPadding?: number
+	innerPadding?: number,
+	top?: number
 }
 
 export interface ButtonOptions {
@@ -161,7 +162,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 	private computeTextPos() {
 		let y = Config.Game.height - this.Options.windowHeight - this.Options.padding + this.Options.innerPadding;
 		if (this.Anchor == Anchor.Top) {
-			y = this.Options.padding + this.Options.innerPadding;
+			y = this.Options.padding + this.Options.innerPadding + this.Options.top;
 		} else if (this.Anchor == Anchor.Center) {
 			y = Config.Game.centerY - this.Options.windowHeight * 0.5 + this.Options.innerPadding;
 		}
@@ -173,7 +174,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 			this.Height = this.getContentHeight();
 			this.PosY = Config.Game.height - this.Height - this.Options.padding + this.Options.offsetY;
 			if (this.Anchor == Anchor.Top) {
-				this.PosY = this.Options.padding + this.Options.offsetY;
+				this.PosY = this.Options.padding + this.Options.offsetY + this.Options.top;
 			} else if (this.Anchor == Anchor.Center) {
 				this.PosY = Config.Game.centerY - this.Height * 0.5 + this.Options.offsetY;
 			}
@@ -181,7 +182,7 @@ export class DialogBox extends Phaser.GameObjects.GameObject {
 			this.Height = this.Options.windowHeight;
 			this.PosY = Config.Game.height - this.Options.windowHeight - this.Options.padding + this.Options.offsetY;
 			if (this.Anchor == Anchor.Top) {
-				this.PosY = this.Options.padding + this.Options.offsetY;
+				this.PosY = this.Options.padding + this.Options.offsetY + this.Options.top;
 			} else if (this.Anchor == Anchor.Center) {
 				this.PosY = Config.Game.centerY - this.Options.windowHeight * 0.5 + this.Options.offsetY;
 			}

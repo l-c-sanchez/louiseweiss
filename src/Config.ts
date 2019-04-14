@@ -48,6 +48,10 @@ export class Config {
 		}
 	};
 
+	public static Hud = {
+		height: 40
+	};
+
 	public static DialogBox = {
 		defaultOptions: {
 			fitContent: false,
@@ -67,7 +71,8 @@ export class Config {
 			arrowPadding: 20,
 			arrowScale: 1,
 			fontSize: Config.GameText.defaultStyle.fontSize,
-			innerPadding: 10
+			innerPadding: 10,
+			top: Config.Hud.height
 		},
 		defaultButtonOptions: {
 			borderThickness: 2,
@@ -172,8 +177,4 @@ export class Config {
 		},
 		text: "A beautiful and interesting text hidden behind the bricks ...."
 	};
-
-	public static Hud = {
-		height: 40
-	}
 }
