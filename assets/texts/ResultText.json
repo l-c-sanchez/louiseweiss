@@ -1,5 +1,60 @@
 {
-    "playAgain" : "Joue avec un autre personnage pour en apprendre plus", 
+
+
+"credits" : {
+        "Choices": {
+                "choice0": {
+                        "text": "Voir les crédits du jeu",
+                        "stars": 0,
+                        "nextDialog": "arg0"
+                }, 
+                "choice1": {
+                        "text": "",
+                        "stars": 0,
+                        "nextDialog": "arg1"
+                },
+                "2": {
+                        "text": "",
+                        "stars": 0,
+                        "nextDialog": "arg2"
+                },
+                "3": {
+                        "text": "",
+                        "stars": 0,
+                        "nextDialog": "arg3"
+                },
+                "4": {
+                        "text": "Joue avec un autre personnage pour en apprendre plus",
+                        "stars": 0,
+                        "nextDialog": ""
+                }
+        },
+        "Dialogs": {
+                "start": {
+                        "text": "Merci d'avoir joué !",
+                        "linkedChoices": ["choice0", "4"]
+                },
+                "arg0": {
+                        "text": "Sur une idée de Camille Camdessus, Léa Sanchez, David Pauget et Matthieu Desmoulins.",
+                        "linkedChoices": ["choice1"]
+
+                },
+                "arg1": {
+                        "text": "Code : Guillaume Michaud, Léa Sanchez et Edouard Mulliez\n\nScénario : David Pauget, Tanguy Garrel-Jaffrelot, Léa Sanchez, Guillaume Michaud et Anait Miridjanian",
+                        "linkedChoices": ["2"]
+                },
+                "arg2": {
+                        "text": "Graphisme : David Pauget\n\nVoix : Matthieu Desmoulins",
+                        "linkedChoices": ["3"]
+                },
+                "arg3": {
+                        "text": "ADD CREDITS",
+                        "linkedChoices": ["4"]
+                }
+        }
+},
+
+        "playAgain" : "Joue avec un autre personnage pour en apprendre plus", 
         "lucie": {
         "contextIfSuccess": "Mais ce n’est pas si évident pour les autres jeunes.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon l'institut de sondage Ifop.",
         "contextIfFail" : "Ne pas aller voter est assez commun chez les jeunes comme votre personnage.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon l'institut de sondage Ifop.",

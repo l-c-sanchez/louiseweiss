@@ -28,6 +28,8 @@ export class Result extends Phaser.Scene {
     }
 
 	create() {
+        let picture = this.add.image(Config.Game.centerX, Config.Game.centerY * 1.1, "EuropeanFlag");
+		picture.setOrigin(0.5, 0.5);
         this.Character = this.registry.get('character')
         this.StarCount  = this.registry.get('starCount');
 
@@ -108,22 +110,27 @@ export class Result extends Phaser.Scene {
     }
     playWithOtherCharacter() {
         var resultText = this.cache.json.get('ResultText');
-        this.StartDialog = new DialogBox(this, resultText.playAgain, true, Anchor.Center, { fitContent: true, fontSize: 22 });
-        this.Button = this.StartDialog.addArrowButton();
-		this.Button.on('pointerup', () => {
-			if (this.StartDialog.isAnimationEnded()) {
-				this.startCharacterChoice();
-			} else {
-				this.StartDialog.endAnimation();
-			}
-        }, this);
-        this.add.existing(this.StartDialog);
+        // this.StartDialog = new DialogBox(this, resultText.playAgain, true, Anchor.Center, { fitContent: true, fontSize: 22 });
+        var credits = new DialogTree(this, resultText.credits, true, Anchor.Bottom, {fitContent:true, offsetY:-10});
+        this.add.existing(credits);
+        credits.on('destroy', this.startCharacterChoice, this);
+        // this.startCharacterChoice();
+        // this.Button = credits.addArrowButton();
+		// this.Button.on('pointerup', () => {
+		// 	if (this.StartDialog.isAnimationEnded()) {
+        //         this.StartCredits.destroy();
+		// 		this.startCharacterChoice();
+		// 	} else {
+		// 		this.StartDialog.endAnimation();
+		// 	}
+        // }, this);
+        // this.add.existing(this.StartDialog);
     }
     startCharacterChoice() {
         this.registry.set('character', "");
         this.registry.set('starCount', 0);
         this.registry.set('GameOver', false);
-
+        this.scene.stop("HudScene");
         this.scene.start('CharacterChoice')
     }
 
