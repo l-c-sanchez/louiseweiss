@@ -34,7 +34,7 @@
 			"duringFlash": "In progress"
 		},
 		"valentin": {
-			"sprite_char": "lucie",
+			"sprite_char": "valentin",
 			"instruction": "Vous arrivez chez vos patients, qui semblent avoir quelques questions pour vous."
 		}
 	},
@@ -60,8 +60,8 @@
 			"message_received_ring": "Dring, dring..."
 		},
 		"valentin": {
-			"sprite_char": "lucie",
-			"instruction": "Valentin est de nouveau chez André et Josiane qui se disputent au sujet des Européennes. Il doit choisir un camp. Soutiens André ou Josiane. Attention : en fonction de tes réponses et de ton intérêt pour le scrutin, tu gagneras ou perdras des étoiles."
+			"sprite_char": "valentin",
+			"instruction": "André et Josiane reparlent encore des Européennes et se disputent à ce sujet. Tu peux choisir de soutenir André ou Josiane.\n\nAttention : en fonction de tes réponses et de ton intérêt pour le scrutin, tu gagneras ou perdras des étoiles."
 		},
 		"lucie": {
 			"sprite_char":"lucie",
@@ -119,7 +119,7 @@
 	},
 	"Car": {
 		"valentin": {
-			"sprite_char":"lucie",
+			"sprite_char":"valentin",
 			"posList": [{"x":8,"y":6}, {"x":8,"y":8}, {"x":4,"y":8}],
 			"carPosList": [{"x":3,"y":8}, {"x":3,"y":0}],
 			"instruction1": "22 mars 2019. 2 mois avant le vote.",
@@ -129,7 +129,7 @@
 	},
 	"WhoSaid": {
 		"valentin": {
-			"sprite_char":"lucie",
+			"sprite_char":"valentin",
 			"posList": [{"x":7,"y":13}, {"x":7,"y":11}, {"x":8,"y":11}, {"x":8,"y":6}, {"x":3,"y":4}],
 			"instruction1": "19 mai 2019. Une semaine avant le vote.",
 			"instruction2": "Valentin :\nBon, voyons voir si j'arrive à y voir plus clair dans ces élections.",
@@ -138,7 +138,7 @@
 	},
 	"PatientStreet": {
 		"valentin": {
-			"sprite_char":"lucie",
+			"sprite_char":"valentin",
 			"posList": [{"x":4,"y":11}, {"x":4,"y":7}]
 		}
 	}

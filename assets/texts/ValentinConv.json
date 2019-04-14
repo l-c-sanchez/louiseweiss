@@ -1,75 +1,101 @@
 {
 	"Choices": {
-		"T1": {
+		"TD2": {
 			"text": "",
 			"stars": 0,
-			"nextDialog": "Q1"
-		},
-		"T2": {
-			"text": "",
-			"stars": 0,
-			"nextDialog": "Q2"
-		},
-		"T3": {
-			"text": "",
-			"stars": 0,
-			"nextDialog": "Q3"
-		},
-		"Q1A1": {
-			"text": "C’est vrai, l’abstention ne fait que rendre le Parlement moins représentatif. Les eurodéputés vont nous représenter pendant 5 ans.",
-			"stars": 1,
-			"nextDialog": "D1"
-		},
-		"Q1A2": {
-			"text": "Moi non plus je ne vois pas pourquoi aller voter",
-			"stars": -1,
-			"nextDialog": "D1"
-		},
-		"Q2A1": {
-			"text": "On le sait, la France va céder son siège à l’ONU à l’Allemagne",
-			"stars": -1,
 			"nextDialog": "D2"
 		},
-		"Q2A2": {
-			"text": "En effet, la France reste un pays influent avec ses 79 sièges au Parlement à l’issue de ces élections.",
+		"D2A1": {
+			"text": "La France est un pays influent avec ses 79 sièges au Parlement.",
 			"stars": 1,
-			"nextDialog": "D2"
+			"nextDialog": "D3A"
 		},
-		"Q3A1": {
-			"text": "Les pouvoirs du Parlement sont vastes. Il a des compétences de contrôle sur la Commission européenne. Et depuis 2014, il vote pour le président de la Commission européenne.",
+		"D2A2": {
+			"text": "Moi non plus, je ne vois pas pourquoi voter.",
+			"stars": -1,
+			"nextDialog": "D3B"
+		},
+		"TD4": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D4"
+		},
+		"TD5": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D5"
+		},
+		"D5A2": {
+			"text": "Une autre Europe est sûrement possible.",
+			"stars": 1,
+			"nextDialog": "D6A"
+		},
+		"D5A1": {
+			"text": "De toute façon, les autres Etats ne voudront jamais changer les traités. A quoi bon voter ?",
+			"stars": -1,
+			"nextDialog": "D6B"
+		},
+		"TD7": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D7"
+		},
+		"TD8": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D8"
+		},
+		"D8A2": {
+			"text": "Les politiques européennes changent notre quotidien. Par exemple, fin mars, les eurodéputés ont voté la fin des produits en plastique à usage unique pour 2021.",
 			"stars": 1,
 			"nextDialog": ""
 		},
-		"Q3A2": {
-			"text": "Je suis d’accord, le Parlement n'a aucun pouvoir !",
+		"D8A1": {
+			"text": "Je suis d’accord avec André. Je ne pense pas qu’aller voter changera quoi que ce soit.",
 			"stars": -1,
 			"nextDialog": ""
 		}
 	},
 	"Dialogs": {
 		"start": {
-			"text": "André :\nDe toute façon je ne vais pas aller voter le 26 mai, ça ne sert à rien.",
-			"linkedChoices": ["T1"]
-		},
-		"Q1": {
-			"text": "Josianne :\nMais André, tu sais bien que la législation européenne est de plus en plus transposée dans les Etats membres. Et le Parlement européen est la seule institution de l’UE à être élue au suffrage universel direct.",
-			"linkedChoices": ["Q1A1", "Q1A2"]
-		},
-		"D1": {
-			"text": "André :\nDe toute façon, la France n’a pas de poids dans l’UE, dominée par l’Allemagne . Ils ont 96 eurodéputés sur 705 !",
-			"linkedChoices": ["T2"]
-		},
-		"Q2": {
-			"text": "Josianne :\nEt juste derrière l’Allemagne ? La France !",
-			"linkedChoices": ["Q2A1", "Q2A2"]
+			"text": "André :\nDe toute façon, moi je ne voterai pas le 26 mai. L’Union européenne est une prison ! TOUT se décide à Bruxelles. Nos hommes politiques n’ont en réalité aucun pouvoir.",
+			"linkedChoices": ["TD2"]
 		},
 		"D2": {
-			"text": "Josianne :\nC’est important de voter, le Parlement approuve le budget annuel de l’UE, qui était quand même de plus de 160 milliards d’euros en 2018. Et il a bien sûr un rôle législatif.",
-			"linkedChoices": ["T3"]
+			"text": "Josiane :\nTu te trompes, André. Les politiques européennes changent notre quotidien. Tu te plaignais du changement d’heure récemment ? Et bien les députés ont voté sa suppression.",
+			"linkedChoices": ["D2A1", "D2A2"]
 		},
-		"Q3": {
-			"text": "André :\nOui mais c'est la Commission européenne qui a le monopole de l’initiative législative !",
-			"linkedChoices": ["Q3A1", "Q3A2"]
+		"D3A": {
+			"text": "Josiane :\nExactement, on est quand même le deuxième pays en nombre d’eurodéputés.",
+			"linkedChoices": ["TD4"]
+		},
+		"D3B": {
+			"text": "Josiane :\nC’est sûr que si tu ne votes pas, notre quotidien ne va pas changer !",
+			"linkedChoices": ["TD4"]
+		},
+		"D4": {
+			"text": "André :\nTu soutiens les gilets jaunes, Josiane ? C’est quoi leurs revendications: moins d’impôts et de taxes, la hausse du SMIC et des retraites, plus de services publics, la fin de l’austérité.  C’est impossible au niveau européen, on exige moins de déficit !",
+			"linkedChoices": ["TD5"]
+		},
+		"D5": {
+			"text": "André :\nMais je suis d’accord! Moi je veux qu’on change les textes bruxellois. Donc il faut voter aux élections européennes ! Sinon, faut pas se plaindre !",
+			"linkedChoices": ["D5A1", "D5A2"]
+		},
+		"D6A": {
+			"text": "Josiane :\nOui, une Europe plus démocratique, plus souveraine !",
+			"linkedChoices": ["TD7"]
+		},
+		"D6B": {
+			"text": "Josiane :\nCela n’empêche pas de construire une alternative politique !",
+			"linkedChoices": ["TD7"]
+		},
+		"D7": {
+			"text": "André :\nL’Europe, c’est la misère. On le voit au quotidien.Tous les prix ont explosé. Le logement, la nourriture, l’essence. L’euro n’a eu que des conséquences négatives !",
+			"linkedChoices": ["TD8"]
+		},
+		"D8": {
+			"text": "Josiane :\nC’est sûr, on a perdu du pouvoir d’achat. Mais tu veux quoi, retourner au franc ? Sortir de l’Union européenne ? Ce serait pire pour nous.",
+			"linkedChoices": ["D8A1", "D8A2"]
 		}
 	}
 }

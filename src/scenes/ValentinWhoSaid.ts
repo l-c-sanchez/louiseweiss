@@ -172,7 +172,7 @@ export class ValentinWhoSaid extends Phaser.Scene {
 	private showResultDialog() {
 		let starsAfter = this.getStarCount();
 		let convContent: DialogTreeObj = null;
-		if (starsAfter - this.StarsBefore >= 4) {
+		if (starsAfter - this.StarsBefore >= 2) {
 			convContent = this.cache.json.get('ValentinWhoSaidSuccess');
 		} else {
 			convContent = this.cache.json.get('ValentinWhoSaidFailure');
