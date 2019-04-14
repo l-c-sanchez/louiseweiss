@@ -12,7 +12,7 @@
 	},
 	"Pacman": {
 		"clara": {
-			"instruction":  "Vous êtes dans le bureau de votre patron. Attention: vos choix dans cette scène seront déterminants quant à l’issue du jeu.",
+			"instruction":  "19 mai 2019. 1 semaine avant le vote.\n\nVous êtes dans le bureau de votre patron. Attention: vos choix dans cette scène seront déterminants quant à l’issue du jeu.",
 			"instruction_details_mobile": "Vous devez éviter votre patron qui est en colère... Faites glisser votre doigt dans la direction qui vous intéresse et essayer de ramasser un maximum d'étoiles. Vous avez trente secondes.",
 			"instruction_details_desktop": "Vous devez éviter votre patron qui est en colère... Utilisez les flèches de votre clavier pour aller dans la direction qui vous intéresse et essayer de ramasser un maximum d'étoiles. Vous avez trente secondes.",
 			"result_proc_yes": "Vous avez décidé de privilégier votre travail, et de vous rendre en Suisse le jour des élections européennes. Pourtant, Clara pourra quand même voter. Avant de partir, elle a fait une demande de procuration au commissariat de police. Son frère, inscrit aussi sur les listes électorales de Paris, votera pour elle. ",
@@ -40,7 +40,11 @@
 	"Conv": {
 		"clara": {
 
-			"instruction":  "1 mois avant le vote.\n\nPrenez le temps d’échanger avec votre fiancé."
+			"posList": [{"x":1,"y":2}, {"x":8,"y":2}],
+			"sprite_char": "clara",
+			"instruction":  "5 avril 2019. 2 mois avant le vote. Clara vient d'arriver au travail.",
+			"message_received": "Clara a reçu un message de son amie Gwen, qui travaille dans une entreprise de pêche en Bretagne.",
+			"message_received_ring": "Dring, dring..."
 		},
 		"valentin": {
 			"instruction": "Le ton monte entre Josiane et André. Prenez part à ce débat sur l’Union européenne."
@@ -61,7 +65,7 @@
 			"sprite_char":"lucie",
 			"posList": [{"x":7,"y":19}, {"x":7,"y":7}, {"x":3,"y":7}, {"x":3,"y":6}],
 			"busPosList": [{"x":6,"y":8}, {"x":12,"y":8}],
-			"message_received": "Tu as reçu un nouveau message de Paul."
+			"message_received": "Lucie a reçu un nouveau message de Paul."
 		}
 	},
 	"Bus": {

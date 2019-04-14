@@ -25,7 +25,6 @@ export class Preload extends Phaser.Scene {
 		this.load.setPath(/*Config.Phaser.url + */'assets/');
 
 		//General
-		// this.load.image('Transparent', 'sprites/ButtonDebug.png');
 		this.load.image('Transparent', 'sprites/transparent.png');
 		this.load.audio('ringtone', 'sounds/ringtone.mp3')
 
@@ -104,6 +103,11 @@ export class Preload extends Phaser.Scene {
 		this.load.image('paddle', 'sprites/paddle.png');
 		this.load.image('brick', 'sprites/brick.png');
 
+		// Clara Town
+		this.load.tilemapTiledJSON('claratown', 'tilesets/claratown.json');
+		this.load.image('galletcity', 'tilesets/galletcity.png');
+		this.load.spritesheet('radio', 'sprites/radio.png', { frameWidth:32, frameHeight:32});
+
 		// Autres
 	
 		this.load.on('progress', this.onProgress, this);
@@ -114,6 +118,7 @@ export class Preload extends Phaser.Scene {
 
 		// QuizzClara
 		this.load.json('QuizzClara', 'texts/QuizzClara.json');
+		this.load.json('QuizzClaraResults', 'texts/QuizzClaraResults.json');
 		this.load.audio('ClaraFlash', 'sounds/ClaraFlash.mp3');
 	}
 

@@ -320,10 +320,7 @@ export class Pacman extends Phaser.Scene {
     private startConvwithBoss() {
         var dialogContent:DialogTreeObj;
 
-        if (this.Character == "valentin")
-            dialogContent = this.cache.json.get('ClaraBoss');
-        else
-            dialogContent = this.cache.json.get('ClaraBoss');
+        dialogContent = this.cache.json.get('ClaraBoss');
         this.Dialogs = new DialogTree(this, dialogContent, true, Anchor.Bottom, { fitContent:true });
         
         this.add.existing(this.Dialogs);

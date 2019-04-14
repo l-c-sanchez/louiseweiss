@@ -21,6 +21,7 @@ export class QuizzClara extends Phaser.Scene {
     Config       : any;
     TextDuringFlash : GameText
     Button : Phaser.GameObjects.Sprite
+    InitialStarCount: number;
 
     constructor() {
         super({ key: 'QuizzClara', active: false });
@@ -32,10 +33,7 @@ export class QuizzClara extends Phaser.Scene {
         this.Hud.setRemainingTime(0.5, false);
 	}
 
-	preload() {
-        //  StartDialog	 : DialogBox = null;
-
-	}
+	preload() {}
 
 	create() {
         console.log("here")
@@ -46,8 +44,11 @@ export class QuizzClara extends Phaser.Scene {
         this.add.existing(this.StartDialog);
         this.Button = this.StartDialog.addArrowButton();
         this.Button.on('pointerup', this.startQuizz, this);
+        // Star count will be used to know how many good answers there was.
+        this.InitialStarCount = this.registry.get('starCount');
 
     }
+
     startQuizz() {
         if (this.GameState != State.Paused){
             return;
@@ -71,10 +72,47 @@ export class QuizzClara extends Phaser.Scene {
         this.TextDuringFlash = new GameText(this, Config.Game.centerX, Config.Game.centerY, this.TextData.Quizz.clara.duringFlash);
 		this.TextDuringFlash.setOrigin(0.5, 0.5);
         this.TextDuringFlash.setSize(40);
-        
-     
+    }
 
-}
+    private startResultInOffice() {
+        // Office background
+        this.cameras.main.setBackgroundColor('#000000');
+		let tileMap = this.make.tilemap({ key: 'ClaraPacmanMap' });
+        var tiles = tileMap.addTilesetImage('OfficeTileset', 'OfficeTileset');
+        var layer = tileMap.createStaticLayer('layer0', tiles, 0, 0);
+        
+        // Dialogbox with result
+        let resultTexts = this.cache.json.get('QuizzClaraResults');
+        let hasWon = this.getCorrectAnswerNumber() >= 2;
+        let resultText: string = hasWon ? resultTexts['win'] : resultTexts['lose'];
+
+        let dialog = new DialogBox(this, resultText, true, Anchor.Center,
+            { fitContent: true, fontSize: 22 }
+        );
+
+        let button = dialog.addArrowButton(); 
+        button.on('pointerup', () => {
+            if (dialog.isAnimationEnded()) {
+                this.startNextScene();
+            } else {
+                dialog.endAnimation();
+            }
+        });
+        this.add.existing(dialog);
+
+    }
+
+    private startNextScene(){
+        this.scene.start('ClaraConv');
+    }
+
+    private getCorrectAnswerNumber(): number {
+        let finalStars = this.registry.get('starCount');
+        let diff = finalStars - this.InitialStarCount;
+        // We decided to put +1 for correct answers and +0 for incorrect answers.
+        return diff;
+    }
+
     update() {
         if (this.Hud.getRemainingTime() <= 0 && this.GameEnded == false){
             console.log("here")
@@ -83,13 +121,13 @@ export class QuizzClara extends Phaser.Scene {
             this.GameEnded = true;       
             let dialogContent = this.cache.json.get('QuizzClara');
             this.cameras.main.setBackgroundColor("#ffffff");
-            
-    
-            this.Dialogs = new DialogTree(this, dialogContent, false, Anchor.Bottom, {windowHeight: 500});
+            this.Dialogs = new DialogTree(this, dialogContent, false, Anchor.Bottom, {fitContent:true});
     
             this.add.existing(this.Dialogs);
             this.Dialogs.on('destroy', () => {
-                this.scene.start('ClaraConv');
+
+            this.startResultInOffice();
+
             });     
         }
 

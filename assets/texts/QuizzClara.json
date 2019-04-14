@@ -7,22 +7,22 @@
 		},
 		"A2A": {
 			"text": "Pour une révolution européenne",
-			"stars": -1,
-			"nextDialog": "Q3True"
+			"stars": 0,
+			"nextDialog": "Q3False"
 		},
 		"A2B": {
 			"text": "Pour une renaissance européenne",
 			"stars": 1,
-			"nextDialog": "Q3False"
+			"nextDialog": "Q3True"
 		},
 		"A2C": {
 			"text": "Pour une Europe en marche",
-			"stars": -1,
-			"nextDialog": "Q3True"
+			"stars": 0,
+			"nextDialog": "Q3False"
         },
         "A3A": {
 			"text": "Vrai",
-			"stars": -1,
+			"stars": 0,
 			"nextDialog": "Q4False"
         },
         "A3B": {
@@ -32,12 +32,12 @@
         },
         "A4A": {
 			"text": "la fin de l’espace Schengen ",
-			"stars": -1,
+			"stars": 0,
 			"nextDialog": "Q5False"
 		},
 		"A4B": {
 			"text": "moins de contrôle aux frontières",
-			"stars": -1,
+			"stars": 0,
 			"nextDialog": "Q5False"
         },
         "A4C": {
@@ -50,7 +50,6 @@
 			"stars": 0,
 			"nextDialog": ""
         }
-        
 	},
 	"Dialogs": {
 		"start": {

@@ -7,6 +7,7 @@
                 "Choices": {
                         "choice0": {
                                 "text": "",
+                                "stars": 0,
                                 "nextDialog": "arg0"
                         }, 
                         "choice1": {

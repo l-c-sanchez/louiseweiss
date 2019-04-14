@@ -19,6 +19,7 @@ import { LucieBus } from "./scenes/LucieBus";
 import { LucieFriends } from "./scenes/LucieFriends";
 import { LucieBusLeave } from "./scenes/LucieBusLeave";
 import { ValentinCar } from "./scenes/ValentinCar";
+import { ClaraTown } from "./scenes/ClaraTown";
 
 export class App {
 
@@ -46,6 +47,7 @@ export class App {
 		this.Scenes.push(new LucieFriends());
 		this.Scenes.push(new LucieBusLeave());
 		this.Scenes.push(new ValentinCar());
+		this.Scenes.push(new ClaraTown());
 		
 		Config.Phaser.scene = this.Scenes;
 
