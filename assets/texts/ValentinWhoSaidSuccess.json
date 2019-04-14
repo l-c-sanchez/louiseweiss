@@ -1,0 +1,19 @@
+{
+	"Choices": {
+		"T1": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D1"
+		}
+	},
+	"Dialogs": {
+		"start": {
+			"text": "Bravo, tu connais les principales listes.",
+			"linkedChoices": ["T1"]
+		},
+		"D1": {
+			"text": "Il est maintenant temps de retourner voir tes patients, Josiane et André.",
+			"linkedChoices": []
+		}
+	}
+}

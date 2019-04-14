@@ -15,6 +15,11 @@
 			"stars": 0,
 			"nextDialog": "D2"
 		},
+		"T3B": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D2B"
+		},
 		"T4": {
 			"text": "",
 			"stars": 0,
@@ -25,89 +30,129 @@
 			"stars": 0,
 			"nextDialog": "Q3"
 		},
+		"T6": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D3"
+		},
+		"T7": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D4"
+		},
+		"T8": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D4B"
+		},
+		"T9": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D5"
+		},
 		"Q1A1": {
-			"text": "La tête de liste des gilets jaunes.",
+			"text": "Rassemblement jaunes et citoyens",
 			"stars": -1,
 			"nextDialog": "Q1FAILURE"
 		},
 		"Q1A2": {
-			"text": "La candidate plébiscitée par les gilets jaunes.",
+			"text": "Rassemblement d’Initiative citoyenne",
 			"stars": -1,
 			"nextDialog": "Q1FAILURE"
 		},
 		"Q1A3": {
-			"text": "Une ancienne figure de proue du mouvement.",
+			"text": "Jaunes et Citoyens",
 			"stars": 1,
 			"nextDialog": "Q1SUCCESS"
 		},
 		"Q2A1": {
-			"text": "François Asselineau",
+			"text": "Jérémy Clément",
 			"stars": 1,
 			"nextDialog": "Q2SUCCESS"
 		},
 		"Q2A2": {
-			"text": "Etienne Chouard",
+			"text": "Ingrid Levavasseur",
 			"stars": -1,
 			"nextDialog": "Q2FAILURE"
 		},
 		"Q3A1": {
-			"text": "Oui, ça une être une véritable vague jaune, Bernadette !",
+			"text": "Oui, ça va être une véritable vague jaune.",
 			"stars": -1,
 			"nextDialog": "Q3FAILURE"
 		},
 		"Q3A2": {
-			"text": "Pas vraiment, la principale liste est à moins de 5%...",
+			"text": "Pas vraiment, la principale liste ne dépasse pas les 5%.",
 			"stars": 1,
 			"nextDialog": "Q3SUCCESS"
 		}
 	},
 	"Dialogs": {
 		"start": {
-			"text": "Josianne :\nMon Valentin ! Vous avez pris votre temps !",
+			"text": "Josiane :\nMon Valentin ! Vous avez pris votre temps !",
 			"linkedChoices": ["T1"]
 		},
 		"D1": {
-			"text": "André :\nLes gilets jaunes vous ont arrêté jeune homme ? ou vous avez fait une grass mat ?",
+			"text": "André :\nLes gilets jaunes vous ont arrêté jeune homme ?",
 			"linkedChoices": ["T2"]
 		},
 		"Q1": {
-			"text": "Josianne :\nAh les gilets jaunes, rebelle que je suis, je les soutiens ! Par contre je suis perdue là, qui est cette jeune femme rousse là...Ingrid Levavasseur  ?",
+			"text": "Josiane :\nAh les gilets jaunes, moi je les soutiens ! Par contre je suis perdue là...Comment s’appelle la liste qui vient de se lancer pour les élections ?",
 			"linkedChoices": ["Q1A1", "Q1A2", "Q1A3"]
 		},
 		"Q1SUCCESS": {
-			"text": "André :\nOui, c’est ça ! Elle a annoncé qu'elle abandonnait la liste du \"Ralliement d'initiative citoyenne\".",
+			"text": "Josiane :\nOui, voilà !",
 			"linkedChoices": ["T4"]
 		},
 		"Q1FAILURE": {
-			"text": "André :\nDiable !  Vous êtes en retard et vous dites des sottises !",
+			"text": "André :\nVous êtes en retard et vous dites des sottises !",
 			"linkedChoices": ["T3"]
 		},
 		"D2": {
-			"text": "Josianne :\nDu calme André",
+			"text": "Josiane :\nDu calme, André. Valentin est un homme occupé lui, il ne passe pas sa journée devant la télévision.",
+			"linkedChoices": ["T3B"]
+		},
+		"D2B": {
+			"text": "André :\n...",
 			"linkedChoices": ["T4"]
 		},
 		"Q2": {
-			"text": "Josianne :\nD’ailleurs, certains gilets jaunes n’appellent pas à voter pour un mystérieux personnage ? Quel est son nom déjà ?",
+			"text": "Josiane :\nNous, on ne retient aucun nom. Qui est à la tête de l’autre liste, le Rassemblement d’Initiative citoyenne ?",
 			"linkedChoices": ["Q2A1", "Q2A2"]
 		},
 		"Q2SUCCESS": {
-			"text": "Josianne :\nAh oui, Monsieur Frexit...son discours souverainiste trouve donc un certain écho sur les ronds-points...",
-			"linkedChoices": ["T5"]
+			"text": "Josiane :\nC’est donc lui. Comme tout cela est flou, ce mouvement est vraiment désorganisé.",
+			"linkedChoices": ["T6"]
 		},
 		"Q2FAILURE": {
-			"text": "André :\nEt pourquoi pas Michel Houellebecq ? LOL",
+			"text": "André :\nQui ça, la rousse ? Elle a quitté la liste en février ! ",
+			"linkedChoices": ["T7"]
+		},
+		"D3": {
+			"text": "André :\nAh les Européennes...Je ne sais pas ce que les gilets jaunes sont allés faire dans cette galère.",
+			"linkedChoices": ["T5"]
+		},
+		"D4": {
+			"text": "Josiane :\nEn même temps, vu comment elle a été traitée et insultée.",
+			"linkedChoices": ["T8"]
+		},
+		"D4B": {
+			"text": "André :\nC’était une opportuniste, elle voulait faire une carrière politique...",
 			"linkedChoices": ["T5"]
 		},
 		"Q3": {
-			"text": "Josianne :\nBref, de toute façon, les gilets jaunes heureusement sont en tête des sondages !",
+			"text": "Josiane :\nDe toute façon, les gilets jaunes sont en tête des sondages, heureusement !",
 			"linkedChoices": ["Q3A1", "Q3A2"]
 		},
 		"Q3SUCCESS": {
-			"text": "André :\nVoila, comme ça ils n’auront aucun élu Parlement européen, ces casseurs !",
-			"linkedChoices": []
+			"text": "André :\nTant mieux, comme ça ils n’auront aucun élu au Parlement européen. Le véritable combat, c’est dans la rue !",
+			"linkedChoices": ["T9"]
 		},
 		"Q3FAILURE": {
-			"text": "André :\nNon mais fichtre alors ! C’est fini les FAKES NEWS (comme disent les jeunes)",
+			"text": "André :\nC’est une plaisanterie, jeune homme ? Les sondages leur donnent au maximum 3% !",
+			"linkedChoices": ["T9"]
+		},
+		"D5": {
+			"text": "Josiane :\nBon André ! Valentin est pressé, arrêtons de l’embêter. Merci encore d’être passé, à très vite ! Et promis, on ne parlera pas d’Europe la prochaine fois !",
 			"linkedChoices": []
 		}
 	}

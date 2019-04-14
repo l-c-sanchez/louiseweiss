@@ -10,7 +10,7 @@ enum SceneState {
 	Moving
 };
 
-export class ValentinConv extends Phaser.Scene {
+export class ValentinQuizz extends Phaser.Scene {
 	private Hud			: HudScene;
 	private Quizz		: DialogTree;
     private Config		: any;
@@ -23,7 +23,7 @@ export class ValentinConv extends Phaser.Scene {
 
 
     constructor() {
-        super({ key: 'ValentinConv', active: false });
+        super({ key: 'ValentinQuizz', active: false });
     }
 
     init() {
@@ -37,14 +37,14 @@ export class ValentinConv extends Phaser.Scene {
 	create() {
         let character: string = this.registry.get('character');
         let games = this.cache.json.get('Games');
-		this.Config = games.Conv[character];
+		this.Config = games.Quizz[character];
         if (!this.Config){
             throw new TypeError("Invalid config");
 		}
 		
 		this.cameras.main.setBackgroundColor('#000000');
 
-		this.TileMap = this.make.tilemap({ key: 'PatientHouse2' });
+		this.TileMap = this.make.tilemap({ key: 'PatientHouse1' });
 		var tiles = [
 			this.TileMap.addTilesetImage('Interiors', 'Interiors'), 
 			this.TileMap.addTilesetImage('house', 'house')
@@ -66,25 +66,25 @@ export class ValentinConv extends Phaser.Scene {
             repeat: -1
         });
 
-		var pos = this.TileMap.tileToWorldXY(8, 9);
+		var pos = this.TileMap.tileToWorldXY(4, 10);
 		pos.x += this.TileMap.tileWidth / 2;
 		pos.y += this.TileMap.tileWidth / 2;
-		var mamie = this.physics.add.sprite(pos.x , pos.y, 'Mamie');
-		mamie.setFlipX(true);
+		this.physics.add.sprite(pos.x , pos.y, 'Mamie');
 
-		pos = this.TileMap.tileToWorldXY(7, 8);
+		pos = this.TileMap.tileToWorldXY(5, 11);
 		pos.x += this.TileMap.tileWidth / 2;
 		pos.y += this.TileMap.tileWidth / 2;
 		var papi = this.physics.add.sprite(pos.x , pos.y, 'Papi');
+		papi.setFlipX(true);
 
-		pos = this.TileMap.tileToWorldXY(3, 9);
+		pos = this.TileMap.tileToWorldXY(4, 14);
 		pos.x += this.TileMap.tileWidth / 2;
 		pos.y += this.TileMap.tileWidth / 2;
 		this.ValentinSprite = this.physics.add.sprite(pos.x , pos.y, this.Config.sprite_char);
 
 		this.CurrentState = SceneState.Moving;
 
-		this.Target = this.TileMap.tileToWorldXY(6, 9);
+		this.Target = this.TileMap.tileToWorldXY(4, 12);
 		this.Target.x += this.TileMap.tileWidth / 2;
 		this.Target.y += this.TileMap.tileWidth / 2;
 		this.moveValentin(this.Target);

@@ -359,7 +359,7 @@ export class CarGame extends Phaser.Scene {
         }
         if (this.GameEnded){
             if (this.Character == "valentin")
-                this.scene.start("ValentinConv");
+                this.scene.start("PatientStreet");
             else if (this.Character == "lucie")
                 this.scene.start("Result");
         }
