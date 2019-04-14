@@ -91,6 +91,7 @@ export class Preload extends Phaser.Scene {
 		this.load.tilemapTiledJSON('CountryRoad', 'tilesets/CountryRoad.json');
 		this.load.image('CountryTiles', 'tilesets/CountryTiles.png');
 		this.load.image('voiture64', 'sprites/voiture64.png');
+		this.load.image('house', 'tilesets/house.png');
 
 		// Facebook
 		this.load.json('FacebookText', 'texts/FacebookText.json');

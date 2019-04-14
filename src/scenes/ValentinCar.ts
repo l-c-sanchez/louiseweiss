@@ -44,10 +44,11 @@ export class ValentinCar extends Phaser.Scene {
 		this.TileMap = this.make.tilemap({ key: 'CountryRoad' });
 		var tiles = [
 			this.TileMap.addTilesetImage('CountryTiles', 'CountryTiles'), 
-			this.TileMap.addTilesetImage('voiture64', 'voiture64')
+			this.TileMap.addTilesetImage('house', 'house')
 		];
 		this.TileMap.createStaticLayer('background', tiles, 0, 0);
-		// this.TileMap.createStaticLayer('foreground', tiles, 0, 0);
+		this.TileMap.createStaticLayer('house', tiles, 0, 0);
+		this.TileMap.createStaticLayer('objects', tiles, 0, 0);
 
         this.anims.create({
             key:"right",
@@ -68,18 +69,19 @@ export class ValentinCar extends Phaser.Scene {
 
 		var pos = this.Config.posList[this.CurrentIndex];
 		this.Target = this.TileMap.tileToWorldXY(pos.x, pos.y);
-		// this.Target.x += this.TileMap.tileWidth / 2;
-		// this.Target.y += this.TileMap.tileWidth / 2;
+		this.Target.x += this.TileMap.tileWidth / 2;
+		this.Target.y += this.TileMap.tileWidth / 2;
 		this.ValentinSprite = this.physics.add.sprite(this.Target.x , this.Target.y, this.Config.sprite_char);
 
 		pos = this.Config.carPosList[this.CarCurrentIndex];
 		this.CarTarget = this.TileMap.tileToWorldXY(pos.x, pos.y);
-		this.CarSprite = this.physics.add.sprite(this.CarTarget.x , this.CarTarget.y, 'voiture64');		
+		this.CarSprite = this.physics.add.sprite(this.CarTarget.x , this.CarTarget.y, 'voiture64');	
+		this.CarSprite.setOrigin(0.5, 0.25);	
 
         this.StartDialog = new DialogBox(this, this.Config.instruction1, true, Anchor.Bottom, {
 			fitContent: true,
 			fontSize: 22,
-			offsetY:-120
+			// offsetY:-120
 		});
 		this.add.existing(this.StartDialog);
 	}
@@ -111,8 +113,8 @@ export class ValentinCar extends Phaser.Scene {
 			if (this.CurrentIndex < this.Config.posList.length) {
 				var pos = this.Config.posList[this.CurrentIndex];
 				var target = this.TileMap.tileToWorldXY(pos.x, pos.y);
-				// target.x += this.TileMap.tileWidth / 2;
-				// target.y += this.TileMap.tileWidth / 2;
+				target.x += this.TileMap.tileWidth / 2;
+				target.y += this.TileMap.tileWidth / 2;
 				this.moveValentin(target);
 			}
 			else {
@@ -135,7 +137,7 @@ export class ValentinCar extends Phaser.Scene {
 		this.StartDialog = new DialogBox(this, this.Config.instruction2, true, Anchor.Bottom, {
 			fitContent: true,
 			fontSize: 22,
-			offsetY:-120
+			// offsetY:-120
 		});
 
 		this.add.existing(this.StartDialog);
@@ -154,7 +156,7 @@ export class ValentinCar extends Phaser.Scene {
 		this.StartDialog = new DialogBox(this, this.Config.instruction3, true, Anchor.Bottom, {
 			fitContent: true,
 			fontSize: 22,
-			offsetY:-120
+			// offsetY:-120
 		});
 
 		this.add.existing(this.StartDialog);

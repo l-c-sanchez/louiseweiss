@@ -102,8 +102,8 @@
 	"Car": {
 		"valentin": {
 			"sprite_char":"lucie",
-			"posList": [{"x":10,"y":10}, {"x":4,"y":10}],
-			"carPosList": [{"x":3,"y":10}, {"x":3,"y":0}],
+			"posList": [{"x":8,"y":6}, {"x":8,"y":8}, {"x":4,"y":8}],
+			"carPosList": [{"x":3,"y":8}, {"x":3,"y":0}],
 			"instruction1": "22 mars 2019. 2 mois avant le vote.",
 			"instruction2": "Valentin :\nDéjà 8h ! Je vais être en retard chez mes patients.",
 			"instruction3": "Valentin :\nIl faut que je me dépêche !"
