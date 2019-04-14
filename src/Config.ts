@@ -172,4 +172,8 @@ export class Config {
 		},
 		text: "A beautiful and interesting text hidden behind the bricks ...."
 	};
+
+	public static Hud = {
+		height: 40
+	}
 }

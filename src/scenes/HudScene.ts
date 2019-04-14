@@ -25,11 +25,17 @@ export class HudScene extends Phaser.Scene {
 			console.log(this);
         }
 
+        // Adding a background for HUD
+        let graphics = this.add.graphics();
+        let darkGrey = Phaser.Display.Color.GetColor(96, 104, 117);
+        graphics.fillStyle(darkGrey, 0.8);
+        graphics.fillRect(0, 0, Config.Game.width, Config.Hud.height);
+
         // TODO: put star and counter at right positions.
         var star = this.add.image(Config.Game.centerX, 17, 'star');
 		star.setOrigin(0, 0.5);
         this.StarCountText = new GameText(this, Config.Game.centerX - 15, 17, "0");
-        this.StarCountText.setOrigin(1, 0.5)
+        this.StarCountText.setOrigin(1, 0.5);
         this.TimeText = new GameText(this, Config.Game.centerX / 2, 17, "");
         this.TimeText.setOrigin(0, 0.5);
         
