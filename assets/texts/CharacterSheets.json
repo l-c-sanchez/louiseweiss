@@ -18,7 +18,8 @@
 			"town": "dans un village",
 			"stars": 2,
 			"sprite": "ValentinPortrait",
-			"sceneToLaunch": "ValentinCar"
+			"sceneToLaunch": "CarGame",
+			"_comment": "ValentinCar"
 		},
 		{
 			"name": "Lucie",

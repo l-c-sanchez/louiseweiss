@@ -287,6 +287,11 @@ export class CarGame extends Phaser.Scene {
 	private updateStarCount(difference: number) {
 		if (this.registry.has('starCount')) {
 			let stars: number = this.registry.get('starCount');
+			if (difference > 0) {
+				this.hud.winStarAnim();
+			} else if (stars >= 1) {
+				this.hud.loseStarAnim();		
+			}
 			stars = Math.max(0, stars + difference);
 			this.registry.set('starCount', stars);
 		} else {
@@ -295,7 +300,7 @@ export class CarGame extends Phaser.Scene {
 	}
 
     private collectStar(player: Phaser.Physics.Arcade.Sprite, star: Phaser.Physics.Arcade.Sprite) {
-        star.disableBody(true, true);
+		star.disableBody(true, true);
 		this.updateStarCount(1);
     }
 
@@ -321,7 +326,7 @@ export class CarGame extends Phaser.Scene {
                 callbackScope: this
             })
 
-            this.updateStarCount(-1);
+			this.updateStarCount(-1);
         }
     }
 

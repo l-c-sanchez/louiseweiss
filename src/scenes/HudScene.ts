@@ -1,6 +1,6 @@
 import { Config } from "../Config";
 import { GameText } from "../utils/GameText";
-import { WinStarAnim } from "../utils/StarAnim";
+import { WinStarAnim, LoseStarAnim } from "../utils/StarAnim";
 
 export class HudScene extends Phaser.Scene {
 
@@ -74,6 +74,11 @@ export class HudScene extends Phaser.Scene {
 
 	public winStarAnim() {
 		var star = new WinStarAnim(this);
+		this.add.existing(star);
+	}
+
+	public loseStarAnim() {
+		var star = new LoseStarAnim(this);
 		this.add.existing(star);
 	}
 
