@@ -54,6 +54,7 @@ export class LucieBusLeave extends Phaser.Scene {
         this.BusTarget = this.TileMap.tileToWorldXY(pos.x, pos.y);
         this.physics.moveTo(this.BusSprite, this.BusTarget.x, this.BusTarget.y, 60);
 
+		this.anims.remove('down');
         this.anims.create({
             key: "down",
             frames: this.anims.generateFrameNumbers(character, { start: 7, end:13 }),

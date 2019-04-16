@@ -2,6 +2,7 @@ import { Config } from "../Config";
 import { HudScene } from "./HudScene";
 import { DialogBox, Anchor } from "../utils/DialogBox";
 import { DialogTree, DialogTreeObj } from "../utils/DialogTree";
+import { WinStarAnim } from "../utils/StarAnim";
 
 enum State {
     Paused,
@@ -240,6 +241,10 @@ export class Pacman extends Phaser.Scene {
 
         var claraAnims = ["", "left", "right", "up", "down" ];
         var bossAnims = ["", "boss_left", "boss_right", "boss_up", "boss_down" ];
+		this.anims.remove('right');
+		this.anims.remove('left');
+		this.anims.remove('up');
+		this.anims.remove('down');
         this.anims.create({
             key:"right",
             frames:this.anims.generateFrameNumbers(this.Config.sprite_char, { start: 1, end:6 }),
@@ -530,7 +535,8 @@ export class Pacman extends Phaser.Scene {
     private collectStar(player: Phaser.Physics.Arcade.Sprite, star: Phaser.Physics.Arcade.Sprite) {
         star.disableBody(true, true);
         this.RemainingStarCount -= 1;
-        this.registry.values.starCount += 1;
+		this.registry.values.starCount += 1;
+		this.Hud.winStarAnim();		
     }
     private collideBoss(player: Phaser.Physics.Arcade.Sprite, boss: Phaser.Physics.Arcade.Sprite) {
         player.disableBody(true, true);

@@ -52,6 +52,8 @@ export class LucieBus extends Phaser.Scene {
 		this.TileMap.createStaticLayer('fond', tiles, 0, 0);
 		this.TileMap.createStaticLayer('decor', tiles, 0, 0);
 
+		this.anims.remove('right');
+		this.anims.remove('left');
         this.anims.create({
             key:"right",
             frames:this.anims.generateFrameNumbers(this.Config.sprite_char, { start: 1, end:6 }),

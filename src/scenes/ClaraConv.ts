@@ -42,6 +42,7 @@ export class ClaraConv extends Phaser.Scene {
 		var target = this.TileMap.tileToWorldXY(this.Config.posList[1].x, this.Config.posList[1].y);
 		this.physics.moveTo(this.ClaraSprite, target.x, target.y, 40);
 		
+		this.anims.remove('right');
         this.anims.create({
             key:"right",
             frames:this.anims.generateFrameNumbers(this.Config.sprite_char, { start: 1, end:6 }),

@@ -54,6 +54,8 @@ export class ValentinConv extends Phaser.Scene {
 		this.TileMap.createStaticLayer('objects1', tiles, 0, 0);
 		this.TileMap.createStaticLayer('objects2', tiles, 0, 0);
 
+		this.anims.remove('right');
+		this.anims.remove('left');
 		this.anims.create({
             key:"right",
             frames:this.anims.generateFrameNumbers(this.Config.sprite_char, { start: 1, end:6 }),

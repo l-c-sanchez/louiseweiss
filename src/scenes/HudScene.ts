@@ -1,5 +1,6 @@
 import { Config } from "../Config";
 import { GameText } from "../utils/GameText";
+import { WinStarAnim } from "../utils/StarAnim";
 
 export class HudScene extends Phaser.Scene {
 
@@ -70,6 +71,11 @@ export class HudScene extends Phaser.Scene {
             loop: true
         });
     }
+
+	public winStarAnim() {
+		var star = new WinStarAnim(this);
+		this.add.existing(star);
+	}
 
     public stopTimer(){
         if (this.TimerEvent){

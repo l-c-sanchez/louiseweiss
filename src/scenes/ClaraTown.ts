@@ -58,7 +58,9 @@ export class ClaraTown extends Phaser.Scene {
 		];
         this.TileMap.createStaticLayer('road', tiles, 0, 0);
         
-        this.ClaraTarget = this.TileMap.tileToWorldXY(2, 10);
+		this.ClaraTarget = this.TileMap.tileToWorldXY(2, 10);
+		
+		this.anims.remove('right');
         this.anims.create({
             key:"right",
             frames:this.anims.generateFrameNumbers(character, { start: 1, end:6 }),
@@ -140,7 +142,8 @@ export class ClaraTown extends Phaser.Scene {
             let middleX = Config.Game.width / 2;
             let middleY = Config.Game.height / 2;
             this.Radio = this.physics.add.sprite(middleX, middleY + 40, 'radio');
-            this.anims.create({
+			this.anims.remove('blink');
+			this.anims.create({
                 key: 'blink',
                 frames: this.anims.generateFrameNumbers('radio', { start: 0, end: 1}),
                 frameRate: 3,
