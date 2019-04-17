@@ -45,9 +45,16 @@ export class HudScene extends Phaser.Scene {
 
     update() {}
     
-    private updateData(parent, key, data){
+    private updateData(parent, key, value, previousValue){
         if (key === 'starCount'){
-            this.StarCountText.setText(data.toString());
+            let difference = value - previousValue;
+			if (difference > 0) {
+				this.winStarAnim();
+			} else if (difference < 0 && previousValue >= 1) {
+				this.loseStarAnim();		
+			}
+			let stars = Math.max(0, value);
+            this.StarCountText.setText(stars.toString());
         }
     }
 

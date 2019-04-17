@@ -287,11 +287,6 @@ export class CarGame extends Phaser.Scene {
 	private updateStarCount(difference: number) {
 		if (this.registry.has('starCount')) {
 			let stars: number = this.registry.get('starCount');
-			if (difference > 0) {
-				this.hud.winStarAnim();
-			} else if (stars >= 1) {
-				this.hud.loseStarAnim();		
-			}
 			stars = Math.max(0, stars + difference);
 			this.registry.set('starCount', stars);
 		} else {

@@ -2,7 +2,6 @@ import { Config } from "../Config";
 import { HudScene } from "./HudScene";
 import { DialogBox, Anchor } from "../utils/DialogBox";
 import { DialogTree, DialogTreeObj } from "../utils/DialogTree";
-import { WinStarAnim } from "../utils/StarAnim";
 
 enum State {
     Paused,
@@ -432,9 +431,6 @@ export class Pacman extends Phaser.Scene {
             this.GameEnded = true;
         }
         if (this.GameEnded){
-            // console.log(this.RemainingStarCount);
-            // console.log(this.InitialStarCount);
-            // this.InitialStarCount 
             var result = this.registry.get('GameOver');
             if (result == true)
                 this.showProcuration(0);
@@ -536,20 +532,11 @@ export class Pacman extends Phaser.Scene {
         star.disableBody(true, true);
         this.RemainingStarCount -= 1;
 		this.registry.values.starCount += 1;
-		this.Hud.winStarAnim();		
     }
+
     private collideBoss(player: Phaser.Physics.Arcade.Sprite, boss: Phaser.Physics.Arcade.Sprite) {
         player.disableBody(true, true);
         this.registry.set('GameOver', true);
         this.GameEnded = true;
     }
-
-    private getStarCount(): number {
-		if (this.registry.has('starCount')) {
-			return (this.registry.get('starCount'));
-		} else {
-			console.warn("The starCount value should be initialized in the registry before this call.");
-			return (0);
-		}
-	}
 }
