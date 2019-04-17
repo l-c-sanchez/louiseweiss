@@ -311,8 +311,11 @@ export class Pacman extends Phaser.Scene {
         this.Stars.create(this.gridToWorld(6), this.gridToWorld(2), 'star');
         this.Stars.create(this.gridToWorld(8), this.gridToWorld(8), 'star');
         this.Stars.create(this.gridToWorld(1), this.gridToWorld(12), 'star');
+        this.Stars.create(this.gridToWorld(8), this.gridToWorld(18), 'star');
+        this.Stars.create(this.gridToWorld(4), this.gridToWorld(20), 'star');
+        this.Stars.create(this.gridToWorld(7), this.gridToWorld(13), 'star');
 
-        this.RemainingStarCount = 4;
+        this.RemainingStarCount = 7;
         this.physics.add.overlap(this.Player.Sprite, this.Stars, this.collectStar, null, this);
         this.physics.add.overlap(this.Player.Sprite, this.Boss.Sprite, this.collideBoss, null, this);
         // this.GameState = State.Paused;

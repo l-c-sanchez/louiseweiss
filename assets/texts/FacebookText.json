@@ -1,153 +1,141 @@
 {
 	"title": "Likez les informations vraies",
 	"lucie": [
-              {
-                     "publisher": "Le Gorafi",
-                     "text":"Le Parlement européen limite le nombre d’emplois fictifs à 3 par député",
-                     "fake": 1,
-                     "comments": 9,
-                     "likes": 12,
-                     "explanation": "Faux : Le Gorafi est un site d’information satirique."
-          
-                 },
-          
-                {
-                     "publisher": "France 2",
-                     "text":"L’ALDE, le parti européen soutenu par La République en Marche, est financé par Bayer, Monsanto, Google et Microsoft",
-                     "fake": 0,
-                     "comments": 17,
-                     "likes": 28,
-                     "explanation": "Vrai : En Marche a pris ses distances et appelle à mettre un terme à cette pratique au sein de l’UE."
-                 },
-                   {
-                     "publisher": "Le Monde",
-                     "text":"La France s’oppose à l’idée d’un congé parental mieux rémunéré proposée par la Commission européenne",
-                     "fake": 0,
-                     "comments": 19,
-                     "likes": 24,
-                     "explanation": "Vrai : La mesure prévoyait 4 mois de congés rémunérés mais la France a estimé qu’elle était trop coûteuse."
-                 },
-                {
-                     "publisher": "Mediacity",
-                     "text":"Le Parlement européen considère l’Eglise orthodoxe russe comme une organisation terroriste",
-                     "fake": 1,
-                    "comments": 17,
-                     "likes": 28,
-                     "explanation": "Faux : Il s’agit d’une fake news véhiculée par l’extrême droite géorgienne en 2016."
-                 },
-          
-                {
-                     "publisher": "Agora Vox",
-                     "text":"Le traité européen de Lisbonne autorise à tuer des manifestants en cas d’émeute",
-                     "fake": 1,
-                     "comments": 520,
-                     "likes": 102,
-                     "explanation": "Faux : Il s’agit d’un intox publiée sur un blog de gilets jaunes (les moutons rebelles) en février 2019."
-                 },
-          
-                {           "publisher": "AFP Factuel",
-                     "text":"L’importation de boeuf aux hormones, saumon transgénique ou poulet au chlore n’est pas autorisée en France",
-                     "fake": 0,
-                     "comments": 1,
-                     "likes": 0,
-                     "explanation": "Vrai: Ces importations sont interdites au sein de l’UE contrairement à ce qu’affirmait Jordan Bardella, tête de liste RN, en février."
-                 },
-                 
-          {
-                     "publisher": "AFP",
-                     "text":"'Tinder' électoral, dessins animés: les astuces pour faire voter les jeunes",
-          "fake": 0,
-                    "comments": 39,
-                     "likes": 95,
-          "explanation": "Vrai : Les associations multiplient les initiatives pour mobiliser la jeunesse qui boude massivement les scrutins européens."
-                 },
-          
-                {
-                     "publisher": "Buzzbeed",
-                     "text":"Face à la pression migratoire, la Commission européenne interdit les animaux de compagnie en Europe",
-                     "fake": 1,
-                    "comments": 51,
-                     "likes": 89,
-          "explanation": "Faux : Buzzbeed est un site parodiant Buzzfeed."
-                 },
-          
-          
-          {
-                     "publisher": "Libération",
-                     "text":"Jean-Luc Mélenchon appelle à “sortir des traités qui organisent l’UE”",
-          "fake": 0,
-                    "comments": 39,
-                     "likes": 95,
-          "explanation": "Vrai : Le leader de la France Insoumise répondait fin mars à la tribune d’Emmanuel Macron."
-                 },
-                  {
-                     "publisher": "Le Monde",
-                     "text":"Européenne: Le PS et Place Publique s’allient, Glucksmann tête de liste",
-                      "fake": 0,
-                    "comments": 39,
-                     "likes": 95,
-                     "explanation": "Vrai : Après des mois de négociations, les deux formations ont accepté en mars de présenter une liste commune."
-                  },
-          
-             {
-                     "publisher": "Russia Now",
-                     "text":"L'Union européenne nous entraîne vers une 3e guerre mondiale.",
-                     "fake": 1,
-                     "comments": 31,
-                     "likes": 92,
-                     "explanation": "Faux : Cette information est mise en avant par une partie de l’extrême droite russe."
-                 },
-          
-          
-                  {
-                     "publisher": "Toute l’Europe",
-                     "text":" Européennes: Asselineau et Philippot, les deux derniers partisans d’un Frexit non négociable",
-                      "fake": 0,
-                    "comments": 39,
-                     "likes": 95,
-                     "explanation": "Vrai : Les deux tête de liste aux européennes exigent une sortie immédiate et inconditionnelle de l’Union européenne."
-                 },
-          
-          
-          {
-                     "publisher": "Lanceur d’alerte 75",
-                     "text":"L'Union européenne est un complot de la CIA pour détruire la France",
-                      "fake": 1,
-                     "comments": 3,
-                     "likes": 2,
-                     "explanation": "Faux : Cette théorie, défendue par le souverainiste Philippe de Villiers, est critiquée par les historiens."
-                 },
-          
-          
-          {
-                     "publisher": "Foodwatch",
-                     "text":"Coca Cola sponsorise la présidence roumaine du Conseil de l'Union européenne. La malbouffe au cœur du pouvoir politique",
-                      "fake": 0,
-                     "comments": 93,
-                     "likes": 32,
-                     "explanation": "Vrai : La présidence roumaine du Conseil de l’UE est soutenue par des multinationals comme Mercedes, Coca et Renault."
-                 },
-          
-          
-          {
-                     "publisher": "Le JDD",
-                     "text":"'Pour 'en finir avec l'Europe de Monsanto', Jadot (EELV) propose un “Green New Deal”",
-                      "fake": 0,
-                     "comments": 39,
-                     "likes": 95,
-                     "explanation": "Vrai :  Il prône un plan européen de 100 milliards d’euros en faveur d’investissements écologiques."
-                 },
-          
-          
-          {
-                     "publisher": "Manu Macron",
-                     "text":"Le 26 mai, il n’y aura qu’un seul tour. Pour garantir la paix, il est temps d’en finir avec la souveraineté nationale pour une souveraineté européenne totale.",
-                     "fake": 1,
-                     "comments": 31,
-                     "likes": 92,
-                      "explanation": "Faux : Il s’agit d’un compte parodique du chef de l’Etat."
-                 }
-          
-
+		{
+			"publisher": "Europe 1",
+			"text": "Intentions de vote aux européennes : le RN réduit l'écart avec LREM",
+			"fake": 0,
+			"comments": 78,
+			"likes": 31,
+			"explanation": "Vrai : Selon un sondage BVA publié fin mars, l’écart se resserre entre LREM et RN (24% et 21% d’intentions de vote)."
+		},
+		{
+			"publisher": "Europe 1",
+			"text": "Glyphosate : l'UE vote une autorisation jusqu’en 2022",
+			"fake": 0,
+			"comments": 89,
+			"likes": 51,
+			"explanation": "Vrai : En décembre 2017, la Commission européenne a annoncé que le pesticide controversé serait finalement autorisé pour 5 ans de plus dans l'UE."
+		},
+		{
+			"publisher": "Le Gorafi",
+			"text": "Le Parlement européen limite le nombre d’emplois fictifs à 3 par député",
+			"fake": 1,
+			"comments": 9,
+			"likes": 12,
+			"explanation": "Faux : Le Gorafi est un site d’information satirique."
+		},
+		{
+			"publisher": "France 2",
+			"text": "L’ALDE, le parti européen soutenu par La République en Marche, est financé par Bayer, Monsanto, Google et Microsoft",
+			"fake": 0,
+			"comments": 17,
+			"likes": 28,
+			"explanation": "Vrai : En Marche a pris ses distances et appelle à mettre un terme à cette pratique au sein de l’UE."
+		},
+		{
+			"publisher": "Le Monde",
+			"text": "La France s’oppose à l’idée d’un congé parental mieux rémunéré proposée par la Commission européenne",
+			"fake": 0,
+			"comments": 19,
+			"likes": 24,
+			"explanation": "Vrai : La mesure prévoyait 4 mois de congés rémunérés mais la France a estimé qu’elle était trop coûteuse."
+		},
+		{
+			"publisher": "Mediacity",
+			"text": "Le Parlement européen considère l’Eglise orthodoxe russe comme une organisation terroriste",
+			"fake": 1,
+			"comments": 17,
+			"likes": 28,
+			"explanation": "Faux : Il s’agit d’une fake news véhiculée par l’extrême droite géorgienne en 2016."
+		},
+		{
+			"publisher": "Agora Vox",
+			"text": "Le traité européen de Lisbonne autorise à tuer des manifestants en cas d’émeute",
+			"fake": 1,
+			"comments": 520,
+			"likes": 102,
+			"explanation": "Faux : Il s’agit d’un intox publiée sur un blog de gilets jaunes (les moutons rebelles) en février 2019."
+		},
+		{
+			"publisher": "AFP Factuel",
+			"text": "L’importation de boeuf aux hormones, saumon transgénique ou poulet au chlore n’est pas autorisée en France",
+			"fake": 0,
+			"comments": 1,
+			"likes": 0,
+			"explanation": "Vrai: Ces importations sont interdites au sein de l’UE contrairement à ce qu’affirmait Jordan Bardella, tête de liste RN, en février."
+		},
+		{
+			"publisher": "Buzzbeed",
+			"text": "Face à la pression migratoire, la Commission européenne interdit les animaux de compagnie en Europe",
+			"fake": 1,
+			"comments": 51,
+			"likes": 89,
+			"explanation": "Faux : Buzzbeed est un site parodiant Buzzfeed."
+		},
+		{
+			"publisher": "Libération",
+			"text": "Jean-Luc Mélenchon appelle à “sortir des traités qui organisent l’UE”",
+			"fake": 0,
+			"comments": 39,
+			"likes": 95,
+			"explanation": "Vrai : Le leader de la France Insoumise répondait fin mars à la tribune d’Emmanuel Macron."
+		},
+		{
+			"publisher": "Le Monde",
+			"text": "Européenne: Le PS et Place Publique s’allient, Glucksmann tête de liste",
+			"fake": 0,
+			"comments": 39,
+			"likes": 95,
+			"explanation": "Vrai : Après des mois de négociations, les deux formations ont accepté en mars de présenter une liste commune."
+		},
+		{
+			"publisher": "Russia Now",
+			"text": "L'Union européenne nous entraîne vers une 3e guerre mondiale.",
+			"fake": 1,
+			"comments": 31,
+			"likes": 92,
+			"explanation": "Faux : Cette information est mise en avant par une partie de l’extrême droite russe."
+		},
+		{
+			"publisher": "Toute l’Europe",
+			"text": " Européennes: Asselineau et Philippot, les deux derniers partisans d’un Frexit non négociable",
+			"fake": 0,
+			"comments": 39,
+			"likes": 95,
+			"explanation": "Vrai : Les deux tête de liste aux européennes exigent une sortie immédiate et inconditionnelle de l’Union européenne."
+		},
+		{
+			"publisher": "Lanceur d’alerte 75",
+			"text": "L'Union européenne est un complot de la CIA pour détruire la France",
+			"fake": 1,
+			"comments": 3,
+			"likes": 2,
+			"explanation": "Faux : Cette théorie, défendue par le souverainiste Philippe de Villiers, est critiquée par les historiens."
+		},
+		{
+			"publisher": "Foodwatch",
+			"text": "Coca Cola sponsorise la présidence roumaine du Conseil de l'Union européenne. La malbouffe au cœur du pouvoir politique",
+			"fake": 0,
+			"comments": 93,
+			"likes": 32,
+			"explanation": "Vrai : La présidence roumaine du Conseil de l’UE est soutenue par des multinationals comme Mercedes, Coca et Renault."
+		},
+		{
+			"publisher": "Le JDD",
+			"text": "'Pour 'en finir avec l'Europe de Monsanto', Jadot (EELV) propose un “Green New Deal”",
+			"fake": 0,
+			"comments": 39,
+			"likes": 95,
+			"explanation": "Vrai :  Il prône un plan européen de 100 milliards d’euros en faveur d’investissements écologiques."
+		},
+		{
+			"publisher": "Manu Macron",
+			"text": "Le 26 mai, il n’y aura qu’un seul tour. Pour garantir la paix, il est temps d’en finir avec la souveraineté nationale pour une souveraineté européenne totale.",
+			"fake": 1,
+			"comments": 31,
+			"likes": 92,
+			"explanation": "Faux : Il s’agit d’un compte parodique du chef de l’Etat."
+		}
 	]
 }

@@ -15,6 +15,11 @@
 			"stars": 0,
 			"nextDialog": "D2"
 		},
+		"T31": {
+			"text": "",
+			"stars": 0,
+			"nextDialog": "D21"
+		},
 		"T3B": {
 			"text": "",
 			"stars": 0,
@@ -51,17 +56,17 @@
 			"nextDialog": "D5"
 		},
 		"Q1A1": {
-			"text": "Rassemblement jaunes et citoyens",
+			"text": "Ralliement de l’internationale communiste ?",
 			"stars": -1,
 			"nextDialog": "Q1FAILURE"
 		},
 		"Q1A2": {
-			"text": "Rassemblement d’Initiative citoyenne",
+			"text": "Référendum des indépendants sur la consommation ?",
 			"stars": -1,
 			"nextDialog": "Q1FAILURE"
 		},
 		"Q1A3": {
-			"text": "Jaunes et Citoyens",
+			"text": "Référendum d'initiative citoyenne ?",
 			"stars": 1,
 			"nextDialog": "Q1SUCCESS"
 		},
@@ -96,11 +101,15 @@
 			"linkedChoices": ["T2"]
 		},
 		"Q1": {
-			"text": "Josiane :\nAh les gilets jaunes, moi je les soutiens ! Par contre je suis perdue là...Comment s’appelle la liste qui vient de se lancer pour les élections ?",
+			"text": "Josiane :\nAh les gilets jaunes, moi je les soutiens ! D’ailleurs, le journaliste à la télé disait qu’une liste venait de se lancer. \"RIC\", comme leur principale revendication.",
 			"linkedChoices": ["Q1A1", "Q1A2", "Q1A3"]
 		},
 		"Q1SUCCESS": {
-			"text": "Josiane :\nOui, voilà !",
+			"text": "Josiane :\nExactement. Il est temps de redonner la parole au peuple !",
+			"linkedChoices": ["T31"]
+		},
+		"D21": {
+			"text": "André :\nOn n’est pas en Suisse ! On ne va pas passer notre temps à voter ! que les députés fassent leur travail !",
 			"linkedChoices": ["T4"]
 		},
 		"Q1FAILURE": {
