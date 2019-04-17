@@ -2,7 +2,7 @@
 	"Choices": {
 		"Q1A1": {
 			"text": "Nathalie Loiseau (La République En Marche)",
-			"stars": 0,
+			"stars": -1,
 			"nextDialog": "Q1F"
 		},
 		"Q1A2": {
@@ -12,7 +12,7 @@
 		},
 		"Q1A3": {
 			"text": "Jean Lassale (Résistons !)",
-			"stars": 0,
+			"stars": -1,
 			"nextDialog": "Q1F"
 		},
 		"TQ2": {
@@ -22,7 +22,7 @@
 		},
 		"Q2A1": {
 			"text": "Nicolas Dupont-Aignan (Les Patriotes)",
-			"stars": 0,
+			"stars": -1,
 			"nextDialog": "Q2F"
 		},
 		"Q2A2": {
@@ -32,7 +32,7 @@
 		},
 		"Q2A3": {
 			"text": "François-Xavier Bellamy (Les Républicains)",
-			"stars": 0,
+			"stars": -1,
 			"nextDialog": "Q2F"
 		},
 		"TQ3": {
@@ -42,12 +42,12 @@
 		},
 		"Q3A1": {
 			"text": "Yannick Jadot (EELV)",
-			"stars": 0,
+			"stars": -1,
 			"nextDialog": "Q3F"
 		},
 		"Q3A2": {
 			"text": "Nathalie Loiseau (LREM)",
-			"stars": 0,
+			"stars": -1,
 			"nextDialog": "Q3F"
 		},
 		"Q3A3": {
@@ -67,12 +67,12 @@
 		},
 		"Q4A2": {
 			"text": "Nicolas Dupont-Aignan (Les Patriotes)",
-			"stars": 0,
+			"stars": -1,
 			"nextDialog": "Q4F"
 		},
 		"Q4A3": {
 			"text": "Manon Aubry (France insoumise)",
-			"stars": 0,
+			"stars": -1,
 			"nextDialog": "Q4F"
 		},
 		"TQ5": {
@@ -87,12 +87,12 @@
 		},
 		"Q5A2": {
 			"text": "Florian Philippot (Les Patriotes)",
-			"stars": 0,
+			"stars": -1,
 			"nextDialog": "Q5F"
 		},
 		"Q5A3": {
 			"text": "Manon Aubry (France insoumise)",
-			"stars": 0,
+			"stars": -1,
 			"nextDialog": "Q5F"
 		},
 		"TQ6": {
@@ -102,12 +102,12 @@
 		},
 		"Q6A1": {
 			"text": "François-Xavier Bellamy (LR)",
-			"stars": 0,
+			"stars": -1,
 			"nextDialog": "Q6F"
 		},
 		"Q6A2": {
 			"text": "Yannick Jadot (EELV)",
-			"stars": 0,
+			"stars": -1,
 			"nextDialog": "Q6F"
 		},
 		"Q6A3": {
@@ -122,7 +122,7 @@
 		},
 		"Q7A1": {
 			"text": "Jordan Bardella (RN)",
-			"stars": 0,
+			"stars": -1,
 			"nextDialog": "Q7F"
 		},
 		"Q7A2": {
@@ -132,7 +132,7 @@
 		},
 		"Q7A3": {
 			"text": "Nathalie Arthaud (Lutte ouvrière)",
-			"stars": 0,
+			"stars": -1,
 			"nextDialog": "Q7F"
 		}
 	},
