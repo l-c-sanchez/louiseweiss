@@ -23,6 +23,7 @@ import { ClaraTown } from "./scenes/ClaraTown";
 import { PatientStreet } from "./scenes/PatientStreet";
 import { ValentinQuizz } from "./scenes/ValentinQuizz";
 import { ValentinWhoSaid } from "./scenes/ValentinWhoSaid";
+import { ValentinSubtitles } from "./scenes/ValentinSubtitles";
 
 export class App {
 
@@ -53,6 +54,7 @@ export class App {
 		this.Scenes.push(new PatientStreet());
 		this.Scenes.push(new ValentinQuizz());
 		this.Scenes.push(new ValentinWhoSaid());
+		this.Scenes.push(new ValentinSubtitles());
 		this.Scenes.push(new ClaraTown());
 		
 		Config.Phaser.scene = this.Scenes;

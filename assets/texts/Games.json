@@ -104,8 +104,24 @@
 		"valentin": {
 			"instruction": "Valentin a allumé la radio dans sa voiture. Mais écoute-t-il vraiment?\n\nLa route est difficile. Evite les vaches, collecte les étoiles et concentre-toi sur les informations.",
 			"instruction_details_mobile": "Glisse ton doigt vers la gauche ou vers la droite pour déplacer Valentin et éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles.",
-			"instruction_details_desktop": "Avec les flèches de ton clavier, déplace Valentin à droite et à gauche pour éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles."
-				},
+			"instruction_details_desktop": "Avec les flèches de ton clavier, déplace Valentin à droite et à gauche pour éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles.",
+			"subtitle0":  "Aux Européennes, la multiplication des listes de “gilets jaunes”.",
+			"subtitleTime0": 2900,
+			"subtitle1": "L’une des figures du mouvement, Jean-François Barnaba,",
+			"subtitleTime1": 2000,
+			"subtitle2": "a annoncé ce matin qu’il mènera la bataille sous la bannière \"Jaunes et Citoyens\"",
+			"subtitleTime2": 4000,
+			"subtitle3": "avec deux axes majeurs de campagne : le pouvoir d’achat d’abord et la démocratie.",
+			"subtitleTime3": 4000,
+			"subtitle4": "C’est la deuxième liste officiellement déclarée pour les élections de mai prochain,",
+			"subtitleTime4": 3500,
+			"subtitle5": "après le Rassemblement d’Initiative citoyenne, ou RIC, mené par Jérémy Clément.",
+			"subtitleTime5": 4000,
+			"subtitle6": "Des listes qui peinent à dépasser la barre des 3%.",
+			"subtitleTime6": 3000,
+			"subtitle7": "D’autres figures du mouvement pourraient aussi annoncer leur candidature dans les prochains jours.",
+			"subtitleTime7": 4500
+		},
 		"lucie": {
 				"sprite_char":"lucie",
 				"instruction0": "26 mai 2019, jour du vote.",

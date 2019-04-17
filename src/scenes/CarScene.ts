@@ -176,6 +176,8 @@ export class CarGame extends Phaser.Scene {
     GameEnded    : boolean;
     GameState    : State;
     StartDialog	 : DialogBox = null;
+    Subtitles	 : DialogBox = null;
+    SubtitleId	 : number = 0;
 
     invicible: boolean;
 
@@ -280,7 +282,8 @@ export class CarGame extends Phaser.Scene {
                 loop: false,
                 delay: 0
             });
-            flash.play();
+			flash.play();
+			this.scene.launch('ValentinSubtitles')
         }
     }
 
@@ -367,9 +370,25 @@ export class CarGame extends Phaser.Scene {
                 this.scene.start("PatientStreet");
             else if (this.Character == "lucie")
                 this.scene.start("Result");
-        }
-
+		}
     }
+
+	private showSubtitles() {
+		if (this.Subtitles != null)
+			this.Subtitles.destroy();
+
+		if (this.SubtitleId < 1) {
+			console.log(this.SubtitleId.toString());
+			console.log(this.Config['subtitle' + this.SubtitleId.toString()]);
+			this.Subtitles = new DialogBox(this, this.Config['subtitle' + this.SubtitleId.toString()], true, Anchor.Top, { fitContent: true, fontSize: 22 });
+			++this.SubtitleId;
+			this.time.addEvent({
+				delay: 5000,
+				callback: this.showSubtitles,
+				callbackScope: this
+			});
+		}
+	}
 
     private moveTo(x: number){
         var carWidth = Config.CarGame.tileSize;
