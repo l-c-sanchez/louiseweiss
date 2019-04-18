@@ -1,193 +1,217 @@
 {
-
-
-"credits" : {
-        "Choices": {
-                "choice0": {
-                        "text": "Voir les crédits du jeu",
-                        "stars": 0,
-                        "nextDialog": "arg0"
-                }, 
-                "choice1": {
-                        "text": "",
-                        "stars": 0,
-                        "nextDialog": "arg1"
-                },
-                "2": {
-                        "text": "",
-                        "stars": 0,
-                        "nextDialog": "arg2"
-                },
-                "3": {
-                        "text": "",
-                        "stars": 0,
-                        "nextDialog": "arg3"
-                },
-                "4": {
-                        "text": "Joue avec un autre personnage pour en apprendre plus",
-                        "stars": 0,
-                        "nextDialog": ""
-                }
-        },
-        "Dialogs": {
-                "start": {
-                        "text": "Merci d'avoir joué !",
-                        "linkedChoices": ["choice0", "4"]
-                },
-                "arg0": {
-                        "text": "Sur une idée de Camille Camdessus, Léa Sanchez, David Pauget et Matthieu Desmoulins.",
-                        "linkedChoices": ["choice1"]
-
-                },
-                "arg1": {
-                        "text": "Code : Guillaume Michaud, Léa Sanchez et Edouard Mulliez\n\nScénario : David Pauget, Tanguy Garrel-Jaffrelot, Léa Sanchez, Guillaume Michaud et Anait Miridjanian",
-                        "linkedChoices": ["2"]
-                },
-                "arg2": {
-                        "text": "Graphisme : David Pauget\n\nVoix : Matthieu Desmoulins",
-                        "linkedChoices": ["3"]
-                },
-                "arg3": {
-                        "text": "ADD CREDITS",
-                        "linkedChoices": ["4"]
-                }
-        }
-},
-
-        "playAgain" : "Joue avec un autre personnage pour en apprendre plus", 
-        "lucie": {
-        "contextIfSuccess": "Mais ce n’est pas si évident pour les autres jeunes.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon l'institut de sondage Ifop.",
-        "contextIfFail" : "Ne pas aller voter est assez commun chez les jeunes comme votre personnage.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon l'institut de sondage Ifop.",
-        "dialog" : {
-                "Choices": {
-                        "choice0": {
-                                "text": "",
-                                "stars": 0,
-                                "nextDialog": "arg0"
-                        }, 
-                        "choice1": {
-                                "text": "",
-                                "stars": 0,
-                                "nextDialog": "arg1"
-                        },
-                        "2": {
-                                "text": "",
-                                "stars": 0,
-                                "nextDialog": "arg2"
-                        },
-                        "3": {
-                                "text": "",
-                                "stars": 0,
-                                "nextDialog": "arg3"
-                        }
-                },
-                "Dialogs": {
-                        "start": {
-                                "text": "Une étude de l’INSEE précise que moins de 18% des jeunes votent de façon systématique. Cela est particulièrement vrai pour les classes populaires, les non-diplômés et à l’est de la France.",
-                                "linkedChoices": ["choice0"]
-                        },
-                        "arg0": {
-                                "text": "Nous avons interrogé Anne Muxel, sociologue, pour découvrir qu’elles sont les raisons de la forte abstention des jeunes. Elle distingue plusieurs éléments d’explication :",
-                                "linkedChoices": ["choice1"]
-
-                        },
-                        "arg1": {
-                                "text": "Un manque d’intérêt des jeunes pour ce scrutin, alors que nombre d’eux ne savent pas comment s’informer",
-                                "linkedChoices": ["2"]
-                        },
-                        "arg2": {
-                                "text": "Une défiance envers les institutions européennes",
-                                "linkedChoices": ["3"]
-                        },
-                        "arg3": {
-                                "text": "L’Europe leur paraît détachée de leur quotidien",
-                                "linkedChoices": []
-                        }
-                }
-        }
-    },
-    "clara": {
-        "contextIfSuccess": "Mais la majorité des français boudent ce scrutin, qu’ils perçoivent comme étant peu lisible.",
-        "contextIfFail" : "Comme vous, la majorité des français boudent ce scrutin, qu’ils perçoivent comme étant peu lisible.",
-        "dialog" : {
-                "Choices": {
-                        "choice1": {
-                                "text": "",
-                                "stars": 0,
-                                "nextDialog": "arg1"
-                        },
-                        "2": {
-                                "text": "",
-                                "stars": 0,
-                                "nextDialog": "arg2"
-                        },
-                        "3": {
-                                "text": "",
-                                "stars": 0,
-                                "nextDialog": "arg3"
-                        }
-                },
-                "Dialogs": {
-                        "start": {
-                                "text": "Les couches populaires et modestes sont traditionnellement plus eurosceptiques. Aux Européennes de 2014, ils ont massivement choisi l’abstention et le vote FN.",
-                                "linkedChoices": ["choice1"]
-                        },
-                        "arg1": {
-                                "text": "Selon Ipsos, 69% des chômeurs, 68% des employés et 65% des ouvriers se sont abstenus aux Européennes de 2014.",
-                                "linkedChoices": ["2"]
-                        },
-                        "arg2": {
-                                "text": "Selon la même étude, l’abstention s'élevait à 70% chez les personnes issues de foyer gagnant moins de 20 000 euros bruts par an. ",
-                                "linkedChoices": ["3"]
-                        },
-                        "arg3": {
-                                "text": "Selon un sondage BVA publié fin mars 2019, le sentiment majoritaire est que l’UE est une construction « artificielle ». Une vision critique largement partagée par les ruraux (60%), qui ont du mal à voir les bénéfices ou les réalisation concrètes au quotidien.",
-                                "linkedChoices": []
-                        }
-                }
-        }
-        },
-        
-    "valentin": {
-        "contextIfSuccess": "success",
-        "contextIfFail" : "fail",
-        "dialog" : {
-                "Choices": {
-                        "choice1": {
-                                "text": "",
-                                "stars": 0,
-                                "nextDialog": "arg1"
-                        },
-                        "2": {
-                                "text": "",
-                                "stars": 0,
-                                "nextDialog": "arg2"
-                        },
-                        "3": {
-                                "text": "",
-                                "stars": 0,
-                                "nextDialog": "arg3"
-                        }
-                },
-                "Dialogs": {
-                        "start": {
-                                "text": "Nous avons interrogé Anne Muxel, sociologue, pour découvrir ... Elle distingue plusieurs éléments d’explication :",
-                                "linkedChoices": ["choice1"]
-                        },
-                        "arg1": {
-                                "text": "manque de temps",
-                                "linkedChoices": ["2"]
-                        },
-                        "arg2": {
-                                "text": "blabla",
-                                "linkedChoices": ["3"]
-                        },
-                        "arg3": {
-                                "text": "blabla",
-                                "linkedChoices": []
-                        }
-                }
-        }
-}
-
+	"credits": {
+		"Choices": {
+			"choice0": {
+				"text": "Voir les crédits du jeu",
+				"stars": 0,
+				"nextDialog": "arg0"
+			},
+			"choice1": {
+				"text": "",
+				"stars": 0,
+				"nextDialog": "arg1"
+			},
+			"2": {
+				"text": "",
+				"stars": 0,
+				"nextDialog": "arg2"
+			},
+			"3": {
+				"text": "",
+				"stars": 0,
+				"nextDialog": "arg3"
+			},
+			"4": {
+				"text": "Joue avec un autre personnage pour en apprendre plus",
+				"stars": 0,
+				"nextDialog": ""
+			}
+		},
+		"Dialogs": {
+			"start": {
+				"text": "Merci d'avoir joué !",
+				"linkedChoices": [
+					"choice0",
+					"4"
+				]
+			},
+			"arg0": {
+				"text": "Sur une idée de Camille Camdessus, Léa Sanchez, David Pauget et Matthieu Desmoulins.",
+				"linkedChoices": [
+					"choice1"
+				]
+			},
+			"arg1": {
+				"text": "Code : Guillaume Michaud, Léa Sanchez et Edouard Mulliez\n\nScénario : David Pauget, Tanguy Garrel-Jaffrelot, Léa Sanchez, Guillaume Michaud et Anait Miridjanian",
+				"linkedChoices": [
+					"2"
+				]
+			},
+			"arg2": {
+				"text": "Graphisme : David Pauget\n\nVoix : Matthieu Desmoulins",
+				"linkedChoices": [
+					"3"
+				]
+			},
+			"arg3": {
+				"text": "ADD CREDITS",
+				"linkedChoices": [
+					"4"
+				]
+			}
+		}
+	},
+	"playAgain": "Joue avec un autre personnage pour en apprendre plus",
+	"lucie": {
+		"contextIfSuccess": "Mais ce n’est pas si évident pour les autres jeunes.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon l'institut de sondage Ifop.",
+		"contextIfFail": "Ne pas aller voter est assez commun chez les jeunes comme votre personnage.\n\nEn 2014, en France, 74% des 18 à 24 ans ne se sont pas déplacés, selon l'institut de sondage Ifop.",
+		"dialog": {
+			"Choices": {
+				"choice0": {
+					"text": "",
+					"stars": 0,
+					"nextDialog": "arg0"
+				},
+				"choice1": {
+					"text": "",
+					"stars": 0,
+					"nextDialog": "arg1"
+				},
+				"2": {
+					"text": "",
+					"stars": 0,
+					"nextDialog": "arg2"
+				},
+				"3": {
+					"text": "",
+					"stars": 0,
+					"nextDialog": "arg3"
+				}
+			},
+			"Dialogs": {
+				"start": {
+					"text": "Une étude de l’INSEE précise que moins de 18% des jeunes votent de façon systématique. Cela est particulièrement vrai pour les classes populaires, les non-diplômés et à l’est de la France.",
+					"linkedChoices": [
+						"choice0"
+					]
+				},
+				"arg0": {
+					"text": "Nous avons interrogé Anne Muxel, sociologue, pour découvrir qu’elles sont les raisons de la forte abstention des jeunes. Elle distingue plusieurs éléments d’explication :",
+					"linkedChoices": [
+						"choice1"
+					]
+				},
+				"arg1": {
+					"text": "Un manque d’intérêt des jeunes pour ce scrutin, alors que nombre d’eux ne savent pas comment s’informer",
+					"linkedChoices": [
+						"2"
+					]
+				},
+				"arg2": {
+					"text": "Une défiance envers les institutions européennes",
+					"linkedChoices": [
+						"3"
+					]
+				},
+				"arg3": {
+					"text": "L’Europe leur paraît détachée de leur quotidien",
+					"linkedChoices": []
+				}
+			}
+		}
+	},
+	"clara": {
+		"contextIfSuccess": "(A changer?) Mais la majorité des français boudent ce scrutin, qu’ils perçoivent comme étant peu lisible.",
+		"contextIfFail": "(A changer?) Comme vous, la majorité des français boudent ce scrutin, qu’ils perçoivent comme étant peu lisible.",
+		"dialog": {
+			"Choices": {
+				"choice1": {
+					"text": "",
+					"stars": 0,
+					"nextDialog": "arg1"
+				},
+				"2": {
+					"text": "",
+					"stars": 0,
+					"nextDialog": "arg2"
+				},
+				"3": {
+					"text": "",
+					"stars": 0,
+					"nextDialog": "arg3"
+				}
+			},
+			"Dialogs": {
+				"start": {
+					"text": "Aux Européennes de 2014, l’abstention a été inférieure à la moyenne nationale chez les cadres. Selon Ipsos, 47% des cadres et professions intellectuelles supérieures ont voté contre 44% des électeurs en moyenne.",
+					"linkedChoices": [
+						"choice1"
+					]
+				},
+				"arg1": {
+					"text": "Pourquoi ? Tout d’abord, les catégories CSP+, comme les cadres, sont traditionnellement plus europhiles.",
+					"linkedChoices": [
+						"2"
+					]
+				},
+				"arg2": {
+					"text": "68% des cadres se sentent citoyens de l’UE contre 56% des Français, selon un sondage BVA publié en mars 2019.",
+					"linkedChoices": [
+						"3"
+					]
+				},
+				"arg3": {
+					"text": "En outre, selon les chercheurs interrogés, les cadres sont plus enclins au vote car ils sont plus informés que la moyenne. Ils perçoivent plus facilement les bénéfices que le vote pourrait leur apporter.",
+					"linkedChoices": []
+				}
+			}
+		}
+	},
+	"valentin": {
+		"contextIfSuccess": "Mais la majorité des français boudent ce scrutin, qu’ils perçoivent comme étant peu lisible.",
+		"contextIfFail": "Comme vous, la majorité des français boudent ce scrutin, qu’ils perçoivent comme étant peu lisible.",
+		"dialog": {
+			"Choices": {
+				"choice1": {
+					"text": "",
+					"stars": 0,
+					"nextDialog": "arg1"
+				},
+				"2": {
+					"text": "",
+					"stars": 0,
+					"nextDialog": "arg2"
+				},
+				"3": {
+					"text": "",
+					"stars": 0,
+					"nextDialog": "arg3"
+				}
+			},
+			"Dialogs": {
+				"start": {
+					"text": "Les couches populaires et modestes sont traditionnellement plus eurosceptiques. Aux Européennes de 2014, ils ont massivement choisi l’abstention et le vote FN.",
+					"linkedChoices": [
+						"choice1"
+					]
+				},
+				"arg1": {
+					"text": "Selon Ipsos, 69% des chômeurs, 68% des employés et 65% des ouvriers se sont abstenus aux Européennes de 2014.",
+					"linkedChoices": [
+						"2"
+					]
+				},
+				"arg2": {
+					"text": "Selon la même étude, l’abstention s'élevait à 70% chez les personnes issues de foyer gagnant moins de 20 000 euros bruts par an.",
+					"linkedChoices": [
+						"3"
+					]
+				},
+				"arg3": {
+					"text": "Selon un sondage BVA publié fin mars 2019, le sentiment majoritaire est que l’UE est une construction « artificielle ». Une vision critique largement partagée par les ruraux (60%), qui ont du mal à voir les bénéfices ou les réalisation concrètes au quotidien.",
+					"linkedChoices": []
+				}
+			}
+		}
+	}
 }
