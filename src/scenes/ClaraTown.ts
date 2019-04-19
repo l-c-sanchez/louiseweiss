@@ -177,7 +177,7 @@ export class ClaraTown extends Phaser.Scene {
             // console.log("stop car")
         }
         else if (this.GameState == State.Started && this.hud.getRemainingTime() == 30){
-            this.StartDialog = new DialogBox(this, this.Config.firstpart, true, Anchor.Bottom, {
+            this.StartDialog = new DialogBox(this, this.Config.firstpart, false, Anchor.Bottom, {
                 fitContent: true,
                 fontSize: 22,
                 offsetY:-10
@@ -194,7 +194,7 @@ export class ClaraTown extends Phaser.Scene {
             //     callbackScope: this
             // });
             this.StartDialog.destroy();
-            this.StartDialog = new DialogBox(this, this.Config.secondpart, true, Anchor.Bottom, {
+            this.StartDialog = new DialogBox(this, this.Config.secondpart, false, Anchor.Bottom, {
                 fitContent: true,
                 fontSize: 22,
                 offsetY:-40
@@ -204,7 +204,7 @@ export class ClaraTown extends Phaser.Scene {
         else if (this.hud.getRemainingTime() == 14 && this.GameState == State.secondpart){
             this.GameState = State.thirdpart;
             this.StartDialog.destroy();
-            this.StartDialog = new DialogBox(this, this.Config.thirdpart, true, Anchor.Bottom, {
+            this.StartDialog = new DialogBox(this, this.Config.thirdpart, false, Anchor.Bottom, {
                 fitContent: true,
                 fontSize: 22,
                 offsetY:-40
@@ -214,7 +214,7 @@ export class ClaraTown extends Phaser.Scene {
         else if (this.hud.getRemainingTime() == 7 && this.GameState == State.thirdpart){
             this.GameState = State.fourthpart;
             this.StartDialog.destroy();
-            this.StartDialog = new DialogBox(this, this.Config.fourthpart, true, Anchor.Bottom, {
+            this.StartDialog = new DialogBox(this, this.Config.fourthpart, false, Anchor.Bottom, {
                 fitContent: true,
                 fontSize: 22,
                 offsetY:-40
