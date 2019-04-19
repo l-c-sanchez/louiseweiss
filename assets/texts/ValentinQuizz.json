@@ -101,7 +101,7 @@
 			"linkedChoices": ["T2"]
 		},
 		"Q1": {
-			"text": "Josiane :\nAh les gilets jaunes, moi je les soutiens ! D’ailleurs, le journaliste à la télé disait qu’une liste venait de se lancer. \"RIC\", comme leur principale revendication.",
+			"text": "Josiane :\nAh les gilets jaunes, moi je les soutiens ! D’ailleurs, le journaliste à la télé disait qu’une liste venait de se lancer, avec le \"RIC\" comme principale revendication.",
 			"linkedChoices": ["Q1A1", "Q1A2", "Q1A3"]
 		},
 		"Q1SUCCESS": {

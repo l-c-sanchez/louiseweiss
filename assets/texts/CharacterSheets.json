@@ -25,7 +25,7 @@
 			"name": "Lucie",
 			"age": "24 ans",
 			"job": "Intérimaire",
-			"town": "une ville moyenne",
+			"town": "dans une ville moyenne",
 			"stars": 1,
 			"sprite": "LuciePortrait",
 			"sceneToLaunch": "LucieConv",
