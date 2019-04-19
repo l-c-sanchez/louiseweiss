@@ -130,6 +130,7 @@ export class Result extends Phaser.Scene {
         this.registry.set('character', "");
         this.registry.set('starCount', 0);
         this.registry.set('GameOver', false);
+        console.log(this.registry.get('character'))
         this.scene.stop("HudScene");
         this.scene.start('CharacterChoice')
     }

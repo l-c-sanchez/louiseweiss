@@ -15,8 +15,23 @@
 			"stars": 0,
 			"nextDialog": "M4"
 		},
-		"C4": {
-			"text": "Oui, je ne sais encore pour quelle liste mais je voterai certainement pour un parti européiste. Mon entreprise a besoin de l’espace Schengen et de la zone euro pour exporter.",
+		"C4A": {
+			"text": "Environ 1,000 euros par an ?",
+			"stars": 0,
+			"nextDialog": "M4False"
+		},
+		"C4B": {
+			"text": "Environ 2,000 euros par an ?",
+			"stars": 0,
+			"nextDialog": "M4False"
+		},
+		"C4C": {
+			"text": "Environ 5,000 euros par an ?",
+			"stars": 2,
+			"nextDialog": "M4True"
+		},
+		"C4bis": {
+			"text": "Oui. Je ne sais encore pour quelle liste mais je voterai certainement pour un parti européiste. Mon entreprise a besoin de l’espace Schengen et de la zone euro pour exporter.",
 			"stars": 2,
 			"nextDialog": "M5"
 		},
@@ -50,29 +65,14 @@
 			"stars": 0,
 			"nextDialog": "M9"
 		},
-		"C9A": {
-			"text": "GAFAM ? Google Apple Ford Alibaba McDonald’s ?",
+		"C9": {
+			"text": "Qu’est-ce que l’Europe compte faire ?",
 			"stars": 0,
-			"nextDialog": "M10B"
-		},
-		"C9B": {
-			"text": "GAFAM ? Google Airbnb Facebook Amazon Microsoft ?",
-			"stars": 0,
-			"nextDialog": "M10B"
-		},
-		"C9C": {
-			"text": "GAFAM ? Google Apple Facebook Amazon Microsoft ?",
-			"stars": 1,
-			"nextDialog": "M10A"
+			"nextDialog": "M10"
 		},
 		"C10": {
-			"text": "Ils veulent les taxer et harmoniser les impôts sur les entreprises. Parce que certains Etats tels que l’Irlande taxent ses entreprises à hauteur de 12% tandis que d’autres pays comme la France les taxent à 33%.",
-			"stars": 1,
-			"nextDialog": "M11"
-		},
-		"C11": {
-			"text": "A très vite",
-			"stars": 0,
+			"text": "Intéressant. On verra bien ce que les candidats proposent… Je vais essayer de m’informer! ",
+			"stars": 3,
 			"nextDialog": ""
 		}
 	},
@@ -91,8 +91,16 @@
 			"linkedChoices": ["C3"]
 		},
 		"M4": {
-			"text": "C’est sûr... Tu penses aller voter aux européennes ?",
-			"linkedChoices": ["C4"]
+			"text": "Au Royaume-Uni, le fisc estime que le pays va s’appauvrir à cause du Brexit.  Et ce même si le pays parvient à un accord avec l’UE comme celui qu’a négocié le Canada. Devine le montant que chaque foyer britannique devrait perdre d’ici 2030.",
+			"linkedChoices": ["C4A", "C4B", "C4C"]
+		},
+		"M4False": {
+			"text": "Non, environ 5,000 euros par an. Il faudrait éviter ce scénario pour la France. Tu penses aller voter aux européennes ?",
+			"linkedChoices": ["C4bis"]
+		},
+		"M4True": {
+			"text": "Correct ! Il faudrait éviter ce scénario pour la France. Tu penses aller voter aux européennes ?",
+			"linkedChoices": ["C4bis"]
 		},
 		"M5": {
 			"text": "D’autant qu’à 28, les Etats-membres font le poid face aux géants économiques comme la Chine, le Japon ou les Etats-Unis.",
@@ -116,19 +124,11 @@
 		},
 		"M9": {
 			"text": "Tu as raison, sur ce sujet, l’Europe a imposé aux géants de la Tech le RGPD, qui protège nos données personnelles.\n\nD’ailleurs la Commission européenne travaille sur un projet de taxation des GAFAM ...",
-			"linkedChoices": ["C9A", "C9B", "C9C"]
+			"linkedChoices": ["C9"]
 		},
-		"M10A": {
-			"text": "C’est ça !\n\nEt qu’est-ce que l’Europe compte faire ?",
+		"M10": {
+			"text": "Ils veulent les taxer et harmoniser les impôts sur les entreprises. Parce que certains Etats tels que l’Irlande taxent ses entreprises à hauteur de 12% tandis que la France les taxent à 33% ",
 			"linkedChoices": ["C10"]
-		},
-		"M10B": {
-			"text": "Non, les GAFAMS, ce sont Google, Apple, Facebook, Amazon et Microsoft.\n\nEt qu’est-ce que l’Europe compte faire ?",
-			"linkedChoices": ["C10"]
-		},
-		"M11": {
-			"text": "Intéressant. On verra bien ce que les candidats proposent… Je vais essayer de m’informer !",
-			"linkedChoices": ["C11"]
 		}
 	}
 }
