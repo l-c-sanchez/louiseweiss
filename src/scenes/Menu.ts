@@ -73,7 +73,7 @@ export class Menu extends Phaser.Scene {
 
 	startGame() {
 		if (!this.sys.game.device.os.desktop && !this.scale.isFullscreen) {
-			// this.scale.toggleFullscreen();
+			this.scale.toggleFullscreen();
 		}
 		if (this.StartDialog === null) {
 			let text = this.cache.json.get('StartText');			
