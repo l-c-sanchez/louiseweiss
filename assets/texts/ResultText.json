@@ -48,13 +48,13 @@
 				]
 			},
 			"arg2": {
-				"text": "Graphisme : David Pauget\n\nVoix : Matthieu Desmoulins",
+				"text": "Ressources graphiques\n\nPersonnages, radio et voitures : David Pauget\nBus : Kadokawa, leon kennedy\nBureaux : teddy productions\nArrêt de bus : Ｍｕｐｔｈｏｎ\nMaison : Ayene\nVille : Kenney\nAutre : Crazy_Leen",
 				"linkedChoices": [
 					"3"
 				]
 			},
 			"arg3": {
-				"text": "ADD CREDITS",
+				"text": "Sons\n\nVoix : Matthieu Desmoulins\nOde à la joie : Ode to Joy|8 Bit Cover|Beethoven| - BiTiDuck",
 				"linkedChoices": [
 					"4"
 				]
