@@ -49,9 +49,14 @@ export class HudScene extends Phaser.Scene {
         if (key === 'starCount'){
             let difference = value - previousValue;
 			if (difference > 0) {
-				this.winStarAnim();
+                this.winStarAnim();
+                let winStarSound = this.sound.add('WinStarSound', {volume: 1});
+                winStarSound.play();
+
 			} else if (difference < 0 && previousValue >= 1) {
-				this.loseStarAnim();		
+                this.loseStarAnim();
+                let loseStarSound = this.sound.add('LoseStarSound', {volume: 1});
+                loseStarSound.play();
 			}
 			let stars = Math.max(0, value);
             this.StarCountText.setText(stars.toString());

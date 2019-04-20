@@ -122,12 +122,15 @@ export class Preload extends Phaser.Scene {
 		this.load.image('uber', 'sprites/uber.png');
 
 		// Autres
-	
 		this.load.on('progress', this.onProgress, this);
 		this.load.on('complete', this.onComplete, this);
 
 		this.load.json('ResultText', 'texts/ResultText.json');
 		this.load.json('Games', 'texts/Games.json');
+
+		// Sounds for stars
+		this.load.audio('WinStarSound', 'sounds/mario_coin.mp3')
+		this.load.audio('LoseStarSound', 'sounds/mario_dies_cut.mp3')
 
 		// QuizzClara
 		this.load.json('QuizzClara', 'texts/QuizzClara.json');
