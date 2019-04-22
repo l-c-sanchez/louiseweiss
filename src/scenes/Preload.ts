@@ -64,6 +64,8 @@ export class Preload extends Phaser.Scene {
 		this.load.image('beer', 'sprites/beer.png');
 		this.load.image('Cow', 'sprites/cow.png');
 		this.load.audio('ValentinFlash', 'sounds/ValentinFlash.mp3');
+		this.load.image('LeftArrow', 'sprites/left_arrow.png');
+		this.load.image('RightArrow', 'sprites/right_arrow.png');
 
 		// Valentin Conv
 		this.load.json('ValentinQuizz', 'texts/ValentinQuizz.json');

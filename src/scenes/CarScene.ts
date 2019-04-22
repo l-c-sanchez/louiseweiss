@@ -152,7 +152,7 @@ class Generator {
     }
 }
 
-enum SwipeDirection {
+enum Direction {
 	None,
 	Right,
 	Left
@@ -183,7 +183,7 @@ export class CarGame extends Phaser.Scene {
 
     // Player movement
     Cursors: Phaser.Input.Keyboard.CursorKeys;
-    Swipe: string;
+    TouchDirection: Direction;
 
     constructor() {
         super({ key: 'CarGame', active:false });
@@ -216,7 +216,6 @@ export class CarGame extends Phaser.Scene {
         this.add.existing(this.StartDialog);
         let button = this.StartDialog.addArrowButton();
 		button.on('pointerup', this.startInstruction, this);
-		// this.startInstruction();
     }
 
     public startInstruction() {
@@ -250,22 +249,31 @@ export class CarGame extends Phaser.Scene {
 			this.Player.setScale(2, 2);
 		}
 		this.Player.setOrigin(0.5, 0.5);
-        this.Player.setDepth(10);        
+        this.Player.setDepth(10);
 
-        // Dealing with Swipes
+        // Player movement on Mobile environment
+		if (!this.sys.game.device.os.desktop) {
+            this.addControlArrow(Config.Game.width * 1 / 4, 'LeftArrow');
+            this.addControlArrow(Config.Game.width * 3 / 4, 'RightArrow');
+
+            this.input.on(
+                'pointerdown',
+                function(pointer: Phaser.Input.InputPlugin){ this.updateTouchDirection(pointer) },
+                this
+            );
+            this.input.on(
+                'pointermove',
+                function(pointer: Phaser.Input.InputPlugin){ this.updateTouchDirection(pointer) },
+                this
+            );
+            this.input.on(
+                'pointerup',
+                function(pointer: Phaser.Input.InputPlugin){ this.TouchDirection = Direction.None },
+                this
+            );
+        }
+
         this.Cursors = this.input.keyboard.createCursorKeys();
-        var downX: number, upX: number, Threshold: number = 50;
-        this.input.on('pointerdown', function (pointer : Phaser.Input.InputPlugin) {
-            downX = pointer.x;
-        });
-        this.input.on('pointerup', (pointer : Phaser.Input.InputPlugin) => {
-            upX = pointer.x;
-            if (upX < downX - Threshold){
-                this.Swipe = 'left';
-            } else if (upX > downX + Threshold) {
-                this.Swipe = 'right';
-            }
-        }); 
 
         // Collision with objects
         this.physics.add.overlap(this.Player, this.Generator.StarGroup, this.collectStar, null, this);
@@ -285,6 +293,24 @@ export class CarGame extends Phaser.Scene {
 			flash.play();
 			this.scene.launch('ValentinSubtitles')
         }
+    }
+
+    private updateTouchDirection(pointer: Phaser.Input.InputPlugin){    
+        let downX = pointer.x;
+        let centerX = Config.Game.centerX;
+        let threshold = 30;
+        if (downX < centerX - threshold) {
+            this.TouchDirection = Direction.Left;
+        } else if (downX > centerX + threshold) {
+            this.TouchDirection = Direction.Right;
+        }
+    }
+
+    private addControlArrow(x: number, name: string): void {
+        let arrow = this.physics.add.sprite(x, Config.Game.height * 3 / 4, name);
+        arrow.setScrollFactor(0);
+        arrow.setAlpha(0.3);
+        arrow.depth = 2;
     }
 
 	private updateStarCount(difference: number) {
@@ -346,13 +372,11 @@ export class CarGame extends Phaser.Scene {
 		var corridor = Config.CarGame.corridorSize;
 		if (!this.PlayerMoving)
 		{
-			if (this.Cursors.left != undefined && Phaser.Input.Keyboard.JustDown(this.Cursors.left) || this.Swipe == "left" ){
+			if (this.Cursors.left != undefined && Phaser.Input.Keyboard.JustDown(this.Cursors.left) || this.TouchDirection == Direction.Left ){
 				this.moveTo(this.Player.x -  corridor);
-				this.Swipe = "";
 			}
-			else if (this.Cursors.right != undefined && Phaser.Input.Keyboard.JustDown(this.Cursors.right) || this.Swipe == "right") {
+			else if (this.Cursors.right != undefined && Phaser.Input.Keyboard.JustDown(this.Cursors.right) || this.TouchDirection == Direction.Right) {
 				this.moveTo(this.Player.x + corridor);
-				this.Swipe = "";
 			}
 		}
         this.move();

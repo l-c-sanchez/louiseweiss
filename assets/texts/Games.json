@@ -103,7 +103,7 @@
 		},
 		"valentin": {
 			"instruction": "Valentin a allumé la radio dans sa voiture. Mais écoute-t-il vraiment?\n\nLa route est difficile. Evite les vaches, collecte les étoiles et concentre-toi sur les informations.",
-			"instruction_details_mobile": "Glisse ton doigt vers la gauche ou vers la droite pour déplacer Valentin et éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles.",
+			"instruction_details_mobile": "Touche l'écran à gauche ou à droite pour déplacer Valentin et éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles.",
 			"instruction_details_desktop": "Avec les flèches de ton clavier, déplace Valentin à droite et à gauche pour éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles.",
 			"subtitle0":  "Aux Européennes, la multiplication des listes de “gilets jaunes”.",
 			"subtitleTime0": 2900,
@@ -129,7 +129,7 @@
 				"instruction2": "Arthur :\nHey Lucie ! On se fait un fast food ce midi ?",
 				"instruction4": "Virginie :\nCoucou ! Tu viens toujours au bar avec tout le monde ce soir ?",
 				"instruction": "Lucie est partagée. Elle aimerait aller voter mais ses amis la sollicitent. Sauras-tu éviter ces derniers obstacles ?",
-				"instruction_details_mobile": "Glisse ton doigt vers la gauche ou vers la droite pour déplacer Lucie et éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles.",
+				"instruction_details_mobile": "Touche l'écran à gauche ou à droite pour déplacer Lucie et éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles.",
 				"instruction_details_desktop": "Avec les flèches de ton clavier, déplace Lucie à droite et à gauche pour éviter les obstacles. Profites-en pour ramasser un maximum d’étoiles."
 		}
 	},
