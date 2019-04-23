@@ -166,7 +166,8 @@ export class CarGame extends Phaser.Scene {
     PlayerSpeed: number;
     TargetPos: number;
     Config:any;
-	Character:string;
+    Character:string;
+    private Button 		 : Phaser.GameObjects.Sprite
 	PlayerMoving: boolean = false;
 
     hud: HudScene;
@@ -211,30 +212,46 @@ export class CarGame extends Phaser.Scene {
             throw new TypeError("Invalid config");
         }
         this.GameState = State.Paused;
-
         this.StartDialog = new DialogBox(this, this.Config.instruction, true, Anchor.Center, { fitContent: true, fontSize: 22 });
         this.add.existing(this.StartDialog);
-        let button = this.StartDialog.addArrowButton();
-		button.on('pointerup', this.startInstruction, this);
+        this.Button = this.StartDialog.addArrowButton();
+        this.Button.on('pointerup', () => {
+			if (this.StartDialog.isAnimationEnded()) {
+				this.startInstruction();
+			} else {
+				this.StartDialog.endAnimation();
+			}
+		}, this);
     }
 
     public startInstruction() {
         this.StartDialog.destroy();
+        this.Button.off("pointerup");
         var instruction_details = this.Config.instruction_details_desktop;
 		if(!this.sys.game.device.os.desktop)
             instruction_details = this.Config.instruction_details_mobile;
         this.StartDialog = new DialogBox(this, instruction_details, true, Anchor.Center, { fitContent: true, fontSize: 22 });
         this.add.existing(this.StartDialog);
-        let button = this.StartDialog.addArrowButton();
-        button.on('pointerup', this.startCarGame, this);
+        this.Button = this.StartDialog.addArrowButton();
+        this.Button.on('pointerup', () => {
+			if (this.StartDialog.isAnimationEnded()) {
+				this.startCarGame()
+			} else {
+				this.StartDialog.endAnimation();
+			}
+		}, this);
+        // let button = this.StartDialog.addArrowButton();
+        // button.on('pointerup', this.startCarGame, this);
     }
     
 
     public startCarGame() {    // Create initial environment
         // This avoid starting the game multiple times
+        
         if (this.GameState != State.Paused){
             return;
         }
+        this.Button.off("pointerup");
         this.GameState = State.Started;
 
         this.Generator.setup();
