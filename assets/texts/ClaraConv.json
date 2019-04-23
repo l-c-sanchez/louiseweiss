@@ -91,7 +91,7 @@
 			"linkedChoices": ["C3"]
 		},
 		"M4": {
-			"text": "Au Royaume-Uni, le fisc estime que le pays va s’appauvrir à cause du Brexit.  Et ce même si le pays parvient à un accord avec l’UE comme celui qu’a négocié le Canada. Devine le montant que chaque foyer britannique devrait perdre d’ici 2030.",
+			"text": "Au Royaume-Uni, le fisc estime que le pays va s’appauvrir à cause du Brexit. Et ce même si le pays parvient à un accord avec l’UE comme celui qu’a négocié le Canada. Devine le montant que chaque foyer britannique devrait perdre d’ici 2030.",
 			"linkedChoices": ["C4A", "C4B", "C4C"]
 		},
 		"M4False": {

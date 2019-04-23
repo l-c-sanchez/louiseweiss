@@ -52,7 +52,7 @@ export class ClaraConv extends Phaser.Scene {
 		this.ClaraSprite.anims.play('right');
 
 		
-		this.StartDialog = new DialogBox(this, this.Config.instruction, false, Anchor.Center, { fitContent:true, fontSize: 22 });
+		this.StartDialog = new DialogBox(this, this.Config.instruction, true, Anchor.Center, { fitContent:true, fontSize: 22 });
 		this.time.addEvent({
 			delay: 4000,
 			callback: this.startPhone,

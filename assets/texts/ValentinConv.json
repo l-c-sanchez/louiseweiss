@@ -74,7 +74,7 @@
 			"linkedChoices": ["TD4"]
 		},
 		"D4": {
-			"text": "André :\nTu soutiens les gilets jaunes, Josiane ? C’est quoi leurs revendications: moins d’impôts et de taxes, la hausse du SMIC et des retraites, plus de services publics, la fin de l’austérité.  C’est impossible au niveau européen, on exige moins de déficit !",
+			"text": "André :\nTu soutiens les gilets jaunes, Josiane ? C’est quoi leurs revendications: moins d’impôts et de taxes, la hausse du SMIC et des retraites, plus de services publics, la fin de l’austérité. C’est impossible au niveau européen, on exige moins de déficit !",
 			"linkedChoices": ["TD5"]
 		},
 		"D5": {

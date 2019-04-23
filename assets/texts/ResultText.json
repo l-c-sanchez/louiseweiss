@@ -48,13 +48,13 @@
 				]
 			},
 			"arg2": {
-				"text": "Ressources graphiques\n\nPersonnages, radio et voitures : David Pauget\nBus : Kadokawa, leon kennedy\nBureaux : teddy productions\nArrêt de bus : Ｍｕｐｔｈｏｎ\nMaison : Ayene\nVille : Kenney\nAutre : Crazy_Leen",
+				"text": "Ressources graphiques\nPersonnages, radio et voitures : David Pauget\nBus : Kadokawa, leon kennedy\nBureaux : teddy productions\nArrêt de bus : Mupthon\nMaison : Ayene\nVille : Kenney\nAutre : Crazy_Leen",
 				"linkedChoices": [
 					"3"
 				]
 			},
 			"arg3": {
-				"text": "Sons\n\nVoix : Matthieu Desmoulins\nOde à la joie : Ode to Joy|8 Bit Cover|Beethoven| - BiTiDuck",
+				"text": "Sons\nVoix : Matthieu Desmoulins\nOde à la joie : Ode to Joy|8 Bit Cover|Beethoven| - BiTiDuck",
 				"linkedChoices": [
 					"4"
 				]
@@ -102,7 +102,7 @@
 					]
 				},
 				"arg1": {
-					"text": "Un manque d’intérêt des jeunes pour ce scrutin, alors que nombre d’eux ne savent pas comment s’informer",
+					"text": "Un manque d’intérêt des jeunes pour ce scrutin, alors que nombre d’entre eux ne savent pas comment s’informer",
 					"linkedChoices": [
 						"2"
 					]

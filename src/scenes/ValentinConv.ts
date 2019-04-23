@@ -141,7 +141,7 @@ export class ValentinConv extends Phaser.Scene {
 		} else {
 			convContent = this.cache.json.get('ValentinEndConvSuccess');
 		}
-		this.Quizz = new DialogTree(this, convContent, false, Anchor.Bottom, { fitContent: true });
+		this.Quizz = new DialogTree(this, convContent, true, Anchor.Bottom, { fitContent: true });
 		this.add.existing(this.Quizz);
 		this.Quizz.on('destroy', () => {
 			this.scene.start('Result');
