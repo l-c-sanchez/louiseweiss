@@ -80,12 +80,6 @@ export class Result extends Phaser.Scene {
 
     startExplanation() {
         
-        console.log("in start explanation");
-        // this.input.off("pointerup");
-        // if (this.Result)
-        //     this.Result.destroy();
-        // if (this.Button)
-        //     this.Button.destroy();
 
         if (this.Success == false) 
             this.Context = new DialogBox(this, this.Config.contextIfFail, true, Anchor.Center, { fitContent: true, fontSize: 22 });
@@ -110,27 +104,14 @@ export class Result extends Phaser.Scene {
     }
     playWithOtherCharacter() {
         var resultText = this.cache.json.get('ResultText');
-        // this.StartDialog = new DialogBox(this, resultText.playAgain, true, Anchor.Center, { fitContent: true, fontSize: 22 });
         var credits = new DialogTree(this, resultText.credits, true, Anchor.Bottom, {fitContent:true, offsetY:-10});
         this.add.existing(credits);
         credits.on('destroy', this.startCharacterChoice, this);
-        // this.startCharacterChoice();
-        // this.Button = credits.addArrowButton();
-		// this.Button.on('pointerup', () => {
-		// 	if (this.StartDialog.isAnimationEnded()) {
-        //         this.StartCredits.destroy();
-		// 		this.startCharacterChoice();
-		// 	} else {
-		// 		this.StartDialog.endAnimation();
-		// 	}
-        // }, this);
-        // this.add.existing(this.StartDialog);
     }
     startCharacterChoice() {
         this.registry.set('character', "");
         this.registry.set('starCount', 0);
         this.registry.set('GameOver', false);
-        console.log(this.registry.get('character'))
         this.scene.stop("HudScene");
         this.scene.start('CharacterChoice')
     }

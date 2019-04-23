@@ -28,7 +28,7 @@
 			"town": "dans une ville moyenne",
 			"stars": 1,
 			"sprite": "LuciePortrait",
-			"sceneToLaunch": "CarGame",
+			"sceneToLaunch": "LucieConv",
 			"_comment": "replace scene above with LucieConv"
 		}
 	]

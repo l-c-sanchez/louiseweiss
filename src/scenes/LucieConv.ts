@@ -279,25 +279,6 @@ export class LucieConv extends Phaser.Scene {
 
 	}
 
-	// private startInstruction4() {
-	// 	this.StartDialog.destroy();
-	// 	this.StartDialog = new DialogBox(this, this.Config.instruction4, true, Anchor.Bottom, {
-	// 		fitContent: true,
-	// 		fontSize: 22,
-	// 		offsetY:-120
-	// 	});
-	// 	this.add.existing(this.StartDialog);
-	// 	this.Button = this.StartDialog.addArrowButton();
-	// 	this.Button.on('pointerup', () => {
-	// 		if (this.StartDialog.isAnimationEnded()) {
-	// 			this.StartDialog.destroy();
-	// 			this.startConv()
-	// 		} else {
-	// 			this.StartDialog.endAnimation();
-	// 		}
-	// 	}, this);
-	// }
-
 	private startEnd() {
 		this.StartDialog.destroy();
 		this.StartDialog = new DialogBox(this, this.Config.end, true, Anchor.Bottom, {
