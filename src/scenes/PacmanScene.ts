@@ -361,10 +361,10 @@ export class Pacman extends Phaser.Scene {
     private beginExplanations() {
 
         if (!this.sys.game.device.os.desktop ) {
-			this.StartDialog = new DialogBox(this, this.Config.instruction_details_mobile, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+			this.StartDialog = new DialogBox(this, this.Config.instruction_details_mobile, true, Anchor.Center, { windowHeight: 300, fontSize: 22 });
         }
         else 
-            this.StartDialog = new DialogBox(this, this.Config.instruction_details_desktop, false, Anchor.Center, { windowHeight: 300, fontSize: 22 });
+            this.StartDialog = new DialogBox(this, this.Config.instruction_details_desktop, true, Anchor.Center, { windowHeight: 300, fontSize: 22 });
         this.add.existing(this.StartDialog);
         this.Button = this.StartDialog.addArrowButton();
 		this.Button.on('pointerup', () => {
