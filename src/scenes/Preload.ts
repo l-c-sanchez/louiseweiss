@@ -53,6 +53,11 @@ export class Preload extends Phaser.Scene {
 		this.load.json('ClaraBoss', 'texts/ClaraBoss.json');
 		this.load.json('directions', 'data/directions.json');
 
+		this.load.image('LeftArrow', 'sprites/arrow_left.png');
+		this.load.image('RightArrow', 'sprites/arrow_right.png');
+		this.load.image('UpArrow', 'sprites/arrow_up.png');
+		this.load.image('DownArrow', 'sprites/arrow_down.png');
+
 		// Car game
 		this.load.image('voiture', 'sprites/voiture.png');
 		this.load.image('EnemyCar1', 'sprites/EnemyCar1.png');
@@ -64,8 +69,7 @@ export class Preload extends Phaser.Scene {
 		this.load.image('beer', 'sprites/beer.png');
 		this.load.image('Cow', 'sprites/cow.png');
 		this.load.audio('ValentinFlash', 'sounds/ValentinFlash.mp3');
-		this.load.image('LeftArrow', 'sprites/left_arrow.png');
-		this.load.image('RightArrow', 'sprites/right_arrow.png');
+
 
 		// Valentin Conv
 		this.load.json('ValentinQuizz', 'texts/ValentinQuizz.json');

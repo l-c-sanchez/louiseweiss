@@ -187,6 +187,9 @@ export class Pacman extends Phaser.Scene {
     // Player movement
     Cursors!: Phaser.Input.Keyboard.CursorKeys;
     Swipe!: string;
+
+    TouchDirection: Direction;
+
     Threshold!: number;
 
     Hud: HudScene;
@@ -293,7 +296,9 @@ export class Pacman extends Phaser.Scene {
             repeat: -1
         });
 
-        let bossPos = this.TileMap.tileToWorldXY(4,6)
+        // I'm putting the boss farther from player at beginning so that the user can get used to the
+        // controls before getting caught by the boss.
+        let bossPos = this.TileMap.tileToWorldXY(4, 4)  // (4, 6)
         this.Boss = new PacmanCharacter(this, this.Config.sprite_follower, bossPos.x + 16, bossPos.y + 16, bossAnims);
         this.physics.add.collider(this.Boss.Sprite, layer)
 
@@ -386,25 +391,63 @@ export class Pacman extends Phaser.Scene {
         this.Boss.setSpeed(60);
         this.Player.setSpeed(60);
         this.GameState = State.Started;
-        var downX: number, upX: number, downY: number, upY: number, Threshold: number = 50;
-        this.input.on('pointerdown', function (pointer : Phaser.Input.InputPlugin) {
-            downX = pointer.x;
-            downY = pointer.y;
-        });
-        this.input.on('pointerup', (pointer : Phaser.Input.InputPlugin) => {
-            upX = pointer.x;
-            upY = pointer.y;
-            if (upX < downX - Threshold){
-                this.Swipe = 'left';
-            } else if (upX > downX + Threshold) {
-                this.Swipe = 'right';
-            } else if (upY < downY - Threshold) {
-                this.Swipe = 'up';
-            } else if (upY > downY + Threshold) {
-                this.Swipe = 'down';
-            }
-        });
+
+        // Player movement on Mobile environment
+		if (!this.sys.game.device.os.desktop) {
+            this.addControlArrow(Config.Game.width * 1 / 4, Config.Game.centerY, 'LeftArrow');
+            this.addControlArrow(Config.Game.width * 3 / 4, Config.Game.centerY, 'RightArrow');
+            this.addControlArrow(Config.Game.centerX, Config.Game.height * 1 / 4, 'UpArrow');
+            this.addControlArrow(Config.Game.centerX, Config.Game.height * 3 / 4, 'DownArrow');
+
+            this.input.on(
+                'pointerdown',
+                function(pointer: Phaser.Input.InputPlugin){ this.TouchDirection = this.getTouchDirection(pointer) },
+                this
+            );
+            this.input.on(
+                'pointermove',
+                function(pointer: Phaser.Input.InputPlugin){ this.TouchDirection = this.getTouchDirection(pointer) },
+                this
+            );
+            this.input.on(
+                'pointerup',
+                function(pointer: Phaser.Input.InputPlugin){ this.TouchDirection = Direction.NONE },
+                this
+            );
+        }
+
         this.move(Pacman.RIGHT, this.Player);
+    }
+
+    private getTouchDirection(pointer: Phaser.Input.InputPlugin): Direction {    
+        let x = pointer.x;
+        let y = pointer.y;
+        let height = Config.Game.height;
+        let width = Config.Game.width;
+
+        let top_right = y < height / width * x;
+        let top_left = y < height - height / width * x;
+
+        if (top_right){
+            if (top_left){
+                return Direction.UP;
+            } else {
+                return Direction.RIGHT;
+            }
+        } else {
+            if (top_left){
+                return Direction.LEFT;
+            } else {
+                return Direction.DOWN;
+            }
+        }
+    }
+
+    private addControlArrow(x: number, y: number, name: string): void {
+        let arrow = this.physics.add.sprite(x, y, name);
+        arrow.setAlpha(0.3);
+        let color = Phaser.Display.Color.HexStringToColor('#ffffff')
+        arrow.setTintFill(color.color)
     }
 
     public update() {
@@ -412,19 +455,18 @@ export class Pacman extends Phaser.Scene {
             return;
         this.Player.checkSpaceAround();
 
-        if (this.Cursors.right != undefined && this.Cursors.right.isDown || this.Swipe == 'right'){
+        if (this.Cursors.right != undefined && this.Cursors.right.isDown || this.TouchDirection == Direction.RIGHT){
             this.checkDirection(Pacman.RIGHT, this.Player);
         }
-        else if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.Swipe == 'left'){
+        else if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.TouchDirection == Direction.LEFT){
             this.checkDirection(Pacman.LEFT, this.Player);
         }
-        else if (this.Cursors.up != undefined && this.Cursors.up.isDown || this.Swipe == 'up'){
+        else if (this.Cursors.up != undefined && this.Cursors.up.isDown || this.TouchDirection == Direction.UP){
             this.checkDirection(Pacman.UP, this.Player);
         }
-        else if (this.Cursors.down != undefined && this.Cursors.down.isDown || this.Swipe == 'down'){
+        else if (this.Cursors.down != undefined && this.Cursors.down.isDown || this.TouchDirection == Direction.DOWN){
             this.checkDirection(Pacman.DOWN, this.Player);
         }
-        this.Swipe = '';
 
         if (this.Player.Turning != this.Player.Current && this.Player.Turning !== Pacman.NONE) {
             this.turn(this.Player);
