@@ -188,7 +188,9 @@ export class Pacman extends Phaser.Scene {
     Cursors!: Phaser.Input.Keyboard.CursorKeys;
     Swipe!: string;
 
+    // For Mobile controls
     TouchDirection: Direction;
+    ControlTop: number = Config.Game.height / 2; // Used to delimit the zone for mobile controls.
 
     Threshold!: number;
 
@@ -394,10 +396,11 @@ export class Pacman extends Phaser.Scene {
 
         // Player movement on Mobile environment
 		if (!this.sys.game.device.os.desktop) {
-            this.addControlArrow(Config.Game.width * 1 / 4, Config.Game.centerY, 'LeftArrow');
-            this.addControlArrow(Config.Game.width * 3 / 4, Config.Game.centerY, 'RightArrow');
-            this.addControlArrow(Config.Game.centerX, Config.Game.height * 1 / 4, 'UpArrow');
-            this.addControlArrow(Config.Game.centerX, Config.Game.height * 3 / 4, 'DownArrow');
+            let controlHeight = Config.Game.height - this.ControlTop 
+            this.addControlArrow(Config.Game.width * 1 / 4, this.ControlTop + controlHeight / 2, 'LeftArrow');
+            this.addControlArrow(Config.Game.width * 3 / 4, this.ControlTop + controlHeight / 2, 'RightArrow');
+            this.addControlArrow(Config.Game.centerX, this.ControlTop + controlHeight * 1 / 4, 'UpArrow');
+            this.addControlArrow(Config.Game.centerX, this.ControlTop + controlHeight * 3 / 4, 'DownArrow');
 
             this.input.on(
                 'pointerdown',
@@ -425,8 +428,9 @@ export class Pacman extends Phaser.Scene {
         let height = Config.Game.height;
         let width = Config.Game.width;
 
-        let top_right = y < height / width * x;
-        let top_left = y < height - height / width * x;
+        let controlHeight = Config.Game.height - this.ControlTop
+        let top_right = y < this.ControlTop + controlHeight / width * x;
+        let top_left = y < height - controlHeight / width * x;
 
         if (top_right){
             if (top_left){
