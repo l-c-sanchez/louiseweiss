@@ -2,6 +2,7 @@ import { Config } from "../Config";
 import { HudScene } from "./HudScene";
 import { DialogBox, Anchor } from "../utils/DialogBox";
 import { DialogTree, DialogTreeObj } from "../utils/DialogTree";
+import { Gamepad } from "../utils/Gamepad";
 
 enum State {
     Paused,
@@ -186,11 +187,9 @@ export class Pacman extends Phaser.Scene {
 
     // Player movement
     Cursors!: Phaser.Input.Keyboard.CursorKeys;
-    Swipe!: string;
 
-    // For Mobile controls
-    TouchDirection: Direction;
-    ControlTop: number = Config.Game.height / 2; // Used to delimit the zone for mobile controls.
+    // Gamepad for mobile controls
+    Gamepad: Gamepad;
 
     Threshold!: number;
 
@@ -241,7 +240,6 @@ export class Pacman extends Phaser.Scene {
         var tiles = this.TileMap.addTilesetImage('OfficeTileset', 'OfficeTileset');
 		var layer = this.TileMap.createStaticLayer('layer0', tiles, 0, 0);
 		layer.setCollisionByProperty({ collides: true });
-		let posX = (Config.Game.width - layer.displayWidth) * 0.5
 
         var claraAnims = ["", "left", "right", "up", "down" ];
         var bossAnims = ["", "boss_left", "boss_right", "boss_up", "boss_down" ];
@@ -396,79 +394,34 @@ export class Pacman extends Phaser.Scene {
 
         // Player movement on Mobile environment
 		if (!this.sys.game.device.os.desktop) {
-            let controlHeight = Config.Game.height - this.ControlTop 
-            this.addControlArrow(Config.Game.width * 1 / 4, this.ControlTop + controlHeight / 2, 'LeftArrow');
-            this.addControlArrow(Config.Game.width * 3 / 4, this.ControlTop + controlHeight / 2, 'RightArrow');
-            this.addControlArrow(Config.Game.centerX, this.ControlTop + controlHeight * 1 / 4, 'UpArrow');
-            this.addControlArrow(Config.Game.centerX, this.ControlTop + controlHeight * 3 / 4, 'DownArrow');
-
-            this.input.on(
-                'pointerdown',
-                function(pointer: Phaser.Input.InputPlugin){ this.TouchDirection = this.getTouchDirection(pointer) },
-                this
-            );
-            this.input.on(
-                'pointermove',
-                function(pointer: Phaser.Input.InputPlugin){ this.TouchDirection = this.getTouchDirection(pointer) },
-                this
-            );
-            this.input.on(
-                'pointerup',
-                function(pointer: Phaser.Input.InputPlugin){ this.TouchDirection = Direction.NONE },
-                this
-            );
+            this.Gamepad = new Gamepad(this);
+            this.Gamepad.addJoystick(Config.Game.centerX, Config.Game.height * 5 / 6, 0.7, 'gamepad');
         }
 
         this.move(Pacman.RIGHT, this.Player);
-    }
-
-    private getTouchDirection(pointer: Phaser.Input.InputPlugin): Direction {    
-        let x = pointer.x;
-        let y = pointer.y;
-        let height = Config.Game.height;
-        let width = Config.Game.width;
-
-        let controlHeight = Config.Game.height - this.ControlTop
-        let top_right = y < this.ControlTop + controlHeight / width * x;
-        let top_left = y < height - controlHeight / width * x;
-
-        if (top_right){
-            if (top_left){
-                return Direction.UP;
-            } else {
-                return Direction.RIGHT;
-            }
-        } else {
-            if (top_left){
-                return Direction.LEFT;
-            } else {
-                return Direction.DOWN;
-            }
-        }
-    }
-
-    private addControlArrow(x: number, y: number, name: string): void {
-        let arrow = this.physics.add.sprite(x, y, name);
-        arrow.setAlpha(0.3);
-        let color = Phaser.Display.Color.HexStringToColor('#ffffff')
-        arrow.setTintFill(color.color)
     }
 
     public update() {
         if (this.GameState != State.Started)
             return;
         this.Player.checkSpaceAround();
+        
+        var touchDirection: Direction;
+        if (this.Gamepad){
+            this.Gamepad.update();
+            touchDirection = this.getDirection(this.Gamepad.properties.x, this.Gamepad.properties.y);
+        }
 
-        if (this.Cursors.right != undefined && this.Cursors.right.isDown || this.TouchDirection == Direction.RIGHT){
+        if (this.Cursors.right != undefined && this.Cursors.right.isDown || touchDirection == Direction.RIGHT){
             this.checkDirection(Pacman.RIGHT, this.Player);
         }
-        else if (this.Cursors.left != undefined && this.Cursors.left.isDown || this.TouchDirection == Direction.LEFT){
+        else if (this.Cursors.left != undefined && this.Cursors.left.isDown || touchDirection == Direction.LEFT){
             this.checkDirection(Pacman.LEFT, this.Player);
         }
-        else if (this.Cursors.up != undefined && this.Cursors.up.isDown || this.TouchDirection == Direction.UP){
+        else if (this.Cursors.up != undefined && this.Cursors.up.isDown || touchDirection == Direction.UP){
             this.checkDirection(Pacman.UP, this.Player);
         }
-        else if (this.Cursors.down != undefined && this.Cursors.down.isDown || this.TouchDirection == Direction.DOWN){
+        else if (this.Cursors.down != undefined && this.Cursors.down.isDown || touchDirection == Direction.DOWN){
             this.checkDirection(Pacman.DOWN, this.Player);
         }
 
@@ -494,6 +447,24 @@ export class Pacman extends Phaser.Scene {
             // do next move
             let direction = this.getBossOptimalDirection();
             this.Boss.moveTo(this, direction);
+        }
+    }
+
+    private getDirection(x: number, y: number){
+        if (x==0 && y==0){
+            return Direction.NONE;
+        } else if (Math.abs(x) > Math.abs(y)){
+            if (x > 0){
+                return Direction.RIGHT;
+            } else {
+                return Direction.LEFT;
+            }
+        } else {
+            if (y < 0){
+                return Direction.UP;
+            } else {
+                return Direction.DOWN;
+            }
         }
     }
 

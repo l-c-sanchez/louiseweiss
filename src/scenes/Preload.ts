@@ -143,6 +143,8 @@ export class Preload extends Phaser.Scene {
 		this.load.json('QuizzClaraResults', 'texts/QuizzClaraResults.json');
 		this.load.audio('ClaraFlash', 'sounds/ClaraFlash.mp3');
 
+		// Joystick
+		this.load.spritesheet('gamepad', 'gamepad/gamepad_spritesheet.png', { frameWidth: 100, frameHeight: 100});
 		
 	}
 
